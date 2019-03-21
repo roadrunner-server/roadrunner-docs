@@ -29,7 +29,7 @@
   {
     "title": "Server Customization",
     "links": {
-      "server/building-server": "Building Server]",
+      "server/building-server": "Building Server",
       "server/writing-services": "Writing Services",
       "server/middleware": "HTTP Middleware"
     }
