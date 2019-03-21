@@ -5,4 +5,4 @@ It supports running as a service with the ability to extend its functionality on
 
 * Introduction
    * [About RoadRunner](intro/about.md)
-   * [License](license.md)
+   * [LICENSE](license.md)
