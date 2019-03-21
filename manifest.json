@@ -4,6 +4,9 @@
     "links": {
       "readme": "Table of Contents",
       "intro/about": "About RoadRunner",
+      "intro/install": "Installation",
+      "into/quick-builds": "Quick Builds",
+      "intro/config": "Configuration",
       "license": "LICENSE"
     }
   }
