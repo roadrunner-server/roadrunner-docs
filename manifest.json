@@ -9,5 +9,37 @@
       "intro/config": "Configuration",
       "license": "LICENSE"
     }
+  },
+  {
+    "title": "Using RoadRunner",
+    "links": {
+      "usage/environment": "Environment Configuration",
+      "usage/https": "HTTPS and HTTP/2",
+      "usage/php-workers": "PHP Workers",
+      "usage/caveats": "Caveats",
+      "usage/debugging": "Debugging",
+      "usage/server-commands": "Server Commands",
+      "usage/rpc": "RPC Integration",
+      "usage/restarting-workers": "Restarting Workers",
+      "usage/ide-integration": "IDE integration",
+      "usage/error-handling": "Error Handling",
+      "usage/production": "Production Usage"
+    }
+  },
+  {
+    "title": "Server Customization",
+    "links": {
+      "server/building-server": "Building Server]",
+      "server/writing-services": "Writing Services",
+      "server/middleware": "HTTP Middleware"
+    }
+  },
+  {
+    "title": "As Library",
+    "links": {
+      "library/event-listeners": "Event Listeners",
+      "library/standalone-usage": "Standalone Usage",
+      "library/aws-lambda": "AWS Lambda"
+    }
   }
 ]
