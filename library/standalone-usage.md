@@ -21,7 +21,7 @@ srv.Start()
 res, err := srv.Exec(&roadrunner.Payload{Body: []byte("hello")})
 ```
 
-Worker structure would look like:
+Worker (echo) structure would look like:
 
 ```php
 <?php
