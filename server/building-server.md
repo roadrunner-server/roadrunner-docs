@@ -41,4 +41,4 @@ Use `rr.Container.Register` to add more services:
 rr.Container.Register(custom.ID, &custom.Service{})
 ```
 
-> See how to create [middlewares](Middlewares) in order to intercept HTTP flow.
+> See how to create [middlewares](middleware) in order to intercept HTTP flow.
