@@ -11,7 +11,7 @@ rpc:
   listen: tcp://:6001
 ```
 
-Make sure to forward/expose port 6001.
+> Make sure to forward/expose port 6001.
 
 Then run `rr http:reset` locally on file change.
 
