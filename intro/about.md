@@ -29,4 +29,4 @@ Features:
 
 License:
 --------
-The MIT License (MIT). Please see [`LICENSE`](license.md) for more information. By SpiralScout.
+The MIT License (MIT). Please see [`LICENSE`](../license.md) for more information. By SpiralScout.
