@@ -1,13 +1,13 @@
 # Quick Builds
 You are able to build RoadRunner locally using simple composer command provided by the package.
 
-> Docker is required!
-
 ```
 $ vendor/bin/rr-build
 ```
 
 RoadRunner binary file will appear in your working directory.
+
+> Docker is required!
 
 ## Customizations
 By default, quick builds will use only `http`, `static` services (default). You can create your own builds by placing `.build.json` file in the root of your project. For example to compile RoadRunner with GRPC support use:
