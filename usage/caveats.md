@@ -5,5 +5,5 @@ Since file upload is handled on RR end PHP process will only receive the filenam
 
 > Reference: https://github.com/spiral/roadrunner/issues/133
 
-## Dying
+## Exit and Die functions
 Please note that you should not use any of the following methods `die`, `exit`. Use buffered output if your library requires to write content to stdout.
