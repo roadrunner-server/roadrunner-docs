@@ -26,6 +26,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)
    * [Symfony Framework](https://github.com/spiral/roadrunner/wiki/Symfony-Framework) ([linked issue](https://github.com/spiral/roadrunner/issues/18))
    * [Yii2/3 Framework](https://github.com/spiral/roadrunner/issues/78) (in progress)
+   * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
    * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)
    * [Other Examples](https://github.com/spiral/roadrunner/wiki/Other-Examples) 
 * Server Customization
