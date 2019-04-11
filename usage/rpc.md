@@ -13,7 +13,7 @@ rpc:
 
 ```php
 $relay = new Spiral\Goridge\SocketRelay("127.0.0.1", 6001);
-$rpc = new Goridge\RPC($relay);
+$rpc = new Spiral\Goridge\RPC($relay);
 ```
 
 You can immediately use this RPC to call embedded RPC services such as HTTP:
