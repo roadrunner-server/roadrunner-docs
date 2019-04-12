@@ -107,7 +107,7 @@ Where `rpcService` is:
 ```golang
 package custom
 
-type rpcService {
+type rpcService struct {
 }
 
 func (s *rpcService) Hello(input string, output *string) error {
