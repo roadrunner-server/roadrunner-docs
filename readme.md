@@ -22,9 +22,9 @@ It supports running as a service with the ability to extend its functionality on
    * [Error Handling](usage/error-handling.md)
    * [Production Usage](usage/production.md)
 * Integrations
+   * [Symfony Framework](integrations/symfony)
    * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
    * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)
-   * [Symfony Framework](integrations/symfony)
    * [Yii2/3 Framework](https://github.com/spiral/roadrunner/issues/78) (in progress)
    * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
    * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)
