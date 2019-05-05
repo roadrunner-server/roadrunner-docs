@@ -28,7 +28,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Yii2/3 Framework](https://github.com/spiral/roadrunner/issues/78) (in progress)
    * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
    * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)
-   * [Other Examples](https://github.com/spiral/roadrunner/wiki/Other-Examples) 
+   * [**All Integrations**](https://packagist.org/packages/spiral/roadrunner/dependents) 
 * Server Customization
    * [Building Server](server/building-server.md)
    * [Writing Services](server/writing-services.md)
