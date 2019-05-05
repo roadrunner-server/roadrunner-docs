@@ -22,7 +22,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Error Handling](usage/error-handling.md)
    * [Production Usage](usage/production.md)
 * Integrations
-   * [Symfony Framework](integrations/symfony)
+   * [Symfony Framework](integrations/symfony.md)
    * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
    * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)
    * [Yii2/3 Framework](https://github.com/spiral/roadrunner/issues/78) (in progress)
