@@ -24,6 +24,12 @@
       "usage/error-handling": "Error Handling",
       "usage/production": "Production Usage"
     }
+  },  
+  {
+    "title": "Integrations",
+    "links": {
+      "integrations/symfony": "Symfony Framework"
+    }
   },
   {
     "title": "Server Customization",
