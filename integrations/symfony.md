@@ -1,5 +1,7 @@
 # Symfony Framework Integration
-> References: https://github.com/spiral/roadrunner/issues/42 https://github.com/spiral/roadrunner/issues/18
+> References: 
+> * https://github.com/spiral/roadrunner/issues/42 
+> * https://github.com/spiral/roadrunner/issues/18
 
 A worker to serve apps based on the default Symfony skeleton:
 
