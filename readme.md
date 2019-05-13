@@ -6,7 +6,6 @@ It supports running as a service with the ability to extend its functionality on
 * Introduction
    * [About RoadRunner](intro/about.md)
    * [Installation](intro/install.md)
-   * [Quick Builds](intro/quick-builds.md)
    * [Configuration](intro/config.md)
    * [LICENSE](license.md)
 * Using RoadRunner
