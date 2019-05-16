@@ -23,6 +23,3 @@ To test:
 ```
 $ make test
 ```
-
-## Quick Builds
-You can also build your own version of RoadRunner locally (via Docker) using [the following tutorial](Quick-Builds).
