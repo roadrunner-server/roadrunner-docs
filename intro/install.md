@@ -23,3 +23,15 @@ To test:
 ```
 $ make test
 ```
+
+#### Installation via Composer
+You can also install RoadRunner automatically using command shipped with the composer package, run:
+
+```
+$ composer require spiral/roadrunner
+$ ./vendor/bin/rr get
+```
+
+Server binary will be available in a root of your project.
+
+> PHP extensions `php-curl` and `php-zip` are required to download RoadRunner automatically.
