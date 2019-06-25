@@ -141,11 +141,8 @@ Minimal version:
 
 ```yaml
 http:
-  address: :8080
-  workers:
-    command: "php psr-worker.php"
-    pool:
-      numWorkers: 4
+  address:         :8080
+  workers.command: "php psr-worker.php"
 ```
 
 ## Console flags
@@ -153,4 +150,13 @@ You can overwrite any of the config values using `-o` flag:
 
 ```
 rr serve -v -d -o http.address=:80 -o http.workers.pool.numWorkers=1
+```
+
+## Inluding config files
+You can merge multiple config files into one using `include` directive:
+
+```yaml
+include:
+  - rr/http.yaml
+  - rr/static.yaml
 ```
