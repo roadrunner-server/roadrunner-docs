@@ -10,7 +10,7 @@ env:
 
 # rpc bus allows php application and external clients to talk to rr services.
 rpc:
-  # enable rpc server (enabled by default)
+  # enable rpc server
   enable: true
 
   # rpc connection DSN. Supported TCP and Unix sockets.
@@ -34,13 +34,26 @@ http:
     # ssl private key
     key:      server.key
 
+  # HTTP service provides FastCGI as frontend
+  fcgi:
+    # FastCGI connection DSN. Supported TCP and Unix sockets.
+    address: tcp://0.0.0.0:6920
+
+  # HTTP service provides HTTP2 transport
+  http2:
+    enabled: true
+    maxConcurrentStreams: 128
+
   # max POST request size, including file uploads in MB.
-  maxRequest: 200
+  maxRequestSize: 200
 
   # file upload configuration.
   uploads:
     # list of file extensions which are forbidden for uploading.
     forbid: [".php", ".exe", ".bat"]
+
+  # cidr blocks which can set ip using X-Real-Ip or X-Forwarded-For
+  trustedSubnets: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10"]
 
   # http worker pool configuration.
   workers:
@@ -63,6 +76,57 @@ http:
 
       # amount of time given to worker to gracefully destruct itself.
       destroyTimeout:  60
+
+# Additional HTTP headers and CORS control.
+headers:
+  # Middleware to handle CORS requests, https://www.w3.org/TR/cors/
+  cors:
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+    allowedOrigin: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
+    allowedHeaders: "*"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
+    allowedMethods: "GET,POST,PUT,DELETE"
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+    allowCredentials: true
+
+    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
+    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+
+    # Max allowed age in seconds
+    maxAge: 600
+
+  # Automatically add headers to every request passed to PHP.
+  request:
+    "Example-Request-Header": "Value"
+
+  # Automatically add headers to every response.
+  response:
+    "X-Powered-By": "RoadRunner"
+
+# monitors rr server(s)
+limit:
+  # check worker state each second
+  interval: 1
+
+  # custom watch configuration for each service
+  services:
+    # monitor http workers
+    http:
+      # maximum allowed memory consumption per worker (soft)
+      maxMemory: 100
+
+      # maximum time to live for the worker (soft)
+      TTL: 0
+
+      # maximum allowed amount of time worker can spend in idle before being removed (for weak db connections, soft)
+      idleTTL: 0
+
+      # max_execution_time (brutal)
+      execTTL: 60
 
 # static file serving. remove this section to disable static file serving.
 static:
