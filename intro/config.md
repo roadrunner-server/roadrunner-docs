@@ -160,3 +160,11 @@ include:
   - rr/http.yaml
   - rr/static.yaml
 ```
+
+## Environment Variables
+RoadRunner will replace some config options using reference(s) to environment variable(s):
+
+```yaml
+http:
+  workers.pool.numWorkers: ${NUM_WORKERS}
+```
