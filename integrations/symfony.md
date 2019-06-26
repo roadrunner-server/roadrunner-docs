@@ -1,6 +1,6 @@
 # Symfony Framework Integration
-> References: 
-> * https://github.com/spiral/roadrunner/issues/42 
+> References:
+> * https://github.com/spiral/roadrunner/issues/42
 > * https://github.com/spiral/roadrunner/issues/18
 
 A worker to serve apps based on the default Symfony skeleton:
@@ -18,11 +18,15 @@ use App\Kernel;
 use Spiral\Goridge\StreamRelay;
 use Spiral\RoadRunner\PSR7Client;
 use Spiral\RoadRunner\Worker;
-use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
+use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
+use Zend\Diactoros\ResponseFactory;
+use Zend\Diactoros\ServerRequestFactory;
+use Zend\Diactoros\StreamFactory;
+use Zend\Diactoros\UploadedFileFactory;
 
 require 'vendor/autoload.php';
 
@@ -57,13 +61,18 @@ $kernel = new Kernel($env, $debug);
 $relay = new StreamRelay(STDIN, STDOUT);
 $psr7 = new PSR7Client(new Worker($relay));
 $httpFoundationFactory = new HttpFoundationFactory();
-$diactorosFactory = new DiactorosFactory();
+$psrHttpFactory = new PsrHttpFactory(
+    new ServerRequestFactory,
+    new StreamFactory,
+    new UploadedFileFactory,
+    new ResponseFactory
+);
 
 while ($req = $psr7->acceptRequest()) {
     try {
         $request = $httpFoundationFactory->createRequest($req);
         $response = $kernel->handle($request);
-        $psr7->respond($diactorosFactory->createResponse($response));
+        $psr7->respond($psrHttpFactory->createResponse($response));
         $kernel->terminate($request, $response);
         $kernel->reboot(null);
     } catch (\Throwable $e) {
