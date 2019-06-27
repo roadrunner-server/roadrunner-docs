@@ -39,7 +39,7 @@ You can safely pass values to `ServerRequestInterface->getAttributes()` using `a
 ```golang
 func (s *Service) middleware(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-            attributes.Set(r, "key", "value")
+	    attributes.Set(r, "key", "value")
 	    f(w, r)
 	}
 }
