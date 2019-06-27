@@ -19,6 +19,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Restarting Workers](usage/restarting-workers.md)
    * [IDE integration](usage/ide-integration.md)
    * [Error Handling](usage/error-handling.md)
+   * [Application Metrics](usage/metrics.md)
    * [Production Usage](usage/production.md)
 * Integrations
    * [Symfony Framework](integrations/symfony.md)
