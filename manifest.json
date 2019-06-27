@@ -22,6 +22,7 @@
       "usage/restarting-workers": "Restarting Workers",
       "usage/ide-integration": "IDE integration",
       "usage/error-handling": "Error Handling",
+      "usage/metrics": "Application Metrics",
       "usage/production": "Production Usage"
     }
   },  
