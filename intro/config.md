@@ -16,10 +16,20 @@ rpc:
   # rpc connection DSN. Supported TCP and Unix sockets.
   listen:     tcp://127.0.0.1:6001
 
+metrics:
+  # prometheus client address (path /metrics added automatically)
+  address: localhost:2112
+  collect:
+    app_metric:
+      type:    histogram
+      help:    "Custom application metric"
+      labels:  ["type"]
+      buckets: [0.1, 0.2, 0.3, 1.0]
+
 # http service configuration.
 http:
   # http host to listen.
-  address:   0.0.0.0:8080
+  address: 0.0.0.0:8080
 
   ssl:
     # custom https port (default 443)
@@ -41,7 +51,10 @@ http:
 
   # HTTP service provides HTTP2 transport
   http2:
+    # enable HTTP/2, only with TSL
     enabled: true
+    
+    # max transfer channels
     maxConcurrentStreams: 128
 
   # max POST request size, including file uploads in MB.
