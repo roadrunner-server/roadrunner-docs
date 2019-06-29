@@ -6,8 +6,8 @@ Check pre-build docker repository: https://github.com/n1215/roadrunner-docker-sk
 ## Controller RoadRunner from outside
 By default embedded RPC server will listen only localhost connections. In order to control RR from outside you must:
 
-1) Expose :6001 port from your container.
-2) Configure rr to listed on 0.0.0.0
+* Expose :6001 port from your container.
+* Configure rr to listed on 0.0.0.0
 
 ```yaml
 rpc:
