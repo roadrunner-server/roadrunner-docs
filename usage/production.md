@@ -6,7 +6,7 @@ There are multiple tips and suggestions which must be acknowledged while running
 - [optional] consider calling `gc_collect_cycles` after each execution if you want to keep the memory low (this will slow down your application a bit)
 - watch memory leaks - you have to be more picky about what components you use. Workers will be restarted in case of memory leak but it should not be hard to completely avoid this issue by properly designing your application
 - watch the state pollution (i.e. globals or user data cache in memory)
-- make sure NOT to listen 0.0.0.0 in RPC service
+- make sure NOT to listen 0.0.0.0 in RPC service (unless in Docker)
 - connect to a worker using pipes for higher performance (Unix sockets just a bit slower)
 - tweak your pool timings to the values you like
 - a number of workers = number of CPU threads in your system, unless your application is IO bound, then pick the number heuristically 
