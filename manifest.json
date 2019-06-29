@@ -14,11 +14,11 @@
     "links": {
       "usage/environment": "Environment Configuration",
       "usage/https": "HTTPS and HTTP/2",
-      "usage/headers": "Headers",
       "usage/php-workers": "PHP Workers",
       "usage/caveats": "Caveats",
       "usage/debugging": "Debugging",
       "usage/server-commands": "Server Commands",
+      "usage/headers": "Headers",
       "usage/rpc": "RPC Integration",
       "usage/restarting-workers": "Restarting Workers",
       "usage/ide-integration": "IDE integration",
