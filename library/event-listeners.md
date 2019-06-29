@@ -33,7 +33,7 @@ func myListener(event int, ctx interface{}) {
 	case rrhttp.EventResponse:
 		e := ctx.(*rrhttp.ResponseEvent)
 		logrus.Info(
-                       "%s %v %s %s",
+			"%s %v %s %s",
 			e.Request.RemoteAddr,
 			e.Response.Status,
 			e.Request.Method,
@@ -44,7 +44,7 @@ func myListener(event int, ctx interface{}) {
 
 		if _, ok := e.Error.(roadrunner.JobError); ok {
 			logrus.Info(
-                                "%v %s %s",
+				"%v %s %s",
 				500,
 				e.Request.Method,
 				e.Request.URI,
