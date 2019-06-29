@@ -1,4 +1,15 @@
 # Running in Docker
-RoadRunner can run in docker container. Make sure to expose HTTP ports and RPC (6001) port in order to control server from outside.
+RoadRunner can run in docker container.
 
 Check pre-build docker repository: https://github.com/n1215/roadrunner-docker-skeleton
+
+## Controller RoadRunner from outside
+By default embedded RPC server will listen only localhost connections. In order to control RR from outside you must:
+
+1) Expose :6001 port from your container.
+2) Configure rr to listed on 0.0.0.0
+
+```yaml
+rpc:
+  listen: tcp://:6001
+```
