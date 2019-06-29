@@ -150,11 +150,11 @@ static:
   forbid: [".php", ".htaccess"]
 ```
 
-Minimal version:
+Minimal configuration:
 
 ```yaml
 http:
-  address:         :8080
+  address:         ":8080"
   workers.command: "php psr-worker.php"
 ```
 
