@@ -24,7 +24,8 @@
       "usage/ide-integration": "IDE integration",
       "usage/error-handling": "Error Handling",
       "usage/metrics": "Application Metrics",
-      "usage/production": "Production Usage"
+      "usage/production": "Production Usage",
+      "usage/docker": "Running in Docker"
     }
   },  
   {
