@@ -25,7 +25,7 @@ headers:
     maxAge: 600
 ```
 
-### Customer headers for Response or Request
+### Custom headers for Response or Request
 
 ```yaml
 headers:
