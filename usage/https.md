@@ -45,3 +45,14 @@ Note that the resources path must be related to the public application directory
 
 > Please note, HTTP2 push only works under HTTPS with `static` service enabled.
 
+### FastCGI
+
+There is FastCGI frontend support inside HTTP module, you can enable it (disabled by default):
+
+```yaml
+http:
+  # HTTP service provides FastCGI as frontend
+  fcgi:
+    # FastCGI connection DSN. Supported TCP and Unix sockets.
+    address: tcp://0.0.0.0:6920
+```
