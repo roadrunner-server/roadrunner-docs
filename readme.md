@@ -22,6 +22,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Error Handling](usage/error-handling.md)
    * [Application Metrics](usage/metrics.md)
    * [Production Usage](usage/production.md)
+   * [Running in Docker](usage/docker.md)
 * Integrations
    * [Symfony Framework](integrations/symfony.md)
    * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
