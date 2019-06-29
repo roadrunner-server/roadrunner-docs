@@ -11,6 +11,7 @@ It supports running as a service with the ability to extend its functionality on
 * Using RoadRunner
    * [Environment Configuration](usage/environment.md)
    * [HTTPS and HTTP/2](usage/https.md)
+   * [Headers](usage/headers.md)
    * [PHP Workers](usage/php-workers.md)
    * [Caveats](usage/caveats.md)
    * [Debugging](usage/debugging.md)
