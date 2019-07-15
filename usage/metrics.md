@@ -9,7 +9,8 @@ metrics:
   address: localhost:2112
 ```
 
-Once complete you can access Prometheus metrics using `http://localhost:2112/metrics` url. RoadRunner will expose default `http` and `limit` server metrics.
+Once complete you can access Prometheus metrics using `http://localhost:2112/metrics` url.
+> RoadRunner will expose default `http` and `limit` server metrics automatically.
 
 ## Custom application metrics
 You can also publish application specific metrics using RPC connection to the server. First you have to register metric in your
