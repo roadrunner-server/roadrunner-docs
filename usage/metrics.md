@@ -49,7 +49,7 @@ metrics:
       labels: ["type"]
 ```
 
-You should specify values for your labels while pushing the values:
+You should specify values for your labels while pushing the metric:
 
 ```php
 $rpc = new Spiral\Goridge\RPC(new Spiral\Goridge\SocketRelay("127.0.0.1", 6001));
