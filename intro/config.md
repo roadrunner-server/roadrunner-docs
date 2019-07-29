@@ -54,6 +54,9 @@ http:
     # enable HTTP/2, only with TSL
     enabled: true
     
+    # to enable H2C on TCP connections, false by default
+    h2c: true
+    
     # max transfer channels
     maxConcurrentStreams: 128
 
