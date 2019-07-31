@@ -48,8 +48,6 @@ In most of the cases, your services would require a set of configuration values.
 ```golang
 package custom
 
-package env
-
 import (
 	"github.com/spiral/roadrunner/service"
 )
