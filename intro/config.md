@@ -51,7 +51,7 @@ http:
 
   # HTTP service provides HTTP2 transport
   http2:
-    # enable HTTP/2, only with TSL
+    # enable HTTP/2, only with TLS
     enabled: true
     
     # to enable H2C on TCP connections, false by default
@@ -168,7 +168,7 @@ You can overwrite any of the config values using `-o` flag:
 rr serve -v -d -o http.address=:80 -o http.workers.pool.numWorkers=1
 ```
 
-## Inluding config files
+## Including config files
 You can merge multiple config files into one using `include` directive:
 
 ```yaml
