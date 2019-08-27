@@ -51,7 +51,7 @@ http:
 
   # HTTP service provides HTTP2 transport
   http2:
-    # enable HTTP/2, only with TSL
+    # enable HTTP/2, only with TLS
     enabled: true
     
     # to enable H2C on TCP connections, false by default
