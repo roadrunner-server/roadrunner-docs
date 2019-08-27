@@ -168,7 +168,7 @@ You can overwrite any of the config values using `-o` flag:
 rr serve -v -d -o http.address=:80 -o http.workers.pool.numWorkers=1
 ```
 
-## Inluding config files
+## Including config files
 You can merge multiple config files into one using `include` directive:
 
 ```yaml
