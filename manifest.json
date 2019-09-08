@@ -31,7 +31,8 @@
   {
     "title": "Integrations",
     "links": {
-      "integrations/symfony": "Symfony Framework"
+      "integrations/spiral": "Spiral Framework",
+      "integrations/symfony": "Symfony Framework",
     }
   },
   {
