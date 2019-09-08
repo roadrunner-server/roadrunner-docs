@@ -24,13 +24,13 @@ It supports running as a service with the ability to extend its functionality on
    * [Production Usage](usage/production.md)
    * [Running in Docker](usage/docker.md)
 * Integrations
+   * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)  
+   * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
+   * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)  
    * [Spiral Framework](integrations/spiral.md)
    * [Symfony Framework](integrations/symfony.md)
-   * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
-   * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)
    * [Yii2/3 Framework](https://github.com/spiral/roadrunner/issues/78) (in progress)
    * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
-   * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)
    * [**All Integrations**](https://packagist.org/packages/spiral/roadrunner/dependents) 
 * Server Customization
    * [Building Server](server/building-server.md)
