@@ -24,6 +24,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Production Usage](usage/production.md)
    * [Running in Docker](usage/docker.md)
 * Integrations
+   * [Spiral Framework](integrations/spiral.md)
    * [Symfony Framework](integrations/symfony.md)
    * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
    * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)
