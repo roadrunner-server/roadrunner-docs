@@ -41,12 +41,12 @@ RoadRunner support (HTTP/2 push)[https://en.wikipedia.org/wiki/HTTP/2_Server_Pus
 return $response->withAddedHeader('http2-push', '/test.js');
 ```
 
-Note that the resources path must be related to the public application directory and must include `/` at the beginning.
+Note that the path of the resource must be related to the public application directory and must include `/` at the beginning.
 
 > Please note, HTTP2 push only works under HTTPS with `static` service enabled.
 
 ## H2C
-You can enable HTTP/2 support over non ecrypted TCP connection using H2C:
+You can enable HTTP/2 support over non-ecrypted TCP connection using H2C:
 
 ```yaml
 http:
@@ -55,7 +55,7 @@ http:
 
 ### FastCGI
 
-There is FastCGI frontend support inside HTTP module, you can enable it (disabled by default):
+There is FastCGI frontend support inside the HTTP module, you can enable it (disabled by default):
 
 ```yaml
 http:
