@@ -1,5 +1,5 @@
 # Error Handling
-There are multiple ways how you can handle errors produces by PHP workers.
+There are multiple ways of how you can handle errors produces by PHP workers.
 
 The simplest and most common way would be responding to parent service with the error message using `getWorker()->error()`:
 
