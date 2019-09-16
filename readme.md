@@ -25,7 +25,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Running in Docker](usage/docker.md)
 * Integrations
    * [CakePHP](https://github.com/CakeDC/cakephp-roadrunner)  
-   * [Laravel Framework](https://github.com/spiral/roadrunner/wiki/Laravel-Framework)
+   * [Laravel Framework](https://github.com/spiral/roadrunner/issues/96)
    * [Slim Framework](https://github.com/spiral/roadrunner/issues/62)  
    * [Spiral Framework](integrations/spiral.md)
    * [Symfony Framework](integrations/symfony.md)
