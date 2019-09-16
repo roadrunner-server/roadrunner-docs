@@ -28,7 +28,7 @@ headers:
 ```
 
 ### Custom headers for Response or Request
-You can control additional headers to be set for outgoing responses and headers to be added to the request send to your application.
+You can control additional headers to be set for outgoing responses and headers to be added to the request sent to your application.
 ```yaml
 headers:
   # Automatically add headers to every request passed to PHP.
