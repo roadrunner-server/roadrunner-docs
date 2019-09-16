@@ -1,5 +1,5 @@
 # Application Metrics
-RoadRunner server includes embedded metrics server based on [Prometheus](https://prometheus.io/).
+RoadRunner server includes an embedded metrics server based on [Prometheus](https://prometheus.io/).
 
 ## Enable Metrics
 To enable metrics add `metrics` section to your configuration:
@@ -13,7 +13,7 @@ Once complete you can access Prometheus metrics using `http://localhost:2112/met
 > RoadRunner will expose default `http` and `limit` server metrics automatically.
 
 ## Custom application metrics
-You can also publish application specific metrics using RPC connection to the server. First you have to register metric in your
+You can also publish application-specific metrics using an RPC connection to the server. First, you have to register a metric in your
 configuration file:
 
 ```yaml
