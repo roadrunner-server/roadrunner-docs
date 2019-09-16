@@ -33,7 +33,7 @@ It supports running as a service with the ability to extend its functionality on
    * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
    * [**All Integrations**](https://packagist.org/packages/spiral/roadrunner/dependents) 
 * Server Customization
-   * [Building Server](server/building-server.md)
+   * [Building a Server](server/building-server.md)
    * [Writing Services](server/writing-services.md)
    * [HTTP Middleware](server/middleware.md)
 * As Library
