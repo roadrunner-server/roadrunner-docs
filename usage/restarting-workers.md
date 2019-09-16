@@ -1,8 +1,8 @@
 # Restarting Workers
-RoadRunner provides multiple ways to safely restart worker(s) on demand. Both approaches can be used on a live server and should not cause a downtime.
+RoadRunner provides multiple ways to safely restart worker(s) on demand. Both approaches can be used on a live server and should not cause downtime.
 
 ## Stop Command
-You are able to send `stop` command from worker to parent server to force process destruction. In this scenario, job/request will be automatically forwarded to the next worker.
+You are able to send `stop` command from worker to parent server to force process destruction. In this scenario, the job/request will be automatically forwarded to the next worker.
 
 We can demonstrate it by implementing `maxJobs` control on PHP end:
 
@@ -32,7 +32,7 @@ while ($req = $psr7->acceptRequest()) {
 }
 ```
 
-> This approach can be used to control memory usage inside PHP script.
+> This approach can be used to control memory usage inside the PHP script.
 
 ## Full Reset
 You can also initiate a rebuild of all RoadRunner workers using embedded [RPC bus](RPC-Integration):
