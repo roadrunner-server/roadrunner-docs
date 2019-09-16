@@ -6,25 +6,32 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spiral/roadrunner/badges/quality-score.png)](https://scrutinizer-ci.com/g/spiral/roadrunner/?branch=master)
 [![Codecov](https://codecov.io/gh/spiral/roadrunner/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/roadrunner/)
 
-RoadRunner is an open source (MIT licensed), high-performance PHP application server, load balancer and process manager. It supports running as a service with the ability to extend its functionality on a per-project basis. RoadRunner includes PSR-7 compatible HTTP server.
+RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager. It supports running as a service with the ability to extend its functionality on a per-project basis. RoadRunner includes PSR-7 compatible HTTP server.
 
 Features:
 --------
-- production ready
+- production-ready
 - PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middlewares, event listeners)
-- extendable service model (plus PHP compatible RPC server)
-- flexible ENV configuration
-- no external PHP dependencies, drop-in (based on [Goridge](https://github.com/spiral/goridge))
+- HTTPS and HTTP/2 support (including HTTP/2 Push, H2C)
+- fully customizable server
+- flexible environment configuration
+- no external PHP dependencies (64bit version required), drop-in (based on [Goridge](https://github.com/spiral/goridge))
 - load balancer, process manager and task pipeline
-- frontend agnostic (queue, REST, PSR-7, async php, etc)
-- works over TCP, unix sockets and standard pipes
+- frontend agnostic ([Queue](https://github.com/spiral/jobs), PSR-7, [GRPC](https://github.com/spiral/php-grpc), etc)
+- integrated metrics (Prometheus)
+- works over TCP, UNIX sockets and standard pipes
 - automatic worker replacement and safe PHP process destruction
-- worker lifecycle management (create/allocate/destroy timeouts)
+- worker create/allocate/destroy timeouts
+- max jobs per worker
+- worker lifecycle management (controller) 
+    - maxMemory (graceful stop)
+    - TTL (graceful stop)
+    - idleTTL (graceful stop)
+    - execTTL (brute, max_execution_time)   
 - payload context and body
-- control over max jobs per worker
 - protocol, worker and job level error management (including PHP errors)
-- memory leak failswitch
 - very fast (~250k rpc calls per second on Ryzen 1700X using 16 threads)
+- integrations with Symfony, Laravel, Slim, CakePHP, Zend Expressive, Spiral
 - works on Windows
 
 License:
