@@ -1,5 +1,5 @@
 # Environment configuration
-All RoadRunner workers will inherit system configuration available for parent server process. In addition, you can customize the set of env variables to be passed to your workers using part `env` of `.rr` configuration file.
+All RoadRunner workers will inherit the system configuration available for the parent server process. In addition, you can customize the set of env variables to be passed to your workers using part `env` of `.rr` configuration file.
 
 ```yaml
 env:
@@ -36,7 +36,7 @@ func main() {
 > You must remove default `env` component.
 
 ### Default ENV values
-RoadRunner provide set of ENV values to help PHP process to identify how to properly communicate with server.
+RoadRunner provides set of ENV values to help the PHP process to identify how to properly communicate with the server.
 
 Key     | Description
 ---     | ---
