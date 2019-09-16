@@ -1,5 +1,5 @@
 # PHP Workers
-In order to run your PHP application you must create worker enterpoint and configure RoadRunner to use it. First, install required package using [Composer](https://getcomposer.org/).
+In order to run your PHP application, you must create a worker endpoint and configure RoadRunner to use it. First, install the required package using [Composer](https://getcomposer.org/).
 
 ```bash
 composer require spiral/roadrunner
@@ -102,7 +102,7 @@ $worker = new RoadRunner\Worker(
 ```
 
 ## Troubleshooting
-In some cases RR would not be able to handle errors produced by PHP worker (PHP is missing, script is dead and etc).
+In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead and etc).
 
 ```
 rr serve -v -d
