@@ -68,7 +68,7 @@ custom:
     key: value
 ```
 
-You can now request your config as simple dependency for your service:
+You can now request your config as a simple dependency for your service:
 
 ```golang
 func(s *Service) Init(r *rpc.Service, cfg *Config) (ok bool, err error) {
@@ -91,7 +91,7 @@ func(s *Service) Stop() {
 ```
 
 ### RPC Methods
-You can expose set of RPC methods for your PHP workers by registering `net/rpc` handler using `rpc` service.
+You can expose a set of RPC methods for your PHP workers by registering `net/rpc` handler using `rpc` service.
 
 ```golang
 func(s *Service) Init(r *rpc.Service) (ok bool, err error) {
