@@ -7,3 +7,6 @@ Since file upload is handled on RR end PHP process will only receive the filenam
 
 ## Exit and Die functions
 Please note that you should not use any of the following methods `die`, `exit`. Use buffered output if your library requires to write content to stdout.
+
+## WinCache
+Using roadrunner on Windows with WinCache extension might cause worker bytecode to stuck in memory.
