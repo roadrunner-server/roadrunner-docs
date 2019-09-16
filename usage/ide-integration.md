@@ -16,3 +16,14 @@ rpc:
 Then run `rr http:reset` locally on file change.
 
 > Another option is to use `maxJobs: 1` and to make rr destroy process after each request.
+
+## Debug Mode
+Note, it's much easier to debug the application using following configuration:
+
+```yaml
+http:
+  workers:
+    pool:
+      numWorkers: 1
+      maxJobs:    1
+```
