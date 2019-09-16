@@ -7,7 +7,7 @@ To connect to RoadRunner from PHP application in RPC mode you need:
 - ext-json
 
 ## Configuration
-To change RPC port from default (localhost:6001) use:
+To change the RPC port from default (localhost:6001) use:
 
 ```yaml
 # rpc bus allows php application and external clients to talk to rr services.
