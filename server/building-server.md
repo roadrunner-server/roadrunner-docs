@@ -1,4 +1,4 @@
-# Building Server
+# Building a Server
 RoadRunner use service bus model, this allows you to tweak and extend application functionality for each separate project.
 
 You can achieve that by simply copying `main.go` file in the root of your project.
