@@ -1,5 +1,5 @@
 # Configuration
-Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which must be located in a root of your project. Each service configuration is located under the designated section. The config file must be named as `.rr.{format}` where format is `yml`, `json` and others supported by `sp13f/viper`.
+Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which must be located in the root of your project. Each service configuration is located under the designated section. The config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `sp13f/viper`.
 
 Sample configuration:
 
@@ -90,7 +90,7 @@ http:
       # for how long worker is allowed to be bootstrapped.
       allocateTimeout: 60
 
-      # amount of time given to worker to gracefully destruct itself.
+      # amount of time given to the worker to gracefully destruct itself.
       destroyTimeout:  60
 
 # Additional HTTP headers and CORS control.
@@ -130,7 +130,7 @@ limit:
 
   # custom watch configuration for each service
   services:
-    # monitor http workers
+    # monitor HTTP workers
     http:
       # maximum allowed memory consumption per worker (soft)
       maxMemory: 100
@@ -146,7 +146,7 @@ limit:
 
 # static file serving. remove this section to disable static file serving.
 static:
-  # root directory for static file (http would not serve .php and .htaccess files).
+  # root directory for static file (HTTP would not serve .php and .htaccess files).
   dir:   "public"
 
   # list of extensions for forbid for serving.
