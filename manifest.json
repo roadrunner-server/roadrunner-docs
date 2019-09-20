@@ -46,7 +46,7 @@
     }
   },
   {
-    "title": "As Library",
+    "title": "Integrations",
     "links": {
       "integration/cake": "CakePHP",
       "integration/laravel": "Laravel",
