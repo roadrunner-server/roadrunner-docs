@@ -14,7 +14,6 @@
     "title": "PHP Workers",
     "links": {
       "php/worker": "Worker",
-      "php/environment": "Environment",
       "php/developer": "Developer Mode",
       "php/error-handling": "Error Handling",
       "php/restarting": "Restarting",
