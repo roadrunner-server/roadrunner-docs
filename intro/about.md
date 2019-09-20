@@ -1,39 +1,18 @@
-# About RoadRunner
-[![Latest Stable Version](https://poser.pugx.org/spiral/roadrunner/version)](https://packagist.org/packages/spiral/roadrunner)
-[![GoDoc](https://godoc.org/github.com/spiral/roadrunner?status.svg)](https://godoc.org/github.com/spiral/roadrunner)
-[![Build Status](https://travis-ci.org/spiral/roadrunner.svg?branch=master)](https://travis-ci.org/spiral/roadrunner)
-[![Go Report Card](https://goreportcard.com/badge/github.com/spiral/roadrunner)](https://goreportcard.com/report/github.com/spiral/roadrunner)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spiral/roadrunner/badges/quality-score.png)](https://scrutinizer-ci.com/g/spiral/roadrunner/?branch=master)
-[![Codecov](https://codecov.io/gh/spiral/roadrunner/branch/master/graph/badge.svg)](https://codecov.io/gh/spiral/roadrunner/)
+# What is it?
+This is RoadRunner. RoadRunner is infrastructure level framework for your PHP applications written in Golang. It runs
+your application in the form of workers.
 
-RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager. It supports running as a service with the ability to extend its functionality on a per-project basis. RoadRunner includes PSR-7 compatible HTTP server.
+## Golang
+On Golang end RoadRunner runs your PHP application on goroutine and balances the incoming payloads between multiple workers.
 
-Features:
---------
-- production-ready
-- PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middlewares, event listeners)
-- HTTPS and HTTP/2 support (including HTTP/2 Push, H2C)
-- fully customizable server
-- flexible environment configuration
-- no external PHP dependencies (64bit version required), drop-in (based on [Goridge](https://github.com/spiral/goridge))
-- load balancer, process manager and task pipeline
-- frontend agnostic ([Queue](https://github.com/spiral/jobs), PSR-7, [GRPC](https://github.com/spiral/php-grpc), etc)
-- integrated metrics (Prometheus)
-- works over TCP, UNIX sockets and standard pipes
-- automatic worker replacement and safe PHP process destruction
-- worker create/allocate/destroy timeouts
-- max jobs per worker
-- worker lifecycle management (controller) 
-    - maxMemory (graceful stop)
-    - TTL (graceful stop)
-    - idleTTL (graceful stop)
-    - execTTL (brute, max_execution_time)   
-- payload context and body
-- protocol, worker and job level error management (including PHP errors)
-- very fast (~250k rpc calls per second on Ryzen 1700X using 16 threads)
-- integrations with Symfony, Laravel, Slim, CakePHP, Zend Expressive, Spiral
-- works on Windows
+![Base Diagram](https://user-images.githubusercontent.com/796136/65347341-79dd8600-dbe7-11e9-9621-1c5f2ef929e6.png)
 
-License:
---------
-The MIT License (MIT). Please see [`LICENSE`](license.md) for more information. By SpiralScout.
+The data can be coming from the HTTP request, queue or any other way. 
+
+# PHP
+RoadRunner keeps PHP worker alive between incoming requests. It means that you can completely eliminate bootload time and
+speed up a heavy application by a lot. Since worker locates in resident memory all the open resources will remain open. 
+Using Goridge RPC you can quickly offload some of the complex computations to the application server. For example schedule 
+background PHP job.
+
+![Base Diagram](https://user-images.githubusercontent.com/796136/65348057-00df2e00-dbe9-11e9-9173-f0bd4269c101.png)

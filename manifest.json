@@ -2,45 +2,65 @@
   {
     "title": "RoadRunner",
     "links": {
-      "readme": "Table of Contents",
-      "intro/about": "About RoadRunner",
+      "intro/about": "What is it?]",
+      "intro/features": "Features",
       "intro/install": "Installation",
       "intro/config": "Configuration",
       "license": "LICENSE"
     }
   },
   {
-    "title": "Using RoadRunner",
+    "title": "PHP Workers",
     "links": {
-      "usage/environment": "Environment Configuration",
-      "usage/https": "HTTPS and HTTP/2",
-      "usage/php-workers": "PHP Workers",
-      "usage/caveats": "Caveats",
-      "usage/debugging": "Debugging",
-      "usage/server-commands": "Server Commands",
-      "usage/headers": "Headers",
-      "usage/rpc": "RPC Integration",
-      "usage/restarting-workers": "Restarting Workers",
-      "usage/ide-integration": "IDE integration",
-      "usage/error-handling": "Error Handling",
-      "usage/metrics": "Application Metrics",
-      "usage/production": "Production Usage",
-      "usage/docker": "Running in Docker"
-    }
-  },  
-  {
-    "title": "Integrations",
-    "links": {
-      "integrations/spiral": "Spiral Framework",
-      "integrations/symfony": "Symfony Framework"
+      "php/worker": "Worker",
+      "php/environment": "Environment",
+      "php/developer": "Developer Mode",
+      "php/error-handling": "Error Handling",
+      "php/restarting": "Restarting",
+      "php/limit": "Embedded Monitoring",
+      "php/rpc": "RPC to App Server",
+      "php/rpc": "Environment",
+      "php/caveats": "Caveats",
+      "php/environment": "Environment",
+      "php/debugging": "Debugging"
     }
   },
   {
-    "title": "Server Customization",
+    "title": "App Server",
     "links": {
-      "server/building-server": "Building Server",
-      "server/writing-services": "Writing Services",
-      "server/middleware": "HTTP Middleware"
+      "beep-beep/cli": "CLI Commands",
+      "beep-beep/production": "Production Usage",
+      "beep-beep/metrics": "Prometheus Metrics",
+      "beep-beep/build": "Building a Server",
+      "beep-beep/rpc": "RPC",
+      "beep-beep/service": "Write a Service"
+    }
+  },
+  {
+    "title": "HTTPs and HTTP/2",
+    "links": {
+      "http/https": "HTTPs and HTTP/2",
+      "http/headers": "Headers",
+      "http/middleware": "Middleware"
+    }
+  },
+  {
+    "title": "As Library",
+    "links": {
+      "integration/cake": "CakePHP",
+      "integration/laravel": "Laravel",
+      "integration/slim": "Slim",
+      "integration/spiral": "Event",
+      "integration/symfony": "Symfony Framework",
+      "integration/zend": "Zend Expressive",
+      "integration/yii": "Yii2 and Yii3"
+    }
+  },
+  {
+    "title": "Docker",
+    "links": {
+      "docker/ports": "Ports and Containers",
+      "docker/images": "Available Images"
     }
   },
   {

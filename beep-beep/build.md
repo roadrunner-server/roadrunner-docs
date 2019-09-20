@@ -1,7 +1,12 @@
 # Building a Server
 RoadRunner use service bus model, this allows you to tweak and extend application functionality for each separate project.
 
-You can achieve that by simply copying `main.go` file in the root of your project.
+
+#### Install Golang
+To build an application server you need [Golang 1.12+](https://golang.org/dl/) to be installed.
+
+#### Create main.go
+Copy [main.go](https://github.com/spiral/framework/blob/master/main.go) file in the root of your project.
 
 ```golang
 package main
@@ -43,4 +48,4 @@ Use `rr.Container.Register` to add more services:
 rr.Container.Register(custom.ID, &custom.Service{})
 ```
 
-> See how to create [middlewares](server/middleware.md) in order to intercept HTTP flow.
+> See how to create [http middleware](/http/middleware.md) in order to intercept HTTP flow.
