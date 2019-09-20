@@ -1,4 +1,6 @@
 # Table of Contents
+RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager. 
+
 * Introduction
     * [What is it?](intro/about.md)
     * [Features](intro/features.md) 
