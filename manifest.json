@@ -50,7 +50,7 @@
       "integration/cake": "CakePHP",
       "integration/laravel": "Laravel",
       "integration/slim": "Slim",
-      "integration/spiral": "Event",
+      "integration/spiral": "Spiral Framework",
       "integration/symfony": "Symfony Framework",
       "integration/zend": "Zend Expressive",
       "integration/yii": "Yii2 and Yii3"
