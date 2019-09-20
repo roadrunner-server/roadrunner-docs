@@ -37,7 +37,7 @@
     }
   },
   {
-    "title": "HTTPs and HTTP/2",
+    "title": "HTTPs and HTTP2",
     "links": {
       "http/https": "HTTPs and HTTP/2",
       "http/headers": "Headers",
