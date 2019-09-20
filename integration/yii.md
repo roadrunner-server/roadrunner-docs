@@ -2,7 +2,7 @@
 
 ## Yii 2
 
-There is [Yii2 PSR-7 Bridge](https://github.com/charlesportwoodii/yii2-psr7-bridge) made by Charles R. Portwood II that covers almost everything neede for the integration.
+There is [Yii2 PSR-7 Bridge](https://github.com/charlesportwoodii/yii2-psr7-bridge) made by Charles R. Portwood II that covers almost everything needed for the integration.
 
 ## Yii 3
 
