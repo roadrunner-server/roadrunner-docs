@@ -1,4 +1,4 @@
-# Symfony Framework Integration
+# Symfony Framework
 > References:
 > * https://github.com/spiral/roadrunner/issues/42
 > * https://github.com/spiral/roadrunner/issues/18
