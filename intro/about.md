@@ -10,7 +10,7 @@ and balances the incoming payloads between multiple workers.
 
 ![Base Diagram](https://user-images.githubusercontent.com/796136/65347341-79dd8600-dbe7-11e9-9621-1c5f2ef929e6.png)
 
-The data can be coming from the HTTP request, queue or any other way. 
+The data can be received from the HTTP request, queue or any other way. 
 
 # PHP
 
