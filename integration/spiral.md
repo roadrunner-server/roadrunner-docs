@@ -7,6 +7,7 @@ Framework use extended server build with following modules enabled:
 - Queue (RabbitMQ, AWS SQS, Beanstalkd, In-Memory)
 - GRPC
 - Limit
+- WebSocket broadcasting
 - Metrics
 
 ## Download
