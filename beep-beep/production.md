@@ -14,3 +14,4 @@ There are multiple tips and suggestions which must be acknowledged while running
 - RoadRunner is +40% performant using Keep-Alive connections
 - setup memory limit at least 10-20% below max_memory_usage
 - since RoadRunner workers run from cli you need to enable OPcache in CLI via `opcache.enable_cli=1`
+- make sure to use healcheck service while running rr in pods
