@@ -151,6 +151,11 @@ static:
 
   # list of extensions for forbid for serving.
   forbid: [".php", ".htaccess"]
+  
+# health service configuration
+health:
+  # http host to serve health requests.
+  address: localhost:2113
 ```
 
 Minimal configuration:
