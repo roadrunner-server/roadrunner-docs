@@ -14,4 +14,4 @@ There are multiple tips and suggestions which must be acknowledged while running
 - RoadRunner is +40% performant using Keep-Alive connections
 - setup memory limit at least 10-20% below max_memory_usage
 - since RoadRunner workers run from cli you need to enable OPcache in CLI via `opcache.enable_cli=1`
-- make sure to use [health check endpoint](./health.md) when running rr in a cloud environment
+- make sure to use [health check endpoint](beep-beep/health.md) when running rr in a cloud environment
