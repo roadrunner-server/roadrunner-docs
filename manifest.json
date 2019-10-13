@@ -31,6 +31,7 @@
       "beep-beep/cli": "CLI Commands",
       "beep-beep/production": "Production Usage",
       "beep-beep/metrics": "Prometheus Metrics",
+      "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
       "beep-beep/rpc": "RPC",
       "beep-beep/service": "Write a Service"
