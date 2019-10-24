@@ -19,7 +19,6 @@
       "php/restarting": "Restarting",
       "php/limit": "Embedded Monitoring",
       "php/rpc": "RPC to App Server",
-      "php/rpc": "Environment",
       "php/caveats": "Caveats",
       "php/environment": "Environment",
       "php/debugging": "Debugging"
