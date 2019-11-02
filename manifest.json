@@ -52,6 +52,7 @@
       "integration/slim": "Slim",
       "integration/spiral": "Spiral Framework",
       "integration/symfony": "Symfony Framework",
+      "integration/symlex": "Symlex Framework",
       "integration/zend": "Zend Expressive",
       "integration/yii": "Yii2 and Yii3"
     }
