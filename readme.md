@@ -35,6 +35,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Slim](integration/slim.md)
     * [Spiral Framework](integration/spiral.md)
     * [Symfony Framework](integration/symfony.md)
+    * [Symlex Framework](integration/symlex.md)
     * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
     * [Yii2 and Yii3](integration/yii.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents) 
