@@ -11,4 +11,4 @@ Framework use extended server build with the following modules enabled:
 - Metrics
 
 ## Download
-You can download RoadRunner with enabled features [here](https://github.com/spiral/framework/releases).
+You can download RoadRunner with enabled features [here](https://github.com/spiral/framework/releases/tag/v2.1.0).
