@@ -9,4 +9,4 @@ rpc:
   listen: tcp://:6001
 ```
 
-> Remember that communication of TPC is slower than Unix sockets.
+> Remember that communication of TCP is slower than Unix sockets.
