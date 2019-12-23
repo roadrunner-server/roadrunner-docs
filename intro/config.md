@@ -173,6 +173,14 @@ You can overwrite any of the config values using `-o` flag:
 rr serve -v -d -o http.address=:80 -o http.workers.pool.numWorkers=1
 ```
 
+You can also supply configuration in json form using `-j` flag:
+
+```
+rr serve -v -d -j '{\"static.forbid\":[\".php\"], \"static.dir\":\"public\"}'
+```
+
+> The values will be merged with `.rr` file.
+
 ## Including config files
 You can merge multiple config files into one using `include` directive:
 
