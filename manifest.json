@@ -29,6 +29,7 @@
     "links": {
       "beep-beep/cli": "CLI Commands",
       "beep-beep/production": "Production Usage",
+      "beep-beep/reload": "Auto-Reloading", 
       "beep-beep/metrics": "Prometheus Metrics",
       "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
