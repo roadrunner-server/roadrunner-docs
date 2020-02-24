@@ -54,6 +54,7 @@
       "integration/spiral": "Spiral Framework",
       "integration/symfony": "Symfony Framework",
       "integration/symlex": "Symlex Framework",
+      "integration/ubiquity": "Ubiquity Framework",
       "integration/zend": "Zend Expressive",
       "integration/yii": "Yii2 and Yii3"
     }
