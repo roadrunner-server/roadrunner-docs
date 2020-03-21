@@ -163,7 +163,7 @@ reload:
   # sync interval
   interval: 1s
   # global patterns to sync
-  patterns: [".php"] # global watch
+  patterns: [".php"]
   # list of included for sync services
   services:
     http:
