@@ -1,26 +1,20 @@
 name: CI
 
 on:
-  pull_request: {}
   push:
     branches:
       - master
-
 jobs:
-  style:
-    name: Check Style
-
+  misspell:
     runs-on: ubuntu-latest
-
     steps:
-      # misspell fixer
-      - uses: actions/checkout@v2
-      - uses: sobolevn/misspell-fixer-action@master
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: sobolevn fixer
+        uses: sobolevn/misspell-fixer-action@master
+      - uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'Fixes by misspell-fixer'
-          title: 'Typos fix by misspell-fixer'
-      - uses: peter-evans/create-pull-request@v2.4.4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.head_ref }}
+          commit-message: 'Typos fixes'
+          title: "Typos fixes"
+          branch: typos
