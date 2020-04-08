@@ -1,9 +1,11 @@
 # Table of Contents
-RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager. 
+RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager.
+
+![CI](https://github.com/spiral/roadrunner-docs/workflows/CI/badge.svg)
 
 * Introduction
     * [What is it?](intro/about.md)
-    * [Features](intro/features.md) 
+    * [Features](intro/features.md)
     * [Installation](intro/install.md)
     * [Configuration](intro/config.md)
     * [LICENSE](license.md)
@@ -16,7 +18,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Embedded Monitoring](php/limit.md)
     * [RPC to App Server](php/rpc.md)
     * [Caveats](php/caveats.md)
-    * [Debugging](php/debugging.md) 
+    * [Debugging](php/debugging.md)
 * App Server
     * [CLI Commands](beep-beep/cli.md)
     * [Production Usage](beep-beep/production.md)
@@ -32,7 +34,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Middleware](http/middleware.md)
 * Integrations
     * [CakePHP](integration/cake.md)
-    * [Laravel](integration/laravel.md) 
+    * [Laravel](integration/laravel.md)
     * [Slim](integration/slim.md)
     * [Spiral Framework](integration/spiral.md)
     * [Symfony Framework](integration/symfony.md)
@@ -40,11 +42,11 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Ubiquity Framework](integration/ubiquity.md)
     * [Zend Expressive](https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration)
     * [Yii2 and Yii3](integration/yii.md)
-    * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents) 
+    * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)
 * As Library
     * [Event Listeners](library/event-listeners.md)
     * [Standalone Usage](library/standalone-usage.md)
-    * [AWS Lambda](library/aws-lambda.md) 
+    * [AWS Lambda](library/aws-lambda.md)
