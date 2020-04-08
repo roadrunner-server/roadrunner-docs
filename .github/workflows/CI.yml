@@ -4,8 +4,6 @@ on:
   pull_request: {}
   push:
     branches:
-      - staging
-      - trying
       - master
 
 jobs:
