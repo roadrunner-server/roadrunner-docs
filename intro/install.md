@@ -17,7 +17,7 @@ Server binary will be available in the root of your project.
 > PHP extensions `php-curl` and `php-zip` are required to download RoadRunner automatically.
 
 #### Building RoadRunner
-RoadRunner can be compiled on Linux, OSX, Windows and other 64 bit environments as the only requirement are **Go 1.13-1.14**.
+RoadRunner can be compiled on Linux, OSX, Windows and other 64 bit environments as the only requirement are **Go 1.13+**.
 
 To get all needed dependencies:
 

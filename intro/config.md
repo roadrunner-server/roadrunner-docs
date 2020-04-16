@@ -76,6 +76,9 @@ http:
     # php worker command.
     command:  "php psr-worker.php pipes"
 
+    # User under which process will be started    
+    user: ""
+
     # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
     relay:    "pipes"
 
