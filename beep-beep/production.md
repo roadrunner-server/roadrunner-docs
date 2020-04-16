@@ -28,4 +28,4 @@ Since a single worker typically process more than a single request, you should b
 - Set memory limit to least 10-20% below `max_memory_usage`.
 - Since RoadRunner workers run from cli you need to enable OPcache in CLI via `opcache.enable_cli=1`.
 - Make sure to use [health check endpoint](beep-beep/health.md) when running rr in a cloud environment.
-- To start worker process from the particular user on Linux based systems, please, use `user` option in the config.
+- Use `user` option in the config to start workers processes from the particular user on Linux based systems.
