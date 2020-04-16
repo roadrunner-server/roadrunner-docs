@@ -3,7 +3,7 @@ RoadRunner use service bus model, this allows you to tweak and extend applicatio
 
 
 #### Install Golang
-To build an application server you need [Golang 1.12+](https://golang.org/dl/) to be installed.
+To build an application server you need [Golang 1.13+](https://golang.org/dl/) to be installed.
 
 #### Create main.go
 Copy [main.go](https://github.com/spiral/framework/blob/master/main.go) file in the root of your project.
