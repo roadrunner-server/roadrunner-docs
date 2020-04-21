@@ -56,7 +56,8 @@
       "integration/symlex": "Symlex Framework",
       "integration/ubiquity": "Ubiquity Framework",
       "integration/zend": "Zend Expressive",
-      "integration/yii": "Yii2 and Yii3"
+      "integration/yii": "Yii2 and Yii3",
+      "integration/phalcon": "Phalcon3 and Phalcon4"
     }
   },
   {
