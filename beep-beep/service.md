@@ -114,7 +114,7 @@ func (s *rpcService) Hello(input string, output *string) error {
 }
 ```
 
-To use it within PHP using `RPC` [instance](RPC-Integration):
+To use it within PHP using `RPC` [instance](/beep-beep/rpc.md):
 
 ```php
 var_dump($rpc->call('custom.Hello', 'world'));
