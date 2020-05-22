@@ -35,7 +35,7 @@ while ($req = $psr7->acceptRequest()) {
 > This approach can be used to control memory usage inside the PHP script.
 
 ## Full Reset
-You can also initiate a rebuild of all RoadRunner workers using embedded [RPC bus](RPC-Integration):
+You can also initiate a rebuild of all RoadRunner workers using embedded [RPC bus](/beep-beep/rpc.md):
 
 ```php
 $rpc = new Goridge\RPC(new Spiral\Goridge\SocketRelay("127.0.0.1", 6001));
