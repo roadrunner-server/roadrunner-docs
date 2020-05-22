@@ -18,7 +18,7 @@ func(s *Service) Init() (ok bool, err error) {
 
 Return `false` as your first argument in order to disable the service.
 
-You can register your service by creating a custom version of `main.go` file and [building it](Building-Server).
+You can register your service by creating a custom version of `main.go` file and [building it](/beep-beep/build.md).
 
 ### Dependencies
 You can access other RoadRunner services by requesting dependencies in your `Init` method:
