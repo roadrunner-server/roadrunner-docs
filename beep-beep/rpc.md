@@ -32,4 +32,4 @@ var_dump($rpc->call('http.Workers', true));
 
 > See RPC method definition [here](https://github.com/spiral/roadrunner/blob/master/service/http/rpc.go#L41).
 
-You can read how to create your own services and RPC methods in [this section](server/writing-services.md).
+You can read how to create your own services and RPC methods in [this section](/beep-beep/service.md).
