@@ -44,6 +44,9 @@ http:
     # ssl private key
     key:      server.key
 
+    # rootCA certificate path
+    rootCa:   root.crt
+
   # HTTP service provides FastCGI as frontend
   fcgi:
     # FastCGI connection DSN. Supported TCP and Unix sockets.
