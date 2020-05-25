@@ -27,6 +27,9 @@ http:
 
     # ssl private key
     key:      server.key
+
+    # rootCA certificate path
+    rootCa:   root.crt
 ```
 
 ### Redirecting HTTP to HTTPS
@@ -63,4 +66,14 @@ http:
   fcgi:
     # FastCGI connection DSN. Supported TCP and Unix sockets.
     address: tcp://0.0.0.0:6920
+```
+
+### Root certificate authority support
+
+RootCA supported by the option in .rr.yaml
+
+```yaml
+http:
+    # rootCA certificate path
+    rootCa:   root.crt
 ```
