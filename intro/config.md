@@ -79,7 +79,8 @@ http:
     # php worker command.
     command:  "php psr-worker.php pipes"
 
-    # User under which process will be started    
+    # User under which process will be started. To use this feature RR needs to be run under the root
+    # https://www.man7.org/linux/man-pages/man7/user_namespaces.7.html
     user: ""
 
     # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
