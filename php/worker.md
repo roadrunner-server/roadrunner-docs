@@ -97,7 +97,7 @@ http:
 
 ```php
 $worker = new RoadRunner\Worker(
-    new Goridge\SocketRelay("rr.sock", null, Goridge\SockerRelay::SOCK_UNIX)
+    new Goridge\SocketRelay("rr.sock", null, Goridge\SocketRelay::SOCK_UNIX)
 );
 ```
 
