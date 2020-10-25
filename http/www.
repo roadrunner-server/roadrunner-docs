@@ -1,4 +1,4 @@
-# HTTPS and HTTP/2
+# HTTPS and <HTTP>
 
 You can enable HTTPS and HTTP2 support by adding `ssl` section into `http` config.
 
