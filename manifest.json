@@ -2,7 +2,7 @@
   {
     "title": "RoadRunner",
     "links": {
-      "readme": "Table of Contents",
+      "/": "Table of Contents",
       "intro/about": "What is it?",
       "intro/features": "Features",
       "intro/install": "Installation",
