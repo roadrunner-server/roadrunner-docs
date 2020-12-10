@@ -25,6 +25,9 @@ metrics:
       help:    "Custom application metric"
       labels:  ["type"]
       buckets: [0.1, 0.2, 0.3, 1.0]
+      objectives:
+        - 1.4: 2.3
+        - 2.0: 1.4
 
 # http service configuration.
 http:
