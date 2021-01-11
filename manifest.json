@@ -30,12 +30,13 @@
       "beep-beep/cli": "CLI Commands",
       "beep-beep/production": "Production Usage",
       "beep-beep/systemd": "Writing a RR systemd unit file",
-      "beep-beep/reload": "Auto-Reloading", 
+      "beep-beep/reload": "Auto-Reloading",
       "beep-beep/metrics": "Prometheus Metrics",
       "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
       "beep-beep/rpc": "RPC",
-      "beep-beep/service": "Write a Service"
+      "beep-beep/service": "Write a Service",
+      "beep-beep/http_error_codes": "Overriding HTTP error codes"
     }
   },
   {
