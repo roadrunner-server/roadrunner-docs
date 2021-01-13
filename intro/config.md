@@ -1,5 +1,8 @@
 # Configuration
-Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which must be located in the root of your project. Each service configuration is located under the designated section. The config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `sp13f/viper`.
+
+Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which
+must be located in the root of your project. Each service configuration is located under the designated section. The
+config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `sp13f/viper`.
 
 Sample configuration:
 
@@ -14,17 +17,17 @@ rpc:
   enable: true
 
   # rpc connection DSN. Supported TCP and Unix sockets.
-  listen:     tcp://127.0.0.1:6001
+  listen: tcp://127.0.0.1:6001
 
 metrics:
   # prometheus client address (path /metrics added automatically)
   address: localhost:2112
   collect:
     app_metric:
-      type:    histogram
-      help:    "Custom application metric"
-      labels:  ["type"]
-      buckets: [0.1, 0.2, 0.3, 1.0]
+      type: histogram
+      help: "Custom application metric"
+      labels: [ "type" ]
+      buckets: [ 0.1, 0.2, 0.3, 1.0 ]
       objectives:
         - 1.4: 2.3
         - 2.0: 1.4
@@ -33,22 +36,26 @@ metrics:
 http:
   # http host to listen.
   address: 0.0.0.0:8080
+  # override http error code for the application errors (default 500)
+  appErrorCode: 505
+  # override http error code for the internal RR errors (default 500)
+  internalErrorCode: 505
 
   ssl:
     # custom https port (default 443)
-    port:     443
+    port: 443
 
     # force redirect to https connection
     redirect: true
 
     # ssl cert
-    cert:     server.crt
+    cert: server.crt
 
     # ssl private key
-    key:      server.key
+    key: server.key
 
     # rootCA certificate path
-    rootCa:   root.crt
+    rootCa: root.crt
 
   # HTTP service provides FastCGI as frontend
   fcgi:
@@ -59,10 +66,10 @@ http:
   http2:
     # enable HTTP/2, only with TLS
     enabled: true
-    
+
     # to enable H2C on TCP connections, false by default
     h2c: true
-    
+
     # max transfer channels
     maxConcurrentStreams: 128
 
@@ -72,22 +79,22 @@ http:
   # file upload configuration.
   uploads:
     # list of file extensions which are forbidden for uploading.
-    forbid: [".php", ".exe", ".bat"]
+    forbid: [ ".php", ".exe", ".bat" ]
 
   # cidr blocks which can set ip using X-Real-Ip or X-Forwarded-For
-  trustedSubnets: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10"]
+  trustedSubnets: [ "10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10" ]
 
   # http worker pool configuration.
   workers:
     # php worker command.
-    command:  "php psr-worker.php pipes"
+    command: "php psr-worker.php pipes"
 
     # User under which process will be started. To use this feature RR needs to be run under the root
     # https://www.man7.org/linux/man-pages/man7/user_namespaces.7.html
     user: ""
 
     # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
-    relay:    "pipes"
+    relay: "pipes"
 
     # worker pool configuration.
     pool:
@@ -95,13 +102,13 @@ http:
       numWorkers: 4
 
       # maximum jobs per worker, 0 - unlimited.
-      maxJobs:  0
+      maxJobs: 0
 
       # for how long worker is allowed to be bootstrapped.
       allocateTimeout: 60
 
       # amount of time given to the worker to gracefully destruct itself.
-      destroyTimeout:  60
+      destroyTimeout: 60
 
 # Additional HTTP headers and CORS control.
 headers:
@@ -157,10 +164,10 @@ limit:
 # static file serving. remove this section to disable static file serving.
 static:
   # root directory for static file (HTTP would not serve .php and .htaccess files).
-  dir:   "public"
+  dir: "public"
 
   # list of extensions for forbid for serving.
-  forbid: [".php", ".htaccess"]
+  forbid: [ ".php", ".htaccess" ]
 
   # Automatically add headers to every request.
   request:
@@ -169,7 +176,7 @@ static:
   # Automatically add headers to every response.
   response:
     "X-Powered-By": "RoadRunner"
-  
+
 # health service configuration
 health:
   # http host to serve health requests.
@@ -181,39 +188,40 @@ reload:
   # sync interval
   interval: 1s
   # global patterns to sync
-  patterns: [".php"]
+  patterns: [ ".php" ]
   # list of included for sync services
   services:
     http:
       # recursive search for file patterns to add
       recursive: true
       # ignored folders
-      ignore: ["vendor"]
+      ignore: [ "vendor" ]
       # service specific file pattens to sync
-      patterns: [".php", ".go",".md",]
+      patterns: [ ".php", ".go",".md", ]
       # directories to sync. If recursive is set to true, 
       # recursive sync will be applied only to the directories in `dirs` section
-      dirs:     ["."]
+      dirs: [ "." ]
     jobs:
       recursive: false
-      ignore:   ["service/metrics"]
-      dirs:     ["./jobs"]
+      ignore: [ "service/metrics" ]
+      dirs: [ "./jobs" ]
     rpc:
       recursive: true
-      patterns: [".json"]
+      patterns: [ ".json" ]
       # to include all project directories from workdir, leave `dirs` empty or add a dot "."
-      dirs:     [""]
+      dirs: [ "" ]
 ```
 
 Minimal configuration:
 
 ```yaml
 http:
-  address:         ":8080"
+  address: ":8080"
   workers.command: "php psr-worker.php"
 ```
 
 ## Console flags
+
 You can overwrite any of the config values using `-o` flag:
 
 ```
@@ -229,6 +237,7 @@ rr serve -v -d -j '{\"static.forbid\":[\".php\"], \"static.dir\":\"public\"}'
 > The values will be merged with `.rr` file.
 
 ## Including config files
+
 You can merge multiple config files into one using `include` directive:
 
 ```yaml
@@ -238,6 +247,7 @@ include:
 ```
 
 ## Environment Variables
+
 RoadRunner will replace some config options using reference(s) to environment variable(s):
 
 ```yaml
