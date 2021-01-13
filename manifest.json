@@ -36,7 +36,7 @@
       "beep-beep/build": "Building a Server",
       "beep-beep/rpc": "RPC",
       "beep-beep/service": "Write a Service",
-      "beep-beep/http_error_codes": "Overriding HTTP error codes"
+      "beep-beep/http-error-codes": "Overriding HTTP error codes"
     }
   },
   {
