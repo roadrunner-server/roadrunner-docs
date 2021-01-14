@@ -29,6 +29,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Building a Server](beep-beep/build.md)
     * [RPC](beep-beep/rpc.md)
     * [Write a Service](beep-beep/service.md)
+    * [Overriding HTTP error codes](beep-beep/http-error-codes.md)
 * HTTPs and HTTP/2
     * [HTTPs and HTTP/2](http/https.md)
     * [Headers](http/headers.md)
