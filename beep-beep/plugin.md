@@ -1,6 +1,8 @@
 # Writing Services
 RoadRunner uses a service bus to organize its internal services and their dependencies. This approach is similar to the PHP Container implementation with automatic method injection. You can create your own services, event listeners, middlewares, etc.
 
+@TODO: for Valery to update
+
 To define your service create a struct with public `Init` method with return values (`bool`, `error`):
 
 ```golang

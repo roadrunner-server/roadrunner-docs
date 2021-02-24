@@ -14,8 +14,10 @@ try {
 }
 ```
 
-You can also flush your warning and errors into `error_log` or `STDERR` to output them directly into the console (similar to docker-compose).
+You can also flush your warning and errors into `STDERR` to output them directly into the console (similar to docker-compose).
 
 ```php
-error_log("my message");
+file_put_contents('php://stderr', 'my message');
 ```
+
+Since RoadRunner 2.0 all warnings send to STDOUT will be forwarded to STDERR as well.

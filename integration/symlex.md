@@ -1,5 +1,7 @@
 # Symlex Framework
 
+> Attention, these set of integrations is currently available for v1.* of RoadRunner.
+
 [Symlex](https://symlex.org/) is a lean framework stack for agile Web development based on Symfony and Vuetify.
 RoadRunner is used as default application server since version 4.4.0. The GitHub repository contains everything to get you started:
 

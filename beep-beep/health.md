@@ -3,12 +3,18 @@ RoadRunner server includes a health check endpoint that returns the health of th
 
 ## Enable health
 
-To enable the health check endpoint, add a `health` section to your configuration:
+To enable the health check endpoint, add a `status` section to your configuration:
 
 ```yaml
-health:
+status:
   address: localhost:2114
 ```
+
+To access the heal-check use the following URL:
+
+`http://localhost:2114/health?plugin=http`
+
+> You can check one or multiple plugins using health-check. Currently, only HTTP supported.
 
 Once enabled, the health check endpoint will respond with the following: 
 

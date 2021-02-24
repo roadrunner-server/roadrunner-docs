@@ -23,7 +23,7 @@ Since a single worker typically process more than a single request, you should b
 - Tweak your pool timings to the values you like.
 - A number of workers = number of CPU threads in your system, unless your application is IO bound, then pick
   the number heuristically. 
-- Consider using `maxJobs` for your workers if you experience any issues with application stability over time.
+- Consider using `max_jobs` for your workers if you experience any issues with application stability over time.
 - RoadRunner is +40% performant using Keep-Alive connections.
 - Set memory limit to least 10-20% below `max_memory_usage`.
 - Since RoadRunner workers run from cli you need to enable OPcache in CLI via `opcache.enable_cli=1`.

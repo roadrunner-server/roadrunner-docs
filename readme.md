@@ -3,11 +3,13 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
 
 ![CI](https://github.com/spiral/roadrunner-docs/workflows/CI/badge.svg)
 
+> Documentation for v1.0 of RoadRunner is available [here](https://github.com/spiral/roadrunner-docs/tree/1.0).
+
 * Introduction
     * [What is it?](intro/about.md)
     * [Features](intro/features.md)
     * [Installation](intro/install.md)
-    * [Configuration](intro/config.md)
+    * [Configuration Reference](intro/config.md)
     * [LICENSE](license.md)
 * PHP Workers
     * [Worker](php/worker.md)
@@ -15,26 +17,31 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Developer Mode](php/developer.md)
     * [Error Handling](php/error-handling.md)
     * [Restarting](php/restarting.md)
-    * [Embedded Monitoring](php/limit.md)
+    * [Process Supervisor](php/limit.md)
     * [RPC to App Server](php/rpc.md)
     * [Caveats](php/caveats.md)
     * [Debugging](php/debugging.md)
+* HTTPs and HTTP/2
+    * [HTTPs and HTTP/2](http/https.md)
+    * [Static Content](http/static.md)  
+    * [Headers](http/headers.md)
+    * [Golang Middleware](http/middleware.md)
 * App Server
     * [CLI Commands](beep-beep/cli.md)
+    * [Logging](beep-beep/logging.md)
+    * [Auto-Reloading](beep-beep/reload.md)
     * [Production Usage](beep-beep/production.md)
     * [Writing a RR systemd unit file](beep-beep/systemd.md)
-    * [Auto-Reloading](beep-beep/reload.md)
     * [Prometheus Metrics](beep-beep/metrics.md)
     * [Healthcheck](beep-beep/health.md)
     * [Building a Server](beep-beep/build.md)
     * [RPC](beep-beep/rpc.md)
-    * [Write a Service](beep-beep/service.md)
-    * [Overriding HTTP error codes](beep-beep/http-error-codes.md)
-* HTTPs and HTTP/2
-    * [HTTPs and HTTP/2](http/https.md)
-    * [Headers](http/headers.md)
-    * [Middleware](http/middleware.md)
-* Integrations
+    * [Write a Plugin](beep-beep/plugin.md)
+* Workflow Engine
+    !* [About Temporal.IO](workflow/temporal.md)
+    * [Worker](workflow/worker.md)
+* Integrations V1
+    * [Migration from V1 to V2](integration/migration.md)
     * [CakePHP](integration/cake.md)
     * [Laravel](integration/laravel.md)
     * [Slim](integration/slim.md)
@@ -49,7 +56,3 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)
-* As Library
-    * [Event Listeners](library/event-listeners.md)
-    * [Standalone Usage](library/standalone-usage.md)
-    * [AWS Lambda](library/aws-lambda.md)

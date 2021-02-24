@@ -4,36 +4,21 @@ You can enable HTTPS and HTTP2 support by adding `ssl` section into `http` confi
 
 ```yaml
 http:
-  # http host to listen.
-  address: 0.0.0.0:8080
-  # override http error code for the application errors (default 500)
-  appErrorCode: 505
-  # override http error code for the internal RR errors (default 500)
-  internalErrorCode: 505
-
-  # HTTP service provides HTTP2 transport
-  http2:
-    # enable HTTP/2, only with TSL, enabled by default
-    enabled: true
-
-    # max transfer channels, default 128
-    maxConcurrentStreams: 128
-
+  # host and port separated by semicolon
+  address: 127.0.0.1:8080
+ 
   ssl:
-    # force redirect to https connection
-    redirect: true
-
-    # custom https port (default 443)
-    port: 443
-
-    # ssl cert
-    cert: server.crt
-
-    # ssl private key
-    key: server.key
-
-    # rootCA certificate path
-    rootCa: root.crt
+    # host and port separated by semicolon (default :443)
+    address: :8892
+    redirect: false
+    cert: fixtures/server.crt
+    key: fixtures/server.key
+    root_ca: root.crt
+  
+  # optional support for http2  
+  http2:
+    h2c: false
+    max_concurrent_streams: 128
 ```
 
 ### Redirecting HTTP to HTTPS
@@ -42,7 +27,7 @@ To enable automatic redirect from `http://` to `https://` set `redirect` option 
 
 ### HTTP/2 Push Resources
 
-RoadRunner support (HTTP/2 push)[https://en.wikipedia.org/wiki/HTTP/2_Server_Push] via virtual headers provided by PHP
+RoadRunner support [HTTP/2 push](https://en.wikipedia.org/wiki/HTTP/2_Server_Push) via virtual headers provided by PHP
 response.
 
 ```php
@@ -81,6 +66,6 @@ RootCA supported by the option in .rr.yaml
 
 ```yaml
 http:
-  # rootCA certificate path
-  rootCa: root.crt
+  ssl:
+    root_ca: root.crt
 ```

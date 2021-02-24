@@ -2,6 +2,8 @@
 
 List of available integrations.
 
+> Attention, these set of integrations is currently available for v1.* of RoadRunner.
+
 Repository | Status
 --- | ---
 https://github.com/baldinof/roadrunner-bundle | [![Version][baldinof_badge_php_version]][baldinof_link_packagist] [![Build Status][baldinof_badge_build_status]][baldinof_link_build_status] [![License][baldinof_badge_license]][baldinof_link_license]
