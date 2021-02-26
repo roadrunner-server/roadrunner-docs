@@ -1,4 +1,5 @@
 # Server Commands
+
 RoadRunner application can be started by calling a simple command from the root of your PHP application.
 
 ```
@@ -23,6 +24,12 @@ To reset only particular plugins:
 
 ```
 $ rr reset http
+```
+
+To run golang pprof server (debug mode):
+
+```
+$ rr serve -d -c .rr.yaml
 ```
 
 To view the status of all active workers in interactive mode.
