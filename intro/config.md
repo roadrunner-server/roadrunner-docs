@@ -2,7 +2,7 @@
 
 Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which
 must be located in the root of your project. Each service configuration is located under the designated section. The
-config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `sp13f/viper`.
+config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `spf13/viper`.
 
 Sample configuration:
 
