@@ -1,7 +1,5 @@
 # Building a Server
-RoadRunner use service bus model, this allows you to tweak and extend application functionality for each separate project.
-
-@TODO: for Valery to update
+RoadRunner use Endure to manage dependencies, this allows you to tweak and extend application functionality for each separate project.
 
 #### Install Golang
 To build an application server you need [Golang 1.16+](https://golang.org/dl/) to be installed.
