@@ -27,7 +27,7 @@ $worker = $factory->newWorker(
 );
 
 // Workflows are stateful. So you need a type to create instances.
-$worker->registerWorkflowTypes(MyWorkflow::clas);
+$worker->registerWorkflowTypes(MyWorkflow::class);
 
 // Activities are stateless and thread safe. So a shared instance is used.
 $worker->registerActivityImplementations(new MyActivity());

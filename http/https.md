@@ -23,7 +23,7 @@ http:
 
 ### Redirecting HTTP to HTTPS
 
-To enable automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
+To enable an automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
 
 ### HTTP/2 Push Resources
 
@@ -41,7 +41,7 @@ beginning.
 
 ## H2C
 
-You can enable HTTP/2 support over non-ecrypted TCP connection using H2C:
+You can enable HTTP/2 support over non-encrypted TCP connection using H2C:
 
 ```yaml
 http:
@@ -62,7 +62,7 @@ http:
 
 ### Root certificate authority support
 
-RootCA supported by the option in .rr.yaml
+Root CA supported by the option in .rr.yaml
 
 ```yaml
 http:

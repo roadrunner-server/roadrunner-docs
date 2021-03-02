@@ -26,4 +26,4 @@ reload:
 ```
 
 ## Performance
-The `reload` component will affect the performance of application server. Make sure to use it in development mode only.
+The `reload` component will affect the performance of application server. Make sure to use it in development mode only. In the future we have plans to rewrite this plugin to use native OS capabilities of notification events.

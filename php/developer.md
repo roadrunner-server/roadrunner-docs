@@ -1,7 +1,7 @@
 # Developer Mode
-RoadRunner uses PHP scripts in daemon mode, this means that you have to reload server every time you change your codebase. 
+RoadRunner uses PHP scripts in daemon mode, this means that you have to reload a server every time you change your codebase. 
 
-If you use any modern IDE you can achieve that by adding file watcher which automatically invokes command `rr reset`.
+If you use any modern IDE you can achieve that by adding file watcher which automatically invokes command `rr reset` for the plugins specified in the `reload` config.
 
 > Or use [auto-resetter](/beep-beep/reload.md).
 

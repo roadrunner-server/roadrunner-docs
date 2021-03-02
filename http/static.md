@@ -15,9 +15,9 @@ http:
     dir: "tests"
     forbid: [ ] # file extensions to forbid
     request:
-      "input": "custom-header"
+      input: "custom-header"
     response:
-      "output": "output-header"
+      output: "output-header"
 ```
 
 To combine static content with other middleware use the following sequence:
@@ -35,7 +35,7 @@ http:
     dir: "tests"
     forbid: [ ] # file extensions to forbid
     request:
-      "input": "custom-header"
+      input: "custom-header"
     response:
-      "output": "output-header"
+      output: "output-header"
 ```

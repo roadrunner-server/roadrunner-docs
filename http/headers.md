@@ -29,9 +29,9 @@ http:
   headers:
       # Automatically add headers to every request passed to PHP.
       request:
-        "Example-Request-Header": "Value"
+        Example-Request-Header: "Value"
     
       # Automatically add headers to every response.
       response:
-        "X-Powered-By": "RoadRunner"
+        X-Powered-By: "RoadRunner"
 ```

@@ -96,7 +96,7 @@ http:
 
 ## Troubleshooting
 
-In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead and etc)
+In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead etc)
 .
 
 ```

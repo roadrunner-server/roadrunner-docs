@@ -50,7 +50,7 @@ class SubscriptionWorkflow implements SubscriptionWorkflowInterface
         try {
             $trialPeriod = true;
             while (true) {
-                // Lower period duration to observe workflow behaviour
+                // Lower period duration to observe workflow behavior
                 yield Workflow::timer(DateInterval::createFromDateString('30 days'));
                 yield $this->account->chargeMonthlyFee($userID);
 

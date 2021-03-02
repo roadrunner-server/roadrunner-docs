@@ -35,10 +35,20 @@ func (g *Plugin) Name() string {
 We have to register this service after in the `main.go` file in order to properly resolve dependency:
 
 ```golang
-rr.Container.Register(http.ID, &http.Service{})
-rr.Container.Register(custom.ID, &custom.Service{})
+container, err := endure.NewContainer(nil, endure.SetLogLevel(endure.ErrorLevel), endure.RetryOnFail(false))
+if err != nil {
+	panic(err)
+}
+err = container.Register(&http.Service{})
+if err != nil {
+    panic(err)
+}
+err = container.Register(&custom.Service{})
+if err != nil {
+    panic(err)
+}
 
-err = cli.Container.RegisterAll(		
+err = container.RegisterAll(		
 		// ...
         &middleware.Plugin{},
 	)
@@ -48,10 +58,10 @@ err = cli.Container.RegisterAll(
 You can safely pass values to `ServerRequestInterface->getAttributes()` using `attributes` package:
 
 ```golang
-func (s *Service) middleware(f http.HandlerFunc) http.HandlerFunc {
+func (s *Service) middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	    attributes.Set(r, "key", "value")
-	    f(w, r)
+            next(w, r)
 	}
 }
 ```

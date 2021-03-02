@@ -13,7 +13,7 @@ rpc:
 
 server:
   command: "php tests/psr-worker-bench.php"
-  # optional
+  # optional, only for linux under sudo user
   user: ""
   # optional
   group: ""
@@ -26,8 +26,9 @@ server:
 # optional for development
 logs:
   # default
-  mode: production
-  encoding: json
+  mode: development
+  level: debug
+  encoding: console
   output: stderr
   err_output: stderr
   channels:
@@ -39,7 +40,12 @@ logs:
     server:
       mode: production
       level: info
-      encoding: json
+      encoding: console
+      output: stderr
+    rpc:
+      mode: production
+      level: debug
+      encoding: console
       output: stderr
 
 # healthcheck
@@ -108,9 +114,9 @@ http:
     dir: "tests"
     forbid: [ ] # file extensions to forbid
     request:
-      "input": "custom-header"
+      input: "custom-header"
     response:
-      "output": "output-header"
+      output: "output-header"
 
   pool:
     # default - num of logical CPUs
@@ -216,5 +222,5 @@ RoadRunner will replace some config options using reference(s) to environment va
 
 ```yaml
 http:
-  workers.pool.numWorkers: ${NUM_WORKERS}
+  pool.num_workers: ${NUM_WORKERS}
 ```

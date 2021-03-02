@@ -3,7 +3,7 @@ To migration integration from RoadRunner v1.* to v2.* follow the next steps.
 
 ## Update Configuration
 Second version of RoadRunner use single worker factory for all of its plugins. This means that you must include a new section
-into your config `server` which fully configures how workers creates. Limit service no longer presented as separate entity 
+into your config `server` which is responsible for the worker creation. Limit service no longer presented as separate entity 
 but rather part of specific service configuration.
 
 ```yaml
