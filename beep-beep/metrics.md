@@ -10,9 +10,14 @@ metrics:
 ```
 
 Once complete you can access Prometheus metrics using `http://localhost:2112/metrics` url.
-> RoadRunner will expose default `http` and `limit` server metrics automatically.
 
-## Custom application metrics
+Make sure to install metrics extension:
+
+```bash
+$ composer require spiral/roadrunner-metrics
+```
+
+## Application metrics
 You can also publish application-specific metrics using an RPC connection to the server. First, you have to register a metric in your
 configuration file:
 
@@ -28,9 +33,10 @@ metrics:
 To send metric from the application:
 
 ```php
-$rpc = new Spiral\Goridge\RPC(new Spiral\Goridge\SocketRelay("127.0.0.1", 6001));
+$metrics = new RoadRunner\Metrics\Metrics(
+    Goridge\RPC\RPC::create(RoadRunner\Environment::fromGlobals()->getRPCAddress())
+);
 
-$metrics = new Spiral\RoadRunner\Metrics($rpc);
 $metrics->add('app_metric_counter', 1);
 ```
 
@@ -52,8 +58,19 @@ metrics:
 You should specify values for your labels while pushing the metric:
 
 ```php
-$rpc = new Spiral\Goridge\RPC(new Spiral\Goridge\SocketRelay("127.0.0.1", 6001));
+$metrics = new RoadRunner\Metrics\Metrics(
+    Goridge\RPC\RPC::create(RoadRunner\Environment::fromGlobals()->getRPCAddress())
+);
 
-$metrics = new Spiral\RoadRunner\Metrics($rpc);
 $metrics->add('app_type_duration', 0.5, ['some-type']);
+```
+
+## Declare metrics
+You can declare metric from PHP application itself:
+
+```php
+$metrics->declare(
+    'test',
+    RoadRunner\Metrics\Collector::counter()->withHelp('Test counter')
+);
 ```

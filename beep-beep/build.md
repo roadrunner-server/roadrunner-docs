@@ -1,51 +1,76 @@
 # Building a Server
-RoadRunner use service bus model, this allows you to tweak and extend application functionality for each separate project.
-
+RoadRunner use Endure to manage dependencies, this allows you to tweak and extend application functionality for each separate project.
 
 #### Install Golang
-To build an application server you need [Golang 1.13+](https://golang.org/dl/) to be installed.
+To build an application server you need [Golang 1.16+](https://golang.org/dl/) to be installed.
 
 #### Create main.go
-Copy [main.go](https://github.com/spiral/framework/blob/master/main.go) file in the root of your project.
+Copy [main.go](https://github.com/spiral/roadrunner-binary/blob/main/main.go) file in the root of your project.
 
 ```golang
 package main
 
 import (
-	rr "github.com/spiral/roadrunner/cmd/rr/cmd"
-	"github.com/spiral/roadrunner/service/headers"
+	"log"
 
-	// services (plugins)
-	"github.com/spiral/roadrunner/service/env"
-	"github.com/spiral/roadrunner/service/http"
-	"github.com/spiral/roadrunner/service/limit"
-	"github.com/spiral/roadrunner/service/rpc"
-	"github.com/spiral/roadrunner/service/static"
-
-	// additional commands and debug handlers
-	_ "github.com/spiral/roadrunner/cmd/rr/http"
-	_ "github.com/spiral/roadrunner/cmd/rr/limit"
+	endure "github.com/spiral/endure/pkg/container"
+	// plugins
+	"github.com/spiral/roadrunner-binary/v2/cli"
+	httpPlugin "github.com/spiral/roadrunner/v2/plugins/http"
+	"github.com/spiral/roadrunner/v2/plugins/informer"
+	"github.com/spiral/roadrunner/v2/plugins/kv/boltdb"
+	"github.com/spiral/roadrunner/v2/plugins/kv/memcached"
+	"github.com/spiral/roadrunner/v2/plugins/kv/memory"
+	"github.com/spiral/roadrunner/v2/plugins/logger"
+	"github.com/spiral/roadrunner/v2/plugins/metrics"
+	"github.com/spiral/roadrunner/v2/plugins/redis"
+	"github.com/spiral/roadrunner/v2/plugins/reload"
+	"github.com/spiral/roadrunner/v2/plugins/resetter"
+	"github.com/spiral/roadrunner/v2/plugins/rpc"
+	"github.com/spiral/roadrunner/v2/plugins/server"
+	"github.com/temporalio/roadrunner-temporal/activity"
+	temporalClient "github.com/temporalio/roadrunner-temporal/client"
+	"github.com/temporalio/roadrunner-temporal/workflow"
 )
 
 func main() {
-	rr.Container.Register(env.ID, &env.Service{})
-	rr.Container.Register(rpc.ID, &rpc.Service{})
-	rr.Container.Register(http.ID, &http.Service{})
-	rr.Container.Register(headers.ID, &headers.Service{})
-	rr.Container.Register(static.ID, &static.Service{})
-	rr.Container.Register(limit.ID, &limit.Service{})
+	var err error
+	cli.Container, err = endure.NewContainer(nil, endure.SetLogLevel(endure.ErrorLevel), endure.RetryOnFail(false))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// you can register additional commands using cmd.CLI
-	rr.Execute()
+	err = cli.Container.RegisterAll(
+		// logger plugin
+		&logger.ZapLogger{},
+		// metrics plugin
+		&metrics.Plugin{},
+		// http server plugin
+		&httpPlugin.Plugin{},
+		// reload plugin
+		&reload.Plugin{},
+		// informer plugin (./rr workers, ./rr workers -i)
+		&informer.Plugin{},
+		// resetter plugin (./rr reset)
+		&resetter.Plugin{},
+		// rpc plugin (workers, reset)
+		&rpc.Plugin{},
+		// server plugin (NewWorker, NewWorkerPool)
+		&server.Plugin{},
+
+		// temporal plugins
+		&temporalClient.Plugin{},
+		&activity.Plugin{},
+		&workflow.Plugin{},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	cli.Execute()
 }
 ```
 
-You can now start your server without building `go run main.go serve -v -d`.
-
-Use `rr.Container.Register` to add more services:
-
-```golang
-rr.Container.Register(custom.ID, &custom.Service{})
-```
+You can now start your server without building `go run main.go serve`.
 
 > See how to create [http middleware](/http/middleware.md) in order to intercept HTTP flow.

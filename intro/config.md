@@ -1,23 +1,159 @@
 # Configuration
 
-Each of RoadRunner service requires proper configuration. By default, such configuration is merged into one file which
+Each of RoadRunner plugins requires proper configuration. By default, such configuration is merged into one file which
 must be located in the root of your project. Each service configuration is located under the designated section. The
 config file must be named as `.rr.{format}` where the format is `yml`, `json` and others supported by `spf13/viper`.
 
-Sample configuration:
+## Configuration Reference
+This is full configuration reference which enables all RoadRunner features.
 
 ```yaml
-# defines environment variables for all underlying php processes
-env:
-  key: value
-
-# rpc bus allows php application and external clients to talk to rr services.
 rpc:
-  # enable rpc server
-  enable: true
-
-  # rpc connection DSN. Supported TCP and Unix sockets.
   listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php tests/psr-worker-bench.php"
+  # optional, only for linux under sudo user
+  user: ""
+  # optional
+  group: ""
+  env:
+    - SOME_KEY: "SOME_VALUE"
+    - SOME_KEY2: "SOME_VALUE2"
+  relay: "pipes"
+  relay_timeout: 20s
+
+# optional for development
+logs:
+  # default
+  mode: development
+  level: debug
+  encoding: console
+  output: stderr
+  err_output: stderr
+  channels:
+    http:
+      mode: development
+      level: panic
+      encoding: console
+      output: stdout
+    server:
+      mode: production
+      level: info
+      encoding: console
+      output: stderr
+    rpc:
+      mode: production
+      level: debug
+      encoding: console
+      output: stderr
+
+# healthcheck
+status:
+  address: "0.0.0.0:8090"
+
+# Workflow and activity mesh service
+temporal:
+  address: localhost:7233
+  activities:
+    # default - num of logical CPUs
+    num_workers: 6
+    # default 0 - no limit
+    max_jobs: 0
+    # default 1 minute
+    allocate_timeout: 60s
+    # default 1 minute
+    destroy_timeout: 60s
+    # supervisor used to control http workers
+    supervisor:
+      # watch_tick defines how often to check the state of the workers (seconds)
+      watch_tick: 1s
+      # ttl defines maximum time worker is allowed to live (seconds)
+      ttl: 0
+      # idle_ttl defines maximum duration worker can spend in idle mode after first use. Disabled when 0 (seconds)
+      idle_ttl: 10s
+      # exec_ttl defines maximum lifetime per job (seconds)
+      exec_ttl: 10s
+      # max_worker_memory limits memory usage per worker (MB)
+      max_worker_memory: 100
+
+http:
+  # host and port separated by semicolon
+  address: 127.0.0.1:44933
+  max_request_size: 1024
+  # middlewares for the http plugin, order matters
+  middleware: [ "static", "gzip", "headers" ]
+  # uploads
+  uploads:
+    forbid: [ ".php", ".exe", ".bat" ]  
+  trusted_subnets:
+    [
+        "10.0.0.0/8",
+        "127.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16",
+        "::1/128",
+        "fc00::/7",
+        "fe80::/10",
+    ]
+  # headers (middleware)
+  headers:
+    cors:
+      allowed_origin: "*"
+      allowed_headers: "*"
+      allowed_methods: "GET,POST,PUT,DELETE"
+      allow_credentials: true
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+      max_age: 600
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
+  # http static (middleware)
+  static:
+    dir: "tests"
+    forbid: [ ] # file extensions to forbid
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
+
+  pool:
+    # default - num of logical CPUs
+    num_workers: 6
+    # default 0 - no limit
+    max_jobs: 0
+    # default 1 minute
+    allocate_timeout: 60s
+    # default 1 minute
+    destroy_timeout: 60s
+    # supervisor used to control http workers
+    supervisor:
+      # watch_tick defines how often to check the state of the workers (seconds)
+      watch_tick: 1s
+      # ttl defines maximum time worker is allowed to live (seconds)
+      ttl: 0
+      # idle_ttl defines maximum duration worker can spend in idle mode after first use. Disabled when 0 (seconds)
+      idle_ttl: 10s
+      # exec_ttl defines maximum lifetime per job (seconds)
+      exec_ttl: 10s
+      # max_worker_memory limits memory usage per worker (MB)
+      max_worker_memory: 100
+
+  ssl:
+    # host and port separated by semicolon (default :443)
+    address: :8892
+    redirect: false
+    cert: fixtures/server.crt
+    key: fixtures/server.key
+    root_ca: root.crt
+    
+  fcgi:
+    address: tcp://0.0.0.0:7921
+    
+  http2:
+    h2c: false
+    max_concurrent_streams: 128
 
 metrics:
   # prometheus client address (path /metrics added automatically)
@@ -28,196 +164,46 @@ metrics:
       help: "Custom application metric"
       labels: [ "type" ]
       buckets: [ 0.1, 0.2, 0.3, 1.0 ]
+      # objectives defines the quantile rank estimates with their respective
+      #	absolute error [ for summary only ]
       objectives:
         - 1.4: 2.3
         - 2.0: 1.4
 
-# http service configuration.
-http:
-  # http host to listen.
-  address: 0.0.0.0:8080
-  # override http error code for the application errors (default 500)
-  appErrorCode: 505
-  # override http error code for the internal RR errors (default 500)
-  internalErrorCode: 505
-
-  ssl:
-    # custom https port (default 443)
-    port: 443
-
-    # force redirect to https connection
-    redirect: true
-
-    # ssl cert
-    cert: server.crt
-
-    # ssl private key
-    key: server.key
-
-    # rootCA certificate path
-    rootCa: root.crt
-
-  # HTTP service provides FastCGI as frontend
-  fcgi:
-    # FastCGI connection DSN. Supported TCP and Unix sockets.
-    address: tcp://0.0.0.0:6920
-
-  # HTTP service provides HTTP2 transport
-  http2:
-    # enable HTTP/2, only with TLS
-    enabled: true
-
-    # to enable H2C on TCP connections, false by default
-    h2c: true
-
-    # max transfer channels
-    maxConcurrentStreams: 128
-
-  # max POST request size, including file uploads in MB.
-  maxRequestSize: 200
-
-  # file upload configuration.
-  uploads:
-    # list of file extensions which are forbidden for uploading.
-    forbid: [ ".php", ".exe", ".bat" ]
-
-  # cidr blocks which can set ip using X-Real-Ip or X-Forwarded-For
-  trustedSubnets: [ "10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "::1/128", "fc00::/7", "fe80::/10" ]
-
-  # http worker pool configuration.
-  workers:
-    # php worker command.
-    command: "php psr-worker.php pipes"
-
-    # User under which process will be started. To use this feature RR needs to be run under the root
-    # https://www.man7.org/linux/man-pages/man7/user_namespaces.7.html
-    user: ""
-
-    # connection method (pipes, tcp://:9000, unix://socket.unix). default "pipes"
-    relay: "pipes"
-
-    # worker pool configuration.
-    pool:
-      # number of workers to be serving.
-      numWorkers: 4
-
-      # maximum jobs per worker, 0 - unlimited.
-      maxJobs: 0
-
-      # for how long worker is allowed to be bootstrapped.
-      allocateTimeout: 60
-
-      # amount of time given to the worker to gracefully destruct itself.
-      destroyTimeout: 60
-
-# Additional HTTP headers and CORS control.
-headers:
-  # Middleware to handle CORS requests, https://www.w3.org/TR/cors/
-  cors:
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
-    allowedOrigin: "*"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers
-    allowedHeaders: "*"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods
-    allowedMethods: "GET,POST,PUT,DELETE"
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
-    allowCredentials: true
-
-    # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers
-    exposedHeaders: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
-
-    # Max allowed age in seconds
-    maxAge: 600
-
-  # Automatically add headers to every request passed to PHP.
-  request:
-    "Example-Request-Header": "Value"
-
-  # Automatically add headers to every response.
-  response:
-    "X-Powered-By": "RoadRunner"
-
-# monitors rr server(s)
-limit:
-  # check worker state each second
-  interval: 1
-
-  # custom watch configuration for each service
-  services:
-    # monitor HTTP workers
-    http:
-      # maximum allowed memory consumption per worker (soft)
-      maxMemory: 100
-
-      # maximum time to live for the worker (soft)
-      TTL: 0
-
-      # maximum allowed amount of time worker can spend in idle before being removed (for weak db connections, soft)
-      idleTTL: 0
-
-      # max_execution_time (brutal)
-      execTTL: 60
-
-# static file serving. remove this section to disable static file serving.
-static:
-  # root directory for static file (HTTP would not serve .php and .htaccess files).
-  dir: "public"
-
-  # list of extensions for forbid for serving.
-  forbid: [ ".php", ".htaccess" ]
-
-  # Automatically add headers to every request.
-  request:
-    "Example-Request-Header": "Value"
-
-  # Automatically add headers to every response.
-  response:
-    "X-Powered-By": "RoadRunner"
-
-# health service configuration
-health:
-  # http host to serve health requests.
-  address: localhost:2113
-
 reload:
-  # enable or disable file watcher
-  enabled: true
   # sync interval
   interval: 1s
   # global patterns to sync
   patterns: [ ".php" ]
   # list of included for sync services
-  services:
+  plugins:
     http:
       # recursive search for file patterns to add
       recursive: true
       # ignored folders
       ignore: [ "vendor" ]
       # service specific file pattens to sync
-      patterns: [ ".php", ".go",".md", ]
-      # directories to sync. If recursive is set to true, 
+      patterns: [ ".php", ".go", ".md" ]
+      # directories to sync. If recursive is set to true,
       # recursive sync will be applied only to the directories in `dirs` section
       dirs: [ "." ]
-    jobs:
-      recursive: false
-      ignore: [ "service/metrics" ]
-      dirs: [ "./jobs" ]
-    rpc:
-      recursive: true
-      patterns: [ ".json" ]
-      # to include all project directories from workdir, leave `dirs` empty or add a dot "."
-      dirs: [ "" ]
 ```
 
-Minimal configuration:
+## Minimal configuration
+You are not required to enable every plugin to make RoadRunner work. Given configuration only enables essential plugins
+to make HTTP endpoints work:
 
 ```yaml
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php tests/psr-worker-bench.php"
+
 http:
-  address: ":8080"
-  workers.command: "php psr-worker.php"
+  address: "0.0.0.0:8080"
+  pool:
+    num_workers: 4   
 ```
 
 ## Console flags
@@ -225,26 +211,10 @@ http:
 You can overwrite any of the config values using `-o` flag:
 
 ```
-rr serve -v -d -o http.address=:80 -o http.workers.pool.numWorkers=1
-```
-
-You can also supply configuration in json form using `-j` flag:
-
-```
-rr serve -v -d -j '{\"static.forbid\":[\".php\"], \"static.dir\":\"public\"}'
+rr serve -o http.address=:80 -o http.workers.pool.numWorkers=1
 ```
 
 > The values will be merged with `.rr` file.
-
-## Including config files
-
-You can merge multiple config files into one using `include` directive:
-
-```yaml
-include:
-  - rr/http.yaml
-  - rr/static.yaml
-```
 
 ## Environment Variables
 
@@ -252,5 +222,5 @@ RoadRunner will replace some config options using reference(s) to environment va
 
 ```yaml
 http:
-  workers.pool.numWorkers: ${NUM_WORKERS}
+  pool.num_workers: ${NUM_WORKERS}
 ```

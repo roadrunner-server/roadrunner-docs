@@ -6,23 +6,24 @@ application without the `maxJobs: 1` or manual server reset.
 To enable realoading for http service:
 
 ```yaml
-# reload can reset rr servers when files change
 reload:
-  # refresh interval (default 1s)
+  # sync interval
   interval: 1s
-
-  # file extensions to watch, defaults to [.php]
-  patterns: [".php"]
-
-  # list of services to watch
-  services:
+  # global patterns to sync
+  patterns: [ ".php" ]
+  # list of included for sync services
+  plugins:
     http:
-      # list of dirs, "" root
-      dirs: [""]
-
-      # include sub directories
+      # recursive search for file patterns to add
       recursive: true
+      # ignored folders
+      ignore: [ "vendor" ]
+      # service specific file pattens to sync
+      patterns: [ ".php", ".go", ".md" ]
+      # directories to sync. If recursive is set to true,
+      # recursive sync will be applied only to the directories in `dirs` section
+      dirs: [ "." ]
 ```
 
 ## Performance
-The `reload` component will affect the performance of application server. Make sure to use it in development mode only.
+The `reload` component will affect the performance of application server. Make sure to use it in development mode only. In the future we have plans to rewrite this plugin to use native OS capabilities of notification events.

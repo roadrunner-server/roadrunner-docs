@@ -35,14 +35,14 @@
       "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
       "beep-beep/rpc": "RPC",
-      "beep-beep/service": "Write a Service",
-      "beep-beep/http-error-codes": "Overriding HTTP error codes"
+      "beep-beep/service": "Write a Service"
     }
   },
   {
     "title": "HTTPs and HTTP2",
     "links": {
       "http/https": "HTTPs and HTTP/2",
+      "http/static": "Static Content",
       "http/headers": "Headers",
       "http/middleware": "Middleware"
     }

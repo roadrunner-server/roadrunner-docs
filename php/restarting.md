@@ -2,32 +2,39 @@
 RoadRunner provides multiple ways to safely restart worker(s) on demand. Both approaches can be used on a live server and should not cause downtime.
 
 ## Stop Command
-You are able to send `stop` command from worker to parent server to force process destruction. In this scenario, the job/request will be automatically forwarded to the next worker.
+You are able to send `stop` command from worker to parent server to force process destruction. In this scenario, 
+the job/request will be automatically forwarded to the next worker.
 
-We can demonstrate it by implementing `maxJobs` control on PHP end:
+We can demonstrate it by implementing `max_jobs` control on PHP end:
 
 ```php
 <?php
-ini_set('display_errors', 'stderr');
+
+use Spiral\RoadRunner;
+use Nyholm\Psr7;
+
 include "vendor/autoload.php";
 
-$relay = new Spiral\Goridge\StreamRelay(STDIN, STDOUT);
-$psr7 = new Spiral\RoadRunner\PSR7Client(new Spiral\RoadRunner\Worker($relay));
+$worker = RoadRunner\Worker::create();
+$psrFactory = new Psr7\Factory\Psr17Factory();
+
+$worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
 
 $count = 0;
-while ($req = $psr7->acceptRequest()) {
-    if ($count++ > 1000) {
-        $psr7->getWorker()->stop();
-        return;
-    }
-
+while ($req = $worker->waitRequest()) {
     try {
-        $resp = new \Zend\Diactoros\Response();
-        $resp->getBody()->write("hello world");
+        $rsp = new Psr7\Response();
+        $rsp->getBody()->write('Hello world!');
 
-        $psr7->respond($resp);
+        $count++;
+        if ($count > 10) {
+            $worker->getWorker()->stop();
+            return;
+        }
+
+        $worker->respond($rsp);
     } catch (\Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
+        $worker->getWorker()->error((string)$e);
     }
 }
 ```
@@ -38,6 +45,6 @@ while ($req = $psr7->acceptRequest()) {
 You can also initiate a rebuild of all RoadRunner workers using embedded [RPC bus](/beep-beep/rpc.md):
 
 ```php
-$rpc = new Goridge\RPC(new Spiral\Goridge\SocketRelay("127.0.0.1", 6001));
-$rpc->call("http.Reset", true);
+$rpc = \Spiral\Goridge\RPC\RPC::create('tcp://127.0.0.1:6001');
+$rpc->call('resetter.Reset', 'http');
 ```

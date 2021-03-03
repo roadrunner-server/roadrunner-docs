@@ -1,46 +1,67 @@
 # HTTP Middleware
-RoadRunner HTTP server uses default Golang middleware model which allows you to extend it using custom or community-driven middlewares. Simplest service with middleware registration would look like:
+RoadRunner HTTP server uses default Golang middleware model which allows you to extend it using custom or 
+community-driven middlewares. Simplest service with middleware registration would look like:
 
 ```golang
-package custom
+package middleware
 
 import (
-	rrttp "github.com/spiral/roadrunner/service/http"
 	"net/http"
 )
 
-const ID = "custom"
+const PluginName = "middleware"
 
-type Service struct {
+type Plugin struct{}
+
+// to declare plugin
+func (g *Plugin) Init() error {
+	return nil
 }
 
-func (s *Service) Init(r *rrttp.Service) (bool, error) {
-	r.AddMiddleware(s.middleware)
-	return true, nil
-}
-
-func (s *Service) middleware(f http.HandlerFunc) http.HandlerFunc {
+func (g *Plugin) Middleware(next http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	    f(w, r)
+		// do something
 	}
+}
+
+// Middleware/plugin name.
+func (g *Plugin) Name() string {
+	return PluginName
 }
 ```
 
-We have to register this service after `http` in the `main.go` file in order to properly resolve dependency:
+> Middleware must correspond to the following [interface](https://github.com/spiral/roadrunner/blob/master/plugins/http/plugin.go#L44) and be named.
+
+We have to register this service after in the `main.go` file in order to properly resolve dependency:
 
 ```golang
-rr.Container.Register(http.ID, &http.Service{})
-rr.Container.Register(custom.ID, &custom.Service{})
+container, err := endure.NewContainer(nil, endure.SetLogLevel(endure.ErrorLevel), endure.RetryOnFail(false))
+if err != nil {
+	panic(err)
+}
+err = container.Register(&http.Service{})
+if err != nil {
+    panic(err)
+}
+err = container.Register(&custom.Service{})
+if err != nil {
+    panic(err)
+}
+
+err = container.RegisterAll(		
+		// ...
+        &middleware.Plugin{},
+	)
 ```
 
 ### PSR7 Attributes
 You can safely pass values to `ServerRequestInterface->getAttributes()` using `attributes` package:
 
 ```golang
-func (s *Service) middleware(f http.HandlerFunc) http.HandlerFunc {
+func (s *Service) middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	    attributes.Set(r, "key", "value")
-	    f(w, r)
+            next(w, r)
 	}
 }
 ```
