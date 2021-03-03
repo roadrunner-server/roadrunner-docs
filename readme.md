@@ -38,7 +38,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [RPC](beep-beep/rpc.md)
     * [Write a Plugin](beep-beep/plugin.md)
 * Workflow Engine
-    !* [About Temporal.IO](workflow/temporal.md)
+    * [About Temporal.IO](workflow/temporal.md)
     * [Worker](workflow/worker.md)
 * Integrations V1
     * [Migration from V1 to V2](integration/migration.md)

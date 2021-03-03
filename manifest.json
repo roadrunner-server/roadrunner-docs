@@ -6,7 +6,7 @@
       "intro/about": "What is it?",
       "intro/features": "Features",
       "intro/install": "Installation",
-      "intro/config": "Configuration",
+      "intro/config": "Configuration Reference",
       "license": "LICENSE"
     }
   },
@@ -14,28 +14,14 @@
     "title": "PHP Workers",
     "links": {
       "php/worker": "Worker",
+      "php/environment": "Environment",
       "php/developer": "Developer Mode",
       "php/error-handling": "Error Handling",
       "php/restarting": "Restarting",
-      "php/limit": "Embedded Monitoring",
+      "php/limit": "Process Supervisor",
       "php/rpc": "RPC to App Server",
       "php/caveats": "Caveats",
-      "php/environment": "Environment",
       "php/debugging": "Debugging"
-    }
-  },
-  {
-    "title": "App Server",
-    "links": {
-      "beep-beep/cli": "CLI Commands",
-      "beep-beep/production": "Production Usage",
-      "beep-beep/systemd": "Writing a RR systemd unit file",
-      "beep-beep/reload": "Auto-Reloading",
-      "beep-beep/metrics": "Prometheus Metrics",
-      "beep-beep/health": "Healthcheck",
-      "beep-beep/build": "Building a Server",
-      "beep-beep/rpc": "RPC",
-      "beep-beep/service": "Write a Service"
     }
   },
   {
@@ -48,8 +34,24 @@
     }
   },
   {
+    "title": "App Server",
+    "links": {
+      "beep-beep/cli": "CLI Commands",
+      "beep-beep/logging": "Logging",
+      "beep-beep/reload": "Auto-Reloading",
+      "beep-beep/production": "Production Usage",
+      "beep-beep/systemd": "Writing a RR systemd unit file",
+      "beep-beep/metrics": "Prometheus Metrics",
+      "beep-beep/health": "Healthcheck",
+      "beep-beep/build": "Building a Server",
+      "beep-beep/rpc": "RPC",
+      "beep-beep/plugin": "Write a Plugin"
+    }
+  },
+  {
     "title": "Integrations",
     "links": {
+      "integration/migration": "Migration from V1 to V2",
       "integration/cake": "CakePHP",
       "integration/laravel": "Laravel",
       "integration/slim": "Slim",
@@ -67,14 +69,6 @@
     "links": {
       "docker/ports": "Ports and Containers",
       "docker/images": "Available Images"
-    }
-  },
-  {
-    "title": "As Library",
-    "links": {
-      "library/event-listeners": "Event Listeners",
-      "library/standalone-usage": "Standalone Usage",
-      "library/aws-lambda": "AWS Lambda"
     }
   }
 ]
