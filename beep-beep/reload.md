@@ -12,7 +12,7 @@ reload:
   # global patterns to sync
   patterns: [ ".php" ]
   # list of included for sync services
-  plugins:
+  services:
     http:
       # recursive search for file patterns to add
       recursive: true
