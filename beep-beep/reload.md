@@ -3,7 +3,7 @@ RoadRunner is able to automatically detect PHP file changes and reload connected
 application without the `maxJobs: 1` or manual server reset.
 
 ## Configuration
-To enable realoading for http service:
+To enable reloading for http service:
 
 ```yaml
 reload:

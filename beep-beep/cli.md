@@ -32,7 +32,7 @@ To run golang pprof server (debug mode):
 $ rr serve -d -c .rr.yaml
 ```
 
-To view the status of all active workers in interactive mode.
+To view the status of all active workers in an interactive mode.
 
 ```
 $ rr workers -i

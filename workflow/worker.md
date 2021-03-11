@@ -1,5 +1,5 @@
 # Temporal Worker
-Unlike HTTP, Temporal use different way to configure worker. Make sure to require PHP SDK:
+Unlike HTTP, Temporal use different way to configure a worker. Make sure to require PHP SDK:
 
 ```
 $ composer require temporal/sdk

@@ -1,5 +1,5 @@
 # Headers and CORS
-RoadRunner can automatically setup request/response headers and control CORS for your application.
+RoadRunner can automatically set up request/response headers and control CORS for your application.
 
 ### CORS
 To enable CORS headers add the following section to your configuration.

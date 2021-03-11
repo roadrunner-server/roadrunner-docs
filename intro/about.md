@@ -19,5 +19,5 @@ RoadRunner keeps PHP worker alive between incoming requests. It means that you c
 
 ![Base Diagram](https://user-images.githubusercontent.com/796136/65348057-00df2e00-dbe9-11e9-9173-f0bd4269c101.png)
 
-Since worker is located in resident memory, all the open resources will remain open for the next request. Using Goridge
-RPC you can quickly offload some of the complex computations to the application server. For example, schedule a background PHP job.
+Since a worker is located in resident memory, all the open resources will remain open for the next request. Using Goridge
+RPC you can quickly offload some complex computations to the application server. For example, schedule a background PHP job.
