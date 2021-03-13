@@ -8,7 +8,7 @@ active workers, otherwise some calls would not be caught on your breakpoints.
 
 To activate xDebug make sure to set the `xdebug.mode=debug` in your `php.ini`. 
 
-To enable xDebug in your application make sure to set ENV varible `XDEBUG_SESSION`:
+To enable xDebug in your application make sure to set ENV variable `XDEBUG_SESSION`:
 
 ```
 rpc:
