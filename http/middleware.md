@@ -1,6 +1,6 @@
 # HTTP Middleware
 RoadRunner HTTP server uses default Golang middleware model which allows you to extend it using custom or 
-community-driven middlewares. Simplest service with middleware registration would look like:
+community-driven middlewares. The simplest service with middleware registration would look like:
 
 ```golang
 package middleware

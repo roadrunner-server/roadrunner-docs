@@ -7,7 +7,7 @@ install the required package using [Composer](https://getcomposer.org/).
 composer require spiral/roadrunner nyholm/psr7
 ```
 
-Simplest enterpoint with PSR-7 server API might looks like:
+Simplest entrypoint with PSR-7 server API might looks like:
 
 ```php
 <?php
@@ -34,8 +34,8 @@ while ($req = $worker->waitRequest()) {
 }
 ```
 
-Such worker will expect communication with parent RoadRunner server over standard pipes, create `.rr.yaml` config to
-enable it:
+Such a worker will expect communication with the parent RoadRunner server over standard pipes, create `.rr.yaml` config
+to enable it:
 
 ```yaml
 server:

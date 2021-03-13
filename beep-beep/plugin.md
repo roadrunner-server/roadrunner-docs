@@ -45,7 +45,7 @@ func (s *Service) Init(r *rpc.Plugin, rr *http.Plugin) error {
 ### Configuration
 
 In most of the cases, your services would require a set of configuration values. RoadRunner can automatically populate
-and validate your configuration structure using `config` plugin (via interface):
+and validate your configuration structure using `config` plugin (via an interface):
 
 Config sample:
 ```yaml

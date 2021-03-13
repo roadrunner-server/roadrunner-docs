@@ -1,6 +1,6 @@
 # Production Usage
 
-There are multiple tips and suggestions which must be acknowledged while running RoadRuner on production.
+There are multiple tips and suggestions which must be acknowledged while running RoadRunner on production.
 
 ## State and memory
 
@@ -11,7 +11,7 @@ Since a single worker typically process more than a single request, you should b
 - [optional] consider calling `gc_collect_cycles` after each execution if you want to keep the memory low
   (this will slow down your application a bit).
 - Watch memory leaks - you have to be more picky about what components you use. Workers will be restarted in case of
-  a memory leak but it should not be hard to completely avoid this issue by properly designing your application.
+  a memory leak, but it should not be hard to completely avoid this issue by properly designing your application.
 - Avoid state pollution (i.e. globals or user data cache in memory).
 - Database connections and any pipe/socket is the potential point of failure. Simple way of dealing with it is to close
   all connections after each iteration. Note that it is not the most performant solution.

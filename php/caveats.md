@@ -7,7 +7,7 @@ This resource would not be registered in `uploaded files` hash and, as a result,
 > Reference: https://github.com/spiral/roadrunner/issues/133
 
 ## Exit and Die functions
-Please note that you should not use any of the following methods `die`, `exit`. Use buffered output if your library requires to write content to stdout.
+Please note that you should not use any of the following methods `die`, `exit`. Use buffered output if your library requires writing content to stdout.
 
 ## WinCache
 Using roadrunner on Windows with WinCache extension might cause worker bytecode to stuck in memory.
