@@ -174,7 +174,7 @@ Endure will automatically check that registered structure implement all the argu
 
 ### RPC Methods
 
-You can expose a set of RPC methods for your PHP workers also by using Endure `Collects` interface. Endure will automatically get the structure and expose RCP method under the `PluginName` name.
+You can expose a set of RPC methods for your PHP workers also by using Endure `Collects` interface. Endure will automatically get the structure and expose RPC method under the `PluginName` name.
 
 To extend your plugin with RPC methods, plugin will not be changed at all. Only 1 thing to do is to create a file with RPC methods (let's call it `rpc.go`) and expose here all RPC methods for the plugin w/o changing plugin itself:   
 Sample based on the `informer` plugin:   
