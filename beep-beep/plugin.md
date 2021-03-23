@@ -131,7 +131,7 @@ func (s *Plugin) Stop() error {
     return s.stopServing()
 }
 
-func (s *Plugin) doSomeWork() error {
+func (s *Plugin) DoSomeWork() error {
 	return nil
 }
 ```
