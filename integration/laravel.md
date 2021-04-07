@@ -1,7 +1,7 @@
 # Laravel
 List of available integrations.
 
-> Attention, these set of integrations is currently available for v1.* of RoadRunner. 
+The official integration is available via [Laravel Octane](https://github.com/laravel/octane).
 
 Repository | Status
 --- | ---
