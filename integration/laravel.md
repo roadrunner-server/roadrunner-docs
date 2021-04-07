@@ -1,7 +1,7 @@
 # Laravel
-List of available integrations.
-
 The official integration is available via [Laravel Octane](https://github.com/laravel/octane).
+
+List of available community integrations.
 
 Repository | Status
 --- | ---
