@@ -5,7 +5,7 @@ RoadRunner use Endure to manage dependencies, this allows you to tweak and exten
 To build an application server you need [Golang 1.16+](https://golang.org/dl/) to be installed.
 
 #### Create main.go
-Copy [main.go](https://github.com/spiral/roadrunner-binary/blob/main/main.go) file in the root of your project.
+Copy [main.go](https://github.com/spiral/roadrunner-binary/blob/master/cmd/rr/main.go) file in the root of your project.
 
 ```golang
 package main
