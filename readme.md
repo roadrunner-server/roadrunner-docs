@@ -53,6 +53,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Yii2 and Yii3](integration/yii.md)
     * [Phalcon3 and Phalcon4](integration/phalcon.md)
     * [Mezzio](integration/mezzio.md)
+    * [Chubbyphp Framework](integration/chubbyphp.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Docker
     * [Ports and Containers](docker/ports.md)
