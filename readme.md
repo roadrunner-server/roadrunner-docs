@@ -1,5 +1,7 @@
 # Table of Contents
-RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process manager.
+
+RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process
+manager.
 
 ![CI](https://github.com/spiral/roadrunner-docs/workflows/CI/badge.svg)
 
@@ -23,7 +25,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Debugging](php/debugging.md)
 * HTTPs and HTTP/2
     * [HTTPs and HTTP/2](http/https.md)
-    * [Static Content](http/static.md)  
+    * [Static Content](http/static.md)
     * [Headers](http/headers.md)
     * [Golang Middleware](http/middleware.md)
 * App Server
@@ -37,6 +39,7 @@ RoadRunner is an open-source (MIT licensed), high-performance PHP application se
     * [Building a Server](beep-beep/build.md)
     * [RPC](beep-beep/rpc.md)
     * [Write a Plugin](beep-beep/plugin.md)
+    * [Service plugin](beep-beep/service.md)
 * Workflow Engine
     * [About Temporal.IO](workflow/temporal.md)
     * [Worker](workflow/worker.md)
