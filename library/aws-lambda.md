@@ -82,10 +82,11 @@ func main() {
 	cfg.ReadInCfg = rrYaml
 	cfg.Type = "yaml"
 
-	// only 3 plugins needed here
+	// only 4 plugins needed here
 	// 1. Server which should provide pool to us
 	// 2. Our mini plugin, which expose this pool for us
-	// 3.
+	// 3. Logger
+	// 4. Configurer
 	err = cont.RegisterAll(
 		cfg,
 		&logger.ZapLogger{},
