@@ -45,7 +45,8 @@
       "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
       "beep-beep/rpc": "RPC",
-      "beep-beep/plugin": "Write a Plugin"
+      "beep-beep/plugin": "Write a Plugin",
+      "beep-beep/service": "Service plugin"
     }
   },
   {
