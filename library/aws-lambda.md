@@ -149,9 +149,6 @@ import (
 	"github.com/spiral/roadrunner/v2/plugins/server"
 )
 
-// should be global
-var wrkPool pool.Pool
-
 type Plugin struct {
 	sync.Mutex
 	log     logger.Logger
@@ -202,8 +199,8 @@ func (p *Plugin) Stop() error {
 	p.Lock()
 	defer p.Unlock()
 
-	if wrkPool != nil {
-		wrkPool.Destroy(context.Background())
+	if p.wrkPool != nil {
+		p.wrkPool.Destroy(context.Background())
 	}
 	return nil
 }
@@ -212,7 +209,7 @@ func (p *Plugin) handler() func(pld string) (string, error) {
 	return func(pld string) (string, error) {
 		data := fastConvert(pld)
 		// execute on worker pool
-		if wrkPool == nil {
+		if p.wrkPool == nil {
 			// or any error
 			return "", nil
 		}
