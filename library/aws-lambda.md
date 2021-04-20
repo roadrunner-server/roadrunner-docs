@@ -233,7 +233,7 @@ func fastConvert(d string) []byte {
 	return *(*[]byte)(unsafe.Pointer(&d))
 }
 ```
-3. Config file, which can be embedden into the binary with `embed` import:
+3. Config file, which can be embedded into the binary with `embed` import:
 ```yaml
 server:
   command: "php handler.php"
