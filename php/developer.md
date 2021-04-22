@@ -18,7 +18,7 @@ rpc:
 Then run `rr reset` locally on file change.
 
 ## Debug Mode
-To run wokres in debug mode (similar to how PHP-FPM operates):
+To run workers in debug mode (similar to how PHP-FPM operates):
 
 ```yaml
 http:
