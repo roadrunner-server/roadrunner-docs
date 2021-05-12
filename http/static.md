@@ -28,7 +28,9 @@ Where:
 4. `allow`: file extensions which should be served (empty - serve all except forbidden).
 5. `calculate_etag`: turn on etag computation for the static file.
 6. `weak`: use a weak generator (/W).
-7. `request/response`: custom headers for the static files.
+7. `request/response`: custom headers for the static files.  
+
+
 To combine static content with other middleware, use the following sequence (static will always be the last in the row, file server will apply headers and gzip plugins):
 
 ```yaml
