@@ -23,11 +23,10 @@ http:
 ```
 Where:
 1. `dir`: path to the directory.
-2. `pattern`: http path to serve witin the directory. For example: dir - `/home/user/`, pattern - `/static/` will point to the `static` dir in the `/home/user/` (`/home/user/static`).
 3. `forbid`: file extensions that should not be served.
 4. `allow`: file extensions which should be served (empty - serve all except forbidden).
 5. `calculate_etag`: turn on etag computation for the static file.
-6. `weak`: use a weak generator (/W).
+6. `weak`: use a weak generator (/W), it uses only filename to generate a CRC32 sum. If false - all file content used to generate CRC32 sum.
 7. `request/response`: custom headers for the static files.  
 
 
