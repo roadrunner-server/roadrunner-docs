@@ -11,7 +11,6 @@ http:
   # ...
     static:
       dir: "."
-      pattern: "/tests/"
       forbid: [""]
       allow: [".txt", ".php"]
       calculate_etag: false
@@ -43,7 +42,6 @@ http:
     # ...
     static:
       dir: "."
-      pattern: "/tests/"
       forbid: [""]
       allow: [".txt", ".php"]
       calculate_etag: false
