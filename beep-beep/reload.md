@@ -1,6 +1,5 @@
 # Auto-Reloading
-RoadRunner is able to automatically detect PHP file changes and reload connected services. Such approach allows you to develop  
-application without the `maxJobs: 1` or manual server reset.
+RoadRunner is able to automatically detect PHP file changes and reload connected services. Such approach allows you to develop application without the `max_jobs: 1` or manual server reset.
 
 ## Configuration
 To enable reloading for http service:
