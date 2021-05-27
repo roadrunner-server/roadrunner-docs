@@ -62,7 +62,7 @@ logs:
 
 1. Levels: `panic`, `error`, `warn`, `info`, `debug`. Default: `debug`.
 2. Encodings: `console`, `json`. Default: `console`.
-3. Modes: `production`, `development`. Default: `development`.
+3. Modes: `production`, `development`, `raw`. Default: `development`.
 4. Output: `file.log` or `stderr`, `stdout`. Default `stderr`.
 5. Error output: `err_file.log` or `stderr`, `stdout`. Default `stderr`.
 
