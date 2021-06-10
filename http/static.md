@@ -14,6 +14,7 @@ http:
   static:
     dir: "tests"
     forbid: [ ] # file extensions to forbid
+    
     request:
       input: "custom-header"
     response:
