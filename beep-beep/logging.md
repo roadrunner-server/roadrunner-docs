@@ -43,6 +43,46 @@ logs:
   level: info
 ```
 
+### File logger  
+
+It is possibe to redirect channels or whole log output to the file:
+
+Config sample with file logger:
+
+```yaml
+logs:
+  mode: development
+  level: debug
+  file_logger_options:
+    log_output: "test.log"
+    max_size: 10
+    max_age: 24
+    max_backups: 10
+    compress: true
+```
+
+OR for the log channel:
+
+```yaml
+logs:
+  mode: development
+  level: debug
+  channels:
+      http:
+          file_logger_options:
+              log_output: "test.log"
+              max_size: 10
+              max_age: 24
+              max_backups: 10
+              compress: true
+```
+
+1. `log_output`: Filename is the file to write logs to in the same directory.  It uses <processname>-lumberjack.log in os.TempDir() if empty.
+2. `max_size`: is the maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes.
+3. `max_age`: is the maximum number of days to retain old log files based on the timestamp encoded in their filename.  Note that a day is defined as 24 hours and may not exactly correspond to calendar days due to daylight savings, leap seconds, etc. The default is not to remove old log files based on age.
+4. `max_backups`: is the maximum number of old log files to retain.  The default is to retain all old log files (though MaxAge may still cause them to get deleted.)
+5. `compress`: determines if the rotated log files should be compressed using gzip. The default is not to perform compression.
+
 ## Channels
 
 In addition, you can configure each plugin log messages individually using `channels` section:
@@ -58,7 +98,7 @@ logs:
       output: http.log
 ```
 
-## Summary:
+## Summary
 
 1. Levels: `panic`, `error`, `warn`, `info`, `debug`. Default: `debug`.
 2. Encodings: `console`, `json`. Default: `console`.

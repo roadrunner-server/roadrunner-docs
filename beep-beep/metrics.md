@@ -1,7 +1,9 @@
 # Application Metrics
+
 RoadRunner server includes an embedded metrics server based on [Prometheus](https://prometheus.io/).
 
 ## Enable Metrics
+
 To enable metrics add `metrics` section to your configuration:
 
 ```yaml
@@ -14,10 +16,11 @@ Once complete you can access Prometheus metrics using `http://localhost:2112/met
 Make sure to install metrics extension:
 
 ```bash
-$ composer require spiral/roadrunner-metrics
+composer require spiral/roadrunner-metrics
 ```
 
 ## Application metrics
+
 You can also publish application-specific metrics using an RPC connection to the server. First, you have to register a metric in your
 configuration file:
 
@@ -43,6 +46,7 @@ $metrics->add('app_metric_counter', 1);
 > Supported types: gauge, counter, summary, histogram.
 
 ## Tagged metrics
+
 You can use tagged (labels) metrics to group values:
 
 ```yaml
@@ -66,6 +70,7 @@ $metrics->add('app_type_duration', 0.5, ['some-type']);
 ```
 
 ## Declare metrics
+
 You can declare metric from PHP application itself:
 
 ```php
