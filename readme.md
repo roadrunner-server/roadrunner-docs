@@ -37,6 +37,7 @@ manager.
     * [Prometheus Metrics](beep-beep/metrics.md)
     * [Healthcheck](beep-beep/health.md)
     * [Building a Server](beep-beep/build.md)
+    * [KeyValue Storage](beep-beep/kv.md)
     * [RPC](beep-beep/rpc.md)
     * [Write a Plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
