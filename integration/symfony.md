@@ -15,7 +15,6 @@ https://github.com/php-runtime/roadrunner-symfony-nyholm | [![Version][phpruntim
 [baldinof_link_build_status]:https://github.com/baldinof/roadrunner-bundle/actions
 [baldinof_link_license]:https://github.com/baldinof/roadrunner-bundle/blob/master/LICENSE
 
-
 [phpruntime_badge_packagist_version]:https://img.shields.io/packagist/v/runtime/roadrunner-symfony-nyholm.svg?maxAge=180
 [phpruntime_badge_php_version]:https://img.shields.io/packagist/php-v/symfony/runtime.svg?longCache=true
 [phpruntime_badge_license]:https://img.shields.io/packagist/l/runtime/roadrunner-symfony-nyholm.svg?longCache=true
