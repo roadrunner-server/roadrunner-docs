@@ -10,7 +10,7 @@ status:
   address: localhost:2114
 ```
 
-To access the heal-check use the following URL:
+To access the health-check use the following URL:
 
 `http://localhost:2114/health?plugin=http`
 
