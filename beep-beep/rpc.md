@@ -1,6 +1,6 @@
 # RPC Integration
 
-You can connect to RoadRunner server from your PHP workers using shared RPC bus. In order to do that you have to create and
+You can connect to RoadRunner server from your PHP workers using shared RPC bus. In order to do that you have to create
 an instance of `RPC` class configured to work with the address specified in `.rr` file.
 
 ## Requirements
