@@ -42,7 +42,7 @@ drivers are available with their own characteristics and additional settings:
 `boltdb`, `redis`, `memcached` and `memory`.
 
 The `memory` and `boltdb` drivers do not require additional binaries and are
-available immediately, while the rest require separate dependencies. Please see
+available immediately, while the rest require additional setup. Please see
 the appropriate documentation for installing [Redis Server](https://redis.io/)
 and/or [Memcached Server](https://memcached.org/).
 
