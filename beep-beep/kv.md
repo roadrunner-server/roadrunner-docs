@@ -630,7 +630,7 @@ $storage->withSerializer($encrypted)
 ## RPC Interface
 
 All communication between PHP and GO made by the RPC calls with protobuf payloads.
-You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/blob/master/pkg/proto).
+You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/tree/v2.3.0/pkg/proto/kv/v1beta).
 
 - `Has(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first argument
 is a `Request` , which declares a `storage` and an array of `Items` ; the second
