@@ -36,7 +36,7 @@ func (g *Plugin) Name() string {
 
 > Middleware must correspond to the following [interface](https://github.com/spiral/roadrunner/blob/master/plugins/http/plugin.go#L37) and be named.
 
-We have to register this service after in the `internal/container/plugin.go` file in order to properly resolve dependency:
+We have to register this service after in the [`internal/container/plugin.go`](https://github.com/spiral/roadrunner-binary/blob/master/internal/container/plugins.go#L31) file in order to properly resolve dependency:
 
 ```golang
 import (
