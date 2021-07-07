@@ -22,6 +22,9 @@ func (g *Plugin) Init() error {
 func (g *Plugin) Middleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
     // do something
+    // ...
+    // continue request through the middleware pipeline
+    next.ServeHTTP(w, r)
  })
 }
 
@@ -51,11 +54,11 @@ func Plugins() []interface{} {
  }
 ```
 
-You should also make sure you configure the middleware to be used via the config or the command line otherwise the plugin will be loaded but the middleware
-will not be used with incoming requests.
+You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config) otherwise the plugin will be loaded but the middleware will not be used with incoming requests.
 
 ```yaml
 http:
+    # provide the name of the plugin as provided by the plugin in the example's case, "middleware"
     middleware: [ "middleware" ]
 ```
 
