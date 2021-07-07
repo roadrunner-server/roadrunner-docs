@@ -33,26 +33,30 @@ func (g *Plugin) Name() string {
 
 > Middleware must correspond to the following [interface](https://github.com/spiral/roadrunner/blob/master/plugins/http/plugin.go#L37) and be named.
 
-We have to register this service after in the `main.go` file in order to properly resolve dependency:
+We have to register this service after in the `internal/container/plugin.go` file in order to properly resolve dependency:
 
 ```golang
-container, err := endure.NewContainer(nil, endure.SetLogLevel(endure.ErrorLevel), endure.RetryOnFail(false))
-if err != nil {
-    panic(err)
-}
-err = container.Register(&http.Service{})
-if err != nil {
-    panic(err)
-}
-err = container.Register(&custom.Service{})
-xif err != nil {
-    panic(err)
-}
+import (
+    "middleware"
+)
 
-err = container.RegisterAll(  
-  // ...
-        &middleware.Plugin{},
- )
+func Plugins() []interface{} {
+	return []interface{}{
+    // ...
+    
+    // middleware
+    &middleware.Plugin{},
+    
+    // ...
+ }
+```
+
+You should also make sure you configure the middleware to be used via the config or the command line otherwise the plugin will be loaded but the middleware
+will not be used with incoming requests.
+
+```yaml
+http:
+    middleware: [ "middleware" ]
 ```
 
 ### PSR7 Attributes
