@@ -22,6 +22,9 @@ func (g *Plugin) Init() error {
 func (g *Plugin) Middleware(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
     // do something
+    // ...
+    // continue request through the middleware pipeline
+    next.ServeHTTP(w, r)
  })
 }
 
@@ -33,26 +36,30 @@ func (g *Plugin) Name() string {
 
 > Middleware must correspond to the following [interface](https://github.com/spiral/roadrunner/blob/master/plugins/http/plugin.go#L37) and be named.
 
-We have to register this service after in the `main.go` file in order to properly resolve dependency:
+We have to register this service after in the [`internal/container/plugin.go`](https://github.com/spiral/roadrunner-binary/blob/master/internal/container/plugins.go#L31) file in order to properly resolve dependency:
 
 ```golang
-container, err := endure.NewContainer(nil, endure.SetLogLevel(endure.ErrorLevel), endure.RetryOnFail(false))
-if err != nil {
-    panic(err)
-}
-err = container.Register(&http.Service{})
-if err != nil {
-    panic(err)
-}
-err = container.Register(&custom.Service{})
-xif err != nil {
-    panic(err)
-}
+import (
+    "middleware"
+)
 
-err = container.RegisterAll(  
-  // ...
-        &middleware.Plugin{},
- )
+func Plugins() []interface{} {
+	return []interface{}{
+    // ...
+    
+    // middleware
+    &middleware.Plugin{},
+    
+    // ...
+ }
+```
+
+You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config) otherwise the plugin will be loaded but the middleware will not be used with incoming requests.
+
+```yaml
+http:
+    # provide the name of the plugin as provided by the plugin in the example's case, "middleware"
+    middleware: [ "middleware" ]
 ```
 
 ### PSR7 Attributes
