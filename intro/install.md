@@ -13,6 +13,8 @@ $ ./vendor/bin/rr get
 Server binary will be available in the root of your project.
 
 > PHP's extensions `php-curl` and `php-zip` are required to download RoadRunner automatically.
+> PHP's extensions `php-sockets` maybe need to be installed to run roadrunner.
+> Check with `pphp --modules` your installed extensions.
 
 #### Building RoadRunner
 RoadRunner can be compiled on Linux, OSX, Windows and other 64 bit environments as the only requirement are **Go 1.13+**.
