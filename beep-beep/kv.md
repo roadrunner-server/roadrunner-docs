@@ -12,15 +12,14 @@ but in addition it provides others that do not require a separate server, such
 as [BoltDB](https://github.com/boltdb/bolt), and also allows you to replace 
 permanent storage with temporary that stores data in RAM.
 
-KV is a RoadRunner plugin available since `v2.3.0`. It supports several types of
-storage for the [Items](https://github.com/spiral/roadrunner/blob/master/pkg/proto/kv/v1beta/kv.proto#L12). 
-Under the hood this plugin uses [protobuf](https://github.com/spiral/roadrunner/blob/master/pkg/proto/kv/v1beta/kv.proto) 
-to serialize and deserialize binary messages (supported in goridge since `v3.1.0`).
+![kv-general-info](https://user-images.githubusercontent.com/2461257/128436785-3dadbf0d-13c3-4e0c-859c-4fd9668558c8.png)
 
 ## Installation
 
-To install this plugin, please make sure you are using RoadRunner version
-`2.3.0` or higher.
+> **Requirements**
+> - PHP >= 7.4
+> - RoadRunner >= 2.3
+> - *ext-protobuf (optional)*
 
 To get access from the PHP code, you should put the corresponding dependency
 using [the Composer](https://getcomposer.org/).
