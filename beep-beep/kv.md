@@ -269,7 +269,7 @@ Below is a more detailed description of each of the Redis-specific options:
   - `h` - the number of hours. For example `1h` means 1 hour.
   - `m` - the number of minutes. For example `2m` means 2 minutes.
   - `s` - the number of seconds. For example `3s` means 3 seconds.
-  - `ms` - the number of milliseconds. For example `4ms` means 3 milliseconds.
+  - `ms` - the number of milliseconds. For example `4ms` means 4 milliseconds.
   - If no suffix is specified, the value will be interpreted as specified in
     nanoseconds. In most cases, this accuracy is redundant and may not be true. 
     For example `5` means 5 nanoseconds.
