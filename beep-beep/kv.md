@@ -1,14 +1,25 @@
 # KV (Key-Value) Plugin
 
-KV is a Roadrunner plugin available since `v2.3.0`. It supports several types of
-storage for the [Items](https://github.com/spiral/roadrunner/blob/master/pkg/proto/kv/v1beta/kv.proto#L12). 
-Under the hood this plugin uses [protobuf](https://github.com/spiral/roadrunner/blob/master/pkg/proto/kv/v1beta/kv.proto) 
-to serialize and deserialize binary messages (supported in goridge since `v3.1.0`).
+The Key-Value plugin provides the ability to store arbitrary data inside the
+RoadRunner between different requests (in case of HTTP application) or different
+types of applications. Thus, using [Temporal](https://docs.temporal.io/docs/php/introduction), 
+for example, you can transfer data inside the [HTTP application](/php/worker.md) 
+and vice versa.
+
+As a permanent source of data, the RoadRunner allows you to use popular solutions,
+such as [Redis Server](https://redis.io/) or [Memcached](https://memcached.org/), 
+but in addition it provides others that do not require a separate server, such
+as [BoltDB](https://github.com/boltdb/bolt), and also allows you to replace 
+permanent storage with temporary that stores data in RAM.
+
+![kv-general-info](https://user-images.githubusercontent.com/2461257/128436785-3dadbf0d-13c3-4e0c-859c-4fd9668558c8.png)
 
 ## Installation
 
-To install this plugin, please make sure you are using RoadRunner version
-`2.3.0` or higher.
+> **Requirements**
+> - PHP >= 7.4
+> - RoadRunner >= 2.3
+> - *ext-protobuf (optional)*
 
 To get access from the PHP code, you should put the corresponding dependency
 using [the Composer](https://getcomposer.org/).
@@ -471,24 +482,12 @@ echo $storage->get('key');
 //  string(5) "string"
 ```
 
-Please note that the RoadRunner implementation is slightly different from the
-PSR-16, in particular:
+> The `clear()` method available since [RoadRunner v2.3.1](https://github.com/spiral/roadrunner/releases/tag/v2.3.1).
 
-- The `clear()` method is **currently not supported**. You need to manually clear
-  the cache before deploying a new version of the application (if you want to).
-  The cleaning method depends on the drivers used. For example, in the case of
-  using the `memory` driver, you only need to restart the RoadRunner Server.
-
-```php
-$storage->clear();
-
-// Expected:
-//  LogicException: Spiral\RoadRunner\KeyValue\Cache::clear not implemented yet
-```
-
-- You can use `getTtl(string): ?\DateTimeInterface` and
-  `getMultipleTtl(string): iterable<\DateTimeInterface|null>` methods to get
-  information about the expiration of an item stored in a key-value storage.
+Apart from this, RoadRunner Key-Value API provides several additional methods:
+You can use `getTtl(string): ?\DateTimeInterface` and
+`getMultipleTtl(string): iterable<\DateTimeInterface|null>` methods to get
+information about the expiration of an item stored in a key-value storage.
 
 > Please note that the `memcached` driver
 > [**does not support**](https://github.com/memcached/memcached/issues/239)
@@ -661,6 +660,11 @@ keys with their timeouts. The error returned if request fails.
 argument is a `Request` with `Items` which should contain keys to delete; return
 value isn't used and present here only because GO's RPC calling convention.
 The error returned if request fails.
+
+- `Clear(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
+argument is a `Request` with `storage` which should contain the storage to be
+cleaned up; return value isn't used and present here only because GO's RPC 
+calling convention. The error returned if request fails.
 
 From the PHP point of view, such requests (`MGet` for example) are as follows:
 ```php
