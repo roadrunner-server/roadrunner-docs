@@ -661,6 +661,11 @@ argument is a `Request` with `Items` which should contain keys to delete; return
 value isn't used and present here only because GO's RPC calling convention.
 The error returned if request fails.
 
+- `Clear(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
+argument is a `Request` with `storage` which should contain the storage to be
+cleaned up; return value isn't used and present here only because GO's RPC 
+calling convention. The error returned if request fails.
+
 From the PHP point of view, such requests (`MGet` for example) are as follows:
 ```php
 use Spiral\Goridge\RPC\RPC;
