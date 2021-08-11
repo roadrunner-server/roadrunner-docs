@@ -628,6 +628,26 @@ creation has a number of limitations:
 - You need to already have a configured driver in the case to create a new queue.
 - Only common queue settings are available to you: `name`, `driver` and `priority`.
 
+### Getting A List Of Queues
+
+In that case, to get a list of all available queues, you just need to use the 
+standard functionality of the `foreach` operator. Each element of this collection
+will correspond to a specific queue registered in the RoadRunner. And to simply
+get the number of all available queues, you can pass a `Job` object to the 
+`count()` function.
+
+```php
+$jobs = new Spiral\RoadRunner\Jobs\Jobs();
+
+foreach ($jobs as $queue) {
+    var_dump($queue->getName()); 
+    // Expects name of the queue
+}
+
+$count = count($jobs);
+// Expects the number of a queues
+```
+
 ### Pausing A Queue
 
 In addition to the ability to create new queues, there may be times when a queue
@@ -647,4 +667,29 @@ $jobs->pause('emails', 'billing', 'backups');
 
 // Resuming only "emails" and "billing".
 $jobs->resume('emails', 'billing');
+```
+
+## RPC Interface
+
+All communication between PHP and GO made by the RPC calls with protobuf payloads.
+You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
+
+- `Push(in *jobsv1beta.PushRequest, out *jobsv1beta.Empty) error` - TODO
+- `PushBatch(in *jobsv1beta.PushBatchRequest, out *jobsv1beta.Empty) error` - TODO
+- `Pause(in *jobsv1beta.Maintenance, out *jobsv1beta.Empty) error` - TODO
+- `Resume(in *jobsv1beta.Maintenance, out *jobsv1beta.Empty) error` - TODO
+- `List(in *jobsv1beta.Empty, out *jobsv1beta.Maintenance) error` - TODO
+- `Declare(in *jobsv1beta.DeclareRequest, out *jobsv1beta.Empty) error` - TODO
+
+
+From the PHP point of view, such requests (`List` for example) are as follows:
+```php
+use Spiral\Goridge\RPC\RPC;
+use Spiral\Goridge\RPC\Codec\ProtobufCodec;
+use Spiral\RoadRunner\Jobs\DTO\V1\Maintenance;
+
+$response = RPC::create('tcp://127.0.0.1:6001')
+    ->withServicePrefix('jobs')
+    ->withCodec(new ProtobufCodec())
+    ->call('List', '', Maintenance::class);
 ```
