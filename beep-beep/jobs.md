@@ -127,13 +127,16 @@ out what they are responsible for.
   with jobs inside the PQ, they won't be lost, because jobs are deleted from the
   drivers' queue only after Ack.
 
-- `pool.num_workers` - TODO
+- `pool.num_workers` - How many worker processes will be started. Zero 
+  (or nothing) means the number of logical CPUs.
 
-- `pool.max_jobs` - TODO
+- `pool.max_jobs` - Maximal count of worker executions. Zero (or nothing) means
+  no limit.
 
-- `pool.allocate_timeout` - TODO
+- `pool.allocate_timeout` - Timeout for worker allocation. Zero means no limit.
 
-- `pool.destroy_timeout` - TODO
+- `pool.destroy_timeout` - Timeout for worker destroying before process killing.
+  Zero means no limit.
 
 - `consume` - Contains an array of the names of all queues specified in the
   `"pipelines"` section, which should be processed by the concierge specified in
