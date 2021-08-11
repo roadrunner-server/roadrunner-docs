@@ -590,3 +590,61 @@ The interface for receiving headers is completely similar to
 
 We got acquainted with the data and capabilities that we have in the consumer.
 Let's now get down to the basics - sending these messages.
+
+## Advanced Functionality
+
+In addition to the main functionality of queues for sending and processing in
+API has additional functionality that is not directly related to these tasks.
+After we have examined the main functionality, it's time to disassemble the
+advanced features.
+
+### Creating A New Queue
+
+In the very first chapter, we got acquainted with the queue settings and drivers
+for them. In approximately the same way, we can do almost the same thing with 
+the help of the PHP code using `create()` method through `Jobs` instance.
+
+```php
+use Spiral\RoadRunner\Jobs\Jobs;
+use Spiral\RoadRunner\Jobs\Queue\CreateInfo;
+
+$jobs = new Jobs();
+
+//
+// Create a new "example" queue
+//
+$queue = $jobs->create(new CreateInfo(
+    driver: 'amqp',
+    name: 'example',
+));
+```
+
+All settings for creating a new queue are configured using a special
+`CreateInfo` DTO, which is a number of mandatory and additional options.
+
+In addition, you may notice that the possibilities are slightly less than you
+would configure a new queue using the configuration file and this way of queue
+creation has a number of limitations:
+- You need to already have a configured driver in the case to create a new queue.
+- Only common queue settings are available to you: `name`, `driver` and `priority`.
+
+### Pausing A Queue
+
+In addition to the ability to create new queues, there may be times when a queue
+needs to be suspended for processing. Such cases can arise, for example, in the
+case of deploying a new application, when the processing of tasks should be
+suspended during the deployment of new application code.
+
+In this case, the code will be pretty simple. It is enough to call the `pause()`
+method, passing the names of the queues there. In order to start the work of 
+queues further (unpause), you need to call a similar `resume()` method.
+
+```php
+$jobs = new Spiral\RoadRunner\Jobs\Jobs();
+
+// Pause "emails", "billing" and "backups" queues.
+$jobs->pause('emails', 'billing', 'backups');
+
+// Resuming only "emails" and "billing".
+$jobs->resume('emails', 'billing');
+```
