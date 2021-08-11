@@ -88,6 +88,7 @@ look like this:
 ```yaml
 jobs:
   num_pollers: 64
+  timeout: 60
   pipeline_size: 100000
   pool:
     num_workers: 10
@@ -104,15 +105,31 @@ jobs:
 Above is a complete list of all possible common Jobs settings. Let's now figure
 out what they are responsible for.
 
-- `num_pollers` - TODO
+- `num_pollers` - The number of threads that concurrently read from the priority
+  queue and send payloads to the workers. There is no optimal number, it's 
+  heavily dependent on the PHP worker's performance. For example, "echo workers"
+  may process over 300k jobs per second within 64 pollers (on 32 core CPU).
+
+- `timeout` - The internal timeouts via golang context (in seconds). For
+  example, if the connection was interrupted or your push in the middle of the
+  redial state with 10 minutes timeout (but our timeout is 1 min for example), 
+  or queue is full. If the timeout exceeds, your call will be rejected with an
+  error. Default: 60 (seconds).
+
 - `pipeline_size` - TODO
+
 - `pool.num_workers` - TODO
+
 - `pool.max_jobs` - TODO
+
 - `pool.allocate_timeout` - TODO
+
 - `pool.destroy_timeout` - TODO
+
 - `consume` - Contains an array of the names of all queues specified in the
   `"pipelines"` section, which should be processed by the concierge specified in
    the global `"server"` section (see the [PHP worker's settings](/php/worker.md)).
+
 - `pipelines` - This section contains a list of all queues declared in the
   RoadRunner. The key is a unique *queue identifier*, and the value is an object
   from the settings specific to each driver (we will talk about it later).
