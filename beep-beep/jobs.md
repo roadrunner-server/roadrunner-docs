@@ -112,11 +112,20 @@ out what they are responsible for.
 
 - `timeout` - The internal timeouts via golang context (in seconds). For
   example, if the connection was interrupted or your push in the middle of the
-  redial state with 10 minutes timeout (but our timeout is 1 min for example), 
+  redial state with 10 minutes timeout (but our timeout is 1 min for example),
   or queue is full. If the timeout exceeds, your call will be rejected with an
   error. Default: 60 (seconds).
 
-- `pipeline_size` - TODO
+- `pipeline_size` - The "binary heaps" priority queue (PQ) settings. Priority
+  queue stores jobs inside according to its' priorities. Priority might be set
+  for the job or inherited by the pipeline. If worker performance is poor, PQ
+  will accumulate jobs until `pipeline_size` will be reached. After that, PQ
+  will be blocked until workers process all the jobs inside.
+
+  Blocked PQ means, that you can push the job into the driver, but RoadRunner
+  will not read that job until PQ will be empty. If RoadRunner will be killed
+  with jobs inside the PQ, they won't be lost, because jobs are deleted from the
+  drivers' queue only after Ack.
 
 - `pool.num_workers` - TODO
 
