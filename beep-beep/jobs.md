@@ -48,12 +48,6 @@ server:
   relay: pipes
 
 #
-# AMQP connection settings (for example, RabbitMQ)
-#
-amqp:
-    addr: amqp://guest:guest@localhost:5672
-
-#
 # In this section, the jobs themselves are configured
 #
 jobs:
@@ -61,7 +55,7 @@ jobs:
                         # the consumer specified in the "server" section.
   pipelines:
     test:               # RoadRunner queue identifier
-      driver: amqp      # - Queue driver name
+      driver: ephemeral # - Queue driver name
       queue: test       # - Internal (driver's) queue identifier
 ```
 
