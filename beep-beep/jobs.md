@@ -302,11 +302,180 @@ Below is a more detailed description of each of the amqp-specific options:
 
 ### Beanstalk Driver
 
-TODO
+Beanstalk is a queue server developed by Amazon and provides both a 
+[local application](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html)
+and the ability to run the server inside [AWS Elastic](https://aws.amazon.com/elasticbeanstalk/). 
+You can choose any option that is convenient for you.
+
+Setting up the server is similar to setting up AMQP and requires specifying the
+connection in the `"beanstalk"` section of your RoadRunner configuration file.
+
+```yaml
+beanstalk:
+  addr: tcp://127.0.0.1:11300
+```
+
+After setting up the connection, you can start using it. Let's take a look at 
+the complete config with all the options for this driver:
+
+```yaml
+beanstalk:
+  # Optional section.
+  # Default: tcp://127.0.0.1:11300
+  addr: tcp://127.0.0.1:11300
+
+  # Optional section.
+  # Default: 30s
+  timeout: 10s
+
+jobs:
+  pipelines:
+    # User defined name of the queue.
+    example:
+      # Required section.
+      # Should be "beanstalk" for the Beanstalk driver.
+      driver: beanstalk
+      
+      # Optional section.
+      # Default: 10
+      priority: 10
+
+      # Optional section.
+      # Default: 1
+      tube_priority: 1
+      
+      # Optional section.
+      # Default: default
+      tube: default
+
+      # Optional section.
+      # Default: 5s
+      reserve_timeout: 5s
+```
+
+These are all settings that are available to you for configuring this type of 
+driver. Let's take a look at what they are responsible for:
+- `priority` - Similar to the same option in other drivers. This is queue 
+  default priority for for each task pushed into this queue if the priority 
+  value for these tasks was not explicitly set.
+
+- `tube_priority` - The value for specifying the priority within Beanstalk is
+  the internal priority of the server. The value should not exceed `int32` size.
+
+- `tube` - The name of the inner "tube" specific to the Beanstalk driver.
 
 ### SQS Driver
 
-TODO
+[Amazon SQS (Simple Queue Service)](https://aws.amazon.com/sqs/) is an
+alternative queue server also developed by Amazon and is also part of the AWS
+service infrastructure.
+
+However, unlike Beanstalk, it is located entirely on Amazon servers, so the
+connection configuration will differ from the one we are already used to for
+AMQP and Beanstalk. In order to get acquainted with how to create a SQS server, 
+just use the [ready-made documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configuring.html).
+
+After you have created the SQS server, you need to specify the following 
+connection settings in `sqs` configuration settings:
+
+```yaml
+sqs:
+  # Required AccessKey ID.
+  # Default: empty
+  key: access-key
+
+  # Required secret access key.
+  # Default: empty
+  secret: api-secret
+
+  # Required AWS region.
+  # Default: empty
+  region: us-west-1
+
+  # Required AWS session token.
+  # Default: empty
+  session_token: test
+
+  # Required AWS SQS endpoint to connect.
+  # Default: http://127.0.0.1:9324
+  endpoint: http://127.0.0.1:9324
+```
+
+> Please note that although each of the sections contains default values, it is
+> marked as "required". This means that in almost all cases they are required to
+> be specified in order to correctly configure the driver.
+
+After you have configured the connection - you should configure the queue that
+will use this connection:
+
+```yaml
+sqs:
+  # SQS connection configuration...
+
+jobs:
+  pipelines:
+    # Required section.
+    # Should be "sqs" for the Amazon SQS driver.
+    driver: sqs
+    
+    # Optional section.
+    # Default: 10
+    prefetch: 10
+    
+    # Optional section.
+    # Default: 0
+    visibility_timeout: 0
+    
+    # Optional section.
+    # Default: 0
+    wait_time_seconds: 0
+    
+    # Optional section.
+    # Default: default
+    queue: default
+    
+    # Optional section.
+    attributes:
+      # ... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
+      
+    # Optional section.
+    # Default: empty
+    tags:
+      test: "tag"
+```
+
+Below is a more detailed description of each of the SQS-specific options:
+- `prefetch` - Number of jobs to prefetch from the SQS. Amazon SQS never returns 
+  more messages than this value (however, fewer messages might be returned). 
+  Valid values: 1 to 10. Any number bigger than 10 will be rounded to 10. 
+  Default: `10`.
+
+- `visibility_timeout` - The duration (in seconds) that the received messages
+  are hidden from subsequent retrieve requests after being retrieved by a
+  ReceiveMessage request. Max value is 43200 seconds (12 hours). Default: `0`.
+
+- `wait_time_seconds` - The duration (in seconds) for which the call waits for
+  a message to arrive in the queue before returning. If a message is available,
+  the call returns sooner than WaitTimeSeconds. If no messages are available and
+  the wait time expires, the call returns successfully with an empty list of
+  messages. Default: `5`.
+
+- `queue` - SQS internal queue name. Can contain alphanumeric characters, 
+  hyphens (-), and underscores (_). Default value is `"default"` string.
+
+- `attributes` - List of the [AWS SQS attributes](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html).
+> For example 
+> ```yaml
+> attributes:
+>   DelaySeconds: 0
+>   MaximumMessageSize: 262144
+>   MessageRetentionPeriod: 345600
+>   ReceiveMessageWaitTimeSeconds: 0
+>   VisibilityTimeout: 30
+> ```
+
+- `tags` - Tags don't have any semantic meaning. Amazon SQS interprets tags as 
+  character.
 
 ## Client (Producer)
 
