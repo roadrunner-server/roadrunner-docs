@@ -484,6 +484,8 @@ Below is a more detailed description of each of the SQS-specific options:
 
 - `tags` - Tags don't have any semantic meaning. Amazon SQS interprets tags as 
   character.
+> Please note that this functionality is rarely used and slows down the work of
+> queues.
 
 ## Client (Producer)
 
