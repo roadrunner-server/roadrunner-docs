@@ -45,6 +45,7 @@
       "beep-beep/health": "Healthcheck",
       "beep-beep/build": "Building a Server",
       "beep-beep/kv": "KeyValue Storage",
+      "beep-beep/jobs": "Jobs (Queues)",
       "beep-beep/rpc": "RPC",
       "beep-beep/plugin": "Write a Plugin",
       "beep-beep/service": "Service plugin"
