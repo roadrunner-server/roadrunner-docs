@@ -1000,33 +1000,36 @@ advanced features.
 
 ### Creating A New Queue
 
-In the very first chapter, we got acquainted with the queue settings and drivers
-for them. In approximately the same way, we can do almost the same thing with 
-the help of the PHP code using `create()` method through `Jobs` instance.
+In the very [first chapter](/beep-beep/jobs.md#configuration), we got acquainted
+with the queue settings and drivers for them. In approximately the same way, we
+can do almost the same thing with the help of the PHP code using `create()` 
+method through `Jobs` instance.
+
+To create a new queue, the following types of DTO are available to you:
+
+- `Spiral\RoadRunner\Jobs\Queue\AMQPCreateInfo` for AMQP queues.
+- `Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo` for Beanstalk queues.
+- `Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo` for Ephemeral queues.
+- `Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo` for SQS queues.
+
+Such a DTO with the appropriate settings should be passed to the `create()` 
+method to create the corresponding queue:
 
 ```php
 use Spiral\RoadRunner\Jobs\Jobs;
-use Spiral\RoadRunner\Jobs\Queue\CreateInfo;
+use Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo;
 
 $jobs = new Jobs();
 
 //
-// Create a new "example" queue
+// Create a new "example" Ephemeral queue
 //
-$queue = $jobs->create(new CreateInfo(
-    driver: 'amqp',
+$queue = $jobs->create(new EphemeralCreateInfo(
     name: 'example',
+    priority: 42,
+    prefetch: 10,
 ));
 ```
-
-All settings for creating a new queue are configured using a special
-`CreateInfo` DTO, which is a number of mandatory and additional options.
-
-In addition, you may notice that the possibilities are slightly less than you
-would configure a new queue using the configuration file and this way of queue
-creation has a number of limitations:
-- You need to already have a configured driver in the case to create a new queue.
-- Only common queue settings are available to you: `name`, `driver` and `priority`.
 
 ### Getting A List Of Queues
 
