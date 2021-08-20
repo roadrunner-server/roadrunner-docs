@@ -1058,7 +1058,10 @@ You can find versioned proto-payloads here: [Proto](https://github.com/spiral/ro
   The error returned if the request fails.
 
 - `Declare(in *jobsv1beta.DeclareRequest, out *jobsv1beta.Empty) error` - The
-  arguments: the first argument is an `DeclareRequest`
+  arguments: the first argument is an `DeclareRequest`, which contains one
+  `map<string, string>` pipeline field of queue configuration; the second
+  argument is `Empty`, which means that the function does not return a result.
+  The error returned if the request fails.
 
 - `Stat(in *jobsv1beta.Empty, out *jobsv1beta.Stats) error` - TODO
 
