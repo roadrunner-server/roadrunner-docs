@@ -65,10 +65,6 @@ jobs:
 - The `server` section is responsible for configuring the server. Previously, we
   have already met with its description when setting up the [PHP Worker](/php/worker.md).
 
-- The `amqp` section contains settings for connecting to RabbitMQ. As the name
-  implies, the settings are specific only for the RabbitMQ driver and *may not*
-  be available if you use some other driver.
-
 - And finally, the `jobs` section is responsible for the work of the queues
   themselves. It contains information on how the RoadRunner should work with
   connections to drivers, what can be handled by the consumer, and other
@@ -302,9 +298,9 @@ Below is a more detailed description of each of the amqp-specific options:
 
 ### Beanstalk Driver
 
-Beanstalk is a queue server developed by Amazon and provides both a 
-[local application](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html)
-and the ability to run the server inside [AWS Elastic](https://aws.amazon.com/elasticbeanstalk/). 
+Beanstalk is a simple and fast general purpose work queue. To install Beanstalk,
+you can use the [local queue server](https://github.com/beanstalkd/beanstalkd)
+or run the server inside [AWS Elastic](https://aws.amazon.com/elasticbeanstalk/). 
 You can choose any option that is convenient for you.
 
 Setting up the server is similar to setting up AMQP and requires specifying the
@@ -1018,12 +1014,41 @@ $jobs->resume('emails', 'billing');
 All communication between PHP and GO made by the RPC calls with protobuf payloads.
 You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
 
-- `Push(in *jobsv1beta.PushRequest, out *jobsv1beta.Empty) error` - TODO
-- `PushBatch(in *jobsv1beta.PushBatchRequest, out *jobsv1beta.Empty) error` - TODO
-- `Pause(in *jobsv1beta.Maintenance, out *jobsv1beta.Empty) error` - TODO
-- `Resume(in *jobsv1beta.Maintenance, out *jobsv1beta.Empty) error` - TODO
-- `List(in *jobsv1beta.Empty, out *jobsv1beta.Maintenance) error` - TODO
-- `Declare(in *jobsv1beta.DeclareRequest, out *jobsv1beta.Empty) error` - TODO
+- `Push(in *jobsv1beta.PushRequest, out *jobsv1beta.Empty) error` - The
+  arguments: the first argument is a `PushRequest`, which contains one field
+  of the `Job` being sent to the queue; the second argument is `Empty`, which
+  means that the function does not return a result (returns nothing). The error
+  returned if the request fails.
+
+- `PushBatch(in *jobsv1beta.PushBatchRequest, out *jobsv1beta.Empty) error` -
+  The arguments: the first argument is a `PushBatchRequest`, which contains one
+  repeated (list) field of the `Job` being sent to the queue; the second
+  argument is `Empty`, which means that the function does not return a result.
+  The error returned if the request fails.
+
+- `Pause(in *jobsv1beta.Pipelines, out *jobsv1beta.Empty) error` - The arguments:
+  the first argument is a `Pipelines`, which contains one repeated (list)
+  field with the `string` names of the queues to be paused; the second
+  argument is `Empty`, which means that the function does not return a result.
+  The error returned if the request fails.
+
+- `Resume(in *jobsv1beta.Pipelines, out *jobsv1beta.Empty) error` - The
+  arguments: the first argument is a `Pipelines`, which contains one
+  repeated (list) field with the `string` names of the queues to be resumed; the
+  second argument is `Empty`, which means that the function does not return a
+  result. The error returned if the request fails.
+
+- `List(in *jobsv1beta.Empty, out *jobsv1beta.Pipelines) error` - The
+  arguments: the first argument is an `Empty`, meaning that the function does
+  not accept anything (from the point of view of the PHP API, an empty string
+  should be passed); the second argument is `Pipelines`, which contains one
+  repeated (list) field with the `string` names of the all available queues.
+  The error returned if the request fails.
+
+- `Declare(in *jobsv1beta.DeclareRequest, out *jobsv1beta.Empty) error` - The
+  arguments: the first argument is an `DeclareRequest`
+
+- `Stat(in *jobsv1beta.Empty, out *jobsv1beta.Stats) error` - TODO
 
 
 From the PHP point of view, such requests (`List` for example) are as follows:
