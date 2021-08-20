@@ -770,6 +770,54 @@ while ($task = $consumer->waitTask()) {
 We got acquainted with the possibilities of receiving and processing tasks, but
 we do not yet know what the received task is. Let's see what data it contains.
 
+### Task Failing
+
+In some cases, an error may occur during task processing. In this case, you
+should use the `fail()` method, informing the RoadRunner about it. The method
+takes two arguments. The first argument is required and expects any string or
+string-like (instance of Stringable, for example any exception) value with an
+error message. The second is optional and tells the server to restart this task.
+
+```php
+$consumer = new Spiral\RoadRunner\Jobs\Consumer();
+$shouldBeRestarted = false;
+
+while ($task = $consumer->waitTask()) {
+    try {
+        //
+        // Do something...
+        //
+        $task->complete();
+    } catch (\Throwable $e) {
+        $task->fail($e, $shouldBeRestarted);
+    }
+}
+```
+
+In the case that the next time you restart the task, you should update the
+headers, you can use the appropriate method by adding or changing the headers 
+of the received task.
+
+```php
+$task
+    ->withHeader('attempts', (int)$task->getHeaderLine('attempts') - 1)
+    ->withHeader('retry-delay', (int)$task->getHeaderLine('retry-delay') * 2)
+    ->fail('Something went wrong', requeue: true)
+;
+```
+
+In addition, you can re-specify the task execution delay. For example, in the
+code above, you may have noticed the use of a custom header `"retry-delay"`, the
+value of which doubled after each restart, so this value can be used to specify
+the delay in the next task execution.
+
+```php
+$task
+    ->withDelay((int)$task->getHeaderLine('retry-delay'))
+    ->fail('Something went wrong', true)
+;
+```
+
 ### Received Task ID
 
 Each task in the queue has a **unique** identifier. This allows you to
