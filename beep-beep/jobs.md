@@ -371,6 +371,18 @@ connection configuration will differ from the one we are already used to for
 AMQP and Beanstalk. In order to get acquainted with how to create a SQS server, 
 just use the [ready-made documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configuring.html).
 
+Please also note that although installation as a server using AWS services is
+permissible, however, it is possible to install this server locally by
+downloading the corresponding executable file from Amazon servers and running 
+it using Java (you will also need the installed Java Runtime Environment):
+
+```sh
+wget https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-1.2.0.jar
+
+// Where "custom.conf" is your own config file
+java -Dconfig.file=custom.conf -jar elasticmq-server-1.2.0.jar
+```
+
 After you have created the SQS server, you need to specify the following 
 connection settings in `sqs` configuration settings:
 
