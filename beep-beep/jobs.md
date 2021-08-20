@@ -426,8 +426,10 @@ jobs:
     queue: default
     
     # Optional section.
+    # Default: empty
     attributes:
-      # ... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
+      DelaySeconds: 42
+      # etc... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
       
     # Optional section.
     # Default: empty
