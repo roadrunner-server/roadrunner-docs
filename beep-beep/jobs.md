@@ -189,8 +189,8 @@ implementations is not guaranteed.
 To install and configure the RabbitMQ, use the corresponding
 [documentation page](https://www.rabbitmq.com/download.html). After that, you
 should configure the connection to the server in the "`amqp`" section. This
-configuration section contains exactly one `addr` key with a connection DSN
-in the format: `amqp://[USER]:[PASSWORD]@[HOST]:[PORT]`.
+configuration section contains exactly one `addr` key with a 
+[connection DSN](https://www.rabbitmq.com/uri-spec.html).
 
 ```yaml
 amqp:
