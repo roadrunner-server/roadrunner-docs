@@ -82,7 +82,6 @@ jobs:
   pipeline_size: 100000
   pool:
     num_workers: 10
-    max_jobs: 0
     allocate_timeout: 60s
     destroy_timeout: 60s
   consume: [ "queue-name" ]
@@ -117,16 +116,8 @@ out what they are responsible for.
   with jobs inside the PQ, they won't be lost, because jobs are deleted from the
   drivers' queue only after Ack.
 
-- `pool.num_workers` - How many worker processes will be started. Zero 
-  (or nothing) means the number of logical CPUs.
-
-- `pool.max_jobs` - Maximal count of worker executions. Zero (or nothing) means
-  no limit.
-
-- `pool.allocate_timeout` - Timeout for worker allocation. Zero means no limit.
-
-- `pool.destroy_timeout` - Timeout for worker destroying before process killing.
-  Zero means no limit.
+- `pool` - All settings in this section are similar to the worker pool settings
+  described on the [configuration page](https://roadrunner.dev/docs/intro-config).
 
 - `consume` - Contains an array of the names of all queues specified in the
   `"pipelines"` section, which should be processed by the concierge specified in
