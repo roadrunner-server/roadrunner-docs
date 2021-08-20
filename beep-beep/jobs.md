@@ -355,27 +355,19 @@ driver. Let's take a look at what they are responsible for:
 
 [Amazon SQS (Simple Queue Service)](https://aws.amazon.com/sqs/) is an
 alternative queue server also developed by Amazon and is also part of the AWS
-service infrastructure.
+service infrastructure. If you prefer to use the "cloud" option, then you can
+use the [ready-made documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configuring.html)
+for its installation.
 
-However, unlike Beanstalk, it is located entirely on Amazon servers, so the
-connection configuration will differ from the one we are already used to for
-AMQP and Beanstalk. In order to get acquainted with how to create a SQS server, 
-just use the [ready-made documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configuring.html).
-
-Please also note that although installation as a server using AWS services is
-permissible, however, it is possible to install this server locally by
-downloading the corresponding executable file from Amazon servers and running 
-it using Java (you will also need the installed Java Runtime Environment):
-
-```sh
-wget https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-1.2.0.jar
-
-// Where "custom.conf" is your own config file
-java -Dconfig.file=custom.conf -jar elasticmq-server-1.2.0.jar
-```
+In addition to the possibility of using this queue server within the AWS, you
+can also use the local installation of this system on your own servers. If you
+prefer this option, then you can use [softwaremill's implementation](https://github.com/softwaremill/elasticmq)
+of the Amazon SQS server.
 
 After you have created the SQS server, you need to specify the following 
-connection settings in `sqs` configuration settings:
+connection settings in `sqs` configuration settings. Unlike AMQP and Beanstalk,
+SQS requires more values to set up a connection and will be different from what
+we're used to:
 
 ```yaml
 sqs:
