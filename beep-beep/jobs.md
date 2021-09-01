@@ -189,17 +189,10 @@ jobs:
   pipelines:
     # User defined name of the queue.
     example:
-      # Required section.
-      # Should be "boltdb" for the local driver.
       driver: boltdb
-      
-      # Optional section.
-      # Default: 10
-      priority: 10
-      
-      # Optional section.
-      # Default: 1000
-      prefetch: 1000
+      prefetch: 100
+      file: "rr1.db"
+      priority: 1
 ```
 
 Below is a more detailed description of each of the in-memory-specific options:
@@ -209,6 +202,8 @@ Below is a more detailed description of each of the in-memory-specific options:
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
   prefetch number of jobs even if PQ is full.
+
+- `file` - boltdb database file to use. Might be a path with file: `foo/bar/rr1.db`. Default: `rr.db`. 
 
 ### AMQP Driver
 
