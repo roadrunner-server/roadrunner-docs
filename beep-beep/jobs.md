@@ -55,7 +55,7 @@ jobs:
                         # the consumer specified in the "server" section.
   pipelines:
     test:               # RoadRunner queue identifier
-      driver: ephemeral # - Queue driver name
+      driver: memory    # - Queue driver name
       queue: test       # - Internal (driver's) queue identifier
 ```
 
@@ -189,10 +189,17 @@ jobs:
   pipelines:
     # User defined name of the queue.
     example:
+      # Required section.
+      # Should be "boltdb" for the local driver.
       driver: boltdb
-      prefetch: 100
-      file: "rr1.db"
-      priority: 1
+      
+      # Optional section.
+      # Default: 10
+      priority: 10
+      
+      # Optional section.
+      # Default: 1000
+      prefetch: 1000
 ```
 
 Below is a more detailed description of each of the in-memory-specific options:
@@ -204,6 +211,7 @@ Below is a more detailed description of each of the in-memory-specific options:
   prefetch number of jobs even if PQ is full.
 
 - `file` - boltdb database file to use. Might be a path with file: `foo/bar/rr1.db`. Default: `rr.db`. 
+
 
 ### AMQP Driver
 
