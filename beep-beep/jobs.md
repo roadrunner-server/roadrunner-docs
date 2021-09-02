@@ -55,7 +55,7 @@ jobs:
                         # the consumer specified in the "server" section.
   pipelines:
     test:               # RoadRunner queue identifier
-      driver: ephemeral # - Queue driver name
+      driver: memory    # - Queue driver name
       queue: test       # - Internal (driver's) queue identifier
 ```
 
@@ -127,7 +127,7 @@ out what they are responsible for.
   RoadRunner. The key is a unique *queue identifier*, and the value is an object
   from the settings specific to each driver (we will talk about it later).
 
-### Ephemeral (Memory) Driver
+### Memory Driver
 
 This type of driver is already supported by the RoadRunner and does not require
 any additional installations.
@@ -137,7 +137,7 @@ destroyed when the RoadRunner Server is restarted. If you need persistent
 queue, then it is recommended to use alternative drivers: `amqp`, `beanstalk` 
 or `sqs`.
 
-The complete ephemeral driver configuration looks like this:
+The complete `memory` driver configuration looks like this:
 
 ```yaml
 jobs:
@@ -145,8 +145,8 @@ jobs:
     # User defined name of the queue.
     example:
       # Required section.
-      # Should be "ephemeral" for the ephemeral driver.
-      driver: ephemeral
+      # Should be "memory" for the in-memory driver.
+      driver: memory
       
       # Optional section.
       # Default: 10
@@ -157,21 +157,66 @@ jobs:
       prefetch: 10
 ```
 
-Below is a more detailed description of each of the ephemeral-specific options:
-- `priority` - Queue default priority for for each task pushed into this queue 
+Below is a more detailed description of each of the in-memory-specific options:
+- `priority` - Queue default priority for each task pushed into this queue 
   if the priority value for these tasks was not explicitly set.
 
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
   prefetch number of jobs even if PQ is full.
 
-> Please note that this driver cannot have more than 1000 tasks with delay at 
-> the same time.
+> Please note that this driver cannot hold more than 1000 tasks with delay at 
+> the same time (RR limitation)
+
+### Local (based on the boltdb) Driver
+
+This type of driver is already supported by the RoadRunner and does not require
+any additional installations. It uses boltdb as its main storage for the jobs. This driver should be used locally, for
+testing or developing purposes. It can be used in the production, but this type of driver can't handle
+huge load. Maximum RPS it can have no more than 30-50.
+
+Data in this driver persists in the boltdb database file. You can't open same file simultaneously for the 2 pipelines or
+for the KV plugin and Jobs plugin. This is boltdb limitation on concurrent access from the 2 processes to the same file.
+
+The complete `boltdb` driver configuration looks like this:
+
+```yaml
+
+boltdb:
+  permissions: 0777
+
+jobs:
+  pipelines:
+    # User defined name of the queue.
+    example:
+      # Required section.
+      # Should be "boltdb" for the local driver.
+      driver: boltdb
+      
+      # Optional section.
+      # Default: 10
+      priority: 10
+      
+      # Optional section.
+      # Default: 1000
+      prefetch: 1000
+```
+
+Below is a more detailed description of each of the in-memory-specific options:
+- `priority` - Queue default priority for each task pushed into this queue
+  if the priority value for these tasks was not explicitly set.
+
+- `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
+  PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
+  prefetch number of jobs even if PQ is full.
+
+- `file` - boltdb database file to use. Might be a path with file: `foo/bar/rr1.db`. Default: `rr.db`. 
+
 
 ### AMQP Driver
 
-Strictly speaking, AMQP is a protocol, not a full-fledged driver, so you can use
-any servers that support this protocol, such as: 
+Strictly speaking, AMQP (and 0.9.1 version used) is a protocol, not a full-fledged driver, so you can use
+any servers that support this protocol (on your own, only rabbitmq was tested) , such as: 
 [RabbitMQ](https://www.rabbitmq.com/), [Apache Qpid](http://qpid.apache.org/) or
 [Apache ActiveMQ](http://activemq.apache.org/). However, it is recommended to
 use RabbitMQ as the main implementation, and reliable performance with other 
@@ -544,7 +589,7 @@ $second = $task->withValue('john.snow@the-wall.north');
 
 ### Task Dispatching
 
-And to send tasks to the queue, we can use several different methods:
+And to send tasks to the queue, we can use different methods:
 `dispatch()` and `dispatchMany()`. The difference between these two
 implementations is that the first one sends a task to the queue, returning a
 dispatched task object, while the second one dispatches multiple tasks,
@@ -996,7 +1041,7 @@ To create a new queue, the following types of DTO are available to you:
 
 - `Spiral\RoadRunner\Jobs\Queue\AMQPCreateInfo` for AMQP queues.
 - `Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo` for Beanstalk queues.
-- `Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo` for Ephemeral queues.
+- `Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo` for in-memory queues.
 - `Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo` for SQS queues.
 
 Such a DTO with the appropriate settings should be passed to the `create()` 
@@ -1004,14 +1049,14 @@ method to create the corresponding queue:
 
 ```php
 use Spiral\RoadRunner\Jobs\Jobs;
-use Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo;
+use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
 
 $jobs = new Jobs();
 
 //
-// Create a new "example" Ephemeral queue
+// Create a new "example" in-memory queue
 //
-$queue = $jobs->create(new EphemeralCreateInfo(
+$queue = $jobs->create(new MemoryCreateInfo(
     name: 'example',
     priority: 42,
     prefetch: 10,
