@@ -1041,7 +1041,7 @@ To create a new queue, the following types of DTO are available to you:
 
 - `Spiral\RoadRunner\Jobs\Queue\AMQPCreateInfo` for AMQP queues.
 - `Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo` for Beanstalk queues.
-- `Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo` for Ephemeral queues.
+- `Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo` for in-memory queues.
 - `Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo` for SQS queues.
 
 Such a DTO with the appropriate settings should be passed to the `create()` 
@@ -1049,14 +1049,14 @@ method to create the corresponding queue:
 
 ```php
 use Spiral\RoadRunner\Jobs\Jobs;
-use Spiral\RoadRunner\Jobs\Queue\EphemeralCreateInfo;
+use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
 
 $jobs = new Jobs();
 
 //
-// Create a new "example" Ephemeral queue
+// Create a new "example" in-memory queue
 //
-$queue = $jobs->create(new EphemeralCreateInfo(
+$queue = $jobs->create(new MemoryCreateInfo(
     name: 'example',
     priority: 42,
     prefetch: 10,
