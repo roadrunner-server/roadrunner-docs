@@ -22,7 +22,14 @@ $psrFactory = new Psr7\Factory\Psr17Factory();
 
 $worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
 
-while ($req = $worker->waitRequest()) {
+while (true) {
+    try {
+        $req = $worker->waitRequest();
+    } catch (\Throwable $e) {
+        $worker->respond($psrFactory->createResponse(400));
+        continue;
+    }
+    
     try {
         $rsp = new Psr7\Response();
         $rsp->getBody()->write('Hello world!');
