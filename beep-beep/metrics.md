@@ -36,8 +36,8 @@ metrics:
 To send metric from the application:
 
 ```php
-$metrics = new RoadRunner\Metrics\Metrics(
-    Goridge\RPC\RPC::create(RoadRunner\Environment::fromGlobals()->getRPCAddress())
+$metrics = new Spiral\RoadRunner\Metrics\Metrics(
+    Spiral\Goridge\RPC\RPC::create(Spiral\RoadRunner\Environment::fromGlobals()->getRPCAddress())
 );
 
 $metrics->add('app_metric_counter', 1);
@@ -62,8 +62,8 @@ metrics:
 You should specify values for your labels while pushing the metric:
 
 ```php
-$metrics = new RoadRunner\Metrics\Metrics(
-    Goridge\RPC\RPC::create(RoadRunner\Environment::fromGlobals()->getRPCAddress())
+$metrics = new Spiral\RoadRunner\Metrics\Metrics(
+    Spiral\Goridge\RPC\RPC::create(Spiral\RoadRunner\Environment::fromGlobals()->getRPCAddress())
 );
 
 $metrics->add('app_type_duration', 0.5, ['some-type']);
@@ -76,6 +76,6 @@ You can declare metric from PHP application itself:
 ```php
 $metrics->declare(
     'test',
-    RoadRunner\Metrics\Collector::counter()->withHelp('Test counter')
+    Spiral\RoadRunner\Metrics\Collector::counter()->withHelp('Test counter')
 );
 ```
