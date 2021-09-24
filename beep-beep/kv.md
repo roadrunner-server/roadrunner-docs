@@ -130,7 +130,7 @@ Below is a more detailed description of each of the boltdb-specific options:
   exist in, RoadRunner will create this file on its own at startup. Note that this
   must be an existing directory, otherwise a "The system cannot find the path
   specified" error will be occurred, indicating that the full database pathname is
-  invalid.
+  invalid. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`.
 
 - `permissions` - The file permissions in UNIX format of the database file, set
   at the time of its creation. If the file already exists, the permissions will
