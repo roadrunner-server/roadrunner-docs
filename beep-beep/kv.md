@@ -109,11 +109,7 @@ kv:
 
     # Optional section.
     # Default: "rr.db"
-    file: "rr.db"
-
-    # Optional section.
-    # Default: "."
-    dir: "."
+    file: "./rr.db"
 
     # Optional section.
     # Default: 0777
@@ -130,15 +126,11 @@ kv:
 
 Below is a more detailed description of each of the boltdb-specific options:
 
-- `file` - Database file pathname name. In the case that such a file does not
+- `file` - Database file path name. In the case that such a file does not
   exist in, RoadRunner will create this file on its own at startup. Note that this
   must be an existing directory, otherwise a "The system cannot find the path
   specified" error will be occurred, indicating that the full database pathname is
   invalid.
-
-- `dir` - The directory prefix string where the database file will be located.
-  When forming the path to the file, this prefix will be added before the pathname
-  defined in `file` section.
 
 - `permissions` - The file permissions in UNIX format of the database file, set
   at the time of its creation. If the file already exists, the permissions will
