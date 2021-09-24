@@ -210,7 +210,7 @@ Below is a more detailed description of each of the in-memory-specific options:
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
   prefetch number of jobs even if PQ is full.
 
-- `file` - boltdb database file to use. Might be a path with file: `foo/bar/rr1.db`. Default: `rr.db`. 
+- `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`. 
 
 
 ### AMQP Driver
