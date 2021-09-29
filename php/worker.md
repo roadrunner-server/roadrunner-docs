@@ -22,14 +22,23 @@ $psrFactory = new Psr7\Factory\Psr17Factory();
 
 $worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
 
-while ($req = $worker->waitRequest()) {
+while (true) {
     try {
-        $rsp = new Psr7\Response();
-        $rsp->getBody()->write('Hello world!');
+        $request = $psr7->waitRequest();
 
-        $worker->respond($rsp);
-    } catch (\Throwable $e) {
-        $worker->getWorker()->error((string)$e);
+        if (!($request instanceof \Psr\Http\Message\ServerRequestInterface)) { // Termination request received
+            break;
+        }
+    } catch (\Throwable) {
+        $psr7->respond(new Response(400)); // Bad Request
+        continue;
+    }
+
+    try {
+        // Application code logic
+        $psr7->respond(new Response(200, [], 'Hello RoadRunner!'));
+    } catch (\Throwable) {
+        $psr7->respond(new Response(500, [], 'Something Went Wrong!'));
     }
 }
 ```
@@ -101,10 +110,6 @@ In some cases, RR would not be able to handle errors produced by PHP worker (PHP
 
 ```
 $ rr serve
-DEBU[0003] [rpc]: started
-DEBU[0003] [http]: started
-ERRO[0003] [http]: unable to connect to worker: unexpected response, header is missing: exit status 1
-DEBU[0003] [rpc]: stopped
 ```
 
 You can troubleshoot it by invoking `command` set in `.rr` file manually:
@@ -119,4 +124,4 @@ first input character.
 ## Other Type of Workers
 
 Different roadrunner implementations might define their own worker APIs,
-examples: [GRPC](https://github.com/spiral/php-grpc), [Workflow/Activity Worker](https://docs.temporal.io/docs/php-workers/).
+examples: [GRPC](https://github.com/spiral/roadrunner-grpc), [Workflow/Activity Worker](https://docs.temporal.io/docs/php-workers/).
