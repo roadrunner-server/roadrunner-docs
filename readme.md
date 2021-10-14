@@ -39,6 +39,7 @@ manager.
     * [Building a Server](beep-beep/build.md)
     * [KeyValue Storage](beep-beep/kv.md)
     * [RPC](beep-beep/rpc.md)
+    * [Jobs](beep-beep/jobs.md)
     * [Write a Plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
 * Workflow Engine
