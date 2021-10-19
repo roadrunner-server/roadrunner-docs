@@ -18,6 +18,8 @@ service:
     process_num: 10
     exec_timeout: 0
     remain_after_exit: true
+    env:  
+       foo: "BAR"
     restart_sec: 1
 
   some_service_2:
@@ -25,6 +27,8 @@ service:
     process_num: 1
     remain_after_exit: true
     restart_delay: 1s
+    env:
+       foo: "BAR"
     exec_timeout: 0
 ```
 
@@ -41,3 +45,4 @@ Description:
    outside and if `remain_after_exit` will be true, the process will be restarted.
 
 6. `restart_sec` - default: 30 seconds. Delay between process stop and restart.
+7. `env` - environment variables to pass to the underlying process from the config.
