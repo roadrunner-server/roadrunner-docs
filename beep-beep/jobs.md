@@ -212,6 +212,45 @@ Below is a more detailed description of each of the in-memory-specific options:
 
 - `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`. 
 
+### NATS Driver
+
+NATS driver supported in the RR starting from the `v2.5.0` and includes only NATS JetStream support.
+The complete `NATS` driver configuration looks like this:
+
+```yaml
+nats:
+  addr: "demo.nats.io"
+
+jobs:
+  num_pollers: 10
+  pipeline_size: 100000
+  pool:
+    num_workers: 10
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+
+  pipelines:
+    test-1:
+      driver: nats
+      prefetch: 100
+      subject: default
+      stream: foo
+      deliver_new: true
+      rate_limit: 100
+      delete_stream_on_stop: false
+      delete_after_ack: false
+      priority: 2
+```
+
+Below is a more detailed description of each of the in-memory-specific options:
+
+- `subject` - nats [subject](https://docs.nats.io/nats-concepts/subjects).
+- `stream` - stream name.
+- `deliver_new` - the consumer will only start receiving messages that were created after the consumer was created.
+- `rate_limit` - NATS rate [limiter](https://docs.nats.io/jetstream/concepts/consumers#ratelimit).
+- `delete_stream_on_stop` - delete the whole stream when pipeline stopped.
+- `delete_after_ack` - delete message after it successfully acknowledged.
 
 ### AMQP Driver
 

@@ -4,7 +4,7 @@ RoadRunner use Endure to manage dependencies, this allows you to tweak and exten
 
 #### Install Golang
 
-To build an application server you need [Golang 1.16+](https://golang.org/dl/) to be installed.
+To build an application server you need [Golang 1.17+](https://golang.org/dl/) to be installed.
 
 #### Step-by-step walkthrough  
 
@@ -13,4 +13,4 @@ To build an application server you need [Golang 1.16+](https://golang.org/dl/) t
 
 You can now start your server without building `go run cmd/rr/main.go serve`.
 
-> See how to create [http middleware](/http/middleware.md) in order to intercept HTTP flow.
+> See how to create [http middleware](/http/writing-a-middleware.md) in order to intercept HTTP flow.

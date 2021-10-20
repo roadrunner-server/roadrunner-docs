@@ -1,4 +1,5 @@
-### Pub/Sub
+### PHP Client library
+- https://github.com/spiral/broadcast
 
 Roadrunner PubSub interface adds the ability for any storage to implement [Publish/Subscribe messaging paradigm](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern). Internally, Roadrunner implements Pub/Sub interface for the `Redis` and `memory` storages.
 Pub/Sub interface has 3 major parts:

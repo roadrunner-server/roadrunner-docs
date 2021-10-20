@@ -26,8 +26,11 @@ manager.
 * HTTPs and HTTP/2
     * [HTTPs and HTTP/2](http/https.md)
     * [Static Content](http/static.md)
+    * [HTTP error codes](beep-beep/http-error-codes.md)
     * [Headers](http/headers.md)
-    * [Golang Middleware](http/middleware.md)
+    * [Access logs](http/access-logs.md)
+    * [Available middleware](http/available-middleware.md)
+    * [Golang Middleware](http/writing-a-middleware.md)
 * App Server
     * [CLI Commands](beep-beep/cli.md)
     * [Logging](beep-beep/logging.md)
@@ -40,6 +43,7 @@ manager.
     * [KeyValue Storage](beep-beep/kv.md)
     * [RPC](beep-beep/rpc.md)
     * [Jobs](beep-beep/jobs.md)
+    * [GRPC](beep-beep/grpc.md)
     * [Write a Plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
 * Workflow Engine

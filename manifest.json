@@ -27,10 +27,12 @@
   {
     "title": "HTTPs and HTTP2",
     "links": {
+      "http/access-logs": "Access logs",
       "http/https": "HTTPs and HTTP/2",
       "http/static": "Static Content",
       "http/headers": "Headers",
-      "http/middleware": "Middleware"
+      "http/available-middleware": "Available middleware",
+      "http/writing-a-middleware": "Writing a Go middleware"
     }
   },
   {
@@ -46,6 +48,7 @@
       "beep-beep/build": "Building a Server",
       "beep-beep/kv": "KeyValue Storage",
       "beep-beep/jobs": "Jobs (Queues)",
+      "beep-beep/grpc": "GRPC",
       "beep-beep/rpc": "RPC",
       "beep-beep/plugin": "Write a Plugin",
       "beep-beep/service": "Service plugin"

@@ -7,7 +7,7 @@ implements [PubSub](https://github.com/spiral/roadrunner/blob/master/pkg/pubsub/
 
 Websockets plugin uses protobuf messages for the RPC calls (PHP part). The same messages, but JSON-encoded used on the
 client side (browser, devices). All proto messages located in the
-Roadrunner [pkg](https://github.com/spiral/roadrunner/tree/master/pkg/proto/websockets) folder.
+Roadrunner [pkg](https://github.com/spiral/roadrunner-plugins/blob/master/internal/proto/websockets/v1beta/websockets.proto) folder.
 
 #### RPC interface
 
@@ -42,4 +42,4 @@ following:
 #### Architecture
 
 The architecture diagram for the WebSockets plugin can be
-found [here](https://github.com/spiral/roadrunner/tree/master/plugins/websockets/doc)
+found [here](https://github.com/spiral/roadrunner-plugins/blob/master/websockets/doc)
