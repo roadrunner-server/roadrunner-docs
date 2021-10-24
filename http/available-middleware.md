@@ -51,7 +51,7 @@ http:
     destroy_timeout: 60s
 ```
 
-HTTP middleware to handle `X-Sendfile` [header](https://github.com/spiral/roadrunner-plugins/issues/9)
+HTTP middleware handles `X-Sendfile` [header](https://github.com/spiral/roadrunner-plugins/issues/9)
 Middleware reads the file in 10MB chunks. So, for example for the 5Gb file, only 10MB of RSS will be used. If the file size is smaller than 10MB, the middleware fits the buffer to the file size.
 
 ---
