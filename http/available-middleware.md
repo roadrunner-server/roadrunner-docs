@@ -25,13 +25,13 @@ Used to compress incoming or outgoing data with the default gzip compression lev
 
 - ### Headers
 
-Section link: [link](headers.md)
+Section link: [link](/http/headers.md)
 
 ---
 
 - ### Static
 
-Section link: [link](static.md)
+Section link: [link](/http/static.md)
 
 ----
 
