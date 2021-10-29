@@ -56,7 +56,7 @@ metrics:
     app_type_duration:
       type: histogram
       help: "Application counter."
-      labels: ["type"]
+      labels: ["label_1", "label_2"]
 ```
 
 You should specify values for your labels while pushing the metric:
@@ -65,8 +65,12 @@ You should specify values for your labels while pushing the metric:
 $metrics = new Spiral\RoadRunner\Metrics\Metrics(
     Spiral\Goridge\RPC\RPC::create(Spiral\RoadRunner\Environment::fromGlobals()->getRPCAddress())
 );
+/**
+ * @var array<array-key, string>
+ */
+$labels = ['label_1_value', 'label_2_value'];
 
-$metrics->add('app_type_duration', 0.5, ['some-type']);
+$metrics->add('app_type_duration', 0.5, $labels);
 ```
 
 ## Declare metrics
