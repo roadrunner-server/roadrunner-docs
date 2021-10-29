@@ -124,4 +124,4 @@ first input character.
 ## Other Type of Workers
 
 Different roadrunner implementations might define their own worker APIs,
-examples: [GRPC](https://github.com/spiral/roadrunner-grpc), [Workflow/Activity Worker](https://docs.temporal.io/docs/php-workers/).
+examples: [GRPC](https://github.com/spiral/roadrunner-grpc), [Workflow/Activity Worker](https://docs.temporal.io/docs/php/workers/).
