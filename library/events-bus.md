@@ -1,5 +1,7 @@
 ## RoadRunner Events bus
 
+- `[STARTING FROM RR 2.6.0]`
+
 RR events bus might be useful when one plugin raises some event on which another plugin should react. For example,
 plugins like sentry might log errors from the `http` plugin.
 
