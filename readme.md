@@ -46,6 +46,8 @@ manager.
     * [GRPC](beep-beep/grpc.md)
     * [Write a Plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
+    * [AWS Lambda](library/aws-lambda.md)
+    * [RR Events Bus](library/events-bus.md)
 * Workflow Engine
     * [About Temporal.IO](workflow/temporal.md)
     * [Worker](workflow/worker.md)
