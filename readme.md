@@ -44,8 +44,9 @@ manager.
     * [RPC](beep-beep/rpc.md)
     * [Jobs](beep-beep/jobs.md)
     * [GRPC](beep-beep/grpc.md)
-    * [Write a Plugin](beep-beep/plugin.md)
+    * [Write a plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
+    * [TCP plugin](beep-beep/tcp.md)
     * [AWS Lambda](library/aws-lambda.md)
     * [RR Events Bus](library/events-bus.md)
 * Workflow Engine

@@ -52,6 +52,7 @@
       "beep-beep/rpc": "RPC",
       "beep-beep/plugin": "Write a Plugin",
       "beep-beep/service": "Service plugin",
+      "beep-beep/tcp": "TCP plugin",
       "library/lambda": "AWS lambda",
       "library/events-bus": "Using RR events bus"
     }
