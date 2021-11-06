@@ -30,15 +30,15 @@ while (true) {
             break;
         }
     } catch (\Throwable) {
-        $psr7->respond(new Response(400)); // Bad Request
+        $psr7->respond(new Psr7\Response(400)); // Bad Request
         continue;
     }
 
     try {
         // Application code logic
-        $psr7->respond(new Response(200, [], 'Hello RoadRunner!'));
+        $psr7->respond(new Psr7\Response(200, [], 'Hello RoadRunner!'));
     } catch (\Throwable) {
-        $psr7->respond(new Response(500, [], 'Something Went Wrong!'));
+        $psr7->respond(new Psr7\Response(500, [], 'Something Went Wrong!'));
     }
 }
 ```
