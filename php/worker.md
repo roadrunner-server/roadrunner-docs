@@ -20,7 +20,7 @@ include "vendor/autoload.php";
 $worker = RoadRunner\Worker::create();
 $psrFactory = new Psr7\Factory\Psr17Factory();
 
-$worker = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
+$psr7 = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
 
 while (true) {
     try {
