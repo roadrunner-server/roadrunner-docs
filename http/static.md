@@ -10,17 +10,18 @@ To enable static content serving use the configuration inside the http section:
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:44933
-  # ...
-    static:
-      dir: "."
-      forbid: [""]
-      allow: [".txt", ".php"]
-      calculate_etag: false
-      weak: false
-      request:
-        input: "custom-header"
-      response:
-        output: "output-header"
+  middleware: [ "static" ]
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+  static:
+    dir: "."
+    forbid: [ "" ]
+    calculate_etag: false
+    weak: false
+    allow: [ ".txt", ".php" ]
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
 ```
 
 Where:
@@ -38,19 +39,25 @@ To combine static content with other middleware, use the following sequence (sta
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:44933
-  # ...
-  middleware: [ "headers", "gzip" ]
-  # ...
+  middleware: [ "static", headers", "gzip" ]
+  # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-headers).
   headers:
-    # ...
-    static:
-      dir: "."
-      forbid: [""]
-      allow: [".txt", ".php"]
-      calculate_etag: false
-      weak: false
-      request:
-        input: "custom-header"
-      response:
-        output: "output-header"
+    cors:
+      allowed_origin: "*"
+      allowed_headers: "*"
+      allowed_methods: "GET,POST,PUT,DELETE"
+      allow_credentials: true
+      exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
+      max_age: 600
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+  static:
+    dir: "."
+    forbid: [ "" ]
+    calculate_etag: false
+    weak: false
+    allow: [ ".txt", ".php" ]
+    request:
+      input: "custom-header"
+    response:
+      output: "output-header"
 ```
