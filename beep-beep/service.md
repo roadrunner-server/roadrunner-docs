@@ -19,7 +19,7 @@ service:
     exec_timeout: 0
     remain_after_exit: true
     env:  
-       foo: "BAR"
+       - foo: "BAR"
     restart_sec: 1
 
   some_service_2:
@@ -28,7 +28,7 @@ service:
     remain_after_exit: true
     restart_delay: 1s
     env:
-       foo: "BAR"
+       - foo: "BAR"
     exec_timeout: 0
 ```
 
