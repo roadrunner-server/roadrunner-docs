@@ -11,10 +11,12 @@ grpc:
   # This option is required
   listen: "tcp://localhost:9001"
 
-  # Proto file to use
+  # Proto files to use [Multiply files since RR v2.6.0]
   #
-  # This option is required
-  proto: "proto/test/test.proto"
+  # This option is required. At least one proto file must be specified.
+  proto:
+      - "proto/test/test.proto"
+      - "proto/health/health.proto"
 
   # GRPC TLS configuration
   #
