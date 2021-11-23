@@ -15,8 +15,8 @@ grpc:
   #
   # This option is required. At least one proto file must be specified.
   proto:
-      - "proto/test/test.proto"
-      - "proto/health/health.proto"
+      - "first.proto"
+      - "second.proto"
 
   # GRPC TLS configuration
   #
