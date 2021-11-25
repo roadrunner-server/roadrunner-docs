@@ -6,7 +6,7 @@
 ```
 protoc --plugin=protoc-gen-php-grpc --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
 ```
-- `protoc-get-php-grpc` plugin can be downloaded from the `roadrunner-binary` releases page.
+- `protoc-gen-php-grpc` plugin can be downloaded from the `roadrunner-binary` releases page.
 
 ## Configuration
 
