@@ -1,3 +1,4 @@
+```yaml
 ######################################################################################
 #                       THIS IS SAMPLE OF THE CONFIGURATION                          #
 # IT'S NOT A DEFAULT CONFIGURATION, IT'S JUST A REFERENCE TO ALL OPTIONS AND PLUGINS #
@@ -1427,3 +1428,4 @@ endure:
   #
   # Default: "error"
   log_level: error
+```
