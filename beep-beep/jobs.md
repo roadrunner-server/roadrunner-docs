@@ -193,6 +193,10 @@ jobs:
       # Should be "boltdb" for the local driver.
       driver: boltdb
       
+      # BoldDB file to create or DB to use
+      # Default: "rr.db"
+      file: "path/to/rr.db"
+      
       # Optional section.
       # Default: 10
       priority: 10
