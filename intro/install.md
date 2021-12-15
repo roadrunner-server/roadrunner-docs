@@ -17,7 +17,7 @@ Server binary will be available in the root of your project.
 > Check with `php --modules` your installed extensions.
 
 #### Building RoadRunner
-RoadRunner can be compiled on Linux, OSX, Windows and other 64 bit environments as the only requirement are **Go 1.13+**.
+RoadRunner can be compiled on Linux, OSX, Windows and other 64 bit environments as the only requirement are **Go 1.17+**.
 
 To get all needed dependencies:
 
