@@ -49,3 +49,8 @@ Workers of [http]:
 |    9461 | ready     |  42,316 | 31 MB   | 22 days ago     |
 +---------+-----------+---------+---------+-----------------+
 ```
+
+RR support `.env` files. To read environment variable from the `.env` file use the `--dotenv` CLI command:
+```
+rr serve --dotenv .env -c .rr.yaml
+```
