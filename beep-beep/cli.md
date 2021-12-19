@@ -50,7 +50,7 @@ Workers of [http]:
 +---------+-----------+---------+---------+-----------------+
 ```
 
-RR support `.env` files. To read environment variable from the `.env` file use the `--dotenv` CLI command:
+RR support `.env` files. To read environment variables from the `.env` file, use the `--dotenv` CLI command:
 ```
 rr serve --dotenv .env -c .rr.yaml
 ```
