@@ -9,7 +9,6 @@ Simpliest enterpoint with PSR-7 server API might looks like:
 
 ```php
 <?php
-// ./psr-worker.php
 /**
  * @var Goridge\RelayInterface $relay
  */
@@ -34,7 +33,7 @@ while ($req = $psr7->acceptRequest()) {
 }
 ```
 
-Such worker will expect communication with parent RoadRunner server over standard pipes, create`./rr.yaml` config to enable it:
+Such worker will expect communication with parent RoadRunner server over standard pipes, create`.rr.yaml` config to enable it:
 
 ```yaml
 http:
@@ -45,7 +44,7 @@ http:
       numWorkers: 4
 ```
 
-If you don't like `yaml` try `./rr.json`:
+If you don't like `yaml` try `.rr.json`:
 
 ```json
 {
