@@ -35,7 +35,7 @@ $ rr serve -d -c .rr.yaml
 To view the status of all active workers in an interactive mode.
 
 ```
-$ rr workers -i
+$ rr workers -i -c .rr.yaml
 ```
 
 ```

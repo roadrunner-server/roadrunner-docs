@@ -12,6 +12,8 @@ The service plugin was introduced in the RR `v2.0.5`.
 ### Config
 
 ```yaml
+version: "2.7"
+
 service:
   some_service_1:
     command: "php tests/plugins/service/test_files/loop.php"

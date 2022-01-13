@@ -7,6 +7,8 @@ RoadRunner server includes an embedded metrics server based on [Prometheus](http
 To enable metrics add `metrics` section to your configuration:
 
 ```yaml
+version: "2.7"
+
 metrics:
   address: localhost:2112
 ```
@@ -25,6 +27,8 @@ You can also publish application-specific metrics using an RPC connection to the
 configuration file:
 
 ```yaml
+version: "2.7"
+
 metrics:
   address: localhost:2112
   collect:
@@ -50,6 +54,8 @@ $metrics->add('app_metric_counter', 1);
 You can use tagged (labels) metrics to group values:
 
 ```yaml
+version: "2.7"
+
 metrics:
   address: localhost:2112
   collect:

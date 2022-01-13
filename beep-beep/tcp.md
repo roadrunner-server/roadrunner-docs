@@ -8,6 +8,8 @@
 ### Configuration
 
 ```yaml
+version: "2.7"
+
 tcp:
   servers:
     tcp_access_point_1:

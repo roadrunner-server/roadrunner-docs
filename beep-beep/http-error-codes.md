@@ -1,6 +1,8 @@
 ### Overriding HTTP default error code
 
 ```yaml
+version: "2.7"
+
 http:
   # override http error code for the internal RR errors (default 500)
   internal_error_code: 505

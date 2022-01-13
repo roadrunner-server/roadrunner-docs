@@ -6,6 +6,8 @@ All Go middleware located in the
 - ### GZIP
 
 ```yaml
+version: "2.7"
+
 http:
   address: 127.0.0.1:55555
   max_request_size: 1024
@@ -38,6 +40,8 @@ Section link: [link](/http/static.md)
 - ### X-Sendfile
 
 ```yaml
+version: "2.7"
+
 http:
   address: 127.0.0.1:55555
   max_request_size: 1024

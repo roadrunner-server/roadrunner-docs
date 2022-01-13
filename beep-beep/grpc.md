@@ -11,6 +11,8 @@ protoc --plugin=protoc-gen-php-grpc --php-grpc_out=<OUTPUT DIRECTORY> simple.pro
 ## Configuration
 
 ```yaml
+version: "2.7"
+
 grpc:
   # GRPC address to listen
   #
@@ -38,12 +40,12 @@ grpc:
     # This option is required
     cert: ""
 
-    # Path to the CA certificate
+    # Path to the CA certificate, defines the set of root certificate authorities that servers use if required to verify a client certificate. Used with the `client_auth_type` option.
     #
     # This option is optional
     root_ca: ""
 
-    # Client auth type
+    # Client auth type.
     #
     # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
     client_auth_type: ""

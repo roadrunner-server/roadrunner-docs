@@ -5,6 +5,8 @@ By default, embedded RPC server will listen to only localhost connections. In or
 * Configure rr to listen on 0.0.0.0
 
 ```yaml
+version: "2.7"
+
 rpc:
   listen: tcp://:6001
 ```
