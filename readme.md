@@ -45,6 +45,7 @@ manager.
     * [RPC](beep-beep/rpc.md)
     * [Jobs](beep-beep/jobs.md)
     * [GRPC](beep-beep/grpc.md)
+    * [Config](beep-beep/config.md)
     * [Write a plugin](beep-beep/plugin.md)
     * [Service plugin](beep-beep/service.md)
     * [TCP plugin](beep-beep/tcp.md)
