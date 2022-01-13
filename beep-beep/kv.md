@@ -34,12 +34,15 @@ After installing all the required dependencies, you need to configure this
 plugin. To enable it add `kv` section to your configuration:
 
 ```yaml
+version: "2.7"
+
 rpc:
   listen: tcp://127.0.0.1:6001
 
 kv:
   example:
     driver: memory
+    config: {}
 ```
 
 Please note that to interact with the KV, you will also need the RPC defined
@@ -70,6 +73,8 @@ then it is recommended to use the boltdb driver.
 The complete memory driver configuration looks like this:
 
 ```yaml
+version: "2.7"
+
 kv:
   # User defined name of the storage.
   memory:
@@ -77,9 +82,10 @@ kv:
     # Should be "memory" for the memory driver.
     driver: memory
 
-    # Optional section.
-    # Default: 60
-    interval: 60
+    config:
+      # Optional section.
+      # Default: 60
+      interval: 60
 ```
 
 Below is a more detailed description of each of the memory-specific options:
@@ -100,6 +106,8 @@ any additional installations.
 The complete boltdb driver configuration looks like this:
 
 ```yaml
+version: "2.7"
+
 kv:
   # User defined name of the storage.
   boltdb:
@@ -107,21 +115,22 @@ kv:
     # Should be "boltdb" for the boltdb driver.
     driver: boltdb
 
-    # Optional section.
-    # Default: "rr.db"
-    file: "./rr.db"
+    config:
+      # Optional section.
+      # Default: "rr.db"
+      file: "./rr.db"
 
-    # Optional section.
-    # Default: 0777
-    permissions: 0777
+      # Optional section.
+      # Default: 0777
+      permissions: 0777
 
-    # Optional section.
-    # Default: "rr"
-    bucket: "rr"
+      # Optional section.
+      # Default: "rr"
+      bucket: "rr"
 
-    # Optional section.
-    # Default: 60
-    interval: 60
+      # Optional section.
+      # Default: 60
+      interval: 60
 ```
 
 Below is a more detailed description of each of the boltdb-specific options:
@@ -156,6 +165,8 @@ not required, we have one connection to the Redis Server. The configuration of
 such a connection will look like this.
 
 ```yaml
+version: "2.7"
+
 kv:
   # User defined name of the storage.
   redis:
@@ -163,75 +174,76 @@ kv:
     # Should be "redis" for the redis driver.
     driver: redis
 
-    # Optional section.
-    # By default, one connection will be specified with the
-    # "localhost:6379" value.
-    addrs:
-      - "localhost:6379"
+    config:
+      # Optional section.
+      # By default, one connection will be specified with the
+      # "localhost:6379" value.
+      addrs:
+        - "localhost:6379"
 
-    # Optional section.
-    # Default: ""
-    username: ""
+      # Optional section.
+      # Default: ""
+      username: ""
 
-    # Optional section.
-    # Default: ""
-    password: ""
+      # Optional section.
+      # Default: ""
+      password: ""
 
-    # Optional section.
-    # Default: 0
-    db: 0
+      # Optional section.
+      # Default: 0
+      db: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 5 seconds)
-    dial_timeout: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 5 seconds)
+      dial_timeout: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 3 retries)
-    max_retries: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 3 retries)
+      max_retries: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 8ms)
-    min_retry_backoff: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 8ms)
+      min_retry_backoff: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 512ms)
-    max_retry_backoff: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 512ms)
+      max_retry_backoff: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 10 connections per CPU).
-    pool_size: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 10 connections per CPU).
+      pool_size: 0
 
-    # Optional section.
-    # Default: 0 (do not use idle connections)
-    min_idle_conns: 0
+      # Optional section.
+      # Default: 0 (do not use idle connections)
+      min_idle_conns: 0
 
-    # Optional section.
-    # Default: 0 (do not close aged connections)
-    max_conn_age: 0
+      # Optional section.
+      # Default: 0 (do not close aged connections)
+      max_conn_age: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 3s)
-    read_timeout: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 3s)
+      read_timeout: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the value specified in the "read_timeout" section)
-    write_timeout: 0
+      # Optional section.
+      # Default: 0 (equivalent to the value specified in the "read_timeout" section)
+      write_timeout: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the value specified in the "read_timeout" + 1s)
-    pool_timeout: 0
+      # Optional section.
+      # Default: 0 (equivalent to the value specified in the "read_timeout" + 1s)
+      pool_timeout: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 5m)
-    idle_timeout: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 5m)
+      idle_timeout: 0
 
-    # Optional section.
-    # Default: 0 (equivalent to the default value of 1m)
-    idle_check_freq: 0
+      # Optional section.
+      # Default: 0 (equivalent to the default value of 1m)
+      idle_check_freq: 0
 
-    # Optional section.
-    # Default: false
-    read_only: false
+      # Optional section.
+      # Default: false
+      read_only: false
 ```
 
 Below is a more detailed description of each of the Redis-specific options:
@@ -340,20 +352,23 @@ organizing a cluster, two additional options with algorithms for working with
 connections will be available to you: `route_by_latency` and `route_randomly`.
 
 ```yaml
+version: "2.7"
+
 kv:
   redis:
     driver: redis
-    addrs:
-      - "127.0.0.1:6379"
-      - "127.0.0.1:6380"
+    config:
+      addrs:
+        - "127.0.0.1:6379"
+        - "127.0.0.1:6380"
 
-    # Optional section.
-    # Default: false
-    route_by_latency: false
+      # Optional section.
+      # Default: false
+      route_by_latency: false
 
-    # Optional section.
-    # Default: false
-    route_randomly: false
+      # Optional section.
+      # Default: false
+      route_randomly: false
 ```
 
 Where new options means:
@@ -375,16 +390,19 @@ There are two additional options available for the Sentinel configuration:
 `master_name` and `sentinel_password`.
 
 ```yaml
+version: "2.7"
+
 kv:
   redis:
     driver: redis
 
-    # Required section.
-    master_name: ""
+    config:
+      # Required section.
+      master_name: ""
 
-    # Optional section.
-    # Default: "" (no password)
-    sentinel_password: ""
+      # Optional section.
+      # Default: "" (no password)
+      sentinel_password: ""
 ```
 
 Where Sentinel's options means:
@@ -403,16 +421,18 @@ Server is installed and running. You can read more about this [in the documentat
 The complete memcached driver configuration looks like this:
 
 ```yaml
+version: "2.7"
+
 kv:
   # User defined name of the storage.
   memcached:
     # Required section.
     # Should be "memcached" for the memcached driver.
     driver: memcached
-
-    # Optional section.
-    # Default: "localhost:11211"
-    addr: "localhost:11211"
+    config:
+      # Optional section.
+      # Default: "localhost:11211"
+      addr: "localhost:11211"
 ```
 
 Below is a more detailed description of each of the memcached-specific options:

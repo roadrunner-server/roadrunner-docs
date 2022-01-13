@@ -31,6 +31,7 @@
       "http/https": "HTTPs and HTTP/2",
       "http/static": "Static Content",
       "http/headers": "Headers",
+      "http/cache": "Cache (RFC7234)",
       "http/available-middleware": "Available middleware",
       "http/writing-a-middleware": "Writing a Go middleware"
     }

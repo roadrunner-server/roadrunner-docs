@@ -34,6 +34,7 @@ For example, in this way, you can configure both the client and server parts to
 work with RabbitMQ.
 
 ```yaml
+version: "2.7"
 #
 # RPC is required for tasks dispatching (client)
 #
@@ -56,7 +57,9 @@ jobs:
   pipelines:
     test:               # RoadRunner queue identifier
       driver: memory    # - Queue driver name
-      queue: test       # - Internal (driver's) queue identifier
+      config:
+        priority: 10
+        prefetch: 10
 ```
 
 - The `rpc` section is responsible for client settings. It is at this address
@@ -76,6 +79,8 @@ Let's now focus on the common settings of the queue server. In full, it may
 look like this:
 
 ```yaml
+version: "2.7"
+
 jobs:
   num_pollers: 64
   timeout: 60
@@ -88,7 +93,8 @@ jobs:
   pipelines:
     queue-name:
       driver: # "[DRIVER_NAME]"
-      # And driver-specific configuration below...
+      config: # NEW in 2.7
+        # And driver-specific configuration below...
 ```
 
 Above is a complete list of all possible common Jobs settings. Let's now figure
@@ -140,6 +146,8 @@ or `sqs`.
 The complete `memory` driver configuration looks like this:
 
 ```yaml
+version: "2.7"
+
 jobs:
   pipelines:
     # User defined name of the queue.
@@ -147,19 +155,20 @@ jobs:
       # Required section.
       # Should be "memory" for the in-memory driver.
       driver: memory
+
+      config: # NEW in 2.7
+        # Optional section.
+        # Default: 10
+        priority: 10
       
-      # Optional section.
-      # Default: 10
-      priority: 10
-      
-      # Optional section.
-      # Default: 10
-      prefetch: 10
+        # Optional section.
+        # Default: 10
+        prefetch: 10
 ```
 
 Below is a more detailed description of each of the in-memory-specific options:
-- `priority` - Queue default priority for each task pushed into this queue 
-  if the priority value for these tasks was not explicitly set.
+- `priority` - Queue default priority for each task pushed into this queue
+if the priority value for these tasks was not explicitly set.
 
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
@@ -181,6 +190,7 @@ for the KV plugin and Jobs plugin. This is boltdb limitation on concurrent acces
 The complete `boltdb` driver configuration looks like this:
 
 ```yaml
+version: "2.7"
 
 boltdb:
   permissions: 0777
@@ -193,17 +203,18 @@ jobs:
       # Should be "boltdb" for the local driver.
       driver: boltdb
       
-      # BoldDB file to create or DB to use
-      # Default: "rr.db"
-      file: "path/to/rr.db"
+      config: # NEW in 2.7
+        # BoldDB file to create or DB to use
+        # Default: "rr.db"
+        file: "path/to/rr.db"
+
+        # Optional section.
+        # Default: 10
+        priority: 10
       
-      # Optional section.
-      # Default: 10
-      priority: 10
-      
-      # Optional section.
-      # Default: 1000
-      prefetch: 1000
+        # Optional section.
+        # Default: 1000
+        prefetch: 1000
 ```
 
 Below is a more detailed description of each of the in-memory-specific options:
@@ -222,6 +233,8 @@ NATS driver supported in the RR starting from the `v2.5.0` and includes only NAT
 The complete `NATS` driver configuration looks like this:
 
 ```yaml
+version: "2.7"
+
 nats:
   addr: "demo.nats.io"
 
@@ -237,14 +250,15 @@ jobs:
   pipelines:
     test-1:
       driver: nats
-      prefetch: 100
-      subject: default
-      stream: foo
-      deliver_new: true
-      rate_limit: 100
-      delete_stream_on_stop: false
-      delete_after_ack: false
-      priority: 2
+      config: # NEW in 2.7
+        prefetch: 100
+        subject: default
+        stream: foo
+        deliver_new: true
+        rate_limit: 100
+        delete_stream_on_stop: false
+        delete_after_ack: false
+        priority: 2
 ```
 
 Below is a more detailed description of each of the in-memory-specific options:
@@ -281,6 +295,8 @@ use this connection and which will contain the queue settings (including
 amqp-specific):
 
 ```yaml
+version: "2.7"
+
 amqp:
   addr: amqp://guest:guest@localhost:5672
 
@@ -292,42 +308,54 @@ jobs:
       # Required section.
       # Should be "amqp" for the AMQP driver.
       driver: amqp
+
+      config: # NEW in 2.7
       
-      # Optional section.
-      # Default: 10
-      priority: 10
+        # Optional section.
+        # Default: 10
+        priority: 10
       
-      # Optional section.
-      # Default: 100
-      prefetch: 100
+        # Optional section.
+        # Default: 100
+        prefetch: 100
 
-      # Optional section.
-      # Default: "default"
-      queue: "default"
+        # Optional section.
+        # Default: "default"
+        queue: "default"
 
-      # Optional section.
-      # Default: "amqp.default"
-      exchange: "amqp.default"
+        # Optional section.
+        # Default: "amqp.default"
+        exchange: "amqp.default"
 
-      # Optional section.
-      # Default: "direct"
-      exchange_type: "direct"
+        # Durable queue
+        #
+        # Default: false
+        durable: false
 
-      # Optional section.
-      # Default: "" (empty)
-      routing_key: ""
+        # Delete queue when stopping the pipeline
+        #
+        # Default: false
+        delete_queue_on_stop: false
 
-      # Optional section.
-      # Default: false
-      exclusive: false
+        # Optional section.
+        # Default: "direct"
+        exchange_type: "direct"
 
-      # Optional section.
-      # Default: false
-      multiple_ack: false
+       # Optional section.
+        # Default: "" (empty)
+        routing_key: ""
 
-      # Optional section.
-      # Default: false
-      requeue_on_fail: false
+        # Optional section.
+        # Default: false
+        exclusive: false
+
+        # Optional section.
+        # Default: false
+        multiple_ack: false
+
+        # Optional section.
+        # Default: false
+        requeue_on_fail: false
 ```
 
 Below is a more detailed description of each of the amqp-specific options:
@@ -375,6 +403,11 @@ Below is a more detailed description of each of the amqp-specific options:
   
   - `requeue_on_fail` - Requeue on Nack.
 
+**NEW in 2.7:**
+
+- `durable`: create a durable queue. Default: false
+- `delete_queue_on_stop`: delete the queue when the pipeline is stopped. Default: false
+
 ### Beanstalk Driver
 
 Beanstalk is a simple and fast general purpose work queue. To install Beanstalk,
@@ -394,6 +427,8 @@ After setting up the connection, you can start using it. Let's take a look at
 the complete config with all the options for this driver:
 
 ```yaml
+version: "2.7"
+
 beanstalk:
   # Optional section.
   # Default: tcp://127.0.0.1:11300
@@ -410,22 +445,24 @@ jobs:
       # Required section.
       # Should be "beanstalk" for the Beanstalk driver.
       driver: beanstalk
-      
-      # Optional section.
-      # Default: 10
-      priority: 10
 
-      # Optional section.
-      # Default: 1
-      tube_priority: 1
+      config: # NEW in 2.7
       
-      # Optional section.
-      # Default: default
-      tube: default
+        # Optional section.
+        # Default: 10
+        priority: 10
 
-      # Optional section.
-      # Default: 5s
-      reserve_timeout: 5s
+        # Optional section.
+        # Default: 1
+        tube_priority: 1
+      
+        # Optional section.
+        # Default: default
+        tube: default
+
+        # Optional section.
+        # Default: 5s
+        reserve_timeout: 5s
 ```
 
 These are all settings that are available to you for configuring this type of 
@@ -487,7 +524,12 @@ sqs:
 After you have configured the connection - you should configure the queue that
 will use this connection:
 
+**NOTE:**  
+You may also skip the whole `sqs` configuration section (global, not the pipeline) to use the AWS IAM credentials if the RR is inside the EC2 machine. RR will try to detect env automatically by making an http request to the `http://169.254.169.254/latest/dynamic/instance-identity/` as pointer here: [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html)
+
 ```yaml
+version: "2.7"
+
 sqs:
   # SQS connection configuration...
 
@@ -496,33 +538,35 @@ jobs:
     # Required section.
     # Should be "sqs" for the Amazon SQS driver.
     driver: sqs
+
+    config:
     
-    # Optional section.
-    # Default: 10
-    prefetch: 10
+      # Optional section.
+      # Default: 10
+      prefetch: 10
     
-    # Optional section.
-    # Default: 0
-    visibility_timeout: 0
+      # Optional section.
+      # Default: 0
+      visibility_timeout: 0
     
-    # Optional section.
-    # Default: 0
-    wait_time_seconds: 0
+      # Optional section.
+      # Default: 0
+      wait_time_seconds: 0
     
-    # Optional section.
-    # Default: default
-    queue: default
+      # Optional section.
+      # Default: default
+      queue: default
     
-    # Optional section.
-    # Default: empty
-    attributes:
-      DelaySeconds: 42
-      # etc... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
+      # Optional section.
+      # Default: empty
+      attributes:
+        DelaySeconds: 42
+        # etc... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
       
-    # Optional section.
-    # Default: empty
-    tags:
-      test: "tag"
+      # Optional section.
+      # Default: empty
+      tags:
+        test: "tag"
 ```
 
 Below is a more detailed description of each of the SQS-specific options:

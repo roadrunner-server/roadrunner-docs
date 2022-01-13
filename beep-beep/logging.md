@@ -102,6 +102,8 @@ logs:
 In addition, you can configure each plugin log messages individually using `channels` section:
 
 ```yaml
+version: "2.7"
+
 logs:
   encoding: console # default value
   level: info

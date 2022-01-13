@@ -17,6 +17,8 @@ RR starting from the `v2.5.0` will bring access logs support (turned off by defa
 #### Configuration:
 
 ```yaml
+version: "2.7"
+
 http:
   address: 127.0.0.1:44933
   middleware: []
