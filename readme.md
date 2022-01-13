@@ -29,6 +29,7 @@ manager.
     * [HTTP error codes](beep-beep/http-error-codes.md)
     * [Headers](http/headers.md)
     * [Access logs](http/access-logs.md)
+    * [Cache (RFC 7234)](http/cache.md)
     * [Available middleware](http/available-middleware.md)
     * [Golang Middleware](http/writing-a-middleware.md)
 * App Server
