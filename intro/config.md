@@ -1,4 +1,3 @@
-```yaml
 ######################################################################################
 #                       THIS IS SAMPLE OF THE CONFIGURATION                          #
 # IT'S NOT A DEFAULT CONFIGURATION, IT'S JUST A REFERENCE TO ALL OPTIONS AND PLUGINS #
@@ -11,6 +10,9 @@
 # eg.: `option_key: ${ENVIRONMENT_VARIABLE_NAME}`.
 
 # Important: TCP port numbers for each plugin (rpc, http, etc) must be unique!
+
+# RR configuration version
+version: "2.7"
 
 # Remote Procedures Calling (docs: https://roadrunner.dev/docs/beep-beep-rpc)
 # Is used for connecting to RoadRunner server from your PHP workers.
@@ -154,6 +156,16 @@ temporal:
   # Default: default
   namespace: default
 
+  # Internal temporal communication protocol, can be "proto" or "json".
+  #
+  # Default: "proto"
+  codec: proto
+
+  # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
+  #
+  # Default: 0
+  debug_level: 2
+
   # Temporal metrics
   #
   # Optional section
@@ -178,6 +190,11 @@ temporal:
     #
     # Default: false
     debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
 
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
@@ -228,15 +245,6 @@ temporal:
       # Default: 0s
       exec_ttl: 60s
 
-  # Internal temporal communication protocol, can be "proto" or "json".
-  #
-  # Default: "proto"
-  codec: proto
-
-  # Debugging level (only for "json" codec). Set 0 for nothing, 1 for "normal", and 2 for colorized messages.
-  #
-  # Default: 0
-  debug_level: 2
 
 # KV plugin settings. Available drivers: boltdb, redis, memcached, memory.
 # Any number of sections can be defined here.
@@ -442,7 +450,7 @@ http:
   # Default: 0
   max_request_size: 256
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics", [SINCE 2.7] -> "cache"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -472,6 +480,23 @@ http:
     #
     # Error if empty. NEW_RELIC_LICENSE_KEY env variable should be set if the license_key key is empty. If both empty - error.
     license_key: "key"
+
+  # RFC 7234 (partially) RR Cache middleware
+  cache:
+    # Cache driver
+    #
+    # Default: memory. Available drivers: memory
+    driver: memory
+
+    # Methods to cache
+    #
+    # According to the RFC, we can cache only GET, HEAD or POST requests. Currently, only GET method supported.
+    cache_methods: ["GET", "HEAD", "POST"]
+
+    # Configuration for the driver
+    #
+    # Empty for the memory
+    config: {}
 
   # File uploading settings.
   uploads:
@@ -583,6 +608,11 @@ http:
     #
     # Default: false
     debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
 
     # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
     #
@@ -773,9 +803,9 @@ websockets:
 
 # Broadcast plugin. It main purpose is to broadcast published messages via all brokers
 #
-# Used in conjunction with the websockets, memory and redis plugins.
+# Use it in conjunction with the websockets, memory and redis plugins.
 # LIMITATION: DO NOT use the same redis connection within different sections or messages will be duplicated.
-# There is no limitation to use different redis connection (ie localhost:6379, localhost:6378, etc) in different sections.
+# There is no limitation to use different redis connections (ie localhost:6379, localhost:6378, etc) in different sections.
 broadcast:
   # Section name.
   #
@@ -988,6 +1018,7 @@ jobs:
 
   # worker pool configuration
   pool:
+    command: ""
     num_workers: 10
     max_jobs: 0
     allocate_timeout: 60s
@@ -1007,15 +1038,19 @@ jobs:
       # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: memory
 
-      # Pipeline priority
+      # Driver's configuration
       #
-      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
-      priority: 10
+      # Should not be empty
+      config:
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 10
 
-      # Number of job to prefetch from the driver.
-      #
-      # Default: 100_000.
-      prefetch: 10000
+        # Number of job to prefetch from the driver.
+        #
+        # Default: 100_000.
+        prefetch: 10000
 
     # Pipeline name
     #
@@ -1026,68 +1061,92 @@ jobs:
       # This option is required. Possible values: amqp, memory, sqs, beanstalk, boltdb
       driver: boltdb
 
-      # Pipeline priority
+      # Driver's configuration
       #
-      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
-      priority: 10
+      # Should not be empty
+      config:
+        # BoldDB file to create or DB to use
+        #
+        # Default: "rr.db"
+        file: "path/to/rr.db"
 
-      # Number of job to prefetch from the driver.
-      #
-      # Default: 100_000.
-      prefetch: 10000
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 10
+
+        # Number of job to prefetch from the driver.
+        #
+        # Default: 100_000.
+        prefetch: 10000
 
     test-local-2:
       # Driver name
       #
       # This option is required.
-      drier: amqp
+      driver: amqp
 
-      # QoS - prefetch.
+      # Driver's configuration
       #
-      # Default: 10
-      prefetch: 10
+      # Should not be empty
+      config:
 
-      # Queue name
-      #
-      # Default: default
-      queue: test-1-queue
+        # QoS - prefetch.
+        #
+        # Default: 10
+        prefetch: 10
 
-      # Pipeline priority
-      #
-      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
-      priority: 1
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 1
 
-      # Exchange name
-      #
-      # Default: amqp.default
-      exchange: default
+        # Durable queue
+        #
+        # Default: false
+        durable: false
 
-      # Exchange type
-      #
-      # Default: direct.
-      exchange_type: direct
+        # Delete queue when stopping the pipeline
+        #
+        # Default: false
+        delete_queue_on_stop: false
 
-      # Routing key for the queue
-      #
-      # Default: empty.
-      routing_key: test
+        # Queue name
+        #
+        # Default: default
+        queue: test-1-queue
 
-      # Declare a queue exclusive at the exchange
-      #
-      # Default: false
-      exclusive: false
+        # Exchange name
+        #
+        # Default: amqp.default
+        exchange: default
 
-      # When multiple is true, this delivery and all prior unacknowledged deliveries
-      # on the same channel will be acknowledged.  This is useful for batch processing
-      # of deliveries
-      #
-      # Default:false
-      multiple_ack: false
+        # Exchange type
+        #
+        # Default: direct.
+        exchange_type: direct
 
-      # Use rabbitmq mechanism to requeue the job on fail
-      #
-      # Default: false
-      requeue_on_fail: false
+        # Routing key for the queue
+        #
+        # Default: empty.
+        routing_key: test
+
+        # Declare a queue exclusive at the exchange
+        #
+        # Default: false
+        exclusive: false
+
+        # When multiple is true, this delivery and all prior unacknowledged deliveries
+        # on the same channel will be acknowledged.  This is useful for batch processing
+        # of deliveries
+        #
+        # Default:false
+        multiple_ack: false
+
+        # Use rabbitmq mechanism to requeue the job on fail
+        #
+        # Default: false
+        requeue_on_fail: false
 
     test-local-3:
       # Driver name
@@ -1095,25 +1154,30 @@ jobs:
       # This option is required.
       driver: beanstalk
 
-      # Pipeline priority
+      # Driver's configuration
       #
-      # Default
-      priority: 11
+      # Should not be empty
+      config:
 
-      # Beanstalk internal tube priority
-      #
-      # Default: 1
-      tube_priority: 1
+        # Pipeline priority
+        #
+        # Default
+        priority: 11
 
-      # Tube name
-      #
-      # Default: default
-      tube: default-1
+        # Beanstalk internal tube priority
+        #
+        # Default: 1
+        tube_priority: 1
 
-      # If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout.
-      #
-      # Default: 5s
-      reserve_timeout: 10s
+        # Tube name
+        #
+        # Default: default
+        tube: default-1
+
+        # If no job is available before this timeout has passed, Reserve returns a ConnError recording ErrTimeout.
+        #
+        # Default: 5s
+        reserve_timeout: 10s
 
     test-local-4:
       # Driver name
@@ -1121,47 +1185,52 @@ jobs:
       # This option is required.
       driver: sqs
 
-      # Pipeline priority
+      # Driver's configuration
       #
-      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
-      priority: 10
+      # Should not be empty
+      config:
 
-      # Number of jobs to prefetch from the SQS. mazon SQS never returns more messages than this value
-      # (however, fewer messages might be returned). Valid values: 1 to 10.
-      #
-      # Default: 10
-      prefetch: 10
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 10
 
-      # The duration (in seconds) that the received messages are hidden from subsequent
-      # retrieve requests after being retrieved by a ReceiveMessage request
-      #
-      # Default: 0
-      visibility_timeout: 0
+        # Number of jobs to prefetch from the SQS. mazon SQS never returns more messages than this value
+        # (however, fewer messages might be returned). Valid values: 1 to 10.
+        #
+        # Default: 10
+        prefetch: 10
 
-      # The duration (in seconds) for which the call waits for a message to arrive
-      # in the queue before returning. If a message is available, the call returns
-      # sooner than WaitTimeSeconds. If no messages are available and the wait time
-      # expires, the call returns successfully with an empty list of messages.
-      #
-      # Default: 0
-      wait_time_seconds: 0
+        # The duration (in seconds) that the received messages are hidden from subsequent
+        # retrieve requests after being retrieved by a ReceiveMessage request
+        #
+        # Default: 0
+        visibility_timeout: 0
 
-      # Queue name.
-      #
-      # Default: default
-      queue: default
+        # The duration (in seconds) for which the call waits for a message to arrive
+        # in the queue before returning. If a message is available, the call returns
+        # sooner than WaitTimeSeconds. If no messages are available and the wait time
+        # expires, the call returns successfully with an empty list of messages.
+        #
+        # Default: 0
+        wait_time_seconds: 0
 
-      # List of the AWS SQS attributes https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html.
-      attributes:
-        DelaySeconds: 0
-        MaximumMessageSize: 262144
-        MessageRetentionPeriod: 345600
-        ReceiveMessageWaitTimeSeconds: 0
-        VisibilityTimeout: 30
-      # Tags don't have any semantic meaning. Amazon SQS interprets tags as character
-      #	strings.
-      tags:
-        test: "tag"
+        # Queue name.
+        #
+        # Default: default
+        queue: default
+
+        # List of the AWS SQS attributes https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html.
+        attributes:
+          DelaySeconds: 0
+          MaximumMessageSize: 262144
+          MessageRetentionPeriod: 345600
+          ReceiveMessageWaitTimeSeconds: 0
+          VisibilityTimeout: 30
+        # Tags don't have any semantic meaning. Amazon SQS interprets tags as character
+        #	strings.
+        tags:
+          test: "tag"
 
     test-local-5:
       # Driver name
@@ -1169,45 +1238,50 @@ jobs:
       # This option is required
       driver: nats
 
-      # Pipeline priority
+      # Driver's configuration
       #
-      # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
-      priority: 2
+      # Should not be empty
+      config:
 
-      # NATS prefetch
-      #
-      # Messages to read into the channel
-      prefetch: 100
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 2
 
-      # NATS subject
-      #
-      # Default: default
-      subject: default
+        # NATS prefetch
+        #
+        # Messages to read into the channel
+        prefetch: 100
 
-      # NATS stream
-      #
-      # Default: default-stream
-      stream: foo
+        # NATS subject
+        #
+        # Default: default
+        subject: default
 
-      # The consumer will only start receiving messages that were created after the consumer was created
-      #
-      # Default: false (deliver all messages from the stream beginning)
-      deliver_new: true
+        # NATS stream
+        #
+        # Default: default-stream
+        stream: foo
 
-      # Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit
-      #
-      # Default: 1000
-      rate_limit: 100
+        # The consumer will only start receiving messages that were created after the consumer was created
+        #
+        # Default: false (deliver all messages from the stream beginning)
+        deliver_new: true
 
-      # Delete the stream when after pipeline stopped
-      #
-      # Default: false
-      delete_stream_on_stop: false
+        # Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit
+        #
+        # Default: 1000
+        rate_limit: 100
 
-      # Delete message from the stream after successful acknowledge
-      #
-      # Default: false
-      delete_after_ack: false
+        # Delete the stream when after pipeline was stopped
+        #
+        # Default: false
+        delete_stream_on_stop: false
+
+        # Delete message from the stream after successful acknowledge
+        #
+        # Default: false
+        delete_after_ack: false
 
   # list of pipelines to be consumed by the server automatically at the start, keep empty if you want to start consuming manually
   consume:
@@ -1247,15 +1321,15 @@ grpc:
     # This option is required
     cert: ""
 
-    # Path to the CA certificate
+    # Path to the CA certificate, defines the set of root certificate authorities that servers use if required to verify a client certificate. Used with the `client_auth_type` option.
     #
     # This option is optional
     root_ca: ""
 
-    # Client auth type
+    # Client auth type.
     #
     # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
-    client_auth_type: ""
+    client_auth_type: no_client_certs
 
   # Maximum send message size
   #
@@ -1285,7 +1359,7 @@ grpc:
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
-  max_connection_age_grace: 0s
+  max_connection_age_grace: 0s8h
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
@@ -1347,6 +1421,7 @@ tcp:
       read_buf_size: 1
 
   pool:
+    command: ""
     num_workers: 5
     max_jobs: 0
     allocate_timeout: 60s
@@ -1408,7 +1483,7 @@ fileserver:
     - prefix: "/foo/bar"
       root: "../../../tests"
       compress: false
-      cache_duration: 10s
+      cache_duration: 10
       max_age: 10
       bytes_range: true
 
@@ -1428,4 +1503,3 @@ endure:
   #
   # Default: "error"
   log_level: error
-```
