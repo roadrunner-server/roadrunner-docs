@@ -10,8 +10,8 @@ This plugin parse other's plugins configuration and uses flags to find the YAML 
 
 | Configuration version |        RR version                                                  |
 |-----------------------|--------------------------------------------------------------------|
-|   **2.7**             |          **2.7.0+**                                                |
-|   **non-versioned**   |          **2.7.0+** (will be auto-updated), RR **2.6.6** and lower |
+|   **2.7**             |          **2.7.x+**                                                |
+|   **non-versioned**   |          **2.7.x** (will be auto-updated), RR **2.6.6** and lower |
 
 *non-versioned: configuration used in the 2.0.x-2.6.x releases.
 
