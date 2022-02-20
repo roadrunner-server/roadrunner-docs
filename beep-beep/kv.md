@@ -466,7 +466,7 @@ RoadRunner plugin.
 The factory object provides two methods for working with the plugin.
 
 - Method `Factory::isAvailable(): bool` returns boolean `true` value if the
-  plugin is available and `false` otherwise.
+  plugin is available and `false` otherwise. Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901)
 
 - Method `Factory::select(string): CacheInterface` receives the name of the
   storage as the first argument and returns the implementation of the

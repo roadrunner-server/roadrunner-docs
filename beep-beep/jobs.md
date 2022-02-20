@@ -632,7 +632,8 @@ After we have established the connection, we should check the server
 availability and in this case the API availability for the jobs. This can be
 done using the appropriate `isAvailable()` method. When the connection is 
 created, and the availability of the functionality is checked, we can connect to
-the queue we need using `connect()` method.
+the queue we need using `connect()` method. Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901)
+
 
 ```php
 $jobs = new Spiral\RoadRunner\Jobs\Jobs();
