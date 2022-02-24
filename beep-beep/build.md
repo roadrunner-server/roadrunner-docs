@@ -10,7 +10,8 @@ To build an application server you need [Golang 1.17+](https://golang.org/dl/) t
 
 1. Install the [velox](https://github.com/roadrunner-server/velox) `go install github.com/roadrunner-server/velox/vx@v1.0.0-beta.1`
 2. Configure:
-```yaml
+
+```toml
 [velox]
 build_args = ['-trimpath', '-ldflags', '-s -X github.com/roadrunner-server/roadrunner/v2/internal/meta.version=v2.8.0-alpha.1 -X github.com/roadrunner-server/roadrunner/v2/internal/meta.buildTime=today']
 
@@ -56,10 +57,8 @@ memcached = { ref = "master", owner = "roadrunner-server", repository = "memcach
 tcp = { ref = "master", owner = "roadrunner-server", repository = "tcp" }
 ```
 
-3. Build:
-```
-vx build -c plugins.toml -o ~/Downloads
-```
+3. Build RR:  `vx build -c plugins.toml -o ~/Downloads`  
+
 Where:  
 - -c - path to the configuration
 - -o - path where to put the RR binary
