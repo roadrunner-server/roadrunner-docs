@@ -68,6 +68,7 @@ manager.
     * [Phalcon3 and Phalcon4](integration/phalcon.md)
     * [Mezzio](integration/mezzio.md)
     * [Chubbyphp Framework](integration/chubbyphp.md)
+    * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Docker
     * [Ports and Containers](docker/ports.md)
