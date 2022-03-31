@@ -8,10 +8,13 @@ This plugin parse other's plugins configuration and uses flags to find the YAML 
 
 ## Compatibility matrix
 
-| Configuration version |        RR version                                                  |
+⚠️ Keep in mind that the `yaml` configuration version is not the same as the RR version. They have independent versions.
+
+| RR version |                               Configuration version                           |
 |-----------------------|--------------------------------------------------------------------|
-|   **2.7**             |          **2.7.x+**                                                |
-|   **non-versioned**   |          **2.7.x** (will be auto-updated), RR **2.6.6** and lower |
+|   **2.8+**             |          **2.7**                                                |
+|   **2.7.x**   |          **2.7** `OR` Unversioned (treated as `v2.6.0`, will be auto-updated to `v2.7`) |
+|   **<=2.6.x**   |          Doesn't support versions |
 
 *non-versioned: configuration used in the 2.0.x-2.6.x releases.
 
