@@ -90,7 +90,7 @@ logs:
     line_ending: "\n"
 ```
 
-1. `log_output`: Filename is the file to write logs to in the same directory.  It uses <processname>-lumberjack.log in os.TempDir() if empty.
+1. `log_output`: Filename is the file to write logs to in the same directory.  It uses `processname`-lumberjack.log in os.TempDir() if empty.
 2. `max_size`: is the maximum size in megabytes of the log file before it gets rotated. It defaults to 100 megabytes.
 3. `max_age`: is the maximum number of days to retain old log files based on the timestamp encoded in their filename.  Note that a day is defined as 24 hours and may not exactly correspond to calendar days due to daylight savings, leap seconds, etc. The default is not to remove old log files based on age.
 4. `max_backups`: is the maximum number of old log files to retain.  The default is to retain all old log files (though MaxAge may still cause them to get deleted.)
