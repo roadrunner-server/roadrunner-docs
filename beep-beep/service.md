@@ -48,3 +48,25 @@ Description:
 
 6. `restart_sec` - default: 30 seconds. Delay between process stop and restart.
 7. `env` - environment variables to pass to the underlying process from the config.
+<!--
+8. `working_dir` - default: null. A directory to which service should temporarily chdir before exec’ing the command.
+-->
+
+### RPC Interface
+
+Since RR `v2.9` you have an ability to manage services via RPC interface.
+
+All communication between PHP and GO made by the RPC calls with protobuf payloads. You can find versioned proto-payloads here: [Proto](https://github.com/roadrunner-server/api/blob/master/proto/service/v1/service.proto).
+
+- `Create(in *serviceV1.Create, out *serviceV1.Response)  error` - Create a new service.
+- `Restart(in *serviceV1.Service, out *serviceV1.Response) error` - Restart an exist service.
+- `Terminate(in *serviceV1.Service, out *serviceV1.Response) error` - Terminate (Kill) an exist service.
+- `Status(in *serviceV1.Service, out *serviceV1.Status) error` - Get status for an exist service.
+- `List(_ *serviceV1.Service, out *serviceV1.List) error` - Get list of available services.
+
+
+### Integration with PHP
+
+If you need to manage RR services in your PHP project you can use composer package [`spiral/roadrunner-services`](https://packagist.org/packages/spiral/roadrunner-services) for that.
+
+
