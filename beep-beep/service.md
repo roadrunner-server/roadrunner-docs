@@ -1,6 +1,6 @@
 # Service plugin
 
-The service plugin was introduced in the RR `v2.0.5`.
+The service plugin was introduced in the RR `v2.5.0`.
 
 ### Main capabilities
 
