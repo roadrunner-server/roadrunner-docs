@@ -17,7 +17,7 @@ rpc:
 server:
    command: "php worker.php"
    env:
-      XDEBUG_SESSION: 1
+     - XDEBUG_SESSION: 1
 
 http:
    address: "0.0.0.0:8080"
@@ -25,5 +25,7 @@ http:
       num_workers: 1
       debug: true
 ```
+
+Please, keep in mind this guide: [xdebug3](https://xdebug.org/docs/upgrade_guide).  
 
 You should be able to use breakpoints and view state at this point.
