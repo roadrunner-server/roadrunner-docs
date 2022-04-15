@@ -141,7 +141,7 @@ $server->serve(Worker::create());
 
 #### Proto file sample:
 
-```
+```protobuf
 syntax = "proto3";
 
 package service;
