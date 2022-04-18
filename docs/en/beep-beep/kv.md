@@ -409,7 +409,7 @@ Where Sentinel's options means:
 
 - `master_name` - The name of the Sentinel's master in string format.
 
-- `sentinel_password` - Sentinel password from "requirepass <password>" 
+- `sentinel_password` - Sentinel password from "requirepass `password`" 
   (if enabled) in Sentinel configuration.
 
 

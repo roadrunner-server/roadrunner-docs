@@ -48,9 +48,6 @@ Description:
 
 6. `restart_sec` - default: 30 seconds. Delay between process stop and restart.
 7. `env` - environment variables to pass to the underlying process from the config.
-<!--
-8. `working_dir` - default: null. A directory to which service should temporarily chdir before exec’ing the command.
--->
 
 ### RPC Interface
 
