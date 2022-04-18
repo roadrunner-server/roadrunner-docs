@@ -10,4 +10,4 @@ This resource would not be registered in `uploaded files` hash and, as a result,
 Please note that you should not use any of the following methods `die`, `exit`. Use buffered output if your library requires writing content to stdout.
 
 ## WinCache
-Using roadrunner on Windows with the WinCache extension might cause the worker bytecode to get stuck in memory.
+Using roadrunner on Windows with WinCache extension might cause worker bytecode to stuck in memory.
