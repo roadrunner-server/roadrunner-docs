@@ -10,7 +10,12 @@
       "license": "LICENSE"
     }
   },
-
+  {
+    "title": "Plugins",
+    "links": {
+      "plugins/http": "HTTP (transport) plugin"
+    }
+  },
   {
     "title": "PHP Workers",
     "links": {
