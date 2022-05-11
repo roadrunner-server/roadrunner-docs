@@ -11,6 +11,19 @@
     }
   },
   {
+    "title": "Plugins",
+    "links": {
+      "HTTP": "HTTP (transport) plugin",
+      "Jobs (queue)": "Jobs (queueu) plugin"
+    }
+  },
+  {
+    "title": "HTTP Middleware",
+    "links": {
+      "HTTP": "HTTP (transport) plugin",
+    }
+  },
+  {
     "title": "PHP Workers",
     "links": {
       "php/worker": "Worker",
