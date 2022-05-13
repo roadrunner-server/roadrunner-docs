@@ -33,7 +33,7 @@ Features:
 - Payload context and body
 - Protocol, worker and job level error management (including PHP errors)
 - Development Mode
-- Integrations with Symfony, [Laravel](https://github.com/spiral/roadrunner-laravel), Slim, CakePHP, Zend Expressive
+- Integrations with Symfony, [Laravel](https://github.com/roadrunner-server/roadrunner-laravel), Slim, CakePHP, Zend Expressive
 - Application server for [Spiral](https://github.com/spiral/framework)
 - Automatic reloading on file changes
 - Works on Windows (Unix sockets (AF_UNIX) supported on Windows 10)

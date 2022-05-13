@@ -1,12 +1,12 @@
 ## PHP Client
 
-[Roadrunner GRPC](https://github.com/spiral/roadrunner-grpc)
+[Roadrunner GRPC](https://github.com/roadrunner-server/roadrunner-grpc)
 
 ### Compiling proto sample:
 ```
 protoc --plugin=protoc-gen-php-grpc --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
 ```
-- `protoc-gen-php-grpc` plugin can be downloaded from the `roadrunner-binary` [releases page](https://github.com/spiral/roadrunner-binary/releases).
+- `protoc-gen-php-grpc` plugin can be downloaded from the `roadrunner-binary` [releases page](https://github.com/roadrunner-server/roadrunner-binary/releases).
 
 ## Configuration
 

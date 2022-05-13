@@ -1195,7 +1195,7 @@ $jobs->resume('emails', 'billing');
 ## RPC Interface
 
 All communication between PHP and GO made by the RPC calls with protobuf payloads.
-You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
+You can find versioned proto-payloads here: [Proto](https://github.com/roadrunner-server/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
 
 - `Push(in *jobsv1beta.PushRequest, out *jobsv1beta.Empty) error` - The
   arguments: the first argument is a `PushRequest`, which contains one field

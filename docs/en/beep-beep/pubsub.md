@@ -9,7 +9,7 @@ Pub/Sub interface has 3 major parts:
 
 ---
 #### Samples of implementation:
-1. [Websockets](https://github.com/spiral/roadrunner/blob/master/plugins/websockets/plugin.go) plugin
-2. [Redis](https://github.com/spiral/roadrunner/blob/master/plugins/redis/plugin.go) plugin
-3. [In-memory](https://github.com/spiral/roadrunner/blob/master/plugins/websockets/memory/inMemory.go) storage plugin
+1. [Websockets](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/websockets/plugin.go) plugin
+2. [Redis](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/redis/plugin.go) plugin
+3. [In-memory](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/websockets/memory/inMemory.go) storage plugin
 

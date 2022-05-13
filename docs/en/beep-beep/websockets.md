@@ -1,13 +1,13 @@
 ### Websockets
 
 Websockets plugins add WebSockets broadcasting features to the Roadrunner. It
-implements [PubSub](https://github.com/spiral/roadrunner/blob/master/pkg/pubsub/interface.go) interface.
+implements [PubSub](https://github.com/roadrunner-server/roadrunner/blob/master/pkg/pubsub/interface.go) interface.
 
 #### Protobuf
 
 Websockets plugin uses protobuf messages for the RPC calls (PHP part). The same messages, but JSON-encoded used on the
 client side (browser, devices). All proto messages located in the
-Roadrunner [pkg](https://github.com/spiral/roadrunner-plugins/blob/master/internal/proto/websockets/v1beta/websockets.proto) folder.
+Roadrunner [pkg](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/internal/proto/websockets/v1beta/websockets.proto) folder.
 
 #### RPC interface
 
@@ -42,4 +42,4 @@ following:
 #### Architecture
 
 The architecture diagram for the WebSockets plugin can be
-found [here](https://github.com/spiral/roadrunner-plugins/blob/master/websockets/doc)
+found [here](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/websockets/doc)
