@@ -3,7 +3,7 @@
 RoadRunner is an open-source (MIT licensed), high-performance PHP application server, load balancer, and process
 manager.
 
-![CI](https://github.com/roadrunner-server/roadrunner-docs/workflows/CI/badge.svg)
+![CI](https://github.com/spiral/roadrunner-docs/workflows/CI/badge.svg)
 
 > Documentation for v1.0 of RoadRunner is available [here](https://github.com/roadrunner-server/roadrunner-docs/tree/1.0).
 
@@ -13,8 +13,35 @@ manager.
     * [Installation](intro/install.md)
     * [Configuration Reference](intro/config.md)
     * [LICENSE](license.md)
+* Plugins
+  * [HTTP (transport](plugins/http.md)
+  * [JOBS (queues)](plugins/jobs.md)
+  * [Key-Value](plugins/kv.md)
+  * [Configuration](plugins/config.md)
+  * [gRPC](plugins/gRPC.md)
+  * [Informer](plugins/informer.md)
+  * [Broadcast](plugins/broadcast.md)
+  * [Logger](plugins/logger.md)
+  * [Metrics (prometheus)](plugins/metrics.md)
+  * [Reload](plugins/reload.md)
+  * [Resetter](plugins/resetter.md)
+  * [RPC](plugins/rpc.md)
+  * [Server](plugins/server.md)
+  * [Service (like systemd)](plugins/service.md)
+  * [Status](plugins/status.md)
+  * [Websockets](plugins/websocket.md)
+  * [TCP](plugins/tcp.md)
+  * [Fileserver](plugins/fileserver.md)
+* HTTP Middleware 
+  * [Headers](Headers and CORS)
+  * [Gzip](GZIP middleware)
+  * [Static](Static files handler)
+  * [Sendfile](X-Sendfile headers handler)
+  * [Newrelic](NewRelic distributed traces and custom attributes)
+  * [Cache](RFC7234 cache)
+  * [OTEL](OpenTelemetry protocol)
 * PHP Workers
-    * [Worker](php/worker.md)
+  * [Worker](php/worker.md)
     * [Environment](php/environment.md)
     * [Developer Mode](php/developer.md)
     * [Error Handling](php/error-handling.md)
