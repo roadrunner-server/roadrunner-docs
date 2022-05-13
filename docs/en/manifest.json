@@ -36,13 +36,13 @@
   {
     "title": "HTTP Middleware",
     "links": {
-      "middleware/headers": "HTTP middleware supports constant custom headers and CORS",
-      "middleware/gzip": "HTTP middleware supports Accept-Encoding: GZIP",
-      "middleware/static": "HTTP middleware serves static files",
-      "middleware/sendfile": "HTTP middleware handles X-Sendfile headers",
-      "middleware/newrelic": "HTTP middleware supports NewRelic distributed traces and custom attributes",
-      "middleware/cache": "HTTP middleware supports RFC7234 cache",
-      "middleware/otel": "HTTP middleware supports OpenTelemetry protocol"
+      "middleware/headers": "Headers and CORS",
+      "middleware/gzip": "GZIP middleware",
+      "middleware/static": "Static files handler",
+      "middleware/sendfile": "X-Sendfile headers handler",
+      "middleware/newrelic": "NewRelic distributed traces and custom attributes",
+      "middleware/cache": "RFC7234 cache",
+      "middleware/otel": "OpenTelemetry protocol"
     }
   },
   {
