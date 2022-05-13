@@ -48,14 +48,14 @@
   {
     "title": "Plugin's drivers",
     "links": {
-      "drivers/amqp": "JOBS RabbitMQ driver",
-      "drivers/beanstalk": "JOBS (queues) plugin",
-      "drivers/boltdb": "JOBS and KV boltdb driver",
-      "drivers/sqs": "JOBS SQS driver",
-      "drivers/nats": "JOBS NATS driver",
-      "drivers/memcached": "KV memcached driver",
-      "drivers/memory": "KV, JOBS and Broadcast in-memory driver",
-      "drivers/redis": "KV and Broadcast driver"
+      "drivers/amqp": "RabbitMQ",
+      "drivers/beanstalk": "Beanstalk",
+      "drivers/boltdb": "Boltdb",
+      "drivers/sqs": "SQS",
+      "drivers/nats": "NATS",
+      "drivers/memcached": "Memcached",
+      "drivers/memory": "In-memory",
+      "drivers/redis": "Redis"
     }
   },
   {
