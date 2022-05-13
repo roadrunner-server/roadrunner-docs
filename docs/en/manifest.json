@@ -46,19 +46,6 @@
     }
   },
   {
-    "title": "Plugin's drivers",
-    "links": {
-      "drivers/amqp": "RabbitMQ",
-      "drivers/beanstalk": "Beanstalk",
-      "drivers/boltdb": "Boltdb",
-      "drivers/sqs": "SQS",
-      "drivers/nats": "NATS",
-      "drivers/memcached": "Memcached",
-      "drivers/memory": "In-memory",
-      "drivers/redis": "Redis"
-    }
-  },
-  {
     "title": "Materials",
     "links": {
       "plugins/http": "HTTP (transport) plugin"
