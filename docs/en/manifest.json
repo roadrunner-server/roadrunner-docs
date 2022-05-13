@@ -13,6 +13,7 @@
   {
     "title": "Plugins",
     "links": {
+      "plugins/intro": "What is it?",
       "plugins/http": "HTTP (transport)",
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",

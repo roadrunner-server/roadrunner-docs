@@ -14,6 +14,7 @@ manager.
     * [Configuration Reference](intro/config.md)
     * [LICENSE](license.md)
 * Plugins
+  * [What is it?](plugins/intro.md)
   * [HTTP (transport)](plugins/http.md)
   * [JOBS (queues)](plugins/jobs.md)
   * [Key-Value](plugins/kv.md)
