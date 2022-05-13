@@ -13,6 +13,54 @@
   {
     "title": "Plugins",
     "links": {
+      "plugins/http": "HTTP (transport) plugin",
+      "plugins/jobs": "JOBS (queues) plugin",
+      "plugins/kv": "Key-Value plugin",
+      "plugins/config": "Configuration plugin",
+      "plugins/gRPC": "gRPC plugin",
+      "plugins/informer": "Informer plugin",
+      "plugins/broadcast": "Broadcast plugin",
+      "plugins/logger": "Logger plugin",
+      "plugins/metrics": "Metrics (prometheus) plugin",
+      "plugins/reload": "Reload plugin",
+      "plugins/resetter": "Resetter plugin",
+      "plugins/rpc": "RPC plugin",
+      "plugins/server": "Server plugin",
+      "plugins/service": "Service (like systemd) plugin",
+      "plugins/status": "Status reporter plugin",
+      "plugins/websockets": "Websockets plugin",
+      "plugins/tcp": "TCP plugin",
+      "plugins/fileserver": "Fileserver (static files) plugin"
+    }
+  },
+  {
+    "title": "HTTP Middleware",
+    "links": {
+      "middleware/headers": "HTTP middleware supports constant custom headers and CORS",
+      "middleware/gzip": "HTTP middleware supports Accept-Encoding: GZIP",
+      "middleware/static": "HTTP middleware serves static files",
+      "middleware/sendfile": "HTTP middleware handles X-Sendfile headers",
+      "middleware/newrelic": "HTTP middleware supports NewRelic distributed traces and custom attributes",
+      "middleware/cache": "HTTP middleware supports RFC7234 cache",
+      "middleware/otel": "HTTP middleware supports OpenTelemetry protocol"
+    }
+  },
+  {
+    "title": "Plugin's drivers",
+    "links": {
+      "drivers/amqp": "JOBS RabbitMQ driver",
+      "drivers/beanstalk": "JOBS (queues) plugin",
+      "drivers/boltdb": "JOBS and KV boltdb driver",
+      "drivers/sqs": "JOBS SQS driver",
+      "drivers/nats": "JOBS NATS driver",
+      "drivers/memcached": "KV memcached driver",
+      "drivers/memory": "KV, JOBS and Broadcast in-memory driver",
+      "drivers/redis": "KV and Broadcast driver"
+    }
+  },
+  {
+    "title": "Materials",
+    "links": {
       "plugins/http": "HTTP (transport) plugin"
     }
   },
