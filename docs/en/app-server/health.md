@@ -23,6 +23,17 @@ Once enabled, the health check endpoint will respond with the following:
  - `HTTP 200` if there is at least **one worker** ready to serve requests.
  - `HTTP 500` if there are **no workers** ready to service requests.
 
+
+To access the readiness-check use the following URL:
+
+`http://localhost:2114/ready?plugin=http`
+
+
+The difference between `ready` and `health` endpoints in the underlying checks.
+
+For the `ready`, at least 1 worker should be in the `Ready` state (ready to accept a request). For the `health` check at least 1 worker should be in the `Active` state (serving the request).
+
+From the user perspective, the `Ready` state means that the request might be sent and processed immediately, but the `Active` state means that the worker is working on the request and is healthy.
 ## Use cases
 
 The health check endpoint can be used for the following:
