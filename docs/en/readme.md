@@ -14,6 +14,15 @@ manager.
     * [Installation](intro/install.md)
     * [Configuration Reference](intro/config.md)
     * [LICENSE](license.md)
+* PHP Workers
+    * [Worker](php/worker.md)
+    * [Environment](php/environment.md)
+    * [Developer Mode](php/developer.md)
+    * [Restarting](php/restarting.md)
+    * [Process Supervisor](php/supervisor.md)
+    * [RPC to App Server](php/rpc.md)
+    * [Caveats](php/caveats.md)
+    * [Debugging](php/debugging.md)
 * Plugins
     * [What is it?](plugins/intro.md)
     * [Write a plugin](plugins/plugin.md)
@@ -43,16 +52,6 @@ manager.
     * [Newrelic](middleware/newrelic.md)
     * [Cache](middleware/cache.md)
     * [OTEL](middleware/otel.md)
-* PHP Workers
-    * [Worker](php/worker.md)
-    * [Environment](php/environment.md)
-    * [Developer Mode](php/developer.md)
-    * [Error Handling](php/error-handling.md)
-    * [Restarting](php/restarting.md)
-    * [Process Supervisor](php/supervisor.md)
-    * [RPC to App Server](php/rpc.md)
-    * [Caveats](php/caveats.md)
-    * [Debugging](php/debugging.md)
 * App Server
     * [CLI Commands](app-server/cli.md)
     * [Production Usage Tips](app-server/production.md)

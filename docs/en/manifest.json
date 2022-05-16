@@ -52,24 +52,11 @@
       "php/worker": "Worker",
       "php/environment": "Environment",
       "php/developer": "Developer Mode",
-      "php/error-handling": "Error Handling",
       "php/restarting": "Restarting",
       "php/supervisor": "Process Supervisor",
       "php/rpc": "RPC to App Server",
       "php/caveats": "Caveats",
       "php/debugging": "Debugging"
-    }
-  },
-  {
-    "title": "HTTPs and HTTP2",
-    "links": {
-      "http/access-logs": "Access logs",
-      "http/https": "HTTPs and HTTP/2",
-      "http/static": "Static Content",
-      "http/headers": "Headers",
-      "http/cache": "Cache (RFC7234)",
-      "http/available-middleware": "Available middleware",
-      "http/writing-a-middleware": "Writing a Go middleware"
     }
   },
   {
