@@ -226,7 +226,8 @@ func (p *Plugin) handler() func(pld string) (string, error) {
 		return exec.String(), nil
 	}
 }
-```
+```  
+
 3. Config file, which can be embedded into the binary with [`embed`](https://pkg.go.dev/embed) import:
 ```yaml
 server:
