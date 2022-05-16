@@ -11,6 +11,35 @@
     }
   },
   {
+    "title": "PHP Workers",
+    "links": {
+      "php/worker": "Worker",
+      "php/environment": "Environment",
+      "php/developer": "Developer Mode",
+      "php/restarting": "Restarting",
+      "php/supervisor": "Process Supervisor",
+      "php/rpc": "RPC to App Server",
+      "php/caveats": "Caveats",
+      "php/debugging": "Debugging"
+    }
+  },
+  {
+    "title": "App Server",
+    "links": {
+      "app-server/cli": "CLI Commands",
+      "app-server/production": "Production Usage",
+      "app-server/systemd": "Writing a RR systemd unit file",
+      "app-server/health": "Healthcheck",
+      "app-server/build": "Building a Server",
+      "app-server/aws-lambda": "AWS lambda",
+      "app-server/https": "HTTPS",
+      "app-server/access-logs": "Access-Logs",
+      "app-server/events-bus": "Using RR events bus",
+      "app-server/http-error-codes": "Overriding HTTP error codes",
+      "app-server/pubsub": "PubSub"
+    }
+  },
+  {
     "title": "Plugins",
     "links": {
       "plugins/intro": "What is it?",
@@ -37,6 +66,7 @@
   {
     "title": "HTTP Middleware",
     "links": {
+      "middleware/writing-a-middleware": "Writing a middleware",
       "middleware/headers": "Headers and CORS",
       "middleware/gzip": "GZIP",
       "middleware/static": "Static files handler",
@@ -44,33 +74,6 @@
       "middleware/newrelic": "NewRelic",
       "middleware/cache": "RFC7234 cache",
       "middleware/otel": "OpenTelemetry"
-    }
-  },
-  {
-    "title": "PHP Workers",
-    "links": {
-      "php/worker": "Worker",
-      "php/environment": "Environment",
-      "php/developer": "Developer Mode",
-      "php/restarting": "Restarting",
-      "php/supervisor": "Process Supervisor",
-      "php/rpc": "RPC to App Server",
-      "php/caveats": "Caveats",
-      "php/debugging": "Debugging"
-    }
-  },
-  {
-    "title": "App Server",
-    "links": {
-      "app-server/cli": "CLI Commands",
-      "app-server/production": "Production Usage",
-      "app-server/systemd": "Writing a RR systemd unit file",
-      "app-server/health": "Healthcheck",
-      "app-server/build": "Building a Server",
-      "app-server/aws-lambda": "AWS lambda",
-      "app-server/events-bus": "Using RR events bus",
-      "app-server/http-error-codes": "Overriding HTTP error codes",
-      "app-server/pubsub": "PubSub"
     }
   },
   {
