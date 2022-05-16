@@ -992,6 +992,53 @@ $handler = $container->get(match($task->getQueue()) {
 $handler->process($task);
 ```
 
+### Task auto acknowledge
+
+RoadRunner version `v2.10.0+` supports an auto acknowledge task option. You might use this option to acknowledge a task right after RR receive it from the queue.
+You can use this option for the non-important tasks which can fail or break the worker.
+
+To use this option you may update the Options:
+
+```php
+// Create with default values
+$options = new Options(
+     Options::DEFAULT_DELAY,
+     Options::DEFAULT_PRIORITY,
+     Options::DEFAULT_AUTO_ACK, // false by default
+);
+```
+
+Or manage that manually per every `Task`:
+
+```php
+use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
+use Spiral\RoadRunner\Jobs\Options;
+use Spiral\RoadRunner\Jobs\Jobs;
+
+$options = new Options();
+
+// Jobs service
+$jobs = new Jobs(RPC::create('tcp://127.0.0.1:6001'));
+
+// Select "test" queue from jobs
+$queue = $jobs->connect('test');
+
+// or create a new queue
+$queue = $jobs->create(new MemoryCreateInfo('local'));
+
+// Set default auto ack for all tasks
+$queue = $queue->withDefaultOptions(
+     $options->withAutoAck(true)
+);
+
+// Create a new task with custom auto ack
+$task = $queue->push('task_name', ['foo' => 'bar'], (new Options())->withAutoAck(false));
+
+// or change auto ack for created task
+$task = $queue->create('task_name', ['foo' => 'bar'])->withAutoAck(false);
+$queue->dispatch($task);
+```
+
 ### Received Task Name
 
 The task name is some identifier associated with a specific type of task. For
