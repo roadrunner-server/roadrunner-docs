@@ -1,4 +1,8 @@
-### X-Sendfile
+## X-Sendfile middleware
+
+### Symfony [docs](https://symfony.com/doc/current/components/http_foundation.html#serving-files)
+
+### Configuration
 
 ```yaml
 version: "2.7"

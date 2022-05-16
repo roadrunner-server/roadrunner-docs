@@ -5,7 +5,7 @@ The simplest and most common way would be responding to parent service with the 
 
 ```php
 try {
-    $resp = new \Zend\Diactoros\Response();
+    $resp = new Psr7\Response();
     $resp->getBody()->write("hello world");
 
     $psr7->respond($resp);

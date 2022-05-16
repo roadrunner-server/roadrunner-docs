@@ -38,12 +38,12 @@
     "title": "HTTP Middleware",
     "links": {
       "middleware/headers": "Headers and CORS",
-      "middleware/gzip": "GZIP middleware",
+      "middleware/gzip": "GZIP",
       "middleware/static": "Static files handler",
-      "middleware/sendfile": "X-Sendfile headers handler",
-      "middleware/newrelic": "NewRelic distributed traces and custom attributes",
+      "middleware/sendfile": "X-Sendfile handler",
+      "middleware/newrelic": "NewRelic",
       "middleware/cache": "RFC7234 cache",
-      "middleware/otel": "OpenTelemetry protocol"
+      "middleware/otel": "OpenTelemetry"
     }
   },
   {
@@ -54,7 +54,7 @@
       "php/developer": "Developer Mode",
       "php/error-handling": "Error Handling",
       "php/restarting": "Restarting",
-      "php/limit": "Process Supervisor",
+      "php/supervisor": "Process Supervisor",
       "php/rpc": "RPC to App Server",
       "php/caveats": "Caveats",
       "php/debugging": "Debugging"
@@ -75,24 +75,15 @@
   {
     "title": "App Server",
     "links": {
-      "beep-beep/cli": "CLI Commands",
-      "beep-beep/logging": "Logging",
-      "beep-beep/reload": "Auto-Reloading",
-      "beep-beep/production": "Production Usage",
-      "beep-beep/systemd": "Writing a RR systemd unit file",
-      "beep-beep/metrics": "Prometheus Metrics",
-      "beep-beep/health": "Healthcheck",
-      "beep-beep/build": "Building a Server",
-      "beep-beep/kv": "KeyValue Storage",
-      "beep-beep/jobs": "Jobs (Queues)",
-      "beep-beep/grpc": "GRPC",
-      "beep-beep/config": "Config",
-      "beep-beep/rpc": "RPC",
-      "beep-beep/plugin": "Write a Plugin",
-      "beep-beep/service": "Service plugin",
-      "beep-beep/tcp": "TCP plugin",
-      "library/aws-lambda": "AWS lambda",
-      "library/events-bus": "Using RR events bus"
+      "app-server/cli": "CLI Commands",
+      "app-server/production": "Production Usage",
+      "app-server/systemd": "Writing a RR systemd unit file",
+      "app-server/health": "Healthcheck",
+      "app-server/build": "Building a Server",
+      "app-server/aws-lambda": "AWS lambda",
+      "app-server/events-bus": "Using RR events bus",
+      "app-server/http-error-codes": "Overriding HTTP error codes",
+      "app-server/pubsub": "PubSub"
     }
   },
   {
