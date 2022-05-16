@@ -16,47 +16,64 @@
       "php/worker": "Worker",
       "php/environment": "Environment",
       "php/developer": "Developer Mode",
-      "php/error-handling": "Error Handling",
       "php/restarting": "Restarting",
-      "php/limit": "Process Supervisor",
+      "php/supervisor": "Process Supervisor",
       "php/rpc": "RPC to App Server",
-      "php/caveats": "Caveats",
+      "php/limitations": "Caveats",
       "php/debugging": "Debugging"
-    }
-  },
-  {
-    "title": "HTTPs and HTTP2",
-    "links": {
-      "http/access-logs": "Access logs",
-      "http/https": "HTTPs and HTTP/2",
-      "http/static": "Static Content",
-      "http/headers": "Headers",
-      "http/cache": "Cache (RFC7234)",
-      "http/available-middleware": "Available middleware",
-      "http/writing-a-middleware": "Writing a Go middleware"
     }
   },
   {
     "title": "App Server",
     "links": {
-      "beep-beep/cli": "CLI Commands",
-      "beep-beep/logging": "Logging",
-      "beep-beep/reload": "Auto-Reloading",
-      "beep-beep/production": "Production Usage",
-      "beep-beep/systemd": "Writing a RR systemd unit file",
-      "beep-beep/metrics": "Prometheus Metrics",
-      "beep-beep/health": "Healthcheck",
-      "beep-beep/build": "Building a Server",
-      "beep-beep/kv": "KeyValue Storage",
-      "beep-beep/jobs": "Jobs (Queues)",
-      "beep-beep/grpc": "GRPC",
-      "beep-beep/config": "Config",
-      "beep-beep/rpc": "RPC",
-      "beep-beep/plugin": "Write a Plugin",
-      "beep-beep/service": "Service plugin",
-      "beep-beep/tcp": "TCP plugin",
-      "library/aws-lambda": "AWS lambda",
-      "library/events-bus": "Using RR events bus"
+      "app-server/cli": "CLI Commands",
+      "app-server/production": "Production Usage",
+      "app-server/systemd": "Writing a RR systemd unit file",
+      "app-server/health": "Healthcheck",
+      "app-server/build": "Building a Server",
+      "app-server/aws-lambda": "AWS lambda",
+      "app-server/https": "HTTPS",
+      "app-server/access-logs": "Access-Logs",
+      "app-server/events-bus": "Using RR events bus",
+      "app-server/http-error-codes": "Overriding HTTP error codes",
+      "app-server/pubsub": "PubSub"
+    }
+  },
+  {
+    "title": "Plugins",
+    "links": {
+      "plugins/intro": "What is it?",
+      "plugins/http": "HTTP (transport)",
+      "plugins/jobs": "JOBS (queues)",
+      "plugins/kv": "Key-Value",
+      "plugins/config": "Configuration",
+      "plugins/gRPC": "gRPC",
+      "plugins/informer": "Informer",
+      "plugins/broadcast": "Broadcast",
+      "plugins/logger": "Logger",
+      "plugins/metrics": "Metrics (prometheus)",
+      "plugins/reload": "Reload",
+      "plugins/resetter": "Resetter",
+      "plugins/rpc": "RPC",
+      "plugins/server": "Server",
+      "plugins/service": "Service (like systemd)",
+      "plugins/status": "Status",
+      "plugins/websockets": "Websockets",
+      "plugins/tcp": "TCP",
+      "plugins/fileserver": "Fileserver"
+    }
+  },
+  {
+    "title": "HTTP Middleware",
+    "links": {
+      "middleware/writing-a-middleware": "Writing a middleware",
+      "middleware/headers": "Headers and CORS",
+      "middleware/gzip": "GZIP",
+      "middleware/static": "Static files handler",
+      "middleware/sendfile": "X-Sendfile handler",
+      "middleware/newrelic": "NewRelic",
+      "middleware/cache": "RFC7234 cache",
+      "middleware/otel": "OpenTelemetry"
     }
   },
   {

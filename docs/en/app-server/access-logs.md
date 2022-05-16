@@ -1,6 +1,6 @@
 ### Access logs
 
-RR starting from the `v2.5.0` will bring access logs support (turned off by default). They will include the following information:  
+RR starting from the `v2.5.0` brings access logs support (turned off by default). They will include the following information:  
 
 - `method` - http method.
 - `remote_addr` - request remote address.

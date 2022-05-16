@@ -43,7 +43,7 @@ logs:
   level: info
 ```
 
-### File logger  
+### File logger
 
 It is possibe to redirect channels or whole log output to the file:
 

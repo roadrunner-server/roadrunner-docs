@@ -34,9 +34,9 @@ func (g *Plugin) Name() string {
 }
 ```
 
-> Middleware must correspond to the following [interface](https://github.com/spiral/roadrunner-plugins/blob/master/http/plugin.go#L38) and be [named](https://github.com/spiral/roadrunner-plugins/blob/master/http/plugin.go#L362).
+> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/http/plugin.go#L38) and be [named](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/http/plugin.go#L362).
 
-We have to register this service after in the [internal/container/plugin.go](https://github.com/spiral/roadrunner-binary/blob/master/internal/container/plugins.go) file in order to properly resolve dependency:
+We have to register this service after in the [internal/container/plugin.go](https://github.com/roadrunner-server/roadrunner-binary/blob/master/internal/container/plugins.go) file in order to properly resolve dependency:
 
 ```golang
 import (
@@ -64,7 +64,7 @@ http:
 
 ### PSR7 Attributes
 
-You can safely pass values to `ServerRequestInterface->getAttributes()` using [attributes](https://github.com/spiral/roadrunner/blob/master/plugins/http/attributes/attributes.go) package:
+You can safely pass values to `ServerRequestInterface->getAttributes()` using [attributes](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/http/attributes/attributes.go) package:
 
 ```golang
 func (s *Service) middleware(next http.HandlerFunc) http.HandlerFunc {

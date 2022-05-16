@@ -3,7 +3,7 @@
 - `[AVAILABLE SINCE RR v2.6.0]`
 
 ### Client library
-- https://github.com/spiral/roadrunner-tcp
+- https://github.com/roadrunner-server/roadrunner-tcp
 
 ### Configuration
 
@@ -32,7 +32,7 @@ Where:
 
 ### RR Protocol
 
-Protocol used to have bi-directional communication channel between the PHP worker and the RR server. The protocol can be used by any third-party library and has its own client API with the RR. Our reference implementation is: https://github.com/spiral/roadrunner-tcp.
+Protocol used to have bi-directional communication channel between the PHP worker and the RR server. The protocol can be used by any third-party library and has its own client API with the RR. Our reference implementation is: https://github.com/roadrunner-server/roadrunner-tcp.
 
 - `OnConnect`: when the connection is established, RR sends payload with the `CONNECTED` header to the worker with connection uuid, server name, and connection remote address. The PHP worker might then respond with the following headers:
     1. `WRITE` - to write the data in the connection and then start the read loop. After data arrived in the connection, RR will read it and send to it the PHP worker with the header `DATA`.

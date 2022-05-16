@@ -1,13 +1,13 @@
 ### Websockets
 
 Websockets plugins add WebSockets broadcasting features to the Roadrunner. It
-implements [PubSub](https://github.com/spiral/roadrunner/blob/master/pkg/pubsub/interface.go) interface.
+implements [PubSub](https://github.com/roadrunner-server/roadrunner/blob/master/pkg/pubsub/interface.go) interface.
 
 #### Protobuf
 
 Websockets plugin uses protobuf messages for the RPC calls (PHP part). The same messages, but JSON-encoded used on the
 client side (browser, devices). All proto messages located in the
-Roadrunner [pkg](https://github.com/spiral/roadrunner-plugins/blob/master/internal/proto/websockets/v1beta/websockets.proto) folder.
+Roadrunner [pkg](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/internal/proto/websockets/v1beta/websockets.proto) folder.
 
 #### RPC interface
 
@@ -19,7 +19,7 @@ Roadrunner [pkg](https://github.com/spiral/roadrunner-plugins/blob/master/intern
 2. `PublishAsync(in *websocketsv1.Request, out *websocketsv1.Response)`: The arguments: first argument is a `Request` ,
    which declares a `broker`, `topics` to push the payload and `payload`; the second argument is a `Response`, it will
    contain only 1 bool value which used as a signal of error.  
-   The difference between `Publish` and `PublishAsync` that `PublishAsync` doesn't wait for a broker's response. 
+   The difference between `Publish` and `PublishAsync` that `PublishAsync` doesn't wait for a broker's response.
    The error returned if the request fails.
 
 #### Clients
@@ -29,7 +29,7 @@ following:
 
 1. `join` - to join a specified topics. For successful `join` server returns a response with joined topics:
    `{"topic":"@join","payload":["foo","foo2"]}`. Otherwise, the server returns an error or unsuccessful `join` response:
-   `{"topic":"#join","payload":["foo","foo2"]}`. 
+   `{"topic":"#join","payload":["foo","foo2"]}`.
    Sample of `join` command:`{"command":"join","broker":"memory","topics":["foo","foo2"],"payload":""}`
 
 
@@ -42,4 +42,4 @@ following:
 #### Architecture
 
 The architecture diagram for the WebSockets plugin can be
-found [here](https://github.com/spiral/roadrunner-plugins/blob/master/websockets/doc)
+found [here](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/websockets/doc)

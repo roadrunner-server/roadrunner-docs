@@ -75,7 +75,7 @@ jobs:
 
 ### Common Configuration
 
-Let's now focus on the common settings of the queue server. In full, it may 
+Let's now focus on the common settings of the queue server. In full, it may
 look like this:
 
 ```yaml
@@ -101,7 +101,7 @@ Above is a complete list of all possible common Jobs settings. Let's now figure
 out what they are responsible for.
 
 - `num_pollers` - The number of threads that concurrently read from the priority
-  queue and send payloads to the workers. There is no optimal number, it's 
+  queue and send payloads to the workers. There is no optimal number, it's
   heavily dependent on the PHP worker's performance. For example, "echo workers"
   may process over 300k jobs per second within 64 pollers (on 32 core CPU).
 
@@ -127,7 +127,7 @@ out what they are responsible for.
 
 - `consume` - Contains an array of the names of all queues specified in the
   `"pipelines"` section, which should be processed by the concierge specified in
-   the global `"server"` section (see the [PHP worker's settings](/php/worker.md)).
+  the global `"server"` section (see the [PHP worker's settings](/php/worker.md)).
 
 - `pipelines` - This section contains a list of all queues declared in the
   RoadRunner. The key is a unique *queue identifier*, and the value is an object
@@ -140,7 +140,7 @@ any additional installations.
 
 Note that using this type of queue driver, all data is in memory and will be
 destroyed when the RoadRunner Server is restarted. If you need persistent
-queue, then it is recommended to use alternative drivers: `amqp`, `beanstalk` 
+queue, then it is recommended to use alternative drivers: `amqp`, `beanstalk`
 or `sqs`.
 
 The complete `memory` driver configuration looks like this:
@@ -168,13 +168,13 @@ jobs:
 
 Below is a more detailed description of each of the in-memory-specific options:
 - `priority` - Queue default priority for each task pushed into this queue
-if the priority value for these tasks was not explicitly set.
+  if the priority value for these tasks was not explicitly set.
 
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
   prefetch number of jobs even if PQ is full.
 
-> Please note that this driver cannot hold more than 1000 tasks with delay at 
+> Please note that this driver cannot hold more than 1000 tasks with delay at
 > the same time (RR limitation)
 
 ### Local (based on the boltdb) Driver
@@ -225,7 +225,7 @@ Below is a more detailed description of each of the in-memory-specific options:
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
   prefetch number of jobs even if PQ is full.
 
-- `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`. 
+- `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`.
 
 ### NATS Driver
 
@@ -273,16 +273,16 @@ Below is a more detailed description of each of the in-memory-specific options:
 ### AMQP Driver
 
 Strictly speaking, AMQP (and 0.9.1 version used) is a protocol, not a full-fledged driver, so you can use
-any servers that support this protocol (on your own, only rabbitmq was tested) , such as: 
+any servers that support this protocol (on your own, only rabbitmq was tested) , such as:
 [RabbitMQ](https://www.rabbitmq.com/), [Apache Qpid](http://qpid.apache.org/) or
 [Apache ActiveMQ](http://activemq.apache.org/). However, it is recommended to
-use RabbitMQ as the main implementation, and reliable performance with other 
+use RabbitMQ as the main implementation, and reliable performance with other
 implementations is not guaranteed.
 
 To install and configure the RabbitMQ, use the corresponding
 [documentation page](https://www.rabbitmq.com/download.html). After that, you
 should configure the connection to the server in the "`amqp`" section. This
-configuration section contains exactly one `addr` key with a 
+configuration section contains exactly one `addr` key with a
 [connection DSN](https://www.rabbitmq.com/uri-spec.html).
 
 ```yaml
@@ -291,7 +291,7 @@ amqp:
 ```
 
 After creating a connection to the server, you can create a new queue that will
-use this connection and which will contain the queue settings (including 
+use this connection and which will contain the queue settings (including
 amqp-specific):
 
 ```yaml
@@ -366,7 +366,7 @@ Below is a more detailed description of each of the amqp-specific options:
   when the client finishes processing a message, the following message is
   already held locally, rather than needing to be sent down the channel.
   Prefetching gives a performance improvement. This field specifies the prefetch
-  window size in octets. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html) 
+  window size in octets. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
   in AMQP QoS documentation reference.
 
 - `queue` - AMQP internal (inside the driver) queue name.
@@ -379,29 +379,29 @@ Below is a more detailed description of each of the amqp-specific options:
 
 - `exchange_type` - The type of task delivery. May be one of `direct`, `topics`,
   `headers` or `fanout`.
-  - `direct` - Used when a task needs to be delivered to specific queues. The
-    task is published to an exchanger with a specific routing key and goes to
-    all queues that are associated with this exchanger with a similar routing
-    key.
-  - `topics` - Similarly, `direct` exchange enables selective routing by
-    comparing the routing key. But, in this case, the key is set using a
-    template, like: `user.*.messages`.
-  - `fanout` - All tasks are delivered to all queues even if a routing key is
-    specified in the task.
-  - `headers` - Routes tasks to related queues based on a comparison of the
-    (key, value) pairs of the headers property of the binding and the similar
-    property of the message.
-  
-  - `routing_key` - Queue's routing key.
-  
-  - `exclusive` - Exclusive queues can't be redeclared. If set to true and
-    you'll try to declare the same pipeline twice, that will lead to an error.
+    - `direct` - Used when a task needs to be delivered to specific queues. The
+      task is published to an exchanger with a specific routing key and goes to
+      all queues that are associated with this exchanger with a similar routing
+      key.
+    - `topics` - Similarly, `direct` exchange enables selective routing by
+      comparing the routing key. But, in this case, the key is set using a
+      template, like: `user.*.messages`.
+    - `fanout` - All tasks are delivered to all queues even if a routing key is
+      specified in the task.
+    - `headers` - Routes tasks to related queues based on a comparison of the
+      (key, value) pairs of the headers property of the binding and the similar
+      property of the message.
 
-  - `multiple_ack` - This delivery and all prior unacknowledged deliveries on 
-    the same channel will be acknowledged. This is useful for batch processing 
-    of deliveries. Applicable only for the Ack, not for the Nack.
-  
-  - `requeue_on_fail` - Requeue on Nack.
+    - `routing_key` - Queue's routing key.
+
+    - `exclusive` - Exclusive queues can't be redeclared. If set to true and
+      you'll try to declare the same pipeline twice, that will lead to an error.
+
+    - `multiple_ack` - This delivery and all prior unacknowledged deliveries on
+      the same channel will be acknowledged. This is useful for batch processing
+      of deliveries. Applicable only for the Ack, not for the Nack.
+
+    - `requeue_on_fail` - Requeue on Nack.
 
 **NEW in 2.7:**
 
@@ -412,7 +412,7 @@ Below is a more detailed description of each of the amqp-specific options:
 
 Beanstalk is a simple and fast general purpose work queue. To install Beanstalk,
 you can use the [local queue server](https://github.com/beanstalkd/beanstalkd)
-or run the server inside [AWS Elastic](https://aws.amazon.com/elasticbeanstalk/). 
+or run the server inside [AWS Elastic](https://aws.amazon.com/elasticbeanstalk/).
 You can choose any option that is convenient for you.
 
 Setting up the server is similar to setting up AMQP and requires specifying the
@@ -423,7 +423,7 @@ beanstalk:
   addr: tcp://127.0.0.1:11300
 ```
 
-After setting up the connection, you can start using it. Let's take a look at 
+After setting up the connection, you can start using it. Let's take a look at
 the complete config with all the options for this driver:
 
 ```yaml
@@ -465,10 +465,10 @@ jobs:
         reserve_timeout: 5s
 ```
 
-These are all settings that are available to you for configuring this type of 
+These are all settings that are available to you for configuring this type of
 driver. Let's take a look at what they are responsible for:
-- `priority` - Similar to the same option in other drivers. This is queue 
-  default priority for for each task pushed into this queue if the priority 
+- `priority` - Similar to the same option in other drivers. This is queue
+  default priority for for each task pushed into this queue if the priority
   value for these tasks was not explicitly set.
 
 - `tube_priority` - The value for specifying the priority within Beanstalk is
@@ -489,7 +489,7 @@ can also use the local installation of this system on your own servers. If you
 prefer this option, then you can use [softwaremill's implementation](https://github.com/softwaremill/elasticmq)
 of the Amazon SQS server.
 
-After you have created the SQS server, you need to specify the following 
+After you have created the SQS server, you need to specify the following
 connection settings in `sqs` configuration settings. Unlike AMQP and Beanstalk,
 SQS requires more values to set up a connection and will be different from what
 we're used to:
@@ -570,9 +570,9 @@ jobs:
 ```
 
 Below is a more detailed description of each of the SQS-specific options:
-- `prefetch` - Number of jobs to prefetch from the SQS. Amazon SQS never returns 
-  more messages than this value (however, fewer messages might be returned). 
-  Valid values: 1 to 10. Any number bigger than 10 will be rounded to 10. 
+- `prefetch` - Number of jobs to prefetch from the SQS. Amazon SQS never returns
+  more messages than this value (however, fewer messages might be returned).
+  Valid values: 1 to 10. Any number bigger than 10 will be rounded to 10.
   Default: `10`.
 
 - `visibility_timeout` - The duration (in seconds) that the received messages
@@ -585,11 +585,11 @@ Below is a more detailed description of each of the SQS-specific options:
   the wait time expires, the call returns successfully with an empty list of
   messages. Default: `5`.
 
-- `queue` - SQS internal queue name. Can contain alphanumeric characters, 
+- `queue` - SQS internal queue name. Can contain alphanumeric characters,
   hyphens (-), and underscores (_). Default value is `"default"` string.
 
 - `attributes` - List of the [AWS SQS attributes](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html).
-> For example 
+> For example
 > ```yaml
 > attributes:
 >   DelaySeconds: 0
@@ -599,7 +599,7 @@ Below is a more detailed description of each of the SQS-specific options:
 >   VisibilityTimeout: 30
 > ```
 
-- `tags` - Tags don't have any semantic meaning. Amazon SQS interprets tags as 
+- `tags` - Tags don't have any semantic meaning. Amazon SQS interprets tags as
   character.
 > Please note that this functionality is rarely used and slows down the work of
 > queues: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html
@@ -630,7 +630,7 @@ $jobs = new Spiral\RoadRunner\Jobs\Jobs(
 
 After we have established the connection, we should check the server
 availability and in this case the API availability for the jobs. This can be
-done using the appropriate `isAvailable()` method.  Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901). In the releases after `v2.6.2` you can safely remove calls to that method. When the connection is 
+done using the appropriate `isAvailable()` method.  Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901). In the releases after `v2.6.2` you can safely remove calls to that method. When the connection is
 created, and the availability of the functionality is checked, we can connect to
 the queue we need using `connect()` method.
 
@@ -718,7 +718,7 @@ functionality has a number of limitations. In case of creating a new task:
 In the case of immediate dispatch, you will have access to only the basic
 features: The `push()` method accepts one required argument with the
 name of the task and two optional arguments containing additional data for the
-task being performed and additional sending options (for example, a delay). 
+task being performed and additional sending options (for example, a delay).
 Moreover, this method is designed to send only one task.
 
 ```php
@@ -739,7 +739,7 @@ data should be transferred to the task and no special requirements are imposed
 on them, except for the main ones: Since this task is then sent to the queue,
 they must be serializable.
 
-> The default serializer used in jobs allows you to pass anonymous functions 
+> The default serializer used in jobs allows you to pass anonymous functions
 > as well.
 
 In case to add additional data, you can use the optional second argument
@@ -849,7 +849,7 @@ $isJobsMode = $env->getMode() === Mode::MODE_JOBS;
 
 After we are convinced of the specialization of the worker, we can write the
 corresponding code for processing tasks. To get information about the available
-task in the worker, use the 
+task in the worker, use the
 `$consumer->waitTask(): ReceivedTaskInterface` method.
 
 ```php
@@ -915,7 +915,7 @@ while ($task = $consumer->waitTask()) {
 ```
 
 In the case that the next time you restart the task, you should update the
-headers, you can use the appropriate method by adding or changing the headers 
+headers, you can use the appropriate method by adding or changing the headers
 of the received task.
 
 ```php
@@ -968,8 +968,8 @@ $binary = hex2bin(str_replace('-', '', $task->getId()));
 
 ### Received Task Queue
 
-Since a worker can process several different queues at once, you may need to 
-somehow determine from which queue the task came. To get the name of the queue, 
+Since a worker can process several different queues at once, you may need to
+somehow determine from which queue the task came. To get the name of the queue,
 use the `getQueue(): string` method.
 
 ```php
@@ -992,6 +992,53 @@ $handler = $container->get(match($task->getQueue()) {
 $handler->process($task);
 ```
 
+### Task auto acknowledge
+
+RoadRunner version `v2.10.0+` supports an auto acknowledge task option. You might use this option to acknowledge a task right after RR receive it from the queue.
+You can use this option for the non-important tasks which can fail or break the worker.
+
+To use this option you may update the Options:
+
+```php
+// Create with default values
+$options = new Options(
+     Options::DEFAULT_DELAY,
+     Options::DEFAULT_PRIORITY,
+     Options::DEFAULT_AUTO_ACK, // false by default
+);
+```
+
+Or manage that manually per every `Task`:
+
+```php
+use Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo;
+use Spiral\RoadRunner\Jobs\Options;
+use Spiral\RoadRunner\Jobs\Jobs;
+
+$options = new Options();
+
+// Jobs service
+$jobs = new Jobs(RPC::create('tcp://127.0.0.1:6001'));
+
+// Select "test" queue from jobs
+$queue = $jobs->connect('test');
+
+// or create a new queue
+$queue = $jobs->create(new MemoryCreateInfo('local'));
+
+// Set default auto ack for all tasks
+$queue = $queue->withDefaultOptions(
+     $options->withAutoAck(true)
+);
+
+// Create a new task with custom auto ack
+$task = $queue->push('task_name', ['foo' => 'bar'], (new Options())->withAutoAck(false));
+
+// or change auto ack for created task
+$task = $queue->create('task_name', ['foo' => 'bar'])->withAutoAck(false);
+$queue->dispatch($task);
+```
+
 ### Received Task Name
 
 The task name is some identifier associated with a specific type of task. For
@@ -1005,7 +1052,7 @@ echo $task->getName();
 // string(21) "App\\Queue\\Task\\EmailTask"
 ```
 
-Thus, we can implement the creation of a specific task with certain data for 
+Thus, we can implement the creation of a specific task with certain data for
 this task.
 
 ```php
@@ -1020,7 +1067,7 @@ $handler->process($class::fromTask($task));
 
 ### Received Task Payload
 
-Each task contains a set of arbitrary user data to be processed within the task. 
+Each task contains a set of arbitrary user data to be processed within the task.
 To obtain this data, you can use one of the available methods:
 
 **getValue**
@@ -1055,7 +1102,7 @@ $email->sendTo($task->getValue('email'));
 
 **getPayload**
 
-Also you can get all data at once in `array(string|int $key => mixed $value)` 
+Also you can get all data at once in `array(string|int $key => mixed $value)`
 format using the `getPayload` method. This method may be useful to you in cases
 of transferring all data to the DTO.
 
@@ -1070,7 +1117,7 @@ You should pay attention that an array can contain both `int` and  `string`
 keys, so you should take care of their correct pass to the constructor
 yourself. For example, the code above will work completely correctly only in the
 case of PHP >= 8.1. And in the case of earlier versions of the language, you
-should use the [reflection functionality](https://www.php.net/manual/ru/reflectionclass.newinstanceargs.php), 
+should use the [reflection functionality](https://www.php.net/manual/ru/reflectionclass.newinstanceargs.php),
 or pass the payload in some other way.
 
 Since the handler process is not the one that put this task in the queue, then
@@ -1086,7 +1133,7 @@ not forget to specify this both on the client and consumer side.
 In the case that you need to get any additional information that is not related
 to the task, then for this you should use the functionality of headers.
 
-For example, headers can convey information about the serializer, encoding, or 
+For example, headers can convey information about the serializer, encoding, or
 other metadata.
 
 ```php
@@ -1100,12 +1147,12 @@ if (strtolower($encoding) !== 'utf-8') {
 
 The interface for receiving headers is completely similar to
 [PSR-7](https://www.php-fig.org/psr/psr-7/), so methods are available to you:
-- `getHeaders(): array<string, array<string, string>>` - Retrieves all task 
+- `getHeaders(): array<string, array<string, string>>` - Retrieves all task
   header values.
 - `hasHeader(string): bool` - Checks if a header exists by the given name.
 - `getHeader(string): array<string, string>` - Retrieves a message header value
   by the given name.
-- `getHeaderLine(string): string` - Retrieves a comma-separated string of the 
+- `getHeaderLine(string): string` - Retrieves a comma-separated string of the
   values for a single header by the given name.
 
 We got acquainted with the data and capabilities that we have in the consumer.
@@ -1122,7 +1169,7 @@ advanced features.
 
 In the very [first chapter](/beep-beep/jobs.md#configuration), we got acquainted
 with the queue settings and drivers for them. In approximately the same way, we
-can do almost the same thing with the help of the PHP code using `create()` 
+can do almost the same thing with the help of the PHP code using `create()`
 method through `Jobs` instance.
 
 To create a new queue, the following types of DTO are available to you:
@@ -1132,7 +1179,7 @@ To create a new queue, the following types of DTO are available to you:
 - `Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo` for in-memory queues.
 - `Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo` for SQS queues.
 
-Such a DTO with the appropriate settings should be passed to the `create()` 
+Such a DTO with the appropriate settings should be passed to the `create()`
 method to create the corresponding queue:
 
 ```php
@@ -1153,10 +1200,10 @@ $queue = $jobs->create(new MemoryCreateInfo(
 
 ### Getting A List Of Queues
 
-In that case, to get a list of all available queues, you just need to use the 
+In that case, to get a list of all available queues, you just need to use the
 standard functionality of the `foreach` operator. Each element of this collection
 will correspond to a specific queue registered in the RoadRunner. And to simply
-get the number of all available queues, you can pass a `Job` object to the 
+get the number of all available queues, you can pass a `Job` object to the
 `count()` function.
 
 ```php
@@ -1179,7 +1226,7 @@ case of deploying a new application, when the processing of tasks should be
 suspended during the deployment of new application code.
 
 In this case, the code will be pretty simple. It is enough to call the `pause()`
-method, passing the names of the queues there. In order to start the work of 
+method, passing the names of the queues there. In order to start the work of
 queues further (unpause), you need to call a similar `resume()` method.
 
 ```php
@@ -1195,7 +1242,7 @@ $jobs->resume('emails', 'billing');
 ## RPC Interface
 
 All communication between PHP and GO made by the RPC calls with protobuf payloads.
-You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
+You can find versioned proto-payloads here: [Proto](https://github.com/roadrunner-server/roadrunner/blob/e9713a1d08a93e2be70c889c600ed89f54822b54/proto/jobs/v1beta).
 
 - `Push(in *jobsv1beta.PushRequest, out *jobsv1beta.Empty) error` - The
   arguments: the first argument is a `PushRequest`, which contains one field

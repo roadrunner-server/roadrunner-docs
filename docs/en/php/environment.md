@@ -12,6 +12,9 @@ server:
 > All keys will be automatically uppercased!
 
 ### Using environment variables in the configuration
+
+- Option 1:
+
 ```bash
 set -a
 source /var/www/config/.env
@@ -30,6 +33,21 @@ exec /var/www/rr \
   - `-o`: is option to overwrite. All options might be overwritten.
   - `/var/www/config/.env`: contains needed env variables.
   - `${RR_NUM_WORKERS:-8}`: Use `RR_NUM_WORKERS` or 8 by default (if no there are no `RR_NUM_WORKERS` in the `.env`)
+
+---
+
+  - Option 2:
+
+```yaml
+http:
+  address: 127.0.0.1:15389
+  middleware: [ gzip ] 
+  pool:
+    num_workers: ${RR_NUM_WORKERS}
+    max_jobs: ${RR_MAX_JOBS}
+```
+
+RR is able to expand the environment variable from the sentence like `${xxx}` OR `$xxx`
 
 ### Default ENV values inside the worker
 RoadRunner provides set of ENV values to help the PHP process to identify how to properly communicate with the server.

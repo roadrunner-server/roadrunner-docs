@@ -50,6 +50,8 @@ We can create a simple application to demonstrate how it works:
 1. You need 3 files, main.go with the `Endure` container:
 
 ```golang
+package main
+
 import (
 	_ "embed"
 	"log"
@@ -59,10 +61,10 @@ import (
 	"syscall"
 	"time"
 
-	endure "github.com/spiral/endure/pkg/container"
-	"github.com/spiral/roadrunner/v2/plugins/config"
-	"github.com/spiral/roadrunner/v2/plugins/logger"
-	"github.com/spiral/roadrunner/v2/plugins/server"
+	configImpl "github.com/roadrunner-server/config/v2"
+	endure "github.com/roadrunner-server/endure/pkg/container"
+	loggerImpl "github.com/roadrunner-server/logger/v2"
+	serverImpl "github.com/roadrunner-server/server/v2"
 )
 
 //go:embed .rr.yaml
@@ -77,8 +79,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cfg := &config.Viper{}
-	cfg.CommonConfig = &config.General{GracefulTimeout: time.Second * 30}
+	cfg := &configImpl.Plugin{}
+	cfg.Timeout = time.Second * 30
 	cfg.ReadInCfg = rrYaml
 	cfg.Type = "yaml"
 
@@ -89,9 +91,9 @@ func main() {
 	// 4. Configurer
 	err = cont.RegisterAll(
 		cfg,
-		&logger.ZapLogger{},
-		&Plugin{},
-		&server.Plugin{},
+		&loggerImpl.Plugin{},
+		&Plugin{}, // step 2
+		&serverImpl.Plugin{},
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -134,29 +136,30 @@ func main() {
 ```
 
 2. And `Plugin` for the RR:
+
 ```golang
 package main
 
 import (
 	"context"
 	"sync"
-	"unsafe"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/spiral/roadrunner/v2/pkg/payload"
-	"github.com/spiral/roadrunner/v2/pkg/pool"
-	"github.com/spiral/roadrunner/v2/plugins/logger"
-	"github.com/spiral/roadrunner/v2/plugins/server"
+	"github.com/roadrunner-server/api/v2/payload"
+	"github.com/roadrunner-server/api/v2/plugins/server"
+	"github.com/roadrunner-server/api/v2/pool"
+	poolImp "github.com/roadrunner-server/sdk/v2/pool"
+	"go.uber.org/zap"
 )
 
 type Plugin struct {
 	sync.Mutex
-	log     logger.Logger
+	log     *zap.Logger
 	srv     server.Server
 	wrkPool pool.Pool
 }
 
-func (p *Plugin) Init(srv server.Server, log logger.Logger) error {
+func (p *Plugin) Init(srv server.Server, log *zap.Logger) error {
 	var err error
 	p.srv = srv
 	p.log = log
@@ -169,13 +172,13 @@ func (p *Plugin) Serve() chan error {
 	defer p.Unlock()
 	var err error
 
-	p.wrkPool, err = p.srv.NewWorkerPool(context.Background(), pool.Config{
+	p.wrkPool, err = p.srv.NewWorkerPool(context.Background(), poolImp.Config{
 		Debug:           false,
 		NumWorkers:      1,
 		MaxJobs:         0,
 		AllocateTimeout: 0,
 		DestroyTimeout:  0,
-		Supervisor: &pool.SupervisorConfig{
+		Supervisor: &poolImp.SupervisorConfig{
 			WatchTick:       0,
 			TTL:             0,
 			IdleTTL:         0,
@@ -207,13 +210,13 @@ func (p *Plugin) Stop() error {
 
 func (p *Plugin) handler() func(pld string) (string, error) {
 	return func(pld string) (string, error) {
-		data := fastConvert(pld)
+		data := []byte(pld)
 		// execute on worker pool
 		if p.wrkPool == nil {
 			// or any error
 			return "", nil
 		}
-		exec, err := p.wrkPool.Exec(payload.Payload{
+		exec, err := p.wrkPool.Exec(&payload.Payload{
 			Context: nil,
 			Body:    data,
 		})
@@ -223,22 +226,12 @@ func (p *Plugin) handler() func(pld string) (string, error) {
 		return exec.String(), nil
 	}
 }
+```  
 
-// reinterpret_cast conversion cast from string to []byte
-// unsafe
-func fastConvert(d string) []byte {
-	return *(*[]byte)(unsafe.Pointer(&d))
-}
-```
-3. Config file, which can be embedded into the binary with `embed` import:
+3. Config file, which can be embedded into the binary with [`embed`](https://pkg.go.dev/embed) import:
 ```yaml
 server:
   command: "php handler.php"
-  user: ""
-  group: ""
-  env:
-    - SOME_KEY: "SOME_VALUE"
-    - SOME_KEY2: "SOME_VALUE2"
   relay: pipes
   relay_timeout: 60s
 ```
@@ -254,7 +247,7 @@ $ zip main.zip * -r
 You can now upload and invoke your handler using simple string event.
 
 ## Notes
-There are multiple notes you have to acknowledge.
+There are multiple notes you have to acknowledge:
 
 - start with 1 worker per lambda function in order to control your memory usage.
 - make sure to include env variables listed in the code to properly resolve the location of PHP binary and it's dependencies.

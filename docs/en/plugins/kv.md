@@ -2,14 +2,14 @@
 
 The Key-Value plugin provides the ability to store arbitrary data inside the
 RoadRunner between different requests (in case of HTTP application) or different
-types of applications. Thus, using [Temporal](https://docs.temporal.io/docs/php/introduction), 
-for example, you can transfer data inside the [HTTP application](/php/worker.md) 
+types of applications. Thus, using [Temporal](https://docs.temporal.io/docs/php/introduction),
+for example, you can transfer data inside the [HTTP application](/php/worker.md)
 and vice versa.
 
 As a permanent source of data, the RoadRunner allows you to use popular solutions,
-such as [Redis Server](https://redis.io/) or [Memcached](https://memcached.org/), 
+such as [Redis Server](https://redis.io/) or [Memcached](https://memcached.org/),
 but in addition it provides others that do not require a separate server, such
-as [BoltDB](https://github.com/boltdb/bolt), and also allows you to replace 
+as [BoltDB](https://github.com/boltdb/bolt), and also allows you to replace
 permanent storage with temporary that stores data in RAM.
 
 ![kv-general-info](https://user-images.githubusercontent.com/2461257/128436785-3dadbf0d-13c3-4e0c-859c-4fd9668558c8.png)
@@ -253,7 +253,7 @@ Below is a more detailed description of each of the Redis-specific options:
   IP address and port, separated by a colon (`:`) character.
 
 - `username` - Optional value containing the username credentials of the Redis
-  connection. You can omit this field, or specify an empty string if the 
+  connection. You can omit this field, or specify an empty string if the
   username of the connection is not specified.
 
 - `password` - Optional value containing the password credentials of the Redis
@@ -264,19 +264,19 @@ Below is a more detailed description of each of the Redis-specific options:
   Redis Server. Read more about databases section on the documentation page for
   the description of the [select command](https://redis.io/commands/select).
 
-- `dial_timeout` - Server connection timeout. A value of `0` is equivalent to a 
+- `dial_timeout` - Server connection timeout. A value of `0` is equivalent to a
   timeout of 5 seconds (`5s`). After the specified time has elapsed, if the
   connection has not been established, a connection error will occur.
 
-  Must be in the format of a "numeric value" + "time format suffix", like "`2h`" where 
+  Must be in the format of a "numeric value" + "time format suffix", like "`2h`" where
   suffixes means:
-  - `h` - the number of hours. For example `1h` means 1 hour.
-  - `m` - the number of minutes. For example `2m` means 2 minutes.
-  - `s` - the number of seconds. For example `3s` means 3 seconds.
-  - `ms` - the number of milliseconds. For example `4ms` means 4 milliseconds.
-  - If no suffix is specified, the value will be interpreted as specified in
-    nanoseconds. In most cases, this accuracy is redundant and may not be true. 
-    For example `5` means 5 nanoseconds.
+    - `h` - the number of hours. For example `1h` means 1 hour.
+    - `m` - the number of minutes. For example `2m` means 2 minutes.
+    - `s` - the number of seconds. For example `3s` means 3 seconds.
+    - `ms` - the number of milliseconds. For example `4ms` means 4 milliseconds.
+    - If no suffix is specified, the value will be interpreted as specified in
+      nanoseconds. In most cases, this accuracy is redundant and may not be true.
+      For example `5` means 5 nanoseconds.
 
   Please note that all time intervals can be suffixed.
 
@@ -308,13 +308,13 @@ Below is a more detailed description of each of the Redis-specific options:
   connections will not be closed.
 
 - `read_timeout` - Timeout for socket reads. If reached, commands will fail with
-  a timeout instead of blocking. Must be in the format of a "numeric value" + 
+  a timeout instead of blocking. Must be in the format of a "numeric value" +
   "time format suffix". A value of `0` is equivalent to a timeout of 3 seconds
   (`3s`). A value of `-1` disables timeout.
 
 - `write_timeout` - Timeout for socket writes. If reached, commands will fail
   with a timeout instead of blocking. A value of `0` is equivalent of the value
-  specified in the `read_timeout` section. If `read_timeout` value is not 
+  specified in the `read_timeout` section. If `read_timeout` value is not
   specified, a value of 3 seconds (`3s`) will be used.
 
 - `pool_timeout` - Amount of time client waits for connection if all connections
@@ -383,10 +383,10 @@ Where new options means:
 
 #### Redis Sentinel
 
-Redis Sentinel provides high availability for Redis. You can find more 
+Redis Sentinel provides high availability for Redis. You can find more
 information about [Sentinel on the documentation page](https://redis.io/topics/sentinel).
 
-There are two additional options available for the Sentinel configuration: 
+There are two additional options available for the Sentinel configuration:
 `master_name` and `sentinel_password`.
 
 ```yaml
@@ -409,7 +409,7 @@ Where Sentinel's options means:
 
 - `master_name` - The name of the Sentinel's master in string format.
 
-- `sentinel_password` - Sentinel password from "requirepass `password`" 
+- `sentinel_password` - Sentinel password from "requirepass `password`"
   (if enabled) in Sentinel configuration.
 
 
@@ -494,7 +494,7 @@ echo $storage->get('key');
 //  string(5) "string"
 ```
 
-> The `clear()` method available since [RoadRunner v2.3.1](https://github.com/spiral/roadrunner/releases/tag/v2.3.1).
+> The `clear()` method available since [RoadRunner v2.3.1](https://github.com/roadrunner-server/roadrunner/releases/tag/v2.3.1).
 
 Apart from this, RoadRunner Key-Value API provides several additional methods:
 You can use `getTtl(string): ?\DateTimeInterface` and
@@ -641,42 +641,42 @@ $storage->withSerializer($encrypted)
 ## RPC Interface
 
 All communication between PHP and GO made by the RPC calls with protobuf payloads.
-You can find versioned proto-payloads here: [Proto](https://github.com/spiral/roadrunner/tree/v2.3.0/pkg/proto/kv/v1beta).
+You can find versioned proto-payloads here: [Proto](https://github.com/roadrunner-server/roadrunner/tree/v2.3.0/pkg/proto/kv/v1beta).
 
 - `Has(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first argument
-is a `Request` , which declares a `storage` and an array of `Items` ; the second
-argument is a `Response`, it will contain `Items` with keys which are present in
-the provided via `Request` storage. Item value and timeout are not present in
-the response.  The error returned if the request fails.
+  is a `Request` , which declares a `storage` and an array of `Items` ; the second
+  argument is a `Response`, it will contain `Items` with keys which are present in
+  the provided via `Request` storage. Item value and timeout are not present in
+  the response.  The error returned if the request fails.
 
 - `Set(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first argument
-is a `Request` with the `Items` to set; return value isn't used and present here
-only because GO's RPC calling convention. The error returned if request fails.
+  is a `Request` with the `Items` to set; return value isn't used and present here
+  only because GO's RPC calling convention. The error returned if request fails.
 
-- `MGet(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first 
-argument is a `Request` with `Items` which should contain only keys (server
-doesn't check other fields); the second argument is `Response` with the `Items`.
-Every item will have `key` and `value` set, but without timeout (See: `TTL`). 
-The error returned if request fails.
+- `MGet(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first
+  argument is a `Request` with `Items` which should contain only keys (server
+  doesn't check other fields); the second argument is `Response` with the `Items`.
+  Every item will have `key` and `value` set, but without timeout (See: `TTL`).
+  The error returned if request fails.
 
 - `MExpire(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-argument is a `Request` with `Items` which should contain keys and timeouts set;
-return value isn't used and present here only because GO's RPC calling convention.
-The error returned if request fails.
+  argument is a `Request` with `Items` which should contain keys and timeouts set;
+  return value isn't used and present here only because GO's RPC calling convention.
+  The error returned if request fails.
 
 - `TTL(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first argument
-is a `Request` with `Items` which should contain keys; return value will contain
-keys with their timeouts. The error returned if request fails.
+  is a `Request` with `Items` which should contain keys; return value will contain
+  keys with their timeouts. The error returned if request fails.
 
 - `Delete(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-argument is a `Request` with `Items` which should contain keys to delete; return
-value isn't used and present here only because GO's RPC calling convention.
-The error returned if request fails.
+  argument is a `Request` with `Items` which should contain keys to delete; return
+  value isn't used and present here only because GO's RPC calling convention.
+  The error returned if request fails.
 
 - `Clear(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-argument is a `Request` with `storage` which should contain the storage to be
-cleaned up; return value isn't used and present here only because GO's RPC 
-calling convention. The error returned if request fails.
+  argument is a `Request` with `storage` which should contain the storage to be
+  cleaned up; return value isn't used and present here only because GO's RPC
+  calling convention. The error returned if request fails.
 
 From the PHP point of view, such requests (`MGet` for example) are as follows:
 ```php
