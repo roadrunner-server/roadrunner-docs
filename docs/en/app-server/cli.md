@@ -18,6 +18,12 @@ To reload all RoadRunner services:
 $ rr reset
 ```
 
+To reload silently:
+
+```
+$ rr reset --silent
+```
+
 > You can attach this command as file watcher in your IDE.
 
 To reset only particular plugins:
