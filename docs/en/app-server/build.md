@@ -4,11 +4,11 @@ RoadRunner use Endure to manage dependencies, this allows you to tweak and exten
 
 #### Install Golang
 
-To build an application server you need [Golang 1.17+](https://golang.org/dl/) to be installed.
+To build an application server you need [Golang 1.18+](https://golang.org/dl/) to be installed.
 
 #### Step-by-step walkthrough  
 
-1. Install the [velox](https://github.com/roadrunner-server/velox) `go install github.com/roadrunner-server/velox/vx@v1.0.0-beta.1`
+1. Install the [velox](https://github.com/roadrunner-server/velox) `go install github.com/roadrunner-server/velox/vx@lates`
 2. Configure:
 
 ```toml
@@ -62,3 +62,7 @@ tcp = { ref = "master", owner = "roadrunner-server", repository = "tcp" }
 Where:  
 - -c - path to the configuration
 - -o - path where to put the RR binary
+
+
+### Known limitation
+- At the moment only GitHub repositories are supported.

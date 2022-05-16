@@ -40,6 +40,8 @@ func (p *Plugin) Init( /* deps here */) error {
 }
 ```
 
+Structure name should be `Plugin` if you want to build RR with the [`velox`](https://github.com/roadrunner-server/velox) tool.  
+
 The only required method for the plugin is `Init`. It can receive other plugins via its [API](https://github.com/roadrunner-server/api). Users should not request a plugin directly, but use a repository with the plugin's API and request only the plugin's interface, not implementation. However, requesting implementation (structure pointer) is also possible. 
 
 For example, if the `logger` implementation is registered, any other plugin can request the logger via its `Init` function, like:
