@@ -19,7 +19,7 @@
       "php/restarting": "Restarting",
       "php/supervisor": "Process Supervisor",
       "php/rpc": "RPC to App Server",
-      "php/caveats": "Caveats",
+      "php/limitations": "Caveats",
       "php/debugging": "Debugging"
     }
   },

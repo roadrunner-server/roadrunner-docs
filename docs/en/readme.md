@@ -21,7 +21,7 @@ manager.
     * [Restarting](php/restarting.md)
     * [Process Supervisor](php/supervisor.md)
     * [RPC to App Server](php/rpc.md)
-    * [Caveats](php/caveats.md)
+    * [Caveats](php/limitations.md)
     * [Debugging](php/debugging.md)
 * App Server
     * [CLI Commands](app-server/cli.md)
