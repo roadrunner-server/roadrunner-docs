@@ -29,3 +29,12 @@ http:
 Please, keep in mind this guide: [xdebug3](https://xdebug.org/docs/upgrade_guide).  
 
 You should be able to use breakpoints and view state at this point.
+
+### PHP Storm notes
+
+```bash
+export PHP_IDE_CONFIG="serverName=octane-app.test"
+export XDEBUG_SESSION="mode=debug start_with_request=yes client_host=127.0.0.1 client_port=9003 idekey=PHPSTORM"
+
+php -dvariables_order=EGPCS artisan octane:start --max-requests=250 --server=roadrunner --port=8000 --rpc-port=6001 --watch --workers=1
+```
