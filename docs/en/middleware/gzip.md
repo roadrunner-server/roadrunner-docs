@@ -17,3 +17,5 @@ http:
     allocate_timeout: 60s
     destroy_timeout: 60s
 ```
+
+Gzip middleare supports OpenTelemetry headers propagation.
