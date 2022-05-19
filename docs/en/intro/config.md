@@ -500,6 +500,48 @@ http:
         "fe80::/10",
     ]
 
+  # [SINCE 2.10] OpenTelemetry middleware
+  otel:
+    # Use insecure endpoint (http) or insecure gRPC
+    #
+    # Default: false
+    insecure: true
+
+    # Use gzip to compress the spans
+    #
+    # Default: false
+    compress: false
+
+    # Client to send the spans
+    #
+    # Default: http. Possible values: `http`, `grpc`
+    client: http
+
+    # Provides functionality to emit telemetry to consumers
+    #
+    # Default: otlp. Possible values: otlp (used for new_relic, datadog), zipkin or stdout
+    exporter: otlp
+
+    # Used for the http client to override the default URL
+    #
+    # Default: empty
+    custom_url: ""
+
+    # User's service name
+    #
+    # Default: RoadRunner
+    service_name: "rr_test"
+
+    # User's service version
+    #
+    # Default: RoadRunner
+    service_version: "1.0.0"
+
+    # Consumer's endpoint
+    #
+    # Default: localhost:4318
+    endpoint: "127.0.0.1:4318"
+
   # [SINCE 2.6] New Relic middleware
   new_relic:
     # Application name.
@@ -759,8 +801,13 @@ http:
 
     # Path to the root certificate authority file.
     #
-    # This option is optional.
+    # This option is optional (required for the mTLS).
     root_ca: /ssl/root.crt
+
+    # Client auth type (mTLS)
+    #
+    # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
+    client_auth_type: no_client_certs
 
   # FastCGI frontend support.
   fcgi:
@@ -1132,6 +1179,11 @@ jobs:
         # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
         priority: 1
 
+        # Consume any payload type (not only Jobs structured)
+        #
+        # Default: false
+        consume_all: false
+
         # Durable queue
         #
         # Default: false
@@ -1200,6 +1252,11 @@ jobs:
         # Default: 1
         tube_priority: 1
 
+        # Consume any payload type (not only Jobs structured)
+        #
+        # Default: false
+        consume_all: false
+
         # Tube name
         #
         # Default: default
@@ -1231,6 +1288,16 @@ jobs:
         #
         # Default: 10
         prefetch: 10
+
+        # Consume any payload type (not only Jobs structured)
+        #
+        # Default: false
+        consume_all: false
+
+        # Get queue URL only
+        #
+        # Default: false
+        skip_queue_declaration: false
 
         # The duration (in seconds) that the received messages are hidden from subsequent
         # retrieve requests after being retrieved by a ReceiveMessage request
@@ -1273,7 +1340,6 @@ jobs:
       #
       # Should not be empty
       config:
-
         # Pipeline priority
         #
         # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
@@ -1283,6 +1349,11 @@ jobs:
         #
         # Messages to read into the channel
         prefetch: 100
+
+        # Consume any payload type (not only Jobs structured)
+        #
+        # Default: false
+        consume_all: false
 
         # NATS subject
         #
