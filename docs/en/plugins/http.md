@@ -77,6 +77,31 @@ http:
  # ........
 ```
 
+### mTLS
+To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
+
+```yaml
+http:
+  pool:
+    num_workers: 1
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+  ssl:
+    address: :8895
+    key: "server-key.pem"
+    cert: "server-cert.pem"
+    root_ca: "rootCA.pem"
+    client_auth_type: require_and_verify_client_cert 
+```
+
+Options for the `client_auth_type` are:
+- `request_client_cert` 
+- `require_any_client_cert`
+- `verify_client_cert_if_given`
+- `require_and_verify_client_cert`
+- `no_client_certs`
+
 ### Redirecting HTTP to HTTPS
 
 To enable an automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
