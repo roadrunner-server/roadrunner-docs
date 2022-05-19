@@ -177,6 +177,8 @@ Below is a more detailed description of each of the in-memory-specific options:
 > Please note that this driver cannot hold more than 1000 tasks with delay at
 > the same time (RR limitation)
 
+---
+
 ### Local (based on the boltdb) Driver
 
 This type of driver is already supported by the RoadRunner and does not require
@@ -227,48 +229,7 @@ Below is a more detailed description of each of the in-memory-specific options:
 
 - `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`.
 
-### NATS Driver
-
-NATS driver supported in the RR starting from the `v2.5.0` and includes only NATS JetStream support.
-The complete `NATS` driver configuration looks like this:
-
-```yaml
-version: "2.7"
-
-nats:
-  addr: "demo.nats.io"
-
-jobs:
-  num_pollers: 10
-  pipeline_size: 100000
-  pool:
-    num_workers: 10
-    max_jobs: 0
-    allocate_timeout: 60s
-    destroy_timeout: 60s
-
-  pipelines:
-    test-1:
-      driver: nats
-      config: # NEW in 2.7
-        prefetch: 100
-        subject: default
-        stream: foo
-        deliver_new: true
-        rate_limit: 100
-        delete_stream_on_stop: false
-        delete_after_ack: false
-        priority: 2
-```
-
-Below is a more detailed description of each of the in-memory-specific options:
-
-- `subject` - nats [subject](https://docs.nats.io/nats-concepts/subjects).
-- `stream` - stream name.
-- `deliver_new` - the consumer will only start receiving messages that were created after the consumer was created.
-- `rate_limit` - NATS rate [limiter](https://docs.nats.io/jetstream/concepts/consumers#ratelimit).
-- `delete_stream_on_stop` - delete the whole stream when pipeline stopped.
-- `delete_after_ack` - delete message after it successfully acknowledged.
+---
 
 ### AMQP Driver
 
@@ -318,6 +279,10 @@ jobs:
         # Optional section.
         # Default: 100
         prefetch: 100
+        
+        # Consume any payload type (not only Jobs structured)
+        # Default: false
+        consume_all: false
 
         # Optional section.
         # Default: "default"
@@ -371,6 +336,8 @@ Below is a more detailed description of each of the amqp-specific options:
 
 - `queue` - AMQP internal (inside the driver) queue name.
 
+- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
+
 - `exchange` - The name of AMQP exchange to which tasks are sent. Exchange
   distributes the tasks to one or more queues. It routes tasks to the queue
   based on the created bindings between it and the queue. See also
@@ -407,6 +374,8 @@ Below is a more detailed description of each of the amqp-specific options:
 
 - `durable`: create a durable queue. Default: false
 - `delete_queue_on_stop`: delete the queue when the pipeline is stopped. Default: false
+
+---
 
 ### Beanstalk Driver
 
@@ -451,6 +420,10 @@ jobs:
         # Optional section.
         # Default: 10
         priority: 10
+        
+        # Consume any payload type (not only Jobs structured)
+        # Default: false
+        consume_all: false
 
         # Optional section.
         # Default: 1
@@ -475,6 +448,10 @@ driver. Let's take a look at what they are responsible for:
   the internal priority of the server. The value should not exceed `int32` size.
 
 - `tube` - The name of the inner "tube" specific to the Beanstalk driver.
+
+- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
+
+---
 
 ### SQS Driver
 
@@ -539,11 +516,18 @@ jobs:
     # Should be "sqs" for the Amazon SQS driver.
     driver: sqs
 
-    config:
-    
+    config: 
       # Optional section.
       # Default: 10
       prefetch: 10
+
+      # Consume any payload type (not only Jobs structured)
+      # Default: false
+      consume_all: false
+      
+      # Get queue URL only
+      # Default: false
+      skip_queue_declaration: false
     
       # Optional section.
       # Default: 0
@@ -588,6 +572,10 @@ Below is a more detailed description of each of the SQS-specific options:
 - `queue` - SQS internal queue name. Can contain alphanumeric characters,
   hyphens (-), and underscores (_). Default value is `"default"` string.
 
+- `skip_queue_declaration` - By default, RR tries to declare the queue by default and then gets the queue URL. Set this option to `true` if the user already declared the queue to only get its URL.
+
+- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
+
 - `attributes` - List of the [AWS SQS attributes](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html).
 > For example
 > ```yaml
@@ -603,6 +591,79 @@ Below is a more detailed description of each of the SQS-specific options:
   character.
 > Please note that this functionality is rarely used and slows down the work of
 > queues: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-tags.html
+
+---
+
+### NATS Driver
+
+NATS driver supported in the RR starting from the `v2.5.0` and includes only NATS JetStream support.
+The complete `NATS` driver configuration looks like this:
+
+```yaml
+version: "2.7"
+
+nats:
+  addr: "demo.nats.io"
+
+jobs:
+  num_pollers: 10
+  pipeline_size: 100000
+  pool:
+    num_workers: 10
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+
+  pipelines:
+    test-1:
+      driver: nats
+      config:
+        # Pipeline priority
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 2
+
+        # NATS prefetch
+        # Messages to read into the channel
+        prefetch: 100
+
+        # Consume any payload type (not only Jobs structured)
+        # Default: false
+        consume_all: false
+
+        # NATS subject
+        # Default: default
+        subject: default
+
+        # NATS stream
+        # Default: default-stream
+        stream: foo
+
+        # The consumer will only start receiving messages that were created after the consumer was created
+        # Default: false (deliver all messages from the stream beginning)
+        deliver_new: true
+
+        # Consumer rate-limiter in bytes https://docs.nats.io/jetstream/concepts/consumers#ratelimit
+        # Default: 1000
+        rate_limit: 100
+
+        # Delete the stream when after pipeline was stopped
+        # Default: false
+        delete_stream_on_stop: false
+
+        # Delete message from the stream after successful acknowledge
+        # Default: false
+        delete_after_ack: false
+```
+
+Below is a more detailed description of each of the in-memory-specific options:
+
+- `subject` - nats [subject](https://docs.nats.io/nats-concepts/subjects).
+- `stream` - stream name.
+- `deliver_new` - the consumer will only start receiving messages that were created after the consumer was created.
+- `rate_limit` - NATS rate [limiter](https://docs.nats.io/jetstream/concepts/consumers#ratelimit).
+- `delete_stream_on_stop` - delete the whole stream when pipeline stopped.
+- `delete_after_ack` - delete message after it successfully acknowledged.
+- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
 
 ## Client (Producer)
 
