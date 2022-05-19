@@ -177,5 +177,32 @@ message DetailsMessageForException {
 }
 ```
 
+### mTLS
+To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
+
+```yaml
+version: "2.7"
+
+grpc:
+  listen: "tcp://localhost:9001"
+
+  proto:
+      - "first.proto"
+      - "second.proto"
+
+  tls:
+    key: "server-key.pem"
+    cert: "server-cert.pem"
+    root_ca: "rootCA.pem"
+    client_auth_type: request_client_cert
+```
+
+Options for the `client_auth_type` are:
+- `request_client_cert`
+- `require_any_client_cert`
+- `verify_client_cert_if_given`
+- `require_and_verify_client_cert`
+- `no_client_certs`
+
 ## Common issues:
 1. Registering two services with the same name is not allowed. GRPC server will panic after that.
