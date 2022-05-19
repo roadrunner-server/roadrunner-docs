@@ -42,7 +42,7 @@ manager.
     * [JOBS (queues)](plugins/jobs.md)
     * [Key-Value](plugins/kv.md)
     * [Configuration](plugins/config.md)
-    * [gRPC](plugins/gRPC.md)
+    * [gRPC](plugins/grpc.md)
     * [Informer](plugins/informer.md)
     * [Broadcast](plugins/broadcast.md)
     * [Logger](plugins/logger.md)
