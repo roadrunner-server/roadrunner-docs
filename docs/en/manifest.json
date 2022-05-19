@@ -47,7 +47,7 @@
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",
       "plugins/config": "Configuration",
-      "plugins/grpc": "gRPC",
+      "plugins/gRPC": "gRPC",
       "plugins/informer": "Informer",
       "plugins/broadcast": "Broadcast",
       "plugins/logger": "Logger",
