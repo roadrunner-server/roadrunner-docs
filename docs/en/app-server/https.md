@@ -8,7 +8,7 @@ version: "2.7"
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:8080
- 
+
   ssl:
     # host and port separated by semicolon (default :443)
     address: :8892
@@ -16,7 +16,7 @@ http:
     cert: fixtures/server.crt
     key: fixtures/server.key
     root_ca: root.crt
-  
+
   # optional support for http2  
   http2:
     h2c: false
@@ -36,7 +36,7 @@ version: "2.7"
 http:
   # other HTTP sections are omitted 
   # .......
-  
+
   ssl:
     address: '0.0.0.0:443'
     # ACME section
@@ -72,10 +72,35 @@ http:
       # Mandatory. Error on empty
       domains:
         - your-cool-domains.here
-        
- # other HTTP sections are omitted
- # ........
+
+  # other HTTP sections are omitted
+  # ........
 ```
+
+### mTLS
+To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
+
+```yaml
+http:
+  pool:
+    num_workers: 1
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+  ssl:
+    address: :8895
+    key: "server-key.pem"
+    cert: "server-cert.pem"
+    root_ca: "rootCA.pem"
+    client_auth_type: require_and_verify_client_cert 
+```
+
+Options for the `client_auth_type` are:
+- `request_client_cert`
+- `require_any_client_cert`
+- `verify_client_cert_if_given`
+- `require_and_verify_client_cert`
+- `no_client_certs`
 
 ### Redirecting HTTP to HTTPS
 
@@ -130,4 +155,34 @@ version: "2.7"
 http:
   ssl:
     root_ca: root.crt
+```
+
+---
+
+### Access logs
+
+RR starting from the `v2.5.0` will bring access logs support (turned off by default). They will include the following information:
+
+- `method` - http method.
+- `remote_addr` - request remote address.
+- `bytes_sent` - content-length,
+- `http_host` - host.
+- `request` - request Query.
+- `time_local` - local time in Common Log Format.
+- `request_length` - request body with headers size (content-len + size of all headers) in bytes. Max allowed headers size for the RR is 1MB.
+- `request_time` - request processing time in seconds with a milliseconds' resolution.
+- `status` - http response status.
+- `http_user_agent` - http user [agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)
+- `http_referer` - http [referer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer)
+
+#### Configuration:
+
+```yaml
+version: "2.7"
+
+http:
+  address: 127.0.0.1:44933
+  middleware: []
+  access_logs: true 
+  # ...
 ```
