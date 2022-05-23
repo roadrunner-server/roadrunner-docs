@@ -1,4 +1,4 @@
-# [DEPRECATED, use [OTEL](otel.md)]
+# [DEPRECATED], use [OTEL](https://roadrunner.dev/docs/middleware-otel/2.x/en)
 ### NewRelic HTTP middleware
 
 - ✏️ **[BETA]** Support for the New Relic observability platform. Sample of the client library might be
