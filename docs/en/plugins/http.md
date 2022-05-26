@@ -76,6 +76,14 @@ http:
  # other HTTP sections are omitted
  # ........
 ```
+### Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
+
+Connection might be upgraded from the `http/1.1` to `h2c`: [rfc7540](https://datatracker.ietf.org/doc/html/rfc7540#section-3.4)
+Headers, which should be sent to upgrade connection:
+  1. `Upgrade`: `h2c`
+  2. `Connection`: `HTTP2-Settings`
+  3. `Connection`: `Upgrade`
+  4. `HTTP2-Settings`: `AAMAAABkAARAAAAAAAIAAAAA` [RFC](https://datatracker.ietf.org/doc/html/rfc7540#section-3.2.1)
 
 ### mTLS
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
