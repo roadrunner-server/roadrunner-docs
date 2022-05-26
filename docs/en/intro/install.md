@@ -33,3 +33,10 @@ Server binary will be available at the root of your project.
 > PHP's extensions `php-sockets` need to be installed to run roadrunner.
 > Check with `php --modules` your installed extensions.
 
+
+## Installation option for the Debian-derivatives (Ubuntu, Mint, MX, etc)
+
+```bash
+$ wget https://github.com/roadrunner-server/roadrunner/releases/download/v2.X.X/roadrunner-2.X.X-linux-amd64.deb
+$ sudo dpkg -i roadrunner-2.X.X-linux-amd64.deb
+```
