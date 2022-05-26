@@ -102,6 +102,16 @@ Options for the `client_auth_type` are:
 - `require_and_verify_client_cert`
 - `no_client_certs`
 
+### Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
+
+Connection might be upgraded from the `http/1.1` to `h2c`: [rfc7540](https://datatracker.ietf.org/doc/html/rfc7540#section-3.4)
+Headers, which should be sent to upgrade connection:
+  1. `Upgrade`: `h2c`
+  2. `Connection`: `HTTP2-Settings`
+  3. `Connection`: `Upgrade`
+  4. `HTTP2-Settings`: `AAMAAABkAARAAAAAAAIAAAAA` [RFC](https://datatracker.ietf.org/doc/html/rfc7540#section-3.2.1)
+
+
 ### Redirecting HTTP to HTTPS
 
 To enable an automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
