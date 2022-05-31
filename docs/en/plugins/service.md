@@ -1,6 +1,7 @@
 # Service plugin
+- `Since RR v2.5.0`
+- Client API [link](https://github.com/spiral/roadrunner-services)
 
-The service plugin was introduced in the RR `v2.5.0`.
 
 ### Main capabilities
 
