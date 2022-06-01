@@ -7,7 +7,7 @@ community-driven middleware. The simplest service with middleware registration w
 package middleware
 
 import (
- "net/http"
+	"net/http"
 )
 
 const PluginName = "middleware"
@@ -15,22 +15,22 @@ const PluginName = "middleware"
 type Plugin struct{}
 
 // to declare plugin
-func (g *Plugin) Init() error {
-    return nil
+func (p *Plugin) Init() error {
+	return nil
 }
 
-func (g *Plugin) Middleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    // do something
-    // ...
-    // continue request through the middleware pipeline
-    next.ServeHTTP(w, r)
- })
+func (p *Plugin) Middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// do something
+		// ...
+		// continue request through the middleware pipeline
+		next.ServeHTTP(w, r)
+	})
 }
 
 // Middleware/plugin name.
-func (g *Plugin) Name() string {
-    return PluginName
+func (p *Plugin) Name() string {
+	return PluginName
 }
 ```
 
