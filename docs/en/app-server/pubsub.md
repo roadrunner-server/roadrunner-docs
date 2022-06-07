@@ -1,5 +1,5 @@
 ### PHP Client library
-- https://github.com/spiral/broadcast
+- https://github.com/spiral/roadrunner-broadcast
 
 Roadrunner PubSub interface adds the ability for any storage to implement [Publish/Subscribe messaging paradigm](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern). Internally, Roadrunner implements Pub/Sub interface for the `Redis` and `memory` storages.
 Pub/Sub interface has 3 major parts:
@@ -9,7 +9,7 @@ Pub/Sub interface has 3 major parts:
 
 ---
 #### Samples of implementation:
-1. [Websockets](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/websockets/plugin.go) plugin
-2. [Redis](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/redis/plugin.go) plugin
-3. [In-memory](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/websockets/memory/inMemory.go) storage plugin
+1. [Websockets](https://github.com/roadrunner-server/websockets/blob/master/plugin.go) plugin
+2. [Redis](https://github.com/roadrunner-server/redis/blob/master/plugin.go) plugin
+3. [In-memory](https://github.com/roadrunner-server/memory/blob/master/plugin.go) storage plugin
 
