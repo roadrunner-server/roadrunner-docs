@@ -33,7 +33,7 @@ http:
   # ...
   cache:
     driver: memory
-    cache_methods: ["GET", "HEAD", "POST"] # only GET by default
+    cache_methods: ["GET", "HEAD", "POST"] # only GET supported at the moment
     config: {}
 ```
 
