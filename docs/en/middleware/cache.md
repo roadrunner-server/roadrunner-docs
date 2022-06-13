@@ -1,4 +1,4 @@
-## Cache (RFC7234) middleware [WIP]
+## Cache (RFC7234) middleware [In progress]
 
 Cache middleware implements http-caching RFC 7234 (not fully yet).  
 It handles the following headers:
