@@ -36,7 +36,7 @@ jobs:
             --timeout 20
             --max-concurrency 10
             --no-progress
-            README.md translations/*.md
+            docs/en/app-server/*.md docs/en/docker/*.md docs/en/integration/*.md docs/en/intro/*.md docs/en/middleware/*.md docs/en/php/*.md docs/en/plugins/*.md docs/en/workflow/*.md
         env:
           ## Avoid rate limiting when checking github.com links
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
