@@ -32,7 +32,6 @@ jobs:
           args: >-
             --verbose
             --accept 200,204,206
-            --headers "accept=text/html"
             --timeout 20
             --max-concurrency 10
             --no-progress
