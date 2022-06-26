@@ -1,6 +1,6 @@
 ## PHP Client
 
-[Roadrunner Worker](https://github.com/roadrunner-server/roadrunner-worker)
+[Roadrunner Worker](https://github.com/spiral/roadrunner-worker)
 
 ## Configuration
 
