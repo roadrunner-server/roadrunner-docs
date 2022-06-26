@@ -11,6 +11,11 @@ version: "2.7"
 
 metrics:
   address: localhost:2112
+
+# for metrics rr_http_request_duration_seconds_bucket, rr_http_request_duration_seconds_sum,
+# rr_http_request_duration_seconds_count you can enable middleware http_metrics
+http:
+  middleware: ["http_metrics"]    
 ```
 
 Once complete you can access Prometheus metrics using `http://localhost:2112/metrics` url.
