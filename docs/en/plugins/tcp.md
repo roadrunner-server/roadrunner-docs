@@ -3,7 +3,7 @@
 - `[AVAILABLE SINCE RR v2.6.0]`
 
 ### Client library
-- https://github.com/roadrunner-server/roadrunner-tcp
+- https://github.com/spiral/roadrunner-tcp
 
 ### Configuration
 
