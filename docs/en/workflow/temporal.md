@@ -2,7 +2,7 @@
 Temporal is a distributed, scalable, durable, and highly available orchestration engine used to execute asynchronous 
 long-running business logic in a scalable and resilient way.
 
-Read more at [official website](https://docs.temporal.io/docs/overview/).
+Read more at [official website](https://docs.temporal.io/).
 
 RoadRunner 2.0 includes a plugin to execute Temporal workflows and activities. Make sure to write [temporal worker](/workflow/worker.md).
 
