@@ -37,6 +37,9 @@ jobs:
             --no-progress
             --exclude-loopback
             --exclude-link-local
+            --exclude-mail
+            --exclude-path file:///github/workspace/docs/en/docker/tcp:/:6001
+            --exclude https://*.my.site/ https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/ 
             docs/en/app-server/*.md docs/en/docker/*.md docs/en/integration/*.md docs/en/intro/*.md docs/en/middleware/*.md docs/en/php/*.md docs/en/plugins/*.md docs/en/workflow/*.md
         env:
           ## Avoid rate limiting when checking github.com links
