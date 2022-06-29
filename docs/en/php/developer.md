@@ -3,7 +3,7 @@ RoadRunner uses PHP scripts in daemon mode, this means that you have to reload a
 
 If you use any modern IDE you can achieve that by adding file watcher which automatically invokes command `rr reset` for the plugins specified in the `reload` config.
 
-> Or use [auto-resetter](/beep-beep/reload.md).
+> Or use [auto-resetter](../plugins/reload.md).
 
 ## In Docker
 You can reset rr process in docker by connecting to it using local rr client. 
