@@ -1,6 +1,6 @@
 # Invalid message sent to STDOUT
 
-This message `validation failed on the message sent to STDOUT: see: https://bit.ly/3a8iQTQ, invalid message ...` means that you or some application sent a non-correct message (raw) to the `STDOUT`.  
+This message `validation failed on the message sent to STDOUT, RR docs: https://bit.ly/3a8iQTQ, invalid message: ...` means that you or some application sent a non-correct message (raw) to the `STDOUT`.  
 Process `STDOUT` is reserved for the RR communication with the PHP process via the `goridge` protocol (`v3`).
 
 How to fix that?  
