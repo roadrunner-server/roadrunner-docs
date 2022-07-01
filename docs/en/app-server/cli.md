@@ -81,6 +81,12 @@ RoadRunner supports `.env` files. To read environment variables from the `.env` 
 rr serve --dotenv .env -c .rr.yaml
 ```
 
+To show the rr version, use `-v` or `--version`:
+```bash
+rr -v
+```
+Output: `rr version local (build time: development, go1.18.3), OS: linux, arch: amd64`
+
 List of all commands with available options:
 - `serve`:
   1. `-c`: path to the config file.
