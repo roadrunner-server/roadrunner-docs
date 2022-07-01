@@ -87,3 +87,5 @@ manager.
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)
+* Errors
+    * [CRC validation](known-issues/stdout-crc.md)
