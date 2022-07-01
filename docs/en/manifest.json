@@ -101,5 +101,11 @@
       "docker/ports": "Ports and Containers",
       "docker/images": "Available Images"
     }
+  },
+  {
+    "title": "Error codes",
+    "links": {
+      "known-issues/stdout-crc": "CRC validation failed"
+    }
   }
 ]
