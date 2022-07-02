@@ -2,6 +2,10 @@
 
 RR plugin is a separate piece of software that can extend the RR functionality. The plugin may depend on the other plugins, but also might be fully independent. 
 
+## Plugin GitHub template
+
+- [Repository](https://github.com/roadrunner-server/plugin_template)
+
 ### Interface
 
 ```go
