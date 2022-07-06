@@ -43,3 +43,6 @@ following:
 
 The architecture diagram for the WebSockets plugin can be
 found [here](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/websockets/doc)
+
+### GitHub discussions:
+- https://github.com/roadrunner-server/roadrunner/discussions/1203
