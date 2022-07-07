@@ -8,6 +8,10 @@ OpenTelemetry middleware is a unified standard for the tracing, logging and metr
 PHP library in the alpha stage at the moment: [link](https://github.com/open-telemetry/opentelemetry-php).  
 Thanks to [Brett McBride](https://github.com/brettmc), he created a rr-otel [PHP demo](https://github.com/brettmc/rr-otel-demo).
 
+### Original issue
+
+- https://github.com/roadrunner-server/roadrunner/issues/1027
+
 ### Configuration
 
 OT is a http plugin middleware, so, its configuration is located under the http plugin configuration.
