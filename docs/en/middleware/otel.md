@@ -57,7 +57,7 @@ logs:
 1. `insecure`: boolean, default `false`. Use insecure endpoints (http/https) or insecure gRPC.
 2. `compress`: boolean, default `false`. Use gzip to compress the spans.
 3. `client`: string, default `http`. Client to send the spans. Possible values: `http`, `grpc`.
-4. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout` or `jaeger`.
+4. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
 5. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
 6. `endpoint`: string, default `localhost:4318`. Consumer's endpoint.
 7. `service_name`: string, default: `RoadRunner`. User's service name.
