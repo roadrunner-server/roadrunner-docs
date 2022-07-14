@@ -106,6 +106,7 @@
     "title": "Error codes",
     "links": {
       "known-issues/stdout-crc": "CRC validation failed"
+      "known-issues/allocate-timeout": "Allocate timeout"
     }
   }
 ]
