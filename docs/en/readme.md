@@ -36,7 +36,7 @@ manager.
     * [Access-Logs](app-server/access-logs.md)
     * [PubSub](app-server/pubsub.md)
 * Plugins
-  * [What is it?](plugins/intro.md)
+    * [What is it?](plugins/intro.md)
     * [Write a plugin](plugins/plugin.md)
     * [HTTP (transport)](plugins/http.md)
     * [JOBS (queues)](plugins/jobs.md)
