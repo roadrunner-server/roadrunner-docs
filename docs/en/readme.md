@@ -89,3 +89,5 @@ manager.
     * [Available Images](docker/images.md)
 * Errors
     * [CRC validation](known-issues/stdout-crc.md)
+    * [Allocate_timeout](known-issues/allocate-timeout.md)
+
