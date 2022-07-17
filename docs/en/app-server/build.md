@@ -99,7 +99,7 @@ ref = "v2.10.1"
     [gitlab.token]
     # api, read-api, read-repo
     token = "token"
-    
+
     [gitlab.endpoint]
     endpoint = "https://gitlab.com"
 
@@ -146,7 +146,7 @@ plugins := roadrunner.DefaultPluginsList() // List of RR plugins to enable
 rr, err := roadrunner.NewRR(".rr.yaml", &overrides, plugins)
 ```
 
-Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a stock roadrunner binary. 
+Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a stock roadrunner binary.
 
 You can however chose only the plugins you want and add your own private plugins as well:
 
@@ -187,7 +187,10 @@ The HTTP plugin is itself an `http.Handler` so it's now very easy to use it to l
 
 
 ```go
-overrides := []string{} // List of configuration overrides
+overrides := []string{
+    // override the http plugin's address value for the current run of the program
+    "http.address=127.0.0.1:4444",
+} // List of configuration overrides
 httpPlugin := &httpPlugin.Plugin{},
 plugins := []interface{}{
     &informer.Plugin{},
@@ -197,7 +200,7 @@ plugins := []interface{}{
     // ...
     &coolCompany.Plugin{},
 }
-rr, err := roadrunner.NewRR(".rr.yaml", &overrides, plugins)
+rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 if err != nil {
     return err
 }
