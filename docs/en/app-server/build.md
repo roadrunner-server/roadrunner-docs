@@ -43,7 +43,7 @@ CMD ["/usr/bin/rr"]
 
 - `go install` command:
 ```shell
-go install github.com/roadrunner-server/velox/vx@latest
+go install github.com/roadrunner-server/velox/cmd/vx@latest
 ```
 
 - Or download velox binary from the [releases page](https://github.com/roadrunner-server/velox/releases) and unpack to your `PATH`.
