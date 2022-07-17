@@ -9,7 +9,7 @@ RoadRunner use Endure to manage dependencies, this allows you to tweak and exten
 
 To build an application server you need [Golang 1.18+](https://golang.org/dl/) or Docker to be installed.
 
-### 1. Installation:
+### Installation:
 
 - Docker:
 
@@ -48,7 +48,7 @@ go install github.com/roadrunner-server/velox/cmd/vx@latest
 
 - Or download velox binary from the [releases page](https://github.com/roadrunner-server/velox/releases) and unpack to your `PATH`.
 
-## Configuration:
+### Configuration:
 
 ```toml
 # filename - `plugins.toml`
@@ -113,7 +113,7 @@ level = "debug"
 mode = "development"
 ```
 
-### 3. Usage:
+## Usage:
 
 ```shell
 vx build -c plugins.toml -o ~/Downloads
