@@ -224,3 +224,28 @@ go func() {
 `rr.Serve()` will block until it returns an error or `nil` if it was stopped gracefully.
 
 To gracefully stop the server, we simply call `rr.Stop()`
+
+## Roadrunner State
+
+When you run roadrunner, it goes through multiple phases of initialization, running, stopping etc...
+Sometimes it is useful to know about those, be it for debugging, to know if you're ready to accept requests, or if you can gracefully shutdown the main program.
+
+You can call `rr.CurrentState()` on your roadrunner instance to retrieve one of the following states:
+
+```
+package fsm
+// github.com/roadrunner-server/endure/pkg/fsm
+
+type State uint32
+
+const (
+	Uninitialized State = iota
+	Initializing
+	Initialized
+	Starting
+	Started
+	Stopping
+	Stopped
+	Error
+)
+```
