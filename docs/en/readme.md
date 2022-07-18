@@ -32,6 +32,7 @@ manager.
     * [AWS Lambda](app-server/aws-lambda.md)
     * [RR Events Bus](app-server/events-bus.md)
     * [Overriding HTTP error codes](app-server/http-error-codes.md)
+    * [gRPC](app-server/grpc.md)
     * [HTTPS](app-server/https.md)
     * [Access-Logs](app-server/access-logs.md)
     * [PubSub](app-server/pubsub.md)

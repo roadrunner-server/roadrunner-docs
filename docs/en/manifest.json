@@ -33,6 +33,7 @@
       "app-server/build": "Building a Server",
       "app-server/aws-lambda": "AWS lambda",
       "app-server/https": "HTTPS",
+      "app-server/grpc": "HTTPS",
       "app-server/access-logs": "Access-Logs",
       "app-server/events-bus": "Using RR events bus",
       "app-server/http-error-codes": "Overriding HTTP error codes",
