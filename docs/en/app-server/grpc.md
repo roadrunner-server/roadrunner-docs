@@ -4,7 +4,7 @@
 
 ### Compiling proto sample:
 ```
-protoc --plugin=protoc-gen-php-grpc --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
+protoc --plugin=protoc-gen-php-grpc --php_out=<OUTPUT DIRECTORY> --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
 ```
 - `protoc-gen-php-grpc` plugin can be downloaded from the `roadrunner` [releases page](https://github.com/roadrunner-server/roadrunner/releases).
 
