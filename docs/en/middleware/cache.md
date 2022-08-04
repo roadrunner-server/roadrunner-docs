@@ -14,12 +14,7 @@ Cache middleware implements http-caching RFC 7234. It's based on the [Souin](htt
  * Builtin timeout.
 
 **Build the roadrunner binary**
-At the moment, velox doesn't support nested directories middleware. You have to run:
-```bash
-git clone https://github.com/darkweak/souin /anywhere
-```
-
-After that you'll have to replace the roadrunner cache with the full filesystem path to the middleware.
+As it's based on the [Souin](https://github.com/darkweak/souin) HTTP cache library we can use directly the roadrunner middleware implemenation. We have to set the `folder` property because this middleware is located in a sub-directory.
 ```toml
 # configuration.toml
 
@@ -29,7 +24,7 @@ After that you'll have to replace the roadrunner cache with the full filesystem 
 
     [github.plugins]
     # Use the Souin third-party middleware.
-    cache = { ref = "master", owner = "roadrunner-server", repository = "cache", replace = "/anywhere/plugins/roadrunner" }
+    cache = { ref = "master", owner = "darkweak", repository = "souin", folder = "/plugins/roadrunner" }
     # others ...
 
 [log]
