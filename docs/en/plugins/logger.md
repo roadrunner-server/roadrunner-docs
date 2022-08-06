@@ -28,11 +28,11 @@ logs:
   mode: production
   output: stderr
   file_logger_options:
-  log_output: "/tmp/my.log"
-  max_size: 100
-  max_age: 1
-  max_backups : 5
-  compress: false
+    log_output: "/tmp/my.log"
+    max_size: 100
+    max_age: 1
+    max_backups : 5
+    compress: false
 ```
 
 To use console friendly output:
