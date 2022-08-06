@@ -18,14 +18,21 @@ standard error, and disables sampling. Stacktraces are automatically included on
 ```yaml
 logs:
   mode: development
+  output: stderr
 ```
 
-To output to separate file:
+To output to [separate file](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml#L115):
 
 ```yaml
 logs:
   mode: production
-  output: file.log
+  output: stderr
+  file_logger_options:
+  log_output: "/tmp/my.log"
+  max_size: 100
+  max_age: 1
+  max_backups : 5
+  compress: false
 ```
 
 To use console friendly output:
@@ -43,7 +50,7 @@ logs:
   level: info
 ```
 
-### File logger
+### [File logger](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml#L115)
 
 It is possibe to redirect channels or whole log output to the file:
 
@@ -119,7 +126,7 @@ logs:
 1. Levels: `panic`, `error`, `warn`, `info`, `debug`. Default: `debug`.
 2. Encodings: `console`, `json`. Default: `console`.
 3. Modes: `production`, `development`, `raw`. Default: `development`.
-4. Output: `file.log` or `stderr`, `stdout`. Default `stderr`.
-5. Error output: `err_file.log` or `stderr`, `stdout`. Default `stderr`.
+4. Output: `stderr`, `stdout`. Default `stderr`.
+5. Error output: `stderr`, `stdout`. Default `stderr`.
 
 > Feel free to register your own [ZapLogger](https://github.com/uber-go/zap) extensions.
