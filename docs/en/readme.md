@@ -28,6 +28,7 @@ manager.
     * [Production Usage Tips](app-server/production.md)
     * [Writing a RR systemd unit file](app-server/systemd.md)
     * [Healthcheck](app-server/health.md)
+    * [Jobs (queues)](plugins/jobs.md) 
     * [RR with custom plugins](app-server/build.md)
     * [AWS Lambda](app-server/aws-lambda.md)
     * [RR Events Bus](app-server/events-bus.md)
