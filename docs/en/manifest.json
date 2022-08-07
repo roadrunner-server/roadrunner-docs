@@ -32,6 +32,7 @@
       "app-server/health": "Healthcheck",
       "app-server/build": "Building a Server",
       "app-server/aws-lambda": "AWS lambda",
+      "plugins/jobs": "JOBS (queues)",
       "app-server/https": "HTTPS",
       "app-server/grpc": "gRPC",
       "app-server/access-logs": "Access-Logs",
