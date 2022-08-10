@@ -22,7 +22,10 @@ grpc:
   # GRPC reflection server [SINCE 2.11]
   #
   # This option is optional. The reflection server might be activated to use `grpc_cli`, `grpc-ui`, `grpc-curl`, or similar tools to intercept grpc payloads.
-  enable_reflection_server: false
+  reflection_server:
+    include:
+      - "path/to/proto1.proto"
+      - "path/to/proto2.proto"
 
   # Proto files to use [Multiply files since RR v2.6.0]
   #
