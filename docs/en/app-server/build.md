@@ -143,7 +143,7 @@ func handleRequest(w http.ResponseWriter, request *http.Request) {
 ```go
 overrides := []string{} // List of configuration overrides
 plugins := roadrunner.DefaultPluginsList() // List of RR plugins to enable
-rr, err := roadrunner.NewRR(".rr.yaml", &overrides, plugins)
+rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 ```
 
 Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a stock roadrunner binary.
@@ -151,7 +151,10 @@ Here we use the default list of plugins. The same list of plugin you would get i
 You can however chose only the plugins you want and add your own private plugins as well:
 
 ```go
-overrides := []string{} // List of configuration overrides
+overrides := []string{
+    "http.address=127.0.0.1:4444", // example override to set the http address
+    "http.pool.num_workers=4", // example override of how to set the number of php workers
+} // List of configuration overrides
 plugins := []interface{}{
     &informer.Plugin{},
     &resetter.Plugin{},
@@ -160,7 +163,7 @@ plugins := []interface{}{
     // ...
     &coolCompany.Plugin{},
 }
-rr, err := roadrunner.NewRR(".rr.yaml", &overrides, plugins)
+rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 ```
 
 ## Passing requests to RoadRunner
@@ -180,7 +183,7 @@ plugins := []interface{}{
     // ...
     &coolCompany.Plugin{},
 }
-rr, err := roadrunner.NewRR(".rr.yaml", &overrides, plugins)
+rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 ```
 
 The HTTP plugin is itself an `http.Handler` so it's now very easy to use it to let roadrunner and PHP handle the request:
@@ -249,3 +252,4 @@ const (
 	Error
 )
 ```
+Additionally, the actual status name can be obtained via `rr.CurrentState().String()`.
