@@ -26,7 +26,7 @@ manager.
 * App Server
     * [CLI Commands](app-server/cli.md)
     * [Production Usage Tips](app-server/production.md)
-    * [Writing a RR systemd unit file](app-server/systemd.md)
+    * [systemd](app-server/systemd.md)
     * [Healthcheck](app-server/health.md)
     * [Jobs (queues)](plugins/jobs.md) 
     * [RR with custom plugins](app-server/build.md)
