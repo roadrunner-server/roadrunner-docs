@@ -133,7 +133,7 @@ Where:
 - At the moment only GitHub and GitLab repositories are supported.
 
 
-# Embedding a Server
+## Embedding a Server
 
 In some cases, it can be useful to embed a RoadRunner server inside another GO program. This is often the case in microservice architectures where you may have a mandated GO framework for all the apps. In such cases it might not be possible to run a stock roadrunner instance and the only choice is to run roadrunner inside the main app framework / program.
 
