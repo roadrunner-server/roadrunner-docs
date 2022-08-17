@@ -39,7 +39,7 @@ func (p *Plugin) Name() string {
 }
 ```
 
-> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/http/plugin.go#L38) and be [named](https://github.com/roadrunner-server/roadrunner-plugins/blob/master/http/plugin.go#L362).
+> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/api/blob/master/plugins/middleware/interface.go#L10) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
 
 We have to register this service after in the [internal/container/plugin.go](https://github.com/roadrunner-server/roadrunner/blob/master/internal/container/plugins.go) file in order to properly resolve dependency:
 
