@@ -41,7 +41,7 @@ func (p *Plugin) Name() string {
 
 > Middleware must correspond to the following [interface](https://github.com/roadrunner-server/api/blob/master/plugins/middleware/interface.go#L10) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
 
-We have to register this service after in the [internal/container/plugin.go](https://github.com/roadrunner-server/roadrunner/blob/master/internal/container/plugins.go) file in order to properly resolve dependency:
+You have to register this service after in the [container/plugin.go](https://github.com/roadrunner-server/roadrunner/blob/master/container/plugins.go) file in order to properly resolve dependency:
 
 ```golang
 import (
@@ -58,6 +58,8 @@ func Plugins() []interface{} {
     // ...
  }
 ```
+
+Or you might use Velox to [build the RR binary](https://roadrunner.dev/docs/app-server-build/2.x/en).
 
 You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config) otherwise the plugin will be loaded but the middleware will not be used with incoming requests.
 
