@@ -69,10 +69,10 @@ http:
 
 ### PSR7 Attributes
 
-You can safely pass values to `ServerRequestInterface->getAttributes()` using [attributes](https://github.com/roadrunner-server/roadrunner/blob/master/plugins/http/attributes/attributes.go) package:
+You can safely pass values to `ServerRequestInterface->getAttributes()` using [attributes](https://github.com/roadrunner-server/http/blob/master/attributes/attributes.go) package:
 
 ```golang
-func (s *Service) middleware(next http.HandlerFunc) http.HandlerFunc {
+func (s *Service) Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r = attributes.Init(r)
 		attributes.Set(r, "key", "value")
