@@ -5,6 +5,12 @@ RoadRunner uses Endure to manage dependencies, this allows you to tweak and exte
 ## GitHub plugin template
 - [Repository](https://github.com/roadrunner-server/plugin_template)
 
+## How to write a plugin
+#### Writing a plugin  
+[![Writing a plugin](https://img.youtube.com/vi/sddi_lh7ePo/0.jpg)](https://www.youtube.com/watch?v=sddi_lh7ePo)  
+#### Velox configuration  
+[![Velox configuration](https://img.youtube.com/vi/h5PPvc_YOtg/0.jpg)](https://www.youtube.com/watch?v=h5PPvc_YOtg)  
+
 #### Install Golang
 
 To build an application server you need [Golang 1.18+](https://golang.org/dl/) or Docker to be installed.
