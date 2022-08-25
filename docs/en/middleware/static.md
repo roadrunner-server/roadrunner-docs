@@ -53,7 +53,7 @@ http:
       allow_credentials: true
       exposed_headers: "Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma"
       max_age: 600
-  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/middleware-headers/2.x/en).
   static:
     dir: "."
     forbid: [ "" ]
