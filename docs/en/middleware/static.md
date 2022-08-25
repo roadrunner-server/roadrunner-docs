@@ -13,7 +13,7 @@ http:
   # host and port separated by semicolon
   address: 127.0.0.1:44933
   middleware: [ "static" ]
-  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/http-static).
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/middleware-static/2.x/en).
   static:
     dir: "."
     forbid: [ "" ]
