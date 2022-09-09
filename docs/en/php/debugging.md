@@ -38,3 +38,31 @@ export XDEBUG_SESSION="mode=debug start_with_request=yes client_host=127.0.0.1 c
 
 php -dvariables_order=EGPCS artisan octane:start --max-requests=250 --server=roadrunner --port=8000 --rpc-port=6001 --watch --workers=1
 ```
+
+## Jobs debugging
+
+### Prerequisites
+
+0. XDebug 3 installed and properly configured.
+1. Number of jobs workers set to `1` with `jobs.pool.num_workers` configuration option in `.rr.yaml`.
+
+### Debug process
+
+If you have any active XDebug listener while starting RoadRunner with XDebug enabled — disable it. This will prevent
+false-positive debug session.
+
+Once RoadRunner starts all workers, enable XDebug listener and reset jobs workers with:
+
+```bash
+rr reset jobs
+```
+
+Now you should see debug session started:
+
+1. Step over to some place where job task is beeing resolved with `$consumer->waitTask()`.
+2. As soon as you reach it, debugger stops but session will still be active.
+3. Trigger task consumtions either with HTTP request or console command (depends on how your application works)
+and continue to debug job worker as usual within active session started before.
+4. You can continue to debug jobs as long as debug session active.
+
+If connections session broken or timed out, you can repeat instruction above to reestablish connection by resetting jobs workers.
