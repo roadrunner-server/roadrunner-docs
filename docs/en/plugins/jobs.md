@@ -873,14 +873,20 @@ $jobs = new Spiral\RoadRunner\Jobs\Jobs(
 
 After we have established the connection, we should check the server
 availability and in this case the API availability for the jobs. This can be
-done using the appropriate `isAvailable()` method.  Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901). In the releases after `v2.6.2` you can safely remove calls to that method. When the connection is
-created, and the availability of the functionality is checked, we can connect to
-the queue we need using `connect()` method.
+done using the appropriate `isAvailable()` method. 
+
+> **Note**, that this method will always return an `Exception` because it was removed 
+> from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901). 
+> In the releases after `v2.6.2` you can safely remove calls to that method. 
+
+When the connection is created, and the availability of the functionality is checked, we can connect to the queue we 
+need using `connect()` method.
 
 
 ```php
 $jobs = new Spiral\RoadRunner\Jobs\Jobs();
 
+// Be careful, isAvailable method doesn't work after v2.6.2
 if (!$jobs->isAvailable()) {
     throw new LogicException('The server does not support "jobs" functionality =(');
 }
@@ -906,7 +912,10 @@ Also, this method takes an additional second argument with additional data to
 complete this task.
 
 ```php
-$task = $queue->create(SendEmailTask::class, ['email' => 'dev@null.pipe']);
+$task = $queue->create(
+  SendEmailTask::class, 
+  payload: ['email' => 'dev@null.pipe']
+);
 ```
 
 You can also use this task as a basis for creating several others.
@@ -917,6 +926,46 @@ $task = $queue->create(SendEmailTask::class);
 $first = $task->withValue('john.doe@example.com');
 $second = $task->withValue('john.snow@the-wall.north');
 ```
+
+In addition, the method takes an additional third argument with `Spiral\RoadRunner\Jobs\OptionsInterface` 
+where you can pass object with predefined options.
+
+```php
+$options = new \Spiral\RoadRunner\Jobs\Options(autoAck: true);
+
+$task = $queue->create(
+  SendEmailTask::class, 
+  options: $options->withDelay(10)
+);
+```
+
+You can also redefine options for created task.
+
+```php
+$options = new \Spiral\RoadRunner\Jobs\Options(autoAck: true);
+
+$task = $queue->create(SendEmailTask::class);
+
+$task = $task->withOptions($options);
+```
+
+### Task creation for Kafka driver
+
+Please note, a queue with Kafka driver requires a task with specified `topic`. In this case 
+you have to use `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`, because it has all required
+methods for working with Kafka driver.
+
+```php
+$options = new \Spiral\RoadRunner\Jobs\KafkaOptions(topic: 'foo');
+
+$task = $queue->create(
+  SendEmailTask::class, 
+  options: $options->withPartition(10)->withOffset(1)->withMetadata('foo=bar')
+);
+```
+
+As you noticed we use everywhere interfaces for setting options for the task, and a developer 
+has the ability create his own implementation of the interfaces.
 
 ### Task Dispatching
 
@@ -1421,6 +1470,8 @@ To create a new queue, the following types of DTO are available to you:
 - `Spiral\RoadRunner\Jobs\Queue\BeanstalkCreateInfo` for Beanstalk queues.
 - `Spiral\RoadRunner\Jobs\Queue\MemoryCreateInfo` for in-memory queues.
 - `Spiral\RoadRunner\Jobs\Queue\SQSCreateInfo` for SQS queues.
+- `Spiral\RoadRunner\Jobs\Queue\KafkaCreateInfo` for Kafka queues.
+- `Spiral\RoadRunner\Jobs\Queue\BoltdbCreateInfo` for Boltdb queues.
 
 Such a DTO with the appropriate settings should be passed to the `create()`
 method to create the corresponding queue:
