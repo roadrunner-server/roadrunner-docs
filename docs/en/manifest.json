@@ -83,19 +83,19 @@
     "title": "Integrations",
     "links": {
       "integration/migration": "Migration from V1 to V2",
-      "integration/cake": "CakePHP",
-      "integration/laravel": "Laravel",
-      "integration/slim": "Slim",
       "integration/spiral": "Spiral Framework",
+      "integration/cake": "CakePHP",
+      "integration/chubbyphp": "Chubbyphp Framework",
+      "integration/codeigniter": "CodeIgniter",
+      "integration/laravel": "Laravel",
+      "integration/mezzio": "Mezzio",
+      "integration/phalcon": "Phalcon3 and Phalcon4",
+      "integration/slim": "Slim",
       "integration/symfony": "Symfony Framework",
       "integration/symlex": "Symlex Framework",
       "integration/ubiquity": "Ubiquity Framework",
-      "integration/zend": "Zend Expressive",
       "integration/yii": "Yii2 and Yii3",
-      "integration/phalcon": "Phalcon3 and Phalcon4",
-      "integration/mezzio": "Mezzio",
-      "integration/chubbyphp": "Chubbyphp Framework",
-      "integration/codeigniter": "CodeIgniter"
+      "integration/zend": "Zend Expressive"
     }
   },
   {
