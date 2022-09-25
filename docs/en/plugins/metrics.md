@@ -21,6 +21,21 @@ Make sure to install metrics extension:
 composer require spiral/roadrunner-metrics
 ```
 
+## HTTP metrics
+
+To enable HTTP metrics, add the `http_metrics` middleware as the left-most middleware.
+
+```yaml
+# for metrics rr_http_request_duration_seconds_bucket, rr_http_request_duration_seconds_sum,
+# rr_http_request_duration_seconds_count you can enable middleware http_metrics
+http:
+  middleware: ["http_metrics"]  
+  
+metrics:
+  address: localhost:2112
+  
+```
+
 ## Application metrics
 
 You can also publish application-specific metrics using an RPC connection to the server. First, you have to register a metric in your
@@ -28,7 +43,7 @@ configuration file:
 
 ```yaml
 version: "2.7"
-
+  
 metrics:
   address: localhost:2112
   collect:
