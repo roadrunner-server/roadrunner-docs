@@ -224,6 +224,8 @@ jobs:
 Below is a more detailed description of each of the in-memory-specific options:
 - `priority` - Queue default priority for each task pushed into this queue
   if the priority value for these tasks was not explicitly set.
+  Lower value - higher priority.
+  For example, we have 2 pipelines "pipe1" with priority 1 and "pipe10" with priority 10. Jobs from "pipe10" will be taken by workers only if all the jobs from "pipe1" are handled.
 
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
@@ -326,8 +328,10 @@ jobs:
 ```
 
 Below is a more detailed description of each of the amqp-specific options:
-- `priority` - Queue default priority for for each task pushed into this queue
+- `priority` - Queue default priority for each task pushed into this queue
   if the priority value for these tasks was not explicitly set.
+  Lower value - higher priority.
+  For example, we have 2 pipelines "pipe1" with priority 1 and "pipe10" with priority 10. Jobs from "pipe10" will be taken by workers only if all the jobs from "pipe1" are handled.
 
 - `prefetch` - The client can request that messages be sent in advance so that
   when the client finishes processing a message, the following message is
@@ -443,8 +447,9 @@ jobs:
 These are all settings that are available to you for configuring this type of
 driver. Let's take a look at what they are responsible for:
 - `priority` - Similar to the same option in other drivers. This is queue
-  default priority for for each task pushed into this queue if the priority
+  default priority for each task pushed into this queue if the priority
   value for these tasks was not explicitly set.
+  Lower value - higher priority.
 
 - `tube_priority` - The value for specifying the priority within Beanstalk is
   the internal priority of the server. The value should not exceed `int32` size.
