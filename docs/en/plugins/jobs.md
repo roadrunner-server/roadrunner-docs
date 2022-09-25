@@ -169,6 +169,8 @@ jobs:
 Below is a more detailed description of each of the in-memory-specific options:
 - `priority` - Queue default priority for each task pushed into this queue
   if the priority value for these tasks was not explicitly set.
+  Lower value - higher priority.
+  For example, we have 2 pipelines "pipe1" with priority 1 and "pipe10" with priority 10. Jobs from "pipe10" will be taken by workers only if all the jobs from "pipe1" are handled.
 
 - `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
   PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
