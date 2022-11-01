@@ -21,7 +21,7 @@ To access the health-check use the following URL:
 Once enabled, the health check endpoint will respond with the following: 
 
  - `HTTP 200` if there is at least **one worker** ready to serve requests.
- - `HTTP 500` if there are **no workers** ready to service requests.
+ - `HTTP 500` if there are **no workers** ready to serve requests.
 
 
 To access the readiness-check use the following URL:
