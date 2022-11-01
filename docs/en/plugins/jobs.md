@@ -1113,7 +1113,7 @@ You probably already noticed that when [setting up a jobs consumer](#configurati
 the `"server"` configuration section is used in which a PHP file-handler is defined.
 Exactly the same one we used earlier to write a [HTTP Worker](/php/worker.md).
 Does this mean that if we want to use the Jobs Worker, then we can no longer
-use the HTTP Worker? No it is not!
+use the HTTP Worker? No it does not!
 
 During the launch of the RoadRunner, it spawns several workers defined in the
 `"server"` config section (by default, the number of workers is equal to the
