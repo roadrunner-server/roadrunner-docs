@@ -129,5 +129,12 @@ Where:
 - `-c` - path to the configuration
 - `-o` - path where to put the RR binary
 
+## Supported options for the plugins:
+- `ref`: tag, commit hash or branch name.
+- `owner`: repository owner (might be the user or organization).
+- `repository`: repository name.
+- `folder`: if the plugin is in some folder, you may specify it via this configuration option. For example: ` cache = { ref = "v1.6.18", owner = "darkweak", repository = "souin", folder="plugins/roadrunner" }`.
+- `replace`: go.mod [replace directive](https://go.dev/ref/mod#go-mod-file-replace).
+
 ### Known limitation
 - At the moment only GitHub and GitLab repositories are supported.
