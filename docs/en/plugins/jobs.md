@@ -960,13 +960,17 @@ $task = $task->withOptions($options);
 
 Please note, a queue with Kafka driver requires a task with specified `topic`. In this case 
 you have to use `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`, because it has all required
-methods for working with Kafka driver.
+methods for working with Kafka driver. Connect to queue using `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`.
+To redefine this options for a particular message, simply pass another `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`
+implementation as a second parameter of the `create` method.
 
 ```php
-$options = new \Spiral\RoadRunner\Jobs\KafkaOptions(topic: 'foo');
+$options = new \Spiral\RoadRunner\Jobs\KafkaOptions(topic: 'topic_name');
+
+$queue = $jobs->connect('queue_name', $options);
 
 $task = $queue->create(
-  SendEmailTask::class, 
+  SendEmailTask::class,
   options: $options->withPartition(10)->withOffset(1)->withMetadata('foo=bar')
 );
 ```
