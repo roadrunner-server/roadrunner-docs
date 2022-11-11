@@ -17,7 +17,7 @@ grpc:
   # GRPC address to listen
   #
   # This option is required
-  listen: "tcp://localhost:9001"
+  listen: "tcp://127.0.0.1:9001"
 
   # GRPC reflection server [SINCE 2.11]
   #
