@@ -41,6 +41,8 @@ manager.
 * Plugins
     * [What is it?](plugins/intro.md)
     * [Write a plugin](plugins/plugin.md)
+    * [Application logger](plugins/applogger.md)
+    * [Centrifuge](plugins/centrifuge.md)
     * [HTTP (transport)](plugins/http.md)
     * [JOBS (queues)](plugins/jobs.md)
     * [Key-Value](plugins/kv.md)
