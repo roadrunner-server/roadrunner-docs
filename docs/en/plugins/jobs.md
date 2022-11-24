@@ -374,12 +374,18 @@ Below is a more detailed description of each of the amqp-specific options:
       the same channel will be acknowledged. This is useful for batch processing
       of deliveries. Applicable only for the Ack, not for the Nack.
 
-    - `requeue_on_fail` - Requeue on Nack.
+    - `requeue_on_fail` - Requeue on Nack (by RabbitMQ). Docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
 
 **NEW in 2.7:**
 
 - `durable`: create a durable queue. Default: false
 - `delete_queue_on_stop`: delete the queue when the pipeline is stopped. Default: false
+
+**NEW in 2.12:**
+
+- `exchange_durable`: Declare durable exchange. Default: false
+- `exchange_auto_deleted`: Auto-deleted exchange. Default: false
+- `queue_auto_deleted`: Auto-deleted queue. Default: false
 
 ---
 

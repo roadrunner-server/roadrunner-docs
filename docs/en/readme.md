@@ -41,6 +41,8 @@ manager.
 * Plugins
     * [What is it?](plugins/intro.md)
     * [Write a plugin](plugins/plugin.md)
+    * [Application logger](plugins/applogger.md)
+    * [Centrifuge](plugins/centrifuge.md)
     * [HTTP (transport)](plugins/http.md)
     * [JOBS (queues)](plugins/jobs.md)
     * [Key-Value](plugins/kv.md)
@@ -87,6 +89,8 @@ manager.
     * [Chubbyphp Framework](integration/chubbyphp.md)
     * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
+* Workflow Engine
+    * [v2.12.0](releases/v2.12.0.md)
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)

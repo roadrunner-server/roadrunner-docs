@@ -46,6 +46,7 @@
     "title": "Plugins",
     "links": {
       "plugins/intro": "What is it?",
+      "plugins/applogger": "Application logger",
       "plugins/http": "HTTP (transport)",
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",
@@ -80,6 +81,13 @@
     }
   },
   {
+    "title": "Workflow engine",
+    "links": {
+      "workflow/temporal": "Temporal.io",
+      "workflow/worker": "Temporal worker"
+    }
+  },
+  {
     "title": "Integrations",
     "links": {
       "integration/migration": "Migration from V1 to V2",
@@ -96,6 +104,12 @@
       "integration/ubiquity": "Ubiquity Framework",
       "integration/yii": "Yii2 and Yii3",
       "integration/zend": "Zend Expressive"
+    }
+  },
+  {
+    "title": "Releases",
+    "links": {
+      "releases/v2.12.0": "Release v2.12.0"
     }
   },
   {
