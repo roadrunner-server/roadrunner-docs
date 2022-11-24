@@ -90,7 +90,7 @@ manager.
     * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Releases
-    * [v2.12.0](releases/v2.12.0.md)
+    * [v2.12.0](releases/v2_12_0.md)
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)
