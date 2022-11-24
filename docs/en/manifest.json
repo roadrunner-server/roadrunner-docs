@@ -47,6 +47,7 @@
     "links": {
       "plugins/intro": "What is it?",
       "plugins/applogger": "Application logger",
+      "plugins/centrifuge": "Centrifuge",
       "plugins/http": "HTTP (transport)",
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",
