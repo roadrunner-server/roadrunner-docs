@@ -89,7 +89,7 @@ manager.
     * [Chubbyphp Framework](integration/chubbyphp.md)
     * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
-* Workflow Engine
+* Releases
     * [v2.12.0](releases/v2.12.0.md)
 * Docker
     * [Ports and Containers](docker/ports.md)
