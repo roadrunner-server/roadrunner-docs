@@ -19,20 +19,12 @@ grpc:
   # This option is required
   listen: "tcp://127.0.0.1:9001"
 
-  # GRPC reflection server [SINCE 2.11]
+  # Proto file to use, multiply files supported [SINCE 2.6]
   #
-  # This option is optional. The reflection server might be activated to use `grpc_cli`, `grpc-ui`, `grpc-curl`, or similar tools to intercept grpc payloads.
-  reflection_server:
-    include:
-      - "path/to/proto1.proto"
-      - "path/to/proto2.proto"
-
-  # Proto files to use [Multiply files since RR v2.6.0]
-  #
-  # This option is required. At least one proto file must be specified.
+  # This option is required
   proto:
-      - "first.proto"
-      - "second.proto"
+    - "first.proto"
+    - "second.proto"
 
   # GRPC TLS configuration
   #
@@ -56,7 +48,7 @@ grpc:
     # Client auth type.
     #
     # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
-    client_auth_type: ""
+    client_auth_type: no_client_certs
 
   # Maximum send message size
   #
@@ -86,7 +78,7 @@ grpc:
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
-  max_connection_age_grace: 0s
+  max_connection_age_grace: 0s8h
 
   # MaxConnectionAgeGrace is an additive period after MaxConnectionAge after
   #	which the connection will be forcibly closed.
@@ -110,10 +102,40 @@ grpc:
 
   # Usual workers pool configuration
   pool:
-    num_workers: 2
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
+
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
+    num_workers: 0
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
     max_jobs: 0
+
+    # Timeout for worker allocation. Zero means 60s.
+    #
+    # Default: 60s
     allocate_timeout: 60s
-    destroy_timeout: 60
+
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
+    #
+    # Default: 60s
+    destroy_timeout: 60s
 ```
 
 ## Minimal dependencies:
