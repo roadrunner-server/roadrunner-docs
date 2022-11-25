@@ -48,17 +48,13 @@ manager.
     * [Key-Value](plugins/kv.md)
     * [Configuration](plugins/config.md)
     * [gRPC](plugins/grpc.md)
-    * [Informer](plugins/informer.md)
-    * [Broadcast](plugins/broadcast.md)
     * [Logger](plugins/logger.md)
     * [Metrics (prometheus)](plugins/metrics.md)
     * [Reload](plugins/reload.md)
-    * [Resetter](plugins/resetter.md)
     * [RPC](plugins/rpc.md)
     * [Server](plugins/server.md)
     * [Service (like systemd)](plugins/service.md)
     * [Status](plugins/status.md)
-    * [Websockets](plugins/websocket.md)
     * [TCP](plugins/tcp.md)
     * [Fileserver](plugins/fileserver.md)
 * HTTP Middleware
@@ -90,7 +86,7 @@ manager.
     * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Releases
-    * [v2.12.0](releases/v2_12_0.md)
+    * [v2.12.0](releases/v2-12-0.md)
 * Docker
     * [Ports and Containers](docker/ports.md)
     * [Available Images](docker/images.md)

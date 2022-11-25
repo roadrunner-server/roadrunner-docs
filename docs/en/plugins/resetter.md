@@ -1,1 +1,0 @@
-## Resetter plugin
