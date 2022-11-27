@@ -29,7 +29,7 @@ service:
     command: "tests/plugins/service/test_files/test_binary"
     process_num: 1
     remain_after_exit: true
-    restart_delay: 1s
+    restart_sec: 1s
     env:
        - foo: "BAR"
     exec_timeout: 0
