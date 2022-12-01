@@ -85,6 +85,7 @@ manager.
     * [CodeIgniter](integration/codeigniter.md)
     * [**All Composer Libraries**](https://packagist.org/packages/spiral/roadrunner/dependents)
 * Releases
+    * [v2.12.1](releases/v2-12-1.md)
     * [v2.12.0](releases/v2-12-0.md)
 * Docker
     * [Ports and Containers](docker/ports.md)
