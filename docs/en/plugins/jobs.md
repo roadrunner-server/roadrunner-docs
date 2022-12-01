@@ -227,9 +227,7 @@ Below is a more detailed description of each of the in-memory-specific options:
   Lower value - higher priority.
   For example, we have 2 pipelines "pipe1" with priority 1 and "pipe10" with priority 10. Jobs from "pipe10" will be taken by workers only if all the jobs from "pipe1" are handled.
 
-- `prefetch` - A local buffer between the PQ (priority queue) and driver. If the
-  PQ size is set to 100 and prefetch to 100000, you'll be able to push up to
-  prefetch number of jobs even if PQ is full.
+- `prefetch` - A number of messages to receive from the local queue until ACK/NACK.
 
 - `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. Default: `rr.db`.
 
@@ -270,59 +268,90 @@ jobs:
   pipelines:
     # User defined name of the queue.
     example:
-      # Required section.
-      # Should be "amqp" for the AMQP driver.
+      # Driver name
+      #
+      # This option is required.
       driver: amqp
 
-      config: # NEW in 2.7
-      
-        # Optional section.
+      # Driver's configuration
+      #
+      # Should not be empty
+      config:
+
+        # QoS - prefetch.
+        #
         # Default: 10
-        priority: 10
-      
-        # Optional section.
-        # Default: 100
-        prefetch: 100
-        
+        prefetch: 10
+
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 1
+
         # Consume any payload type (not only Jobs structured)
+        #
         # Default: false
         consume_all: false
-
-        # Optional section.
-        # Default: "default"
-        queue: "default"
-
-        # Optional section.
-        # Default: "amqp.default"
-        exchange: "amqp.default"
 
         # Durable queue
         #
         # Default: false
         durable: false
 
+        # Durable exchange (rabbitmq option: https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)
+        #
+        # Default: true
+        exchange_durable: false
+
+        # Auto-delete (exchange is deleted when last queue is unbound from it): https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges
+        #
+        # Default: false
+        exchange_auto_deleted: false
+
+        # Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes) (rabbitmq option: https://www.rabbitmq.com/queues.html#properties)
+        #
+        # Default: false
+        queue_auto_deleted: false
+
         # Delete queue when stopping the pipeline
         #
         # Default: false
         delete_queue_on_stop: false
 
-        # Optional section.
-        # Default: "direct"
-        exchange_type: "direct"
+        # Queue name
+        #
+        # Default: default
+        queue: test-1-queue
 
-       # Optional section.
-        # Default: "" (empty)
-        routing_key: ""
+        # Exchange name
+        #
+        # Default: amqp.default
+        exchange: default
 
-        # Optional section.
+        # Exchange type
+        #
+        # Default: direct.
+        exchange_type: direct
+
+        # Routing key for the queue
+        #
+        # Default: empty.
+        routing_key: test
+
+        # Declare a queue exclusive at the exchange
+        #
         # Default: false
         exclusive: false
 
-        # Optional section.
-        # Default: false
+        # When multiple is true, this delivery and all prior unacknowledged deliveries
+        # on the same channel will be acknowledged.  This is useful for batch processing
+        # of deliveries
+        #
+        # Default:false
         multiple_ack: false
 
-        # Optional section.
+        # Use rabbitmq mechanism to requeue the job on fail
+        #
         # Default: false
         requeue_on_fail: false
 ```
@@ -383,9 +412,9 @@ Below is a more detailed description of each of the amqp-specific options:
 
 **NEW in 2.12:**
 
-- `exchange_durable`: Declare durable exchange. Default: false
-- `exchange_auto_deleted`: Auto-deleted exchange. Default: false
-- `queue_auto_deleted`: Auto-deleted queue. Default: false
+- `exchange_durable`: Durable exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)). Default: false
+- `exchange_auto_deleted`: Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). Default: false
+- `queue_auto_deleted`: Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). Default: false
 
 ---
 
@@ -567,9 +596,7 @@ jobs:
 ```
 
 Below is a more detailed description of each of the SQS-specific options:
-- `prefetch` - Number of jobs to prefetch from the SQS. Amazon SQS never returns
-  more messages than this value (however, fewer messages might be returned).
-  Valid values: 1 to 10. Any number bigger than 10 will be rounded to 10.
+- `prefetch` - Number of jobs to prefetch from the SQS until ACK/NACK.
   Default: `10`.
 
 - `visibility_timeout` - The duration (in seconds) that the received messages
