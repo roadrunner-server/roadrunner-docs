@@ -9,3 +9,4 @@ How to fix that?
 2. Check `dd` , `echo` inserted by you. PHP workers can redirect `echo` automatically from the `STDOUT` to `STDERR` but only after the worker is initialized fully.
 3. Worker from the RRv1 was used. To update, see: https://roadrunner.dev/docs/integration-migration/2.x/en
 4. OPcache enabled with JIT, but some extenstion doesn't support it, which leads to the warnings. Tune the `error_reporting` configuration option (use only errors): [issue](https://github.com/roadrunner-server/roadrunner/issues/1306)
+5. If you use a Symfony runtime, do not forget to add `APP_RUNTIME` to the server environment variables, as described here: https://github.com/php-runtime/roadrunner-symfony-nyholm.
