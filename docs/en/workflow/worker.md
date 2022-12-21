@@ -37,7 +37,7 @@ $worker->registerActivityImplementations(new MyActivity());
 $factory->run();
 ```
 
-Read more about temporal configuration and usage [at official website](https://docs.temporal.io/docs/php-sdk-overview). 
+Read more about temporal configuration and usage [at official website](https://docs.temporal.io/application-development/features). 
 
 ## Multi-worker Environment
 To serve both HTTP and Temporal from the same worker use `getMode()` option of `Environment`:
