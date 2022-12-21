@@ -138,6 +138,14 @@ grpc:
     destroy_timeout: 60s
 ```
 
+### Emitted metrics
+GRPC plugin emits three types of metrics:
+- `rr_grpc_requests_queue` - Total number of queued requests (Gauge)
+- `rr_grpc_request_total`- Total number of handled GRPC requests after server restart (Counter)
+- `rr_grpc_request_duration_seconds` - GRPC request duration (Histogram)
+
+Example of grafana dashboard is available [here](https://github.com/roadrunner-server/roadrunner/blob/master/dashboards/grpc_dashboard.json).
+
 ## Minimal dependencies:
 
 1. `Server` plugin for the workers pool.
