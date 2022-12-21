@@ -74,4 +74,4 @@ class SubscriptionWorkflow implements SubscriptionWorkflowInterface
 }
 ```
 
-> Read more at [official website](https://docs.temporal.io/php/introduction/).
+> Read more at [official website](https://docs.temporal.io/application-development?lang=php).
