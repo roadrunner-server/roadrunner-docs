@@ -451,7 +451,7 @@ beanstalk:
 jobs:
   pipelines:
     # User defined name of the queue.
-    example:
+    beanstalk-pipeline-name:
       # Required section.
       # Should be "beanstalk" for the Beanstalk driver.
       driver: beanstalk
@@ -554,45 +554,46 @@ sqs:
 
 jobs:
   pipelines:
-    # Required section.
-    # Should be "sqs" for the Amazon SQS driver.
-    driver: sqs
+    test-sqs-pipeline:
+      # Required section.
+      # Should be "sqs" for the Amazon SQS driver.
+      driver: sqs
 
-    config: 
-      # Optional section.
-      # Default: 10
-      prefetch: 10
+      config: 
+        # Optional section.
+        # Default: 10
+        prefetch: 10
 
-      # Consume any payload type (not only Jobs structured)
-      # Default: false
-      consume_all: false
+        # Consume any payload type (not only Jobs structured)
+        # Default: false
+        consume_all: false
       
-      # Get queue URL only
-      # Default: false
-      skip_queue_declaration: false
+        # Get queue URL only
+        # Default: false
+        skip_queue_declaration: false
     
-      # Optional section.
-      # Default: 0
-      visibility_timeout: 0
+        # Optional section.
+        # Default: 0
+        visibility_timeout: 0
     
-      # Optional section.
-      # Default: 0
-      wait_time_seconds: 0
+        # Optional section.
+        # Default: 0
+        wait_time_seconds: 0
     
-      # Optional section.
-      # Default: default
-      queue: default
+        # Optional section.
+        # Default: default
+        queue: default
     
-      # Optional section.
-      # Default: empty
-      attributes:
-        DelaySeconds: 42
-        # etc... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
+        # Optional section.
+        # Default: empty
+        attributes:
+          DelaySeconds: 42
+          # etc... see https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SetQueueAttributes.html
       
-      # Optional section.
-      # Default: empty
-      tags:
-        test: "tag"
+        # Optional section.
+        # Default: empty
+        tags:
+          test: "tag"
 ```
 
 Below is a more detailed description of each of the SQS-specific options:
