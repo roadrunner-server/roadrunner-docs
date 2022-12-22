@@ -354,6 +354,12 @@ jobs:
         #
         # Default: false
         requeue_on_fail: false
+        
+        # Queue headers (new in 2.12.2)
+        #
+        # Default: null
+        queue_headers:
+          x-queue-mode: lazy
 ```
 
 Below is a more detailed description of each of the amqp-specific options:
@@ -404,6 +410,7 @@ Below is a more detailed description of each of the amqp-specific options:
       of deliveries. Applicable only for the Ack, not for the Nack.
 
     - `requeue_on_fail` - Requeue on Nack (by RabbitMQ). Docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
+    - `queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
 
 **NEW in 2.7:**
 
@@ -415,6 +422,10 @@ Below is a more detailed description of each of the amqp-specific options:
 - `exchange_durable`: Durable exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)). Default: false
 - `exchange_auto_deleted`: Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). Default: false
 - `queue_auto_deleted`: Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). Default: false
+
+**NEW in 2.12.2:**
+
+`queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
 
 ---
 
