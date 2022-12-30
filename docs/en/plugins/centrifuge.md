@@ -8,7 +8,6 @@ RR exposes all available APIs, including a `gRPC` proxy and the client's API.
 
 ## API
 
-####
 - [PHP library](https://github.com/roadrunner-php/centrifugo)
 
 #### Proxy interface
