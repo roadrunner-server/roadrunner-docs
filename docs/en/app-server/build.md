@@ -83,7 +83,6 @@ ref = "v2.10.1"
     amqp = { ref = "master", owner = "roadrunner-server", repository = "amqp" }
     beanstalk = { ref = "master", owner = "roadrunner-server", repository = "beanstalk" }
     boltdb = { ref = "master", owner = "roadrunner-server", repository = "boltdb" }
-    broadcast = { ref = "master", owner = "roadrunner-server", repository = "broadcast" }
     fileserver = { ref = "master", owner = "roadrunner-server", repository = "fileserver" }
     grpc = { ref = "master", owner = "roadrunner-server", repository = "grpc" }
     gzip = { ref = "master", owner = "roadrunner-server", repository = "gzip" }

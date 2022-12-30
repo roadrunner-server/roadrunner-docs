@@ -52,7 +52,6 @@
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",
       "plugins/config": "Configuration",
-      "plugins/broadcast": "Broadcast",
       "plugins/logger": "Logger",
       "plugins/metrics": "Metrics (prometheus)",
       "plugins/reload": "Reload",
