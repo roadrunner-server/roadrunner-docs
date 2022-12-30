@@ -5,7 +5,6 @@ the user might use this plugin to send raw messages to the RR `STDERR`.
 
 ## API
 
-####
 - [PHP Library](https://github.com/roadrunner-php/app-logger)
 
 #### RPC Interface 
