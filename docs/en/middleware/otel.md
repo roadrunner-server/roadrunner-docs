@@ -79,3 +79,69 @@ server:
     - OTEL_PHP_TRACES_PROCESSOR: simple
   relay: pipes
 ```
+
+### Using with DataDog
+
+```yaml
+#docker-composer.yml
+version: "3.6"
+
+services:
+  collector:
+    image: otel/opentelemetry-collector-contrib
+    command: ["--config=/etc/otel-collector-config.yml"]
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    ports:
+      - "4318:4318"
+```
+
+Below, you will find an example of a collector configuration that sends data to Zipkin, Datadog, or New Relic:
+
+```yaml
+#otel-collector-config.yml
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  batch:
+    timeout: 1s
+
+exporters:
+  logging:
+    loglevel: debug
+
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+
+  datadog:
+    api:
+      site: datadoghq.eu
+      key: ...
+
+  otlp:
+    endpoint: https://otlp.eu01.nr-data.net:443
+    headers:
+      api-key: ...
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ zipkin, datadog, otlp, logging ]
+```
+
+Then configure your php application:
+
+```dotenv
+# OpenTelemetry
+OTEL_SERVICE_NAME=php-blog
+OTEL_TRACES_EXPORTER=otlp
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318 # Collector address
+OTEL_PHP_TRACES_PROCESSOR=simple
+```
