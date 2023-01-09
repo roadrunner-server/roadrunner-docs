@@ -2,6 +2,11 @@
 
 RoadRunner uses Endure to manage dependencies, this allows you to tweak and extend application functionality for each separate project.
 
+## Compatibility with the plugins:
+
+1. ⚠️ Do not use the plugin's `master` branch.
+2. ⚠️ If you're going to use tags, use tags with the same **major** version (e.g `logger` v3.0.3 + `amqp` v3.0.5, but not `logger` v4.0.0 + `amqp` v3.0.5)
+
 ## GitHub plugin template
 - [Repository](https://github.com/roadrunner-server/plugin_template)
 
