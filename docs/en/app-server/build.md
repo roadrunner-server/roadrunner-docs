@@ -139,7 +139,7 @@ ref = "v2.12.1"
 [gitlab]
     [gitlab.token]
     # api, read-api, read-repo
-    token = "token"
+    token = "${GL_TOKEN}"
 
     [gitlab.endpoint]
     endpoint = "https://gitlab.com"
@@ -162,6 +162,12 @@ vx build -c plugins.toml -o ~/Downloads
 Where:
 - `-c` - path to the configuration
 - `-o` - path where to put the RR binary
+
+## Environment variables:  
+- `"${GL_TOKEN}"` - GitLab token.
+- `"${RT_TOKEN}"` - GitHub token.
+- `"${VERSION}"` - RR version to write into the binary (will be shown with `./rr --version`).
+- `"${TIME}"` - Build time (will be shown with `./rr --version`).
 
 ## Supported options for the plugins:
 - `ref`: tag, commit hash or branch name.
