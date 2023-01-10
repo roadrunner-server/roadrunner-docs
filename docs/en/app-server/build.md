@@ -5,7 +5,10 @@ RoadRunner uses Endure to manage dependencies, this allows you to tweak and exte
 ## Compatibility with the plugins:
 
 1. ⚠️ Do not use the plugin's `master` branch.
-2. ⚠️ If you're going to use tags, use tags with the same **major** version (e.g `logger` v3.0.3 + `amqp` v3.0.5, but not `logger` v4.0.0 + `amqp` v3.0.5)
+2. ⚠️ Use tags with the **same** **major** version (e.g `logger` v3.0.3 + `amqp` v3.0.5, but not `logger` v4.0.0 + `amqp` v3.0.5)
+3. ⚠️ **Currently supported plugins version is: `v3.x.x`**
+4. ⚠️ **Currently supported RR version is: `v2.12.x`**
+
 
 ## GitHub plugin template
 - [Repository](https://github.com/roadrunner-server/plugin_template)
@@ -76,35 +79,62 @@ ref = "v2.10.1"
     token = "token"
 
     [github.plugins]
-    # ref -> master, commit or tag
-    logger = { ref = "master", owner = "roadrunner-server", repository = "logger" }
-    temporal = { ref = "master", owner = "temporalio", repository = "roadrunner-temporal" }
-    metrics = { ref = "master", owner = "roadrunner-server", repository = "metrics" }
-    cache = { ref = "master", owner = "roadrunner-server", repository = "cache" }
-    reload = { ref = "master", owner = "roadrunner-server", repository = "reload" }
-    otel = { ref = "master", owner = "roadrunner-server", repository = "otel" }
-    server = { ref = "master", owner = "roadrunner-server", repository = "server" }
-    service = { ref = "master", owner = "roadrunner-server", repository = "service" }
-    amqp = { ref = "master", owner = "roadrunner-server", repository = "amqp" }
-    beanstalk = { ref = "master", owner = "roadrunner-server", repository = "beanstalk" }
-    boltdb = { ref = "master", owner = "roadrunner-server", repository = "boltdb" }
-    fileserver = { ref = "master", owner = "roadrunner-server", repository = "fileserver" }
-    grpc = { ref = "master", owner = "roadrunner-server", repository = "grpc" }
-    gzip = { ref = "master", owner = "roadrunner-server", repository = "gzip" }
-    headers = { ref = "master", owner = "roadrunner-server", repository = "headers" }
-    http = { ref = "master", owner = "roadrunner-server", repository = "http" }
-    jobs = { ref = "master", owner = "roadrunner-server", repository = "jobs" }
-    memory = { ref = "master", owner = "roadrunner-server", repository = "memory" }
-    nats = { ref = "master", owner = "roadrunner-server", repository = "nats" }
-    new_relic = { ref = "master", owner = "roadrunner-server", repository = "new_relic" }
-    prometheus = { ref = "master", owner = "roadrunner-server", repository = "prometheus" }
-    redis = { ref = "master", owner = "roadrunner-server", repository = "redis" }
-    sqs = { ref = "master", owner = "roadrunner-server", repository = "sqs" }
-    static = { ref = "master", owner = "roadrunner-server", repository = "static" }
-    status = { ref = "master", owner = "roadrunner-server", repository = "status" }
-    kv = { ref = "master", owner = "roadrunner-server", repository = "kv" }
-    memcached = { ref = "master", owner = "roadrunner-server", repository = "memcached" }
-    tcp = { ref = "master", owner = "roadrunner-server", repository = "tcp" }
+    # LOGS
+    appLogger = { ref = "v3.2.0", owner = "roadrunner-server", repository = "app-logger" }
+    logger = { ref = "v3.2.0", owner = "roadrunner-server", repository = "logger" }
+
+    # CENTRIFUGE BROADCASTING PLATFORM
+    centrifuge = { ref = "v3.2.0", owner = "roadrunner-server", repository = "centrifuge" }
+
+    # WORKFLOWS ENGINE
+    temporal = { ref = "v3.0.0", owner = "temporalio", repository = "roadrunner-temporal" }
+
+    # METRICS
+    metrics = { ref = "v3.3.0", owner = "roadrunner-server", repository = "metrics" }
+
+    # HTTP + MIDDLEWARE
+    http = { ref = "v3.2.0", owner = "roadrunner-server", repository = "http" }
+    gzip = { ref = "v3.2.0", owner = "roadrunner-server", repository = "gzip" }
+    prometheus = { ref = "v3.2.0", owner = "roadrunner-server", repository = "prometheus" }
+    headers = { ref = "v3.2.0", owner = "roadrunner-server", repository = "headers" }
+    static = { ref = "v3.2.0", owner = "roadrunner-server", repository = "static" }
+    otel = { ref = "v3.2.0", owner = "roadrunner-server", repository = "otel" }
+
+    # RELOAD (for the DEV)
+    reload = { ref = "v3.2.0", owner = "roadrunner-server", repository = "reload" }
+
+    # SERVER
+    server = { ref = "v3.2.0", owner = "roadrunner-server", repository = "server" }
+
+    # SERVICE aka lightweit systemd
+    service = { ref = "v3.2.0", owner = "roadrunner-server", repository = "service" }
+
+    # JOBS
+    jobs = { ref = "v3.2.0", owner = "roadrunner-server", repository = "jobs" }
+    amqp = { ref = "v3.3.0", owner = "roadrunner-server", repository = "amqp" }
+    sqs = { ref = "v3.3.0", owner = "roadrunner-server", repository = "sqs" }
+    beanstalk = { ref = "v3.2.0", owner = "roadrunner-server", repository = "beanstalk" }
+    nats = { ref = "v3.2.0", owner = "roadrunner-server", repository = "nats" }
+    kafka = { ref = "v3.0.4", owner = "roadrunner-server", repository = "kafka" }
+
+    # KV
+    kv = { ref = "v3.2.0", owner = "roadrunner-server", repository = "kv" }
+    boltdb = { ref = "v3.2.0", owner = "roadrunner-server", repository = "boltdb" }
+    memory = { ref = "v3.3.0", owner = "roadrunner-server", repository = "memory" }
+    redis = { ref = "v3.2.0", owner = "roadrunner-server", repository = "redis" }
+    memcached = { ref = "v3.2.0", owner = "roadrunner-server", repository = "memcached" }
+
+    # FILESERVER (static files)
+    fileserver = { ref = "v3.2.0", owner = "roadrunner-server", repository = "fileserver" }
+
+    # gRPC plugin
+    grpc = { ref = "v3.2.0", owner = "roadrunner-server", repository = "grpc" }
+
+    # HEALTHCHECKS + READINESS CHECKS
+    status = { ref = "v3.2.0", owner = "roadrunner-server", repository = "status" }
+
+    # TCP for the RAW TCP PAYLOADS
+    tcp = { ref = "v3.2.0", owner = "roadrunner-server", repository = "tcp" }
 
 [gitlab]
     [gitlab.token]
