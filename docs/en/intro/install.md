@@ -4,8 +4,8 @@ OSX, Linux, FreeBSD, and Windows. Instructions for using these binaries are on t
 
 ## Docker:
 
-To get the roadrunner binary file you can use our docker image: `spiralscout/roadrunner:2.X.X` (more information about
-image and tags can be found [here](https://hub.docker.com/r/spiralscout/roadrunner/)) or use the GitHub package: `ghcr.io/roadrunner-server/roadrunner:2.X.X`
+To get the roadrunner binary file you can use our docker image: `ghcr.io/roadrunner-server/roadrunner:2.X.X` (more information about
+image and tags can be found [here](https://github.com/roadrunner-server/roadrunner/pkgs/container/roadrunner)).
 
 ```dockerfile
 FROM ghcr.io/roadrunner-server/roadrunner:2.X.X AS roadrunner
@@ -23,8 +23,8 @@ Configuration located in the `.rr.yaml` file ([full sample](https://github.com/r
 You can also install RoadRunner automatically using command shipped with the composer package, run:
 
 ```bash
-$ composer require spiral/roadrunner:v2.0 nyholm/psr7
-$ ./vendor/bin/rr get-binary
+composer require spiral/roadrunner:v2.0 nyholm/psr7
+./vendor/bin/rr get-binary
 ```
 
 Server binary will be available at the root of your project.
@@ -37,6 +37,11 @@ Server binary will be available at the root of your project.
 ## Installation option for the Debian-derivatives (Ubuntu, Mint, MX, etc)
 
 ```bash
-$ wget https://github.com/roadrunner-server/roadrunner/releases/download/v2.X.X/roadrunner-2.X.X-linux-amd64.deb
-$ sudo dpkg -i roadrunner-2.X.X-linux-amd64.deb
+wget https://github.com/roadrunner-server/roadrunner/releases/download/v2.X.X/roadrunner-2.X.X-linux-amd64.deb
+sudo dpkg -i roadrunner-2.X.X-linux-amd64.deb
+```
+
+## Dowload the latest release (WLS2/Linux/macOS):
+```bash
+curl --proto '=https' --tlsv1.2 -sSf  https://raw.githubusercontent.com/roadrunner-server/roadrunner/master/download-latest.sh | sh
 ```
