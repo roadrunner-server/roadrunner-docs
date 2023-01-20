@@ -41,7 +41,7 @@ wget https://github.com/roadrunner-server/roadrunner/releases/download/v2.X.X/ro
 sudo dpkg -i roadrunner-2.X.X-linux-amd64.deb
 ```
 
-## Dowload the latest release (WLS2/Linux/macOS):
+## Dowload the latest release via curl:
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf  https://raw.githubusercontent.com/roadrunner-server/roadrunner/master/download-latest.sh | sh
 ```
