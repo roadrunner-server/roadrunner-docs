@@ -15,7 +15,7 @@
 # RR configuration version
 version: "2.7"
 
-# Remote Procedures Calling (docs: https://roadrunner.dev/docs/beep-beep-rpc)
+# Remote Procedures Calling (docs: https://roadrunner.dev/docs/plugins-rpc/2.x/en)
 # Is used for connecting to RoadRunner server from your PHP workers.
 rpc:
   # TCP address:port for listening.
@@ -53,7 +53,7 @@ server:
   # Default: ""
   user: ""
 
-  # Group name (not GID) for the worker processes. An empty value means to use the RR process user.
+  # Group name (not GID) for the worker processes. An empty value means to use the RR process group.
   #
   # Default: ""
   group: ""
@@ -191,6 +191,13 @@ temporal:
   #
   # Optional section
   metrics:
+
+    # ---- Prometheus
+
+    # Metrics driver to use
+    #
+    # Optional, default: prometheus. Available values: prometheus, statsd
+    driver: prometheus
     # Server metrics address
     #
     # Required for the production. Default: 127.0.0.1:9091, for the metrics 127.0.0.1:9091/metrics
@@ -205,7 +212,76 @@ temporal:
     # Default: (empty)
     prefix: "foobar"
 
+    # ---- Statsd (uncomment)
+
+    # Metrics driver to use
+    #
+    # Optional, default: prometheus. Available values: prometheus, statsd
+    # driver: statsd
+
+    # Statsd host and port
+    #
+    # Optional, default: 127.0.0.1:8125
+    # host_port: "127.0.0.1:8125"
+
+    # Prefix for the metrics
+    #
+    # Optional, default: empty
+    # prefix: "samples"
+
+    # Flush interval is the maximum interval for sending packets.
+    #
+    # Optional, default: 1s
+    # flush_interval: 1s
+
+    # Flush bytes specifies the maximum udp packet size you wish to send.
+    # If FlushBytes is unspecified, it defaults  to 1432 bytes, which is
+    # considered safe for local traffic
+    #
+    # Optional, default: 1432
+    # flush_bytes: 1432
+
+    # Tags passed to the statsd on init
+    #
+    # Optional, default: empty
+    #tags:
+    #  - foo: bar
+
+  # Temporal TLS configuration
+  #
+  # This section is optional
+  tls:
+    # Path to the key file
+    #
+    # This option is required
+    key: ""
+
+    # Path to the certificate
+    #
+    # This option is required
+    cert: ""
+
+    # Path to the CA certificate, defines the set of root certificate authorities that servers use if required to verify a client certificate. Used with the `client_auth_type` option.
+    #
+    # This option is optional
+    root_ca: ""
+
+    # Client auth type.
+    #
+    # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
+    client_auth_type: no_client_certs
+
+    # ServerName is used to verify the hostname on the returned
+    # certificates unless InsecureSkipVerify is given. It is also included
+    # in the client's handshake to support virtual hosting unless it is
+    # an IP address.
+    #
+    # Default: hostname
+    server_name: "tls-sample"
+
   # Activities pool settings.
+  #
+  # Equal to the regular pool options
   activities:
     # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
     #
@@ -227,12 +303,17 @@ temporal:
     # Default: 0
     max_jobs: 0
 
-    # Timeout for worker allocation. Zero means no limit.
+    # Timeout for worker allocation. Zero means 60s.
     #
     # Default: 60s
     allocate_timeout: 60s
 
-    # Timeout for worker destroying before process killing. Zero means no limit.
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
     #
     # Default: 60s
     destroy_timeout: 60s
@@ -268,6 +349,7 @@ temporal:
 
 
 # KV plugin settings. Available drivers: boltdb, redis, memcached, memory.
+#
 # Any number of sections can be defined here.
 kv:
   # User defined name of the section
@@ -278,6 +360,7 @@ kv:
     #
     # This option is required.
     driver: boltdb
+
     # Local configuration section
     #
     # This option is required to use local section, otherwise (boltdb-south) global configuration will be used.
@@ -344,18 +427,18 @@ kv:
       sentinel_password: ""
       route_by_latency: false
       route_randomly: false
-      dial_timeout: 0 # accepted values [1s, 5m, 3h]
+      dial_timeout: 0s # accepted values [1s, 5m, 3h]
       max_retries: 1
-      min_retry_backoff: 0 # accepted values [1s, 5m, 3h]
-      max_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+      min_retry_backoff: 0s # accepted values [1s, 5m, 3h]
+      max_retry_backoff: 0s # accepted values [1s, 5m, 3h]
       pool_size: 0
       min_idle_conns: 0
-      max_conn_age: 0 # accepted values [1s, 5m, 3h]
-      read_timeout: 0 # accepted values [1s, 5m, 3h]
-      write_timeout: 0 # accepted values [1s, 5m, 3h]
-      pool_timeout: 0 # accepted values [1s, 5m, 3h]
-      idle_timeout: 0 # accepted values [1s, 5m, 3h]
-      idle_check_freq: 0 # accepted values [1s, 5m, 3h]
+      max_conn_age: 0s # accepted values [1s, 5m, 3h]
+      read_timeout: 0s # accepted values [1s, 5m, 3h]
+      write_timeout: 0s # accepted values [1s, 5m, 3h]
+      pool_timeout: 0s # accepted values [1s, 5m, 3h]
+      idle_timeout: 0s # accepted values [1s, 5m, 3h]
+      idle_check_freq: 0s # accepted values [1s, 5m, 3h]
       read_only: false
 
   # User defined name of the section
@@ -377,6 +460,7 @@ kv:
 
 # Service plugin settings
 service:
+
   # User defined service name
   #
   # Default: none, required
@@ -401,7 +485,12 @@ service:
     # Allowed time before stop.
     #
     # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
-    exec_timeout: 0
+    exec_timeout: 0s
+
+    # Show the name of the service in logs (e.g. service.some_service_1)
+    #
+    # Default: false
+    service_name_in_log: false
 
     # Remain process after exit. In other words, restart process after exit with any exit code.
     #
@@ -434,10 +523,16 @@ service:
     # Default: 1
     process_num: 1
 
+
+    # Show the name of the service in logs (e.g. service.some_service_1)
+    #
+    # Default: false
+    service_name_in_log: false
+
     # Allowed time before stop.
     #
     # Default: 0 (infinity), can be 1s, 2m, 2h (seconds, minutes, hours)
-    exec_timeout: 0
+    exec_timeout: 0s
 
     # Remain process after exit. In other words, restart process after exit with any exit code.
     #
@@ -476,7 +571,7 @@ http:
   # Optional, default: false
   raw_body: false
 
-  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "websockets", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics", [SINCE 2.7] -> "cache"
+  # Middlewares for the http plugin, order is important. Allowed values is: "headers", "gzip", "static", "sendfile",  [SINCE 2.6] -> "new_relic", [SINCE 2.6] -> "http_metrics", [SINCE 2.7] -> "cache"
   #
   # Default value: []
   middleware: [ "headers", "gzip" ]
@@ -755,14 +850,19 @@ http:
     # Maximal count of worker executions. Zero (or nothing) means no limit.
     #
     # Default: 0
-    max_jobs: 64
+    max_jobs: 0
 
-    # Timeout for worker allocation. Zero means no limit.
+    # Timeout for worker allocation. Zero means 60s.
     #
     # Default: 60s
     allocate_timeout: 60s
 
-    # Timeout for worker destroying before process killing. Zero means no limit.
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
     #
     # Default: 60s
     destroy_timeout: 60s
@@ -888,7 +988,7 @@ http:
     # Default: 128
     max_concurrent_streams: 128
 
-# Redis section. Should be defined to use as a broadcast driver for the websockets (with no limitation to use in other plugins)
+# Redis section.
 redis:
   # UniversalClient is an abstract client which - based on the provided options -
   # can connect to either clusters, or sentinel-backed failover instances
@@ -906,98 +1006,19 @@ redis:
   sentinel_password: ""
   route_by_latency: false
   route_randomly: false
-  dial_timeout: 0 # accepted values [1s, 5m, 3h]
+  dial_timeout: 0s # accepted values [1s, 5m, 3h]
   max_retries: 1
-  min_retry_backoff: 0 # accepted values [1s, 5m, 3h]
-  max_retry_backoff: 0 # accepted values [1s, 5m, 3h]
+  min_retry_backoff: 0s # accepted values [1s, 5m, 3h]
+  max_retry_backoff: 0s # accepted values [1s, 5m, 3h]
   pool_size: 0
   min_idle_conns: 0
-  max_conn_age: 0 # accepted values [1s, 5m, 3h]
-  read_timeout: 0 # accepted values [1s, 5m, 3h]
-  write_timeout: 0 # accepted values [1s, 5m, 3h]
-  pool_timeout: 0 # accepted values [1s, 5m, 3h]
-  idle_timeout: 0 # accepted values [1s, 5m, 3h]
-  idle_check_freq: 0 # accepted values [1s, 5m, 3h]
+  max_conn_age: 0s # accepted values [1s, 5m, 3h]
+  read_timeout: 0s # accepted values [1s, 5m, 3h]
+  write_timeout: 0s # accepted values [1s, 5m, 3h]
+  pool_timeout: 0s # accepted values [1s, 5m, 3h]
+  idle_timeout: 0s # accepted values [1s, 5m, 3h]
+  idle_check_freq: 0s # accepted values [1s, 5m, 3h]
   read_only: false
-
-# Websockets plugin
-#
-# Should be attached as a middleware to the http plugin middlewares
-websockets:
-  # Broker to use. Brokers can be set in the broadcast plugin. For example, if you use broker: default here, broadcast plugin should have default broker in its config.
-  #
-  # This option is required.
-  broker: default-redis
-
-  # Allowed request origin (single value). This option is optional (allowed all by default)
-  #
-  # Default: "*". Samples: "https://*.my.site", "http//*.com", "10.1.1.1", etc
-  allowed_origin: "*"
-
-  # http path where to handle websockets connections
-  #
-  # Default: /ws
-  path: "/ws"
-
-# Broadcast plugin. It main purpose is to broadcast published messages via all brokers
-#
-# Use it in conjunction with the websockets, memory and redis plugins.
-# LIMITATION: DO NOT use the same redis connection within different sections or messages will be duplicated.
-# There is no limitation to use different redis connections (ie localhost:6379, localhost:6378, etc) in different sections.
-broadcast:
-  # Section name.
-  #
-  # This option is required and should match with other plugins broker section.
-  default:
-    # Driver to use. Available drivers: redis, memory. In-memory driver does not require any configuration.
-    #
-    # This option is required. There is no config for this driver for the broadcast, thus we need to use {}
-    driver: memory
-    # This option is required if you want to use local configuration
-    #
-    # Default: empty.
-    config: { }
-
-  # Section name.
-  #
-  # This option is required and should match with other plugins broker section.
-  default-redis:
-    # Driver to use. Available drivers: redis, memory. Redis driver require configuration (if empty - localhost:6379 one-node client will be used, see redis plugin config).
-    #
-    # This option is required.
-    driver: redis
-    # Local configuration section
-    #
-    # This option is required to use local section, otherwise (default-redis) global configuration will be used.
-    config:
-      # Redis configuration. This configuration related to the default-redis section. Broadcast plugin will use this configuration first.
-      # If section configuration doesn't exists, second priority - global redis configuration.
-      # If there are no configurations provided, default will be used.
-      #
-      # Default: localhost:6379
-      addrs:
-        - "localhost:6379"
-      # if a MasterName is passed a sentinel-backed FailoverClient will be returned
-      master_name: ""
-      username: ""
-      password: ""
-      db: 0
-      sentinel_password: ""
-      route_by_latency: false
-      route_randomly: false
-      dial_timeout: 0 # accepted values [1s, 5m, 3h]
-      max_retries: 1
-      min_retry_backoff: 0 # accepted values [1s, 5m, 3h]
-      max_retry_backoff: 0 # accepted values [1s, 5m, 3h]
-      pool_size: 0
-      min_idle_conns: 0
-      max_conn_age: 0 # accepted values [1s, 5m, 3h]
-      read_timeout: 0 # accepted values [1s, 5m, 3h]
-      write_timeout: 0 # accepted values [1s, 5m, 3h]
-      pool_timeout: 0 # accepted values [1s, 5m, 3h]
-      idle_timeout: 0 # accepted values [1s, 5m, 3h]
-      idle_check_freq: 0 # accepted values [1s, 5m, 3h]
-      read_only: false
 
 # Application metrics in Prometheus format (docs: https://roadrunner.dev/docs/plugins-metrics/2.x/en). Drop this section
 # for this feature disabling.
@@ -1162,10 +1183,39 @@ jobs:
 
   # worker pool configuration
   pool:
-    command: ""
-    num_workers: 10
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
+
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
+    num_workers: 0
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
     max_jobs: 0
+
+    # Timeout for worker allocation. Zero means 60s.
+    #
+    # Default: 60s
     allocate_timeout: 60s
+
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
+    #
+    # Default: 60s
     destroy_timeout: 60s
 
   # List of broker pipelines associated with the drivers.
@@ -1191,7 +1241,7 @@ jobs:
         # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
         priority: 10
 
-        # Number of job to prefetch from the driver.
+        # Number of job to prefetch from the driver until ACK/NACK.
         #
         # Default: 100_000.
         prefetch: 10000
@@ -1255,6 +1305,21 @@ jobs:
         # Default: false
         durable: false
 
+        # Durable exchange (rabbitmq option: https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)
+        #
+        # Default: true
+        exchange_durable: false
+
+        # Auto-delete (exchange is deleted when last queue is unbound from it): https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges
+        #
+        # Default: false
+        exchange_auto_deleted: false
+
+        # Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes) (rabbitmq option: https://www.rabbitmq.com/queues.html#properties)
+        #
+        # Default: false
+        queue_auto_deleted: false
+
         # Delete queue when stopping the pipeline
         #
         # Default: false
@@ -1296,6 +1361,12 @@ jobs:
         #
         # Default: false
         requeue_on_fail: false
+
+        # Queue headers
+        #
+        # Default: null
+        queue_headers:
+          x-queue-mode: lazy
 
     test-local-3:
       # Driver name
@@ -1349,8 +1420,7 @@ jobs:
         # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
         priority: 10
 
-        # Number of jobs to prefetch from the SQS. Amazon SQS never returns more messages than this value
-        # (however, fewer messages might be returned). Valid values: 1 to 10.
+        # Number of jobs to prefetch from the SQS until ACK/NACK.
         #
         # Default: 10
         prefetch: 10
@@ -1643,15 +1713,7 @@ grpc:
   # GRPC address to listen
   #
   # This option is required
-  listen: "tcp://localhost:9001"
-
-  # GRPC reflection server [SINCE 2.11]
-  #
-  # This option is optional. The reflection server might be activated to use `grpc_cli`, `grpc-ui`, `grpc-curl`, or similar tools to intercept grpc payloads.
-  reflection_server:
-    include:
-      - "path/to/proto1.proto"
-      - "path/to/proto2.proto"
+  listen: "tcp://127.0.0.1:9001"
 
   # Proto file to use, multiply files supported [SINCE 2.6]
   #
@@ -1736,10 +1798,40 @@ grpc:
 
   # Usual workers pool configuration
   pool:
-    num_workers: 2
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
+
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
+    num_workers: 0
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
     max_jobs: 0
+
+    # Timeout for worker allocation. Zero means 60s.
+    #
+    # Default: 60s
     allocate_timeout: 60s
-    destroy_timeout: 60
+
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
+    #
+    # Default: 60s
+    destroy_timeout: 60s
 
 # [SINCE 2.6] TCP plugin
 tcp:
@@ -1774,10 +1866,39 @@ tcp:
       read_buf_size: 1
 
   pool:
-    command: ""
-    num_workers: 5
+    # Debug mode for the pool. In this mode, pool will not pre-allocate the worker. Worker (only 1, num_workers ignored) will be allocated right after the request arrived.
+    #
+    # Default: false
+    debug: false
+
+    # Override server's command
+    #
+    # Default: empty
+    command: "php my-super-app.php"
+
+    # How many worker processes will be started. Zero (or nothing) means the number of logical CPUs.
+    #
+    # Default: 0
+    num_workers: 0
+
+    # Maximal count of worker executions. Zero (or nothing) means no limit.
+    #
+    # Default: 0
     max_jobs: 0
+
+    # Timeout for worker allocation. Zero means 60s.
+    #
+    # Default: 60s
     allocate_timeout: 60s
+
+    # Timeout for the reset timeout. Zero means 60s.
+    #
+    # Default: 60s
+    reset_timeout: 60s
+
+    # Timeout for worker destroying before process killing. Zero means 60s.
+    #
+    # Default: 60s
     destroy_timeout: 60s
 
 # [SINCE 2.6] Fileserver to serve static files.
@@ -1839,6 +1960,50 @@ fileserver:
       cache_duration: 10
       max_age: 10
       bytes_range: true
+
+# Centrifugo server plugin
+#
+# Docs: https://centrifugal.dev/
+centrifuge:
+  # Centrifugo server proxy address (docs: https://centrifugal.dev/docs/server/proxy#grpc-proxy)
+  #
+  # Optional, default: tcp://127.0.0.1:30000
+  proxy_address: "tcp://127.0.0.1:30000"
+
+  # gRPC server API address (docs: https://centrifugal.dev/docs/server/server_api#grpc-api)
+  #
+  # Optional, default: tcp://127.0.0.1:30000. Centrifugo: `grpc_api` should be set to true and `grpc_port` should be the same as in the RR's config.
+  grpc_api_address: tcp://127.0.0.1:30000
+
+  # Use gRPC gzip compressor
+  #
+  # Optional, default: false
+  use_compressor: true
+
+  # Your application version
+  #
+  # Optional, default: v1.0.0
+  version: "v1.0.0"
+
+  # Your application name
+  #
+  # Optional, default: roadrunner
+  name: "roadrunner"
+
+  # TLS configuration
+  #
+  # Optional, default: null
+  tls:
+    # TLS key
+    #
+    # Required
+    key: /path/to/key.pem
+
+    # TLS certificate
+    #
+    # Required
+    cert: /path/to/cert.pem
+
 
 ## RoadRunner internal container configuration (docs: https://github.com/spiral/endure).
 endure:
