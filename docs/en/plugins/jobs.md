@@ -1,6 +1,6 @@
 # Jobs
 
-Starting with RoadRunner >= 2.4, a queuing system (aka "jobs") is available.
+Starting with RoadRunner >= 2.4, a queuing system (aka "jobs") is available.https://roadrunner.dev/docs/plugins-jobs/2.x/en#configuration
 This plugin allows you to move arbitrary "heavy" code into separate tasks to
 execute them asynchronously in an external worker, which will be referred to
 as "consumer" in this documentation.
@@ -1515,7 +1515,7 @@ advanced features.
 
 ### Creating A New Queue
 
-In the very [first chapter](/beep-beep/jobs.md#configuration), we got acquainted
+In the very [first chapter](https://roadrunner.dev/docs/plugins-jobs/2.x/en#configuration), we got acquainted
 with the queue settings and drivers for them. In approximately the same way, we
 can do almost the same thing with the help of the PHP code using `create()`
 method through `Jobs` instance.
