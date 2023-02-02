@@ -1,6 +1,6 @@
 # Serving static content
 
-It is possible to serve static content using RoadRunner.
+It is possible to serve static content using RoadRunner. **Important note:** if there is no such file to serve, RR will redirect the request back to the PHP worker.
 
 ## Enable HTTP Middleware
 
