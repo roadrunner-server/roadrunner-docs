@@ -14,8 +14,9 @@ Thanks to [Brett McBride](https://github.com/brettmc), he created a rr-otel [PHP
 
 ### Configuration
 
-OT is a http plugin middleware, so, its configuration is located under the http plugin configuration.
+OT is a plugin middleware, so, its configuration is located under the http/grpc plugin configuration.
 
+HTTP:
 ```yaml
 version: "2.7"
 
@@ -40,7 +41,6 @@ http:
   otel:
     insecure: true
     compress: false
-    client: http
     exporter: otlp
     service_name: rr_test
     service_version: 1.0.0
@@ -53,16 +53,46 @@ logs:
   mode: production
 ```
 
+gRPC:
+```yaml
+version: "2.7"
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php otel_worker.php"
+  relay: pipes
+
+grpc:
+  listen: "tcp://127.0.0.1:9001"
+  proto: "service.proto"
+  pool:
+    num_workers: 10
+  otel:
+    insecure: true
+    compress: false
+    exporter: otlp
+    service_name: rr_test
+    service_version: 1.0.0
+    endpoint: 127.0.0.1:4317
+
+
+logs:
+  encoding: console
+  level: debug
+  mode: production
+```
+
 `otel` contains the following keys:
 1. `insecure`: boolean, default `false`. Use insecure endpoints (http/https) or insecure gRPC.
 2. `compress`: boolean, default `false`. Use gzip to compress the spans.
-3. `client`: string, default `http`. Client to send the spans. Possible values: `http`, `grpc`.
-4. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
-5. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
-6. `endpoint`: string, default `localhost:4318`. Consumer's endpoint.
-7. `service_name`: string, default: `RoadRunner`. User's service name.
-8. `service_version`: string, default `1.0.0`. User's service version.
-9. `headers`: key-values map, default empty. User defined headers. new_relic `api-key` should be [here](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/opentelemetry-setup/#review-settings). 
+3. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
+4. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
+5. `endpoint`: string, default `localhost:4318`. Consumer's endpoint.
+6. `service_name`: string, default: `RoadRunner`. User's service name.
+7. `service_version`: string, default `1.0.0`. User's service version.
+8. `headers`: key-values map, default empty. User defined headers. new_relic `api-key` should be [here](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/opentelemetry-setup/#review-settings). 
 
 ### OpenTelemetry environment variables
 
