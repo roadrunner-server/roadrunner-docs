@@ -292,6 +292,11 @@ jobs:
         #
         # Default: false
         consume_all: false
+        
+        # Redial timeout (in seconds). How long to try to reconnect to the AMQP server.
+        #
+        # Default: 60
+        redial_timeout: 60
 
         # Durable queue
         #
@@ -419,6 +424,7 @@ Below is a more detailed description of each of the amqp-specific options:
 
 **NEW in 2.12:**
 
+- `redial_timeout`: Redial timeout (in seconds). How long to try to reconnect to the AMQP server.
 - `exchange_durable`: Durable exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)). Default: false
 - `exchange_auto_deleted`: Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). Default: false
 - `queue_auto_deleted`: Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). Default: false
