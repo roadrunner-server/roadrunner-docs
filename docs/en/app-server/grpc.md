@@ -249,11 +249,6 @@ Options for the `client_auth_type` are:
 - `require_and_verify_client_cert`
 - `no_client_certs`
 
-### Reflection server  
-
-The reflection server might be activated to use [`grpc_cli`](https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md), [`grpc-curl`](https://github.com/fullstorydev/grpcurl), [`grpc-ui`](https://github.com/fullstorydev/grpcui), or similar tools to intercept grpc payloads.  
-Reflection tutorial [GoDocs](https://github.com/grpc/grpc-go/blob/master/Documentation/server-reflection-tutorial.md).
-
 
 ## Common issues:
 1. Registering two services with the same name is not allowed. GRPC server will panic after that.
