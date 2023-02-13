@@ -1,6 +1,6 @@
 # Jobs
 
-Starting with RoadRunner >= 2.4, a queuing system (aka "jobs") is available.https://roadrunner.dev/docs/plugins-jobs/2.x/en#configuration
+Starting with RoadRunner >= 2.4, a queuing system (aka "jobs") [is available](https://roadrunner.dev/docs/plugins-jobs/2.x/en#configuration)
 This plugin allows you to move arbitrary "heavy" code into separate tasks to
 execute them asynchronously in an external worker, which will be referred to
 as "consumer" in this documentation.
