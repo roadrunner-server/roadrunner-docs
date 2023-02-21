@@ -21,6 +21,7 @@ service:
     process_num: 10
     exec_timeout: 0s
     remain_after_exit: true
+    service_name_in_log: false
     env:  
        - foo: "BAR"
     restart_sec: 1
@@ -29,6 +30,7 @@ service:
     command: "tests/plugins/service/test_files/test_binary"
     process_num: 1
     remain_after_exit: true
+    service_name_in_log: false
     restart_sec: 1s
     env:
        - foo: "BAR"
@@ -41,14 +43,15 @@ Description:
 2. `command` - command to execute. There are no limitations on commands here. Here could be binary, PHP file, script,
    etc.
 3. `process_num` - default: 1, number of processes for the command to fire.
-4. `exec_timeout` - default: 0 (unlimited), maximum allowed time to run for the process.
+4. `exec_timeout` - default: 0s (unlimited), maximum allowed time to run for the process. Can be in the form of: `1h`, `1m` or `1s` (`h`,`m`,`s`).
 5. `remain_after_exit` - default: false. Remain process after exit. For example, if you need to restart process every 10
    seconds
    `exec_timeout` should be 10s, and `remain_after_exit` should be set to true. NOTE: if you kill the process from
    outside and if `remain_after_exit` will be true, the process will be restarted.
 
 6. `restart_sec` - default: 30 seconds. Delay between process stop and restart.
-7. `env` - environment variables to pass to the underlying process from the config.
+7. `service_name_in_log`: show the service name in the log in the form `%plugin%.%service_name%`.
+8. `env` - environment variables to pass to the underlying process from the config.
 
 ### RPC Interface
 
