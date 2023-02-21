@@ -19,7 +19,7 @@ service:
   some_service_1:
     command: "php tests/plugins/service/test_files/loop.php"
     process_num: 10
-    exec_timeout: 0
+    exec_timeout: 0s
     remain_after_exit: true
     env:  
        - foo: "BAR"
@@ -32,7 +32,7 @@ service:
     restart_sec: 1s
     env:
        - foo: "BAR"
-    exec_timeout: 0
+    exec_timeout: 10s
 ```
 
 Description:
