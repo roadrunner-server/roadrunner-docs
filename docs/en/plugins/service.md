@@ -50,7 +50,7 @@ Description:
    outside and if `remain_after_exit` will be true, the process will be restarted.
 
 6. `restart_sec` - default: 30 seconds. Delay between process stop and restart.
-7. `service_name_in_log`: show the service name in the log in the form `%plugin%.%service_name%`.
+7. `service_name_in_log` - default: false, show the service name in the log in the form `%plugin%.%service_name%`.
 8. `env` - environment variables to pass to the underlying process from the config.
 
 ### RPC Interface
