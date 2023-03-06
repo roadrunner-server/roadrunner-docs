@@ -55,7 +55,6 @@
       "plugins/logger": "Logger",
       "plugins/metrics": "Metrics (prometheus)",
       "plugins/reload": "Reload",
-      "plugins/resetter": "Resetter",
       "plugins/rpc": "RPC",
       "plugins/server": "Server",
       "plugins/service": "Service (like systemd)",
