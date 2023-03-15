@@ -37,7 +37,6 @@ manager.
     * [gRPC](app-server/grpc.md)
     * [HTTPS](app-server/https.md)
     * [Access-Logs](app-server/access-logs.md)
-    * [PubSub](app-server/pubsub.md)
 * Plugins
     * [What is it?](plugins/intro.md)
     * [Write a plugin](plugins/plugin.md)
