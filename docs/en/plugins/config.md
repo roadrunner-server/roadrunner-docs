@@ -41,7 +41,7 @@ http:
 ```yaml
 http:
   ...
-  middleware: [ "xxx" ]
+  middleware: [ "otel" ]
 
 otel:
   insecure: true
