@@ -54,6 +54,13 @@ otel:
   endpoint: "127.0.0.1:4318"
 ```
 
+## Updating from `version: 2.7` to `version: 3`:
+To update your configuration from version 2.7 to version 3, follow these steps:
+
+1. **Update the version number:** Change the `version` value from `2.7` to `3`.
+2. **Relocate the `otel` middleware configuration:** If your configuration uses the `otel` middleware configuration within the `http` plugin, move it to the configuration root by cutting it from the `http` plugin and pasting it at the root level.
+
+
 
 ## Tips:
 
