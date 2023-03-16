@@ -1,10 +1,4 @@
-## PHP Client
-
-[Roadrunner Worker](https://github.com/spiral/roadrunner-worker)
-
-## Configuration
-
-This plugin parse other's plugins configuration and uses flags to find the YAML config.
+The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML config.
 
 ## Compatibility matrix
 
