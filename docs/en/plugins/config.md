@@ -6,8 +6,8 @@ The `config` plugin parses the configurations of other plugins and uses flags to
 
 | RR version |                               Configuration version                           |
 |-----------------------|--------------------------------------------------------------------|
-|   **2023.x.x**   | **3**   |
-|   **2.8+**             |          **2.7**                                                |
+|   **>=2023.x.x**   | **3**   |
+|   **>=2.8**             |          **2.7**                                                |
 |   **2.7.x**   |          **2.7** `OR` Unversioned (treated as `v2.6.0`, will be auto-updated to `v2.7`) |
 |   **<=2.6.x**   |          Doesn't support versions |
 
