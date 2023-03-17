@@ -22,7 +22,7 @@ RoadRunner uses Endure to manage dependencies, this allows you to tweak and exte
 
 #### Install Golang
 
-To build an application server you need [Golang 1.18+](https://golang.org/dl/) or Docker to be installed.
+To build an application server you need [Golang 1.20+](https://golang.org/dl/) or Docker to be installed.
 
 ### Installation:
 
