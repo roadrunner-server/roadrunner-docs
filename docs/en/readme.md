@@ -29,7 +29,7 @@ manager.
     * [Systemd](app-server/systemd.md)
     * [Healthcheck](app-server/health.md)
     * [Jobs (queues)](plugins/jobs.md) 
-    * [Building a server](app-server/build.md)
+    * [Writing a plugin](app-server/build.md)
     * [Embedding a server](app-server/embedding.md)
     * [AWS Lambda](app-server/aws-lambda.md)
     * [RR Events Bus](app-server/events-bus.md)
@@ -39,7 +39,6 @@ manager.
     * [Access-Logs](app-server/access-logs.md)
 * Plugins
     * [What is it?](plugins/intro.md)
-    * [Write a plugin](plugins/plugin.md)
     * [Application logger](plugins/applogger.md)
     * [Centrifuge](plugins/centrifuge.md)
     * [HTTP (transport)](plugins/http.md)
