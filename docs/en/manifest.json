@@ -30,7 +30,7 @@
       "app-server/production": "Production Usage",
       "app-server/systemd": "Systemd",
       "app-server/health": "Healthcheck",
-      "app-server/build": "Building a Server",
+      "app-server/build": "Writing a plugin",
       "app-server/embedding": "Embedding a Server",
       "app-server/aws-lambda": "AWS lambda",
       "plugins/jobs": "JOBS (queues)",
