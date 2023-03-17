@@ -14,8 +14,9 @@ Thanks to [Brett McBride](https://github.com/brettmc), he created a rr-otel [PHP
 
 ### Configuration
 
-OT is a http plugin middleware, so, its configuration is located under the http plugin configuration.
+OT is a middleware plugin which currently working with gRPC and HTTP plugins.
 
+Example configuration for HTTP:
 ```yaml
 version: "2.7"
 
@@ -37,15 +38,14 @@ http:
   middleware: [gzip, otel]
   pool:
     num_workers: 10
-  otel:
-    insecure: true
-    compress: false
-    client: http
-    exporter: otlp
-    service_name: rr_test
-    service_version: 1.0.0
-    endpoint: 127.0.0.1:4318
 
+otel:
+  insecure: true
+  compress: false
+  exporter: otlp
+  service_name: rr_test
+  service_version: 1.0.0
+  endpoint: 127.0.0.1:4318
 
 logs:
   encoding: console
@@ -53,12 +53,42 @@ logs:
   mode: production
 ```
 
+Example configuration for gRPC:
+```yaml
+version: "2.7"
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php otel_worker.php"
+  relay: pipes
+
+grpc:
+  listen: "tcp://127.0.0.1:9001"
+  proto: "service.proto"
+  pool:
+    num_workers: 10
+
+otel:
+  insecure: true
+  compress: false
+  exporter: otlp
+  service_name: rr_test
+  service_version: 1.0.0
+  endpoint: 127.0.0.1:4317
+  
+logs:
+  encoding: console
+  level: debug
+```
+
 `otel` contains the following keys:
 1. `insecure`: boolean, default `false`. Use insecure endpoints (http/https) or insecure gRPC.
 2. `compress`: boolean, default `false`. Use gzip to compress the spans.
-3. `client`: string, default `http`. Client to send the spans. Possible values: `http`, `grpc`.
-4. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
-5. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
+3. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
+4. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
+5. `client`: string, default `http`. Client to send the spans. Possible values: `http`, `grpc`.
 6. `endpoint`: string, default `localhost:4318`. Consumer's endpoint.
 7. `service_name`: string, default: `RoadRunner`. User's service name.
 8. `service_version`: string, default `1.0.0`. User's service version.

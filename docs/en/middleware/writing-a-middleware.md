@@ -2,12 +2,13 @@
 
 ## Video tutorial
 
-- #### Writing a middleware
+- #### Writing a middleware for HTTP
 [![Writing a middleware](https://img.youtube.com/vi/f5fUSYaDKxo/0.jpg)](https://www.youtube.com/watch?v=f5fUSYaDKxo)  
 
 RoadRunner HTTP server uses default Golang middleware model which allows you to extend it using custom or
 community-driven middleware. The simplest service with middleware registration would look like:
 
+### HTTP
 ```golang
 package middleware
 
@@ -40,6 +41,38 @@ func (p *Plugin) Name() string {
 ```
 
 > Middleware must correspond to the following [interface](https://github.com/roadrunner-server/api/blob/master/plugins/middleware/interface.go#L10) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
+
+### gRPC
+
+```golang
+package middleware
+
+import (
+	"net/http"
+)
+
+const PluginName = "interceptor"
+
+type Plugin struct{}
+
+// to declare plugin
+func (p *Plugin) Init() error {
+	return nil
+}
+
+func (p *Plugin) Interceptor() grpc.UnaryServerInterceptor {
+		// Do something
+}
+
+// Middleware/plugin name.
+func (p *Plugin) Name() string {
+	return PluginName
+}
+```
+
+> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/grpc/blob/master/common/interfaces.go#L7) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
+
+---
 
 You have to register this service after in the [container/plugin.go](https://github.com/roadrunner-server/roadrunner/blob/master/container/plugins.go) file in order to properly resolve dependency:
 
