@@ -10,12 +10,12 @@ To enable metrics add `metrics` section to your configuration:
 version: "2.7"
 
 metrics:
-  address: localhost:2112
+  address: 127.0.0.1:2112
 ```
 
-Once complete you can access Prometheus metrics using `http://localhost:2112/metrics` url.
+Once complete, you can access Prometheus metrics using http://127.0.0.1:2112/metrics url. Make sure to install the metrics extension:
 
-Make sure to install metrics extension:
+Make sure to install the metrics extension:
 
 ```bash
 composer require spiral/roadrunner-metrics
@@ -27,15 +27,13 @@ To enable HTTP metrics, add the `http_metrics` middleware as the left-most middl
 
 ```yaml
 version: '3'
-# for metrics rr_http_request_duration_seconds_bucket, rr_http_request_duration_seconds_sum,
-# rr_http_request_duration_seconds_count you can enable middleware http_metrics
 http:
   middleware: ["http_metrics"]
 
 metrics:
   address: localhost:2112
-
 ```
+
 
 ## Application metrics
 
@@ -112,10 +110,10 @@ $metrics->declare(
 1. `{{plugin}}_total_workers`: total number of workers used by the plugin.
 2. `{{plugin}}_worker_memory_bytes`: worker current memory usage.
 3. `{{plugin}}_worker_state`: worker current state.
-4. `{{plugin}}_workers_invalid`: workers currently in invalid,killing,destroyed,errored,inactive states.
+4. `{{plugin}}_workers_invalid`: workers currently in invalid, killing, destroyed, errored, inactive states.
 5. `{{plugin}}_workers_ready`: workers currently in ready state.
 
-Where plugin is the concatenation of the `rr` + plugin name. For example: for the jobs plugin it would be `rr_jobs_total_workers`.
+Where plugin is the concatenation of the `rr` + `plugin` name. For example: for the `jobs` plugin it would be `rr_jobs_total_workers`.
 
 ### HTTP Metrics
 1. `rr_http_requests_queue`: total number of queued requests which are waiting for the worker.
