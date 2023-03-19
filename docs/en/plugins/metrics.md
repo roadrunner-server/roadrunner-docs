@@ -26,14 +26,15 @@ composer require spiral/roadrunner-metrics
 To enable HTTP metrics, add the `http_metrics` middleware as the left-most middleware.
 
 ```yaml
+version: '3'
 # for metrics rr_http_request_duration_seconds_bucket, rr_http_request_duration_seconds_sum,
 # rr_http_request_duration_seconds_count you can enable middleware http_metrics
 http:
-  middleware: ["http_metrics"]  
-  
+  middleware: ["http_metrics"]
+
 metrics:
   address: localhost:2112
-  
+
 ```
 
 ## Application metrics
@@ -43,7 +44,7 @@ configuration file:
 
 ```yaml
 version: "2.7"
-  
+
 metrics:
   address: localhost:2112
   collect:
@@ -104,3 +105,34 @@ $metrics->declare(
     Spiral\RoadRunner\Metrics\Collector::counter()->withHelp('Test counter')
 );
 ```
+
+## Grafana dashboards and prometheus
+
+### General metrics
+1. `{{plugin}}_total_workers`: total number of workers used by the plugin.
+2. `{{plugin}}_worker_memory_bytes`: worker current memory usage.
+3. `{{plugin}}_worker_state`: worker current state.
+4. `{{plugin}}_workers_invalid`: workers currently in invalid,killing,destroyed,errored,inactive states.
+5. `{{plugin}}_workers_ready`: workers currently in ready state.
+
+Where plugin is the concatenation of the `rr` + plugin name. For example: for the jobs plugin it would be `rr_jobs_total_workers`.
+
+### HTTP Metrics
+1. `rr_http_requests_queue`: total number of queued requests which are waiting for the worker.
+2. `rr_http_uptime_seconds`: plugin uptime in seconds.
+3. `rr_http_no_free_workers_total`: total number of NoFreeWorkers errors.
+4. `rr_http_request_total`: total number of handled http requests after server restart.
+5. `rr_http_request_duration_seconds`: HTTP request duration.
+
+### gRPC Metrics
+1. `rr_grpc_requests_queue`: total number of queued requests which are waiting for the worker.
+2. `rr_gprc_request_total`: total number of handled http requests after server restart.
+3. `rr_grpc_request_duration_seconds`: gRPC request duration.
+
+### JOBS Metrics
+1. `rr_jobs_jobs_err`: number of jobs error while processing in the worker.
+2. `rr_jobs_jobs_ok`: number of successfully processed jobs.
+3. `rr_jobs_push_err`: number of jobs push which was failed.
+4. `rr_jobs_push_latency`: histogram represents latency for pushed operation. Available filters: `driver`, `job` (pipeline), `source`.
+5. `rr_jobs_push_latency_sum`: histogram represents latency for pushed operation. Available filters: `driver`, `job` (pipeline), `source`.
+6. `rr_jobs_push_latency_count`: histogram represents latency for pushed operation, number of the processed jobs for the metric. Available filters: `driver`, `job` (pipeline), `source`.

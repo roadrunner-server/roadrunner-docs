@@ -8,7 +8,7 @@ version: "2.7"
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:8080
- 
+
   ssl:
     # host and port separated by semicolon (default :443)
     address: :8892
@@ -16,7 +16,7 @@ http:
     cert: fixtures/server.crt
     key: fixtures/server.key
     root_ca: root.crt
-  
+
   # optional support for http2  
   http2:
     h2c: false
@@ -36,7 +36,7 @@ version: "2.7"
 http:
   # other HTTP sections are omitted 
   # .......
-  
+
   ssl:
     address: '0.0.0.0:443'
     # ACME section
@@ -72,18 +72,10 @@ http:
       # Mandatory. Error on empty
       domains:
         - your-cool-domains.here
-        
- # other HTTP sections are omitted
- # ........
-```
-### Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
 
-Connection might be upgraded from the `http/1.1` to `h2c`: [rfc7540](https://datatracker.ietf.org/doc/html/rfc7540#section-3.4)
-Headers, which should be sent to upgrade connection:
-  1. `Upgrade`: `h2c`
-  2. `Connection`: `HTTP2-Settings`
-  3. `Connection`: `Upgrade`
-  4. `HTTP2-Settings`: `AAMAAABkAARAAAAAAAIAAAAA` [RFC](https://datatracker.ietf.org/doc/html/rfc7540#section-3.2.1)
+  # other HTTP sections are omitted
+  # ........
+```
 
 ### mTLS
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
@@ -104,11 +96,21 @@ http:
 ```
 
 Options for the `client_auth_type` are:
-- `request_client_cert` 
+- `request_client_cert`
 - `require_any_client_cert`
 - `verify_client_cert_if_given`
 - `require_and_verify_client_cert`
 - `no_client_certs`
+
+### Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
+
+Connection might be upgraded from the `http/1.1` to `h2c`: [rfc7540](https://datatracker.ietf.org/doc/html/rfc7540#section-3.4)
+Headers, which should be sent to upgrade connection:
+1. `Upgrade`: `h2c`
+2. `Connection`: `HTTP2-Settings`
+3. `Connection`: `Upgrade`
+4. `HTTP2-Settings`: `AAMAAABkAARAAAAAAAIAAAAA` [RFC](https://datatracker.ietf.org/doc/html/rfc7540#section-3.2.1)
+
 
 ### Redirecting HTTP to HTTPS
 
@@ -191,6 +193,6 @@ version: "2.7"
 http:
   address: 127.0.0.1:44933
   middleware: []
-  access_logs: true 
+  access_logs: true
   # ...
 ```

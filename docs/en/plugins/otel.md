@@ -1,6 +1,6 @@
-## OpenTelemetry middleware
+## OpenTelemetry plugin
 
-OpenTelemetry middleware is a unified standard for the tracing, logging and metrics information. At the moment, only tracing information is stable and safe to use in production.
+OpenTelemetry plugin is a unified standard for the tracing, logging and metrics information. At the moment, only tracing information is stable and safe to use in production.
 
 
 ### PHP Library

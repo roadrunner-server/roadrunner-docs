@@ -13,67 +13,70 @@
   {
     "title": "PHP Workers",
     "links": {
-      "php/worker": "Worker",
-      "php/environment": "Environment",
+      "php/debugging": "Debugging",
       "php/developer": "Developer Mode",
-      "php/restarting": "Restarting",
-      "php/supervisor": "Process Supervisor",
-      "php/rpc": "RPC to App Server",
+      "php/environment": "Environment",
       "php/limitations": "Caveats",
-      "php/debugging": "Debugging"
+      "php/restarting": "Restarting",
+      "php/rpc": "RPC to App Server",
+      "php/supervisor": "Process Supervisor",
+      "php/worker": "Worker"
     }
   },
   {
     "title": "App Server",
     "links": {
-      "app-server/cli": "CLI Commands",
-      "app-server/production": "Production Usage",
-      "app-server/systemd": "Systemd",
-      "app-server/health": "Healthcheck",
-      "app-server/build": "Building a Server",
-      "app-server/embedding": "Embedding a Server",
-      "app-server/aws-lambda": "AWS lambda",
-      "plugins/jobs": "JOBS (queues)",
-      "app-server/https": "HTTPS",
-      "app-server/grpc": "gRPC",
       "app-server/access-logs": "Access-Logs",
+      "app-server/aws-lambda": "AWS lambda",
+      "app-server/build": "Building a Server",
+      "app-server/cli": "CLI Commands",
+      "app-server/embedding": "Embedding a Server",
       "app-server/events-bus": "Using RR's events bus",
-      "app-server/http-error-codes": "Overriding HTTP error codes"
+      "app-server/health": "Healthcheck",
+      "app-server/http-error-codes": "Overriding HTTP error codes",
+      "app-server/production": "Production Usage",
+      "app-server/systemd": "Systemd"
     }
   },
   {
     "title": "Plugins",
     "links": {
       "plugins/intro": "What is it?",
+      "plugins/plugin": "Writing a plugin",
       "plugins/applogger": "Application logger",
       "plugins/centrifuge": "Centrifuge",
-      "plugins/http": "HTTP (transport)",
+      "plugins/grpc": "gRPC",
+      "plugins/http": "HTTP(S)",
       "plugins/jobs": "JOBS (queues)",
       "plugins/kv": "Key-Value",
       "plugins/config": "Configuration",
       "plugins/logger": "Logger",
-      "plugins/metrics": "Metrics (prometheus)",
+      "plugins/metrics": "Metrics",
       "plugins/reload": "Reload",
       "plugins/rpc": "RPC",
       "plugins/server": "Server",
-      "plugins/service": "Service (like systemd)",
+      "plugins/service": "Service",
       "plugins/status": "Status",
-      "plugins/websockets": "Websockets",
       "plugins/tcp": "TCP",
-      "plugins/fileserver": "Fileserver"
+      "plugins/otel": "OpenTelemetry",
+      "plugins/fileserver": "Static fileserver"
+    }
+  },
+  {
+    "title": "Grafana Dashboards",
+    "links": {
+      "dashboards/dashboards": "What is it?"
     }
   },
   {
     "title": "HTTP Middleware",
     "links": {
-      "middleware/writing-a-middleware": "Writing a middleware",
-      "middleware/headers": "Headers and CORS",
-      "middleware/gzip": "GZIP",
-      "middleware/static": "Static files handler",
-      "middleware/sendfile": "X-Sendfile handler",
-      "middleware/newrelic": "NewRelic",
       "middleware/cache": "RFC7234 cache",
-      "middleware/otel": "OpenTelemetry"
+      "middleware/gzip": "GZIP",
+      "middleware/headers": "Headers and CORS",
+      "middleware/sendfile": "X-Sendfile",
+      "middleware/static": "Static files",
+      "middleware/writing-a-middleware": "Writing a middleware"
     }
   },
   {
@@ -86,15 +89,15 @@
   {
     "title": "Integrations",
     "links": {
-      "integration/migration": "Migration from V1 to V2",
-      "integration/spiral": "Spiral Framework",
       "integration/cake": "CakePHP",
       "integration/chubbyphp": "Chubbyphp Framework",
       "integration/codeigniter": "CodeIgniter",
       "integration/laravel": "Laravel",
       "integration/mezzio": "Mezzio",
+      "integration/migration": "Migration from V1 to V2",
       "integration/phalcon": "Phalcon3 and Phalcon4",
       "integration/slim": "Slim",
+      "integration/spiral": "Spiral Framework",
       "integration/symfony": "Symfony Framework",
       "integration/symlex": "Symlex Framework",
       "integration/ubiquity": "Ubiquity Framework",
