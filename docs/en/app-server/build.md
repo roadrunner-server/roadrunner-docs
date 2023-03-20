@@ -69,7 +69,7 @@ go install github.com/roadrunner-server/velox/cmd/vx@latest
 # filename - `plugins.toml`
 
 [velox]
-build_args = ['-trimpath', '-ldflags', '-s -X github.com/roadrunner-server/roadrunner/v2/internal/meta.version=${VERSION} -X github.com/roadrunner-server/roadrunner/v2/internal/meta.buildTime=${TIME}']
+build_args = ['-trimpath', '-ldflags', '-s -X github.com/roadrunner-server/roadrunner/v2023/internal/meta.version=${VERSION} -X github.com/roadrunner-server/roadrunner/v2023/internal/meta.buildTime=${TIME}']
 
 [roadrunner]
 ref = "v2.12.1"

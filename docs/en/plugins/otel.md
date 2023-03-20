@@ -18,7 +18,7 @@ OT is a middleware plugin which currently working with gRPC and HTTP plugins.
 
 Example configuration for HTTP:
 ```yaml
-version: "2.7"
+version: "3"
 
 rpc:
   listen: tcp://127.0.0.1:6001
@@ -55,7 +55,7 @@ logs:
 
 Example configuration for gRPC:
 ```yaml
-version: "2.7"
+version: "3"
 
 rpc:
   listen: tcp://127.0.0.1:6001

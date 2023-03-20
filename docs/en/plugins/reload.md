@@ -5,7 +5,7 @@ RoadRunner is able to automatically detect PHP file changes and reload connected
 To enable reloading for the `http` service (plugin):
 
 ```yaml
-version: "2.7"
+version: "3"
 
 reload:
   # sync interval

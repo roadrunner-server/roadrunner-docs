@@ -34,7 +34,7 @@ For example, in this way, you can configure both the client and server parts to
 work with RabbitMQ.
 
 ```yaml
-version: "2.7"
+version: "3"
 #
 # RPC is required for tasks dispatching (client)
 #
@@ -79,7 +79,7 @@ Let's now focus on the common settings of the queue server. In full, it may
 look like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 jobs:
   num_pollers: 64
@@ -146,7 +146,7 @@ or `sqs`.
 The complete `memory` driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 jobs:
   pipelines:
@@ -194,7 +194,7 @@ for the KV plugin and Jobs plugin. This is boltdb limitation on concurrent acces
 The complete `boltdb` driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 boltdb:
   permissions: 0777
@@ -258,7 +258,7 @@ use this connection and which will contain the queue settings (including
 amqp-specific):
 
 ```yaml
-version: "2.7"
+version: "3"
 
 amqp:
   addr: amqp://guest:guest@localhost:5672
@@ -454,7 +454,7 @@ After setting up the connection, you can start using it. Let's take a look at
 the complete config with all the options for this driver:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 beanstalk:
   # Optional section.
@@ -564,7 +564,7 @@ will use this connection:
 You may also skip the whole `sqs` configuration section (global, not the pipeline) to use the AWS IAM credentials if the RR is inside the EC2 machine. RR will try to detect env automatically by making an http request to the `http://169.254.169.254/latest/dynamic/instance-identity/` as pointer here: [link](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html)
 
 ```yaml
-version: "2.7"
+version: "3"
 
 sqs:
   # SQS connection configuration...
@@ -658,7 +658,7 @@ NATS driver supported in the RR starting from the `v2.5.0` and includes only NAT
 The complete `NATS` driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 nats:
   addr: "demo.nats.io"

@@ -6,7 +6,7 @@ RoadRunner server includes a health check endpoint that returns the health of th
 To enable the health check endpoint, add a `status` section to your configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 status:
   address: localhost:2114

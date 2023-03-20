@@ -7,7 +7,7 @@
 ## Configuration
 
 ```yaml
-version: '2.7'
+version: "3"
 
 http:
   address: 127.0.0.1:15389

@@ -1,7 +1,7 @@
 ### Overriding HTTP default error code
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # override http error code for the internal RR errors (default 500)

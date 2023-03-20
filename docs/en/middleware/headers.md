@@ -5,7 +5,7 @@ RoadRunner can automatically set up request/response headers and control CORS fo
 To enable CORS headers add the following section to your configuration.
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   address: 127.0.0.1:44933
@@ -26,7 +26,7 @@ http:
 ### Custom headers for Response or Request
 You can control additional headers to be set for outgoing responses and headers to be added to the request sent to your application.
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # ...

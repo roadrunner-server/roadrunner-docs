@@ -15,7 +15,7 @@ Let's have a look at the simple example:
 package foo
 
 import (
-    "github.com/spiral/roadrunner/v2/events"
+    "github.com/spiral/roadrunner/v2023/events"
 )
 
 func foo() {
@@ -55,7 +55,7 @@ Let's have a look at the next sample of code:
 package foo
 
 import (
-    "github.com/spiral/roadrunner/v2/events"
+    "github.com/spiral/roadrunner/v2023/events"
 )
 
 func foo() {
@@ -112,7 +112,7 @@ How to use that:
 package foo
 
 import (
-    "github.com/spiral/roadrunner/v2/events"
+    "github.com/spiral/roadrunner/v2023/events"
 )
 
 func foo() {

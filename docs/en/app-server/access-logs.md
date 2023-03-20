@@ -17,7 +17,7 @@ RR starting from the `v2.5.0` brings access logs support (turned off by default)
 #### Configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   address: 127.0.0.1:44933

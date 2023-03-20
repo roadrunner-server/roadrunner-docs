@@ -11,7 +11,7 @@ protoc --plugin=protoc-gen-php-grpc --php_out=<OUTPUT DIRECTORY> --php-grpc_out=
 ## Configuration
 
 ```yaml
-version: "2.7"
+version: "3"
 
 grpc:
   # GRPC address to listen
@@ -226,7 +226,7 @@ message DetailsMessageForException {
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 grpc:
   listen: "tcp://localhost:9001"

@@ -8,7 +8,7 @@
 ### Configuration
 
 ```yaml
-version: "2.7"
+version: "3"
 
 tcp:
   servers:

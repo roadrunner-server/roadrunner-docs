@@ -3,7 +3,7 @@
 You can enable HTTPS and HTTP2 support by adding `ssl` section into `http` config.
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # host and port separated by semicolon
@@ -31,7 +31,7 @@ RR will track your certificate's expiration date and refresh it automatically.
 ### Configuration
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # other HTTP sections are omitted 
@@ -135,7 +135,7 @@ beginning.
 You can enable HTTP/2 support over non-encrypted TCP connection using H2C:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   http2.h2c: true
@@ -146,7 +146,7 @@ http:
 There is FastCGI frontend support inside the HTTP module, you can enable it (disabled by default):
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # HTTP service provides FastCGI as frontend
@@ -160,7 +160,7 @@ http:
 Root CA supported by the option in .rr.yaml
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   ssl:
@@ -188,7 +188,7 @@ RR starting from the `v2.5.0` will bring access logs support (turned off by defa
 #### Configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   address: 127.0.0.1:44933

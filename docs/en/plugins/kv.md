@@ -34,7 +34,7 @@ After installing all the required dependencies, you need to configure this
 plugin. To enable it add `kv` section to your configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 rpc:
   listen: tcp://127.0.0.1:6001
@@ -73,7 +73,7 @@ then it is recommended to use the boltdb driver.
 The complete memory driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   # User defined name of the storage.
@@ -106,7 +106,7 @@ any additional installations.
 The complete boltdb driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   # User defined name of the storage.
@@ -165,7 +165,7 @@ not required, we have one connection to the Redis Server. The configuration of
 such a connection will look like this.
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   # User defined name of the storage.
@@ -352,7 +352,7 @@ organizing a cluster, two additional options with algorithms for working with
 connections will be available to you: `route_by_latency` and `route_randomly`.
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   redis:
@@ -390,7 +390,7 @@ There are two additional options available for the Sentinel configuration:
 `master_name` and `sentinel_password`.
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   redis:
@@ -421,7 +421,7 @@ Server is installed and running. You can read more about this [in the documentat
 The complete memcached driver configuration looks like this:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 kv:
   # User defined name of the storage.

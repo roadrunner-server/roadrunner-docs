@@ -7,7 +7,7 @@ It is possible to serve static content using RoadRunner. **Important note:** if 
 To enable static content serving use the configuration inside the http section:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # host and port separated by semicolon
@@ -38,7 +38,7 @@ Where:
 To combine static content with other middleware, use the following sequence (static will always be the last in the row, file server will apply headers and gzip plugins):
 
 ```yaml
-version: "2.7"
+version: "3"
 
 http:
   # host and port separated by semicolon
