@@ -6,7 +6,7 @@ manager.
 ![CI](https://github.com/spiral/roadrunner-docs/workflows/CI/badge.svg)
 
 > Documentation for v1.0 of RoadRunner is
-> available [here](https://github.com/roadrunner-server/roadrunner-docs/tree/1.0).
+> available [here](https://github.com/roadrunner-server/roadrunner-docs/tree/1.x/docs/en).
 
 * Introduction
     * [What is it?](intro/about.md)
