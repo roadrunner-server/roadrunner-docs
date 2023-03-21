@@ -99,6 +99,7 @@ ref = "v2.12.1"
     headers = { ref = "v3.2.0", owner = "roadrunner-server", repository = "headers" }
     static = { ref = "v3.2.0", owner = "roadrunner-server", repository = "static" }
     otel = { ref = "v3.2.0", owner = "roadrunner-server", repository = "otel" }
+    cache = { ref = "master", owner = "darkweak", repository = "souin", folder = "/plugins/roadrunner" }
 
     # RELOAD (for the DEV)
     reload = { ref = "v3.2.0", owner = "roadrunner-server", repository = "reload" }
