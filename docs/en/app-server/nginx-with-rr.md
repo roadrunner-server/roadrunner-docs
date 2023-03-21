@@ -132,7 +132,7 @@ And do not forget about the `composer.json`:
 
 5. **Create a docker-compose.yaml file**: To assemble and manage all components, create a `docker-compose.yaml` file that defines the RoadRunner and NGINX services, as well as their configurations:
 
-```dockerfile
+```yaml
 version: "3.8"
 
 services:
