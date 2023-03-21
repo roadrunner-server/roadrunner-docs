@@ -165,3 +165,7 @@ networks:
   nginx-docs:
     name: nginx-docs
 ```
+
+# Tips and Best Practices
+
+1. Consider using `fastcgi_pass` instead of `proxy_pass`: Using the `fastcgi_pass` directive might offer better performance in certain configurations.
