@@ -42,7 +42,7 @@ manager.
     * [Centrifuge](plugins/centrifuge.md)
     * [gRPC](plugins/grpc.md)
     * [HTTP (transport)](plugins/http.md)
-    * [JOBS (queues)](plugins/jobs.md)
+    * [JOBS (queues)](plugins/jobs/jobs.md)
     * [Key-Value](plugins/kv.md)
     * [Configuration](plugins/config.md)
     * [Logger](plugins/logger.md)
