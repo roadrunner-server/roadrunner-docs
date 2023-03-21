@@ -1,0 +1,20 @@
+version: '3'
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php worker.php"
+  relay: pipes
+
+http:
+  address: 0.0.0.0:80
+  pool:
+    num_workers: 10
+  fcgi:
+    address: tcp://0.0.0.0:9000
+
+logs:
+  encoding: json
+  level: error
+  mode: production

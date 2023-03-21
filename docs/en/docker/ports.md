@@ -1,5 +1,5 @@
 # Ports and Containers
-By default, embedded RPC server will listen to only localhost connections. In order to control RR from outside you must:
+By default, the embedded RPC server is configured to accept connections solely from the localhost. To enable remote control of the RR system from external sources, you must follow these steps:
 
 * Expose 6001 port from your container.
 * Configure rr to listen on 0.0.0.0
@@ -11,4 +11,4 @@ rpc:
   listen: tcp://:6001
 ```
 
-> Remember that communication of TCP is slower than Unix sockets.
+> Keep in mind that TCP communication generally exhibits slower performance compared to Unix sockets.

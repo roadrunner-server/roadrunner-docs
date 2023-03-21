@@ -34,6 +34,7 @@
       "app-server/events-bus": "Using RR's events bus",
       "app-server/health": "Healthcheck",
       "app-server/http-error-codes": "Overriding HTTP error codes",
+      "app-server/nginx-with-rr": "RoadRunner with NGINX",
       "app-server/production": "Production Usage",
       "app-server/systemd": "Systemd"
     }

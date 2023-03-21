@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  roadrunner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # if needed to control the RR from the outside
+    ports:
+      - "127.0.0.1:6001:6001"
+    command:
+      - "serve"
+      - "-c"
+      - "/src/.rr.yaml"
+    networks:
+      nginx-docs:
+
+  web:
+    image: nginx:stable-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/etc/nginx/conf.d
+    environment:
+      - NGINX_PORT=80
+    networks:
+      nginx-docs:
+
+networks:
+  nginx-docs:
+    name: nginx-docs
