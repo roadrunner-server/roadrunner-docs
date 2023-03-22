@@ -145,7 +145,7 @@ Below is a more detailed description of each of the amqp-specific options:
   window size in octets. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
   in AMQP QoS documentation reference.
 
-- `queue` - AMQP internal (inside the driver) queue name.
+- `queue`: required, AMQP internal (inside the driver) queue name.
 
 - `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
 
@@ -195,5 +195,9 @@ Below is a more detailed description of each of the amqp-specific options:
 - `queue_auto_deleted`: Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). Default: false
 
 **NEW in 2.12.2:**
+
+`queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+
+**NEW in 2023.1.0:**
 
 `queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
