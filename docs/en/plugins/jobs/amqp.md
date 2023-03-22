@@ -120,6 +120,11 @@ jobs:
         # Default:false
         multiple_ack: false
 
+        # The consumer_id is identified by a string that is unique and scoped for all consumers on this channel.
+        #
+        # Default: "roadrunner" + uuid.
+        consumer_id: "roadrunner-uuid"
+
         # Use rabbitmq mechanism to requeue the job on fail
         #
         # Default: false
@@ -133,54 +138,17 @@ jobs:
 ```
 
 Below is a more detailed description of each of the amqp-specific options:
-- `priority` - Queue default priority for each task pushed into this queue
-  if the priority value for these tasks was not explicitly set.
-  Lower value - higher priority.
-  For example, we have 2 pipelines "pipe1" with priority 1 and "pipe10" with priority 10. Jobs from "pipe10" will be taken by workers only if all the jobs from "pipe1" are handled.
-
-- `prefetch` - The client can request that messages be sent in advance so that
-  when the client finishes processing a message, the following message is
-  already held locally, rather than needing to be sent down the channel.
-  Prefetching gives a performance improvement. This field specifies the prefetch
-  window size in octets. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
-  in AMQP QoS documentation reference.
-
+- `priority`: job priority. A lower value corresponds to a higher priority. For instance, consider two pipelines: "pipe1" with a priority of 1 and "pipe10" with a priority of 10. Workers will only take jobs from "pipe10" if all the jobs from "pipe1" have been processed.
+- `prefetch`: rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
 - `queue`: required, AMQP internal (inside the driver) queue name.
-
-- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
-
-- `exchange` - The name of AMQP exchange to which tasks are sent. Exchange
-  distributes the tasks to one or more queues. It routes tasks to the queue
-  based on the created bindings between it and the queue. See also
-  ["AMQP model"](https://www.rabbitmq.com/tutorials/amqp-concepts.html#amqp-model)
-  documentation section.
-
-- `exchange_type` - The type of task delivery. May be one of `direct`, `topics`,
-  `headers` or `fanout`.
-    - `direct` - Used when a task needs to be delivered to specific queues. The
-      task is published to an exchanger with a specific routing key and goes to
-      all queues that are associated with this exchanger with a similar routing
-      key.
-    - `topics` - Similarly, `direct` exchange enables selective routing by
-      comparing the routing key. But, in this case, the key is set using a
-      template, like: `user.*.messages`.
-    - `fanout` - All tasks are delivered to all queues even if a routing key is
-      specified in the task.
-    - `headers` - Routes tasks to related queues based on a comparison of the
-      (key, value) pairs of the headers property of the binding and the similar
-      property of the message.
-
-    - `routing_key` - Queue's routing key.
-
-    - `exclusive` - Exclusive queues can't be redeclared. If set to true and
-      you'll try to declare the same pipeline twice, that will lead to an error.
-
-    - `multiple_ack` - This delivery and all prior unacknowledged deliveries on
-      the same channel will be acknowledged. This is useful for batch processing
-      of deliveries. Applicable only for the Ack, not for the Nack.
-
-    - `requeue_on_fail` - Requeue on Nack (by RabbitMQ). Docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
-    - `queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+- `consume_all`: by default, RoadRunner only supports `Jobs` structures from the queue. Enable this option by setting it to true if you wish to consume raw payloads as well.
+- `exchange`: required, rabbitMQ exchange name. See also ["AMQP model"](https://www.rabbitmq.com/tutorials/amqp-concepts.html#amqp-model) documentation section.
+- `exchange_type`: rabbitMQ exchange type. May be one of `direct`, `topics`,`headers` or `fanout`.
+- `routing_key`: queue's routing key. Required to push the `Job`.
+- `exclusive`: applied to the queue, exclusive queues cannot be redeclared. If set to true, and you attempt to declare the same pipeline twice, it will result in an error.
+- `multiple_ack`:  this delivery, along with all prior unacknowledged deliveries on the same channel, will be acknowledged. This feature is beneficial for batch processing of deliveries and is applicable only for Ack, not for Nack.
+- `requeue_on_fail`: requeue on Nack (by RabbitMQ). Docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
+- `queue_headers`: used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
 
 **NEW in 2.7:**
 
@@ -196,8 +164,8 @@ Below is a more detailed description of each of the amqp-specific options:
 
 **NEW in 2.12.2:**
 
-`queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+`queue_headers`: used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
 
 **NEW in 2023.1.0:**
 
-`queue_headers` - is used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+`consumer_id`: string that is unique and scoped for all consumers on this channel.
