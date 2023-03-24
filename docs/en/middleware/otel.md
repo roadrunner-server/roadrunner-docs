@@ -36,51 +36,20 @@ server:
 http:
   address: 127.0.0.1:15389
   middleware: [gzip, otel]
+  otel:
+    insecure: true
+    compress: false
+    exporter: otlp
+    service_name: rr_test
+    service_version: 1.0.0
+    endpoint: 127.0.0.1:4318
   pool:
     num_workers: 10
-
-otel:
-  insecure: true
-  compress: false
-  exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
-  endpoint: 127.0.0.1:4318
 
 logs:
   encoding: console
   level: debug
   mode: production
-```
-
-Example configuration for gRPC:
-```yaml
-version: "2.7"
-
-rpc:
-  listen: tcp://127.0.0.1:6001
-
-server:
-  command: "php otel_worker.php"
-  relay: pipes
-
-grpc:
-  listen: "tcp://127.0.0.1:9001"
-  proto: "service.proto"
-  pool:
-    num_workers: 10
-
-otel:
-  insecure: true
-  compress: false
-  exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
-  endpoint: 127.0.0.1:4317
-  
-logs:
-  encoding: console
-  level: debug
 ```
 
 `otel` contains the following keys:
