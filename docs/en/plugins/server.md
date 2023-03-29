@@ -1,3 +1,8 @@
+# Server plugin
+
+Server plugin works with worker creation. Each plugin that uses workers, could easily, with 1 method, request the worker pool or single worker.
+All created workers will automatically inherit all RRs functionality like: supervising, state machine, command handler, etc.
+
 ## PHP Client
 
 - [Roadrunner Worker](https://github.com/spiral/roadrunner-worker)
@@ -12,18 +17,18 @@ server:
     #
     # This option is required if using on_init
     command: "any php or script here"
-    
+
     # Script execute timeout
     #
     # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
     exec_timeout: 20s
-    
+
     # Environment variables for the worker processes.
     #
     # Default: <empty map>
     env:
       - SOME_KEY: "SOME_VALUE"
-      - SOME_KEY2: "SOME_VALUE2" 
+      - SOME_KEY2: "SOME_VALUE2"
 
   # Worker starting command, with any required arguments.
   #
@@ -56,28 +61,4 @@ server:
   #
   # Default: 60s
   relay_timeout: 60s
-```
-
-## Minimal dependencies:
-
-1. `Logger` plugin to show log messages.
-2. `Config` plugin to read and populate plugin's configuration.
-
-## Worker sample:
-
-```php
-<?php
-
-require __DIR__ . '/vendor/autoload.php';
-
-// Create a new Worker from global environment
-$worker = \Spiral\RoadRunner\Worker::create();
-
-while ($data = $worker->waitPayload()) {
-    // Received Payload
-    var_dump($data);
-
-    // Respond Answer
-    $worker->respond(new \Spiral\RoadRunner\Payload('DONE'));
-}
 ```

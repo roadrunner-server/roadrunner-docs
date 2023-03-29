@@ -1,8 +1,8 @@
 # TCP Plugin
 
-- `[AVAILABLE SINCE RR v2.6.0]`
+The TCP plugin can read raw TCP data, delimited with the specified delimiters, and send it to the worker. So basically anything that can be sent over TCP can be sent to the RR endpoint.
 
-### Client library
+### PHP library
 - https://github.com/spiral/roadrunner-tcp
 
 ### Configuration

@@ -1,13 +1,16 @@
 ## What is it?
 
-RR plugin is a separate piece of software that can extend the RR functionality. The plugin may depend on the other plugins, but also might be fully independent. 
+RR plugin is a separate piece of software that can extend the functionality of RR. The plugin may depend on the other
+plugins, or it may be completely independent.
 
-## Plugin GitHub template
+### Creating own plugin/middleware:
 
-- [Repository](https://github.com/roadrunner-server/samples)
+- [Plugin](../customization/plugin.md)
+- [Middleware](../customization/middleware.md)
 
 ### Interface
 
+In general, every plugin implements the following set of methods. They are all optional, but add functionality to your plugin.
 ```go
 package sample
 
@@ -49,42 +52,4 @@ type (
 		Collects() []*dep.In
 	}
 )
-
-// Init is mandatory to implement
-type Plugin struct{}
-
-func (p *Plugin) Init( /* deps here */) error {
-	return nil
-}
 ```
-
-Structure name should be `Plugin` if you want to build RR with the [`velox`](https://github.com/roadrunner-server/velox) tool.  
-
-The only required method for the plugin is `Init`. It can receive other plugins via its [API](https://github.com/roadrunner-server/api).
-Users should not request a plugin directly; instead, they should use a repository with the plugin's API and request only the plugin's interface, not its implementation. 
-For example, if the `logger` implementation is registered, any other plugin can request the logger via its `Init` function, like:
-
-```go
-package main
-
-import (
-	"go.uber.org/zap"
-)
-
-const pluginName string = "example"
-
-type Plugin struct {
-	log *zap.Logger
-}
-
-type Logger interface { // <-- Logger plugin implements this interface
-	NamedLogger(name string) *zap.Logger
-}
-
-func (p *Plugin) Init(logger Logger) error { // <-- here we requested a logger interface implementation from the RR container
-	p.log = logger.NamedLogger(pluginName)
-	return nil
-}
-```
-
-More about plugins can be found here: [link](https://github.com/roadrunner-server/endure/tree/master/examples)

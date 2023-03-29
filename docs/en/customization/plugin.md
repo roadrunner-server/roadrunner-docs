@@ -329,3 +329,6 @@ method you might use the following sample:
 ```php
 var_dump($rpc->call('custom.Hello', 'world'));
 ```
+
+### Tips:
+1. More about plugins can be found here: [link](https://github.com/roadrunner-server/endure/tree/master/examples)
