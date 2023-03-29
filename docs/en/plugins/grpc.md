@@ -3,6 +3,7 @@
 - [Roadrunner GRPC](https://github.com/spiral/roadrunner-grpc)
 
 ### Compiling proto sample:
+
 ```
 protoc --plugin=protoc-gen-php-grpc --php_out=<OUTPUT DIRECTORY> --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
 ```
@@ -138,18 +139,8 @@ grpc:
     destroy_timeout: 60s
 ```
 
-### Emitted metrics
-GRPC plugin emits multiple kinds of metrics:
-- `rr_grpc_requests_queue` - Total number of queued requests (Gauge)
-- `rr_grpc_request_total`- Total number of handled GRPC requests after server restart (Counter)
-- `rr_grpc_request_duration_seconds` - GRPC request duration (Histogram)
-- `rr_grpc_workers_memory_bytes` - Memory usage by workers (Gauge)
-- `rr_grpc_worker_state` - Worker current state (Gauge)
-- `rr_grpc_worker_memory_bytes` - Worker current memory usage (Gauge)
-- `rr_grpc_total_workers` - Total number of workers used by the plugin (Gauge)
-- `rr_grpc_workers_ready` - Workers currently in ready state (Gauge)
-- `rr_grpc_workers_working` - Workers currently in working state (Gauge)
-- `rr_grpc_workers_invalid` - Workers currently in invalid, killing, destroyed, errored and inactive states (Gauge)
+### Metrics
+- [link](../loggin-and-observability/metrics.md)
 
 Example of grafana dashboard is available [here](https://github.com/roadrunner-server/roadrunner/blob/master/dashboards/grpc_dashboard.json).
 
@@ -158,69 +149,6 @@ Example of grafana dashboard is available [here](https://github.com/roadrunner-s
 1. `Server` plugin for the workers pool.
 2. `Logger` plugin to show log messages.
 3. `Config` plugin to read and populate plugin's configuration.
-
-## GRPC worker sample:
-
-```php
-<?php
-
-/**
- * Sample GRPC PHP server.
- */
-
-use Service\EchoInterface;
-use Spiral\RoadRunner\GRPC\Server;
-use Spiral\RoadRunner\Worker;
-
-require __DIR__ . '/vendor/autoload.php';
-
-$server = new Server(null, [
-    'debug' => false, // optional (default: false)
-]);
-
-$server->registerService(EchoInterface::class, new EchoService());
-
-$server->serve(Worker::create());
-
-```
-
-#### Proto file sample:
-
-```protobuf
-syntax = "proto3";
-
-package service;
-option go_package = "./;test";
-
-service Test {
-    rpc Echo (Message) returns (Message) {
-    }
-
-    rpc Throw (Message) returns (Message) {
-    }
-
-    rpc Die (Message) returns (Message) {
-    }
-
-    rpc Info (Message) returns (Message) {
-    }
-
-    rpc Ping (EmptyMessage) returns (EmptyMessage) {
-    }
-}
-
-message Message {
-    string msg = 1;
-}
-
-message EmptyMessage {
-}
-
-message DetailsMessageForException {
-    uint64 code = 1;
-    string message = 2;
-}
-```
 
 ### mTLS
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:

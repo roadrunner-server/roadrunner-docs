@@ -1,7 +1,6 @@
 ## OpenTelemetry plugin
 
-OpenTelemetry plugin is a unified standard for the tracing, logging and metrics information. At the moment, only tracing information is stable and safe to use in production.
-
+OpenTelemetry plugin is a unified standard for tracing, logging and metrics information. Currently, only tracing information is stable and safe to use in production.
 
 ### PHP Library
 

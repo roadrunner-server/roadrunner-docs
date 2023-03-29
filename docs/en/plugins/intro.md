@@ -4,35 +4,49 @@ RR plugin is a separate piece of software that can extend the RR functionality. 
 
 ## Plugin GitHub template
 
-- [Repository](https://github.com/roadrunner-server/plugin_template)
+- [Repository](https://github.com/roadrunner-server/samples)
 
 ### Interface
 
 ```go
 package sample
 
+import (
+	"context"
+
+	"github.com/roadrunner-server/endure/v2/dep"
+)
+
 type (
-	// This is the main Endure service interface which may be implemented to Start (Serve) and Stop plugin (OPTIONAL)
+	// Service interface can be implemented by the plugin to use Start-Stop functionality
 	Service interface {
-		// Serve
+		// Serve starts the plugin
 		Serve() chan error
-		// Stop
-		Stop() error
+		// Stop stops the plugin
+		Stop(context.Context) error
 	}
 
-	// Name of the service (OPTIONAL)
+	// Named -> Name of the service
 	Named interface {
+		// Name return user friendly name of the plugin
 		Name() string
 	}
 
-	// Provider declares the ability to provide dependencies to other plugins (OPTIONAL)
+	// Provider declares the ability to provide service edges of declared types.
 	Provider interface {
-		Provides() []interface{}
+		// Provides function return set of functions which provided dependencies to other plugins
+		Provides() []*dep.Out
 	}
 
-	// Collector declares the ability to accept the plugins which match the provided method signature (OPTIONAL)
+	// Weighted is optional to implement, but when implemented the return value added during the topological sort
+	Weighted interface {
+		Weight() uint
+	}
+
+	// Collector declares the ability to accept the plugins which match the provided method signature.
 	Collector interface {
-		Collects() []interface{}
+		// Collects search for the plugins which implements given interfaces in the args
+		Collects() []*dep.In
 	}
 )
 
@@ -46,18 +60,29 @@ func (p *Plugin) Init( /* deps here */) error {
 
 Structure name should be `Plugin` if you want to build RR with the [`velox`](https://github.com/roadrunner-server/velox) tool.  
 
-The only required method for the plugin is `Init`. It can receive other plugins via its [API](https://github.com/roadrunner-server/api). Users should not request a plugin directly, but use a repository with the plugin's API and request only the plugin's interface, not implementation. However, requesting implementation (structure pointer) is also possible. 
-
+The only required method for the plugin is `Init`. It can receive other plugins via its [API](https://github.com/roadrunner-server/api).
+Users should not request a plugin directly; instead, they should use a repository with the plugin's API and request only the plugin's interface, not its implementation. 
 For example, if the `logger` implementation is registered, any other plugin can request the logger via its `Init` function, like:
 
 ```go
 package main
 
+import (
+	"go.uber.org/zap"
+)
+
+const pluginName string = "example"
+
 type Plugin struct {
-	
+	log *zap.Logger
 }
 
-func (p *Plugin) Init(log *zap.Logger) error { // <-- here we requested a logger from the RR container
+type Logger interface { // <-- Logger plugin implements this interface
+	NamedLogger(name string) *zap.Logger
+}
+
+func (p *Plugin) Init(logger Logger) error { // <-- here we requested a logger interface implementation from the RR container
+	p.log = logger.NamedLogger(pluginName)
 	return nil
 }
 ```

@@ -65,10 +65,7 @@ driver. Let's take a look at what they are responsible for:
   default priority for each task pushed into this queue if the priority
   value for these tasks was not explicitly set.
   Lower value - higher priority.
-
 - `tube_priority` - The value for specifying the priority within Beanstalk is
   the internal priority of the server. The value should not exceed `int32` size.
-
 - `tube` - The name of the inner "tube" specific to the Beanstalk driver.
-
 - `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.

@@ -43,8 +43,8 @@ php -dvariables_order=EGPCS artisan octane:start --max-requests=250 --server=roa
 
 ### Prerequisites
 
-0. XDebug 3 installed and properly configured.
-1. Number of jobs workers set to `1` with `jobs.pool.num_workers` configuration option in `.rr.yaml`.
+1. XDebug 3 installed and properly configured.
+2. Number of jobs workers set to `1` with `jobs.pool.num_workers` configuration option in `.rr.yaml`.
 
 ### Debug process
 
@@ -59,7 +59,7 @@ rr reset jobs
 
 Now you should see debug session started:
 
-1. Step over to some place where job task is beeing resolved with `$consumer->waitTask()`.
+1. Step over to some place where job task is being resolved with `$consumer->waitTask()`.
 2. As soon as you reach it, debugger stops but session will still be active.
 3. Trigger task consumtions either with HTTP request or console command (depends on how your application works)
 and continue to debug job worker as usual within active session started before.

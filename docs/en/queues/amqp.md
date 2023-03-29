@@ -18,16 +18,13 @@ amqp:
   addr: amqp://guest:guest@localhost:5672
 ```
 
-After creating a connection to the server, you can create a new queue that will
-use this connection and which will contain the queue settings (including
-amqp-specific):
+Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses the queue settings, including those specific to AMQP):
 
 ```yaml
 version: "3"
 
 amqp:
   addr: amqp://guest:guest@localhost:5672
-
 
 jobs:
   pipelines:

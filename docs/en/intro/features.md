@@ -33,32 +33,29 @@ with much greater performance and flexibility.
 Features:
 --------
 - Production-ready
-- PCI DSS compliant
+- PCI DSS compliant (HTTP plugin)
 - PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middlewares, event listeners)
 - HTTPS and HTTP/2 support (including HTTP/2 Push, H2C)
-- A Fully customizable server, FastCGI support
+- A Fully customizable http(s)/2 server 
+- FastCGI support (HTTP plugin)
 - Flexible environment configuration
-- No external PHP dependencies (64bit version required), drop-in (based on [Goridge](https://github.com/roadrunner-server/goridge))
-- Load balancer, process manager and task pipeline
+- No external PHP dependencies (64bit version required)
 - Integrated metrics (Prometheus)
 - [Workflow engine](https://github.com/temporalio/sdk-php) by [Temporal.io](https://temporal.io)
-- Works over TCP, UNIX sockets and standard pipes
-- Automatic worker replacement and safe PHP process destruction
+- Works over TCP, UNIX sockets and process pipes
+- Automatic worker replacement, graceful and safe PHP process destruction
 - Worker create/allocate/destroy timeouts
-- Max jobs per worker
+- Max requests per worker limitation
 - Worker lifecycle management (controller)
-  - maxMemory (graceful stop)
-  - TTL (graceful stop)
-  - idleTTL (graceful stop)
-  - execTTL (brute, max_execution_time)
-- Payload context and body
+  - max_memory (graceful stop)
+  - ttl (graceful stop)
+  - idle_ttl (graceful stop)
+  - exec_tll (brute, max_execution_time)
 - Protocol, worker and job level error management (including PHP errors)
 - Development Mode
-- Integrations with Symfony, [Laravel](https://github.com/spiral/roadrunner-laravel), Slim, CakePHP, Zend Expressive
+- Integrations with [Symfony](https://github.com/php-runtime/roadrunner-symfony-nyholm), [Laravel](https://github.com/laravel/octane), Slim, CakePHP, Zend Expressive
 - Application server for [Spiral](https://github.com/spiral/framework)
-- Included in Laravel Octane
-- Automatic reloading on file changes
-- Works on Windows (Unix sockets (AF_UNIX) supported on Windows 10)
+- Works on Windows (Unix sockets (AF_UNIX) supported on Windows 10) and WSL2
 
 License:
 --------

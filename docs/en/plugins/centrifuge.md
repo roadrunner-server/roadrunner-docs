@@ -1,8 +1,8 @@
 # Centrifuge plugin
 
-Centrifuge plugin `[since 2.12.0]` replaces our `Websockets` and `Broadcast` deprecated plugins.
-The centrifuge is a robust library with different clients (JS, Dart, Go, Python), which are actively supported.
-Our previous JS client had feeble support and was not updated for a long time.
+The Centrifuge plugin `[since 2.12.0]` replaces our deprecated `Websockets` and `Broadcast` plugins. 
+Centrifuge is a robust library with various clients (JS, Dart, Go, Python) that are actively supported. 
+Our previous JS client had weak support and had not been updated for an extended period.
 
 RR exposes all available APIs, including a `gRPC` proxy and the client's API.
 

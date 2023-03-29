@@ -2,8 +2,8 @@
 
 - `[AVAILABLE SINCE RR v2.6.0]`
 
-RR events bus might be useful when one plugin raises some event on which another plugin should react. For example,
-plugins like sentry might log errors from the `http` plugin.
+The RR events bus might be useful when one plugin raises some event on which another plugin should react. For example,
+plugins like `Temporal` might read events from the `worker_watcher`.
 
 ## Simple subscription
 
@@ -134,5 +134,6 @@ func foo() {
 }
 ```
 
-Important note: you don't need to import your custom event types into the subscriber. You only need to know the name of that event and pass a string to the subscriber.
+> **INFO**
+> Important note: you don't need to import your custom event types into the subscriber. You only need to know the name of that event and pass a string to the subscriber.
 

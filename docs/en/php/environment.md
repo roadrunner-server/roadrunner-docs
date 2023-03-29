@@ -1,6 +1,7 @@
 # Environment configuration
-All RoadRunner workers will inherit the system configuration available for the parent server process. In addition, you can 
-customize the set of env variables to be passed to your workers using part `env` of `.rr` configuration file.
+
+All RoadRunner workers inherit the system configuration available for the parent server process.
+Additionally, you can customize the set of environment variables passed to your workers by using the `env` section in the `.rr` configuration file.
 
 ```yaml
 server:
@@ -9,6 +10,7 @@ server:
      key: value
 ```
 
+> **WARNING**
 > All keys will be automatically uppercased!
 
 ### Using environment variables in the configuration
@@ -50,10 +52,12 @@ http:
 RR is able to expand the environment variable from the sentence like `${xxx}` OR `$xxx`
 
 ### Default ENV values inside the worker
-RoadRunner provides set of ENV values to help the PHP process to identify how to properly communicate with the server.
+
+RoadRunner provides a set of environment (ENV) values to assist the PHP process in establishing proper communication with the server.
 
 Key      | Description
 ---      | ---
 RR_MODE  | Identifies what mode worker should work with (`http`, `temporal`, `grpc`, `jobs`, `tcp`)
 RR_RPC   | Contains RPC connection address when enabled.
 RR_RELAY | "pipes" or "tcp://...", depends on server relay configuration.
+RR_VERSION | RoadRunner version started the PHP worker (minimum 2023.1.0)

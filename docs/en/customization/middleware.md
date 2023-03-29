@@ -40,7 +40,13 @@ func (p *Plugin) Name() string {
 }
 ```
 
-> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/api/blob/master/plugins/middleware/interface.go#L10) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
+> **WARNING**
+> While RoadRunner supports writing `gRPC` interceptors, you can use it only from version `v2023.2.0`.
+
+> **INFO**
+> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/http/blob/master/common/interfaces.go#L33) and be [named](https://github.com/roadrunner-server/endure/blob/master/container.go#L47).
+
+You can find a lot of examples here: [link](https://github.com/grpc-ecosystem/go-grpc-middleware). Keep in mind that, at the moment, RR supports only `UnaryServerInterceptor` gRPC interceptors.
 
 ### gRPC
 
@@ -61,7 +67,7 @@ func (p *Plugin) Init() error {
 }
 
 func (p *Plugin) Interceptor() grpc.UnaryServerInterceptor {
-		// Do something
+		// Do something and return interceptor
 }
 
 // Middleware/plugin name.
@@ -70,21 +76,21 @@ func (p *Plugin) Name() string {
 }
 ```
 
-> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/grpc/blob/master/common/interfaces.go#L7) and be [named](https://github.com/roadrunner-server/endure/blob/master/pkg/container/container.go#L41).
+> Middleware must correspond to the following [interface](https://github.com/roadrunner-server/grpc/blob/master/common/interfaces.go#L14) and be [named](https://github.com/roadrunner-server/endure/blob/master/container.go#L47).
 
 ---
 
 You have to register this service after in the [container/plugin.go](https://github.com/roadrunner-server/roadrunner/blob/master/container/plugins.go) file in order to properly resolve dependency:
 
-```golang
+```go
 package roadrunner
 
 import (
     "middleware"
 )
 
-func Plugins() []interface{} {
-    return []interface{}{
+func Plugins() []any {
+    return []any {
     // ...
     
     // middleware
@@ -94,9 +100,9 @@ func Plugins() []interface{} {
  }
 ```
 
-Or you might use Velox to [build the RR binary](https://roadrunner.dev/docs/app-server-build/2.x/en).
+Or you might use Velox to [build the RR binary](build.md).
 
-You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config) otherwise the plugin will be loaded but the middleware will not be used with incoming requests.
+You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config). Otherwise, the plugin will be loaded, but the middleware will not be used with incoming requests.
 
 ```yaml
 http:
@@ -108,7 +114,7 @@ http:
 
 You can safely pass values to `ServerRequestInterface->getAttributes()` using [attributes](https://github.com/roadrunner-server/http/blob/master/attributes/attributes.go) package:
 
-```golang
+```go
 func (s *Service) Middleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r = attributes.Init(r)

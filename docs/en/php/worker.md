@@ -1,5 +1,7 @@
 # PHP Workers
 
+## Creating a worker
+
 In order to run your PHP application, you must create a worker endpoint and configure RoadRunner to use it. First,
 install the required package using [Composer](https://getcomposer.org/).
 
@@ -7,7 +9,7 @@ install the required package using [Composer](https://getcomposer.org/).
 composer require spiral/roadrunner nyholm/psr7
 ```
 
-Simplest entrypoint with PSR-7 server API might looks like:
+Simplest entrypoint with PSR-7 server API might look like:
 
 ```php
 <?php
@@ -43,8 +45,7 @@ while (true) {
 }
 ```
 
-Such a worker will expect communication with the parent RoadRunner server over standard pipes, create `.rr.yaml` config
-to enable it:
+Such a worker will expect communication with the parent RoadRunner server over standard pipes. Create a `.rr.yaml` config to enable it:
 
 ```yaml
 server:
@@ -61,7 +62,7 @@ If you don't like `yaml` try `.rr.json`:
 ```json
 {
   "server": {
-    "command": "path-to-php/php psr-worker.php"
+    "command": "php psr-worker.php"
   },
   "http": {
     "address": "0.0.0.0:8080",
@@ -72,12 +73,12 @@ If you don't like `yaml` try `.rr.json`:
 }
 ```
 
-You can start the application now by downloading the RR binary file and running `rr serve`
+You can start the application now by downloading the RR binary file and running `rr serve`.
 
 ## Alternative Communication Methods
 
-PHP Workers would utilize standard pipes STDOUT and STDERR to exchange data frames with RR server. In some cases you might
-want to use alternative communication methods such as TCP socket:
+PHP Workers would utilize standard pipes STDOUT and STDERR to exchange data frames with the RR server. In some cases, you might
+want to use alternative communication methods such as TCP sockets:
 
 ```yaml
 server:
@@ -103,9 +104,9 @@ http:
     num_workers: 4
 ```
 
-# Error Handling
-There are multiple ways of how you can handle errors produces by PHP workers.
+## Error Handling
 
+There are multiple ways of how you can handle errors produces by PHP workers.
 The simplest and most common way would be responding to parent service with the error message using `getWorker()->error()`:
 
 ```php
@@ -127,10 +128,33 @@ file_put_contents('php://stderr', 'my message');
 
 Since RoadRunner 2.0 all warnings send to STDOUT will be forwarded to STDERR as well.
 
+## Embedded Monitoring
+
+RoadRunner is capable of monitoring your application and run soft reset (between requests) if necessary. The previous name - `limit`, current - `supervisor`
+Edit your `.rr` file to specify limits for your application:
+
+```yaml
+# monitors rr server(s)
+http:
+  address: "0.0.0.0:8080"
+  pool:
+    num_workers: 6
+    supervisor:
+      # watch_tick defines how often to check the state of the workers (seconds)
+      watch_tick: 1s
+      # ttl defines maximum time worker is allowed to live (seconds)
+      ttl: 0
+      # idle_ttl defines maximum duration worker can spend in idle mode after first use. Disabled when 0 (seconds)
+      idle_ttl: 10s
+      # exec_ttl defines maximum lifetime per job (seconds)
+      exec_ttl: 10s
+      # max_worker_memory limits memory usage per worker (MB)
+      max_worker_memory: 100
+```
+
 ## Troubleshooting
 
-In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead etc)
-.
+In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead, etc.).
 
 ```
 $ rr serve
@@ -147,5 +171,6 @@ first input character.
 
 ## Other Type of Workers
 
-Different roadrunner implementations might define their own worker APIs,
-examples: [GRPC](https://github.com/spiral/roadrunner-grpc), [Workflow/Activity Worker](https://legacy-documentation-sdks.temporal.io/php/workers).
+Different Roadrunner plugins might define their own worker APIs, examples: 
+- [GRPC](https://github.com/spiral/roadrunner-grpc)
+- [Workflow/Activity Worker](https://legacy-documentation-sdks.temporal.io/php/workers)

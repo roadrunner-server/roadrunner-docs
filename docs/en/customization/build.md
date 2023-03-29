@@ -5,24 +5,25 @@ RoadRunner uses Endure to manage dependencies, this allows you to tweak and exte
 ## Compatibility with the plugins:
 
 1. ⚠️ Do not use the plugin's `master` branch.
-2. ⚠️ Use tags with the **same** **major** version (e.g `logger` v3.0.3 + `amqp` v3.0.5, but not `logger` v4.0.0 + `amqp` v3.0.5)
-3. ⚠️ **Currently supported plugins version is: `v3.x.x`**
-4. ⚠️ **Currently supported RR version is: `v2.12.x`**
+2. ⚠️ Use tags with the **same** **major** version (e.g `logger` v4.x.x + `amqp` v4.x.x, but not `logger` v4.0.0 + `amqp` v3.0.5)
+3. ⚠️ **Currently supported plugins version is: `v4.x.x`**
+4. ⚠️ **Currently supported RR version is: `v2023.x.x`**
 
 
 ## GitHub plugin template
-- [Repository](https://github.com/roadrunner-server/plugin_template)
+- [Repository](https://github.com/roadrunner-server/samples)
 
 ## How to write a plugin
-- #### Writing a plugin  
+
+- ### Writing a plugin  
 [![plugin](https://img.youtube.com/vi/h5PPvc_YOtg/0.jpg)](https://www.youtube.com/watch?v=h5PPvc_YOtg)  
 
-- #### Velox configuration  
+- ### Velox configuration  
 [![configuration](https://img.youtube.com/vi/sddi_lh7ePo/0.jpg)](https://www.youtube.com/watch?v=sddi_lh7ePo)  
 
 #### Install Golang
 
-To build an application server you need [Golang 1.18+](https://golang.org/dl/) or Docker to be installed.
+To build an application server you need [Golang 1.20+](https://golang.org/dl/) or Docker to be installed.
 
 ### Installation:
 
@@ -56,7 +57,8 @@ COPY --from=velox /usr/bin/rr /usr/bin/rr
 CMD ["/usr/bin/rr"]
 ```
 
-- `go install` command:
+- `go install` command (if you have Go installed):
+
 ```shell
 go install github.com/roadrunner-server/velox/cmd/vx@latest
 ```
