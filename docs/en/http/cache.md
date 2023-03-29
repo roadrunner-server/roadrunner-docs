@@ -1,6 +1,7 @@
-## Cache (RFC7234) middleware
+# Cache (RFC7234) middleware
 
 Cache middleware implements http-caching RFC 7234. It's based on the [Souin](https://github.com/darkweak/souin) HTTP cache library.  
+Have a look at the [Souin documentation](https://github.com/darkweak/souin) if you need more information.
 
 ## Features
 
@@ -14,6 +15,7 @@ Cache middleware implements http-caching RFC 7234. It's based on the [Souin](htt
  * Builtin timeout.
 
 **Build the roadrunner binary**
+
 As it's based on the [Souin](https://github.com/darkweak/souin) HTTP cache library we can use directly the roadrunner middleware implemenation. We have to set the `folder` property because this middleware is located in a sub-directory.
 ```toml
 # configuration.toml
@@ -41,6 +43,7 @@ Distributed
 - `etcd`
 - `olric`
 
+More info about customizing RR with your own plugins: [link](../customization/plugin.md)
 
 ## Configuration
 You can set each Souin configuration key under the `http.cache` key. There is a configuration example below.
@@ -157,4 +160,3 @@ http:
 | `ykeys.{key name}.headers.{header name}`          | (DEPRECATED) Header name that should be present a match the regex to be part of the ykey group                                              | `Content-Type: json`                                                                                                      |
 | `ykeys.{key name}.url`                            | (DEPRECATED) Url that should match to be part of the ykey group                                                                             | `.+`                                                                                                                      |
 
-Have a look at the [Souin documentation](https://github.com/darkweak/souin) if you need more informations.

@@ -1,6 +1,12 @@
-### File server plugin
+# File server plugin
 
-### Configuration
+Fileserver plugin serves the static files. It works similar to the `static` HTTP middleware and has extended
+functionality.
+Static HTTP middleware slows down request processing by `~10%` because RR has to check each request for the
+corresponding file.
+The file server plugin uses a different port and only serves static files.
+
+## Configuration
 
 ```yaml
 fileserver:
@@ -62,37 +68,4 @@ fileserver:
       max_age: 10
       bytes_range: true
 
-```
-
-### PHP Worker
-
-```php
-<?php
-/**
- * @var Goridge\RelayInterface $relay
- */
-use Spiral\Goridge;
-use Spiral\RoadRunner;
-
-ini_set('display_errors', 'stderr');
-require __DIR__ . "/vendor/autoload.php";
-
-$worker = RoadRunner\Worker::create();
-$psr7 = new RoadRunner\Http\PSR7Worker(
-    $worker,
-    new \Nyholm\Psr7\Factory\Psr17Factory(),
-    new \Nyholm\Psr7\Factory\Psr17Factory(),
-    new \Nyholm\Psr7\Factory\Psr17Factory()
-);
-
-while ($req = $psr7->waitRequest()) {
-    try {
-        $resp = new \Nyholm\Psr7\Response();
-        $resp->getBody()->write("hello world");
-
-        $psr7->respond($resp);
-    } catch (\Throwable $e) {
-        $psr7->getWorker()->error((string)$e);
-    }
-}
 ```

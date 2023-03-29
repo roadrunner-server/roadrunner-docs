@@ -1,7 +1,9 @@
 # Headers and CORS
-RoadRunner can automatically set up request/response headers and control CORS for your application.
 
-### CORS
+Headers middleware is used to set up request/response headers and control CORS for your application.
+
+## CORS
+
 To enable CORS headers add the following section to your configuration.
 
 ```yaml
@@ -23,7 +25,8 @@ http:
 
 > Make sure to declare "headers" middleware.
 
-### Custom headers for Response or Request
+## Custom headers for Response or Request
+
 You can control additional headers to be set for outgoing responses and headers to be added to the request sent to your application.
 ```yaml
 version: "3"
