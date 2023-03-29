@@ -34,7 +34,7 @@ Features:
 --------
 - Production-ready
 - PCI DSS compliant (HTTP plugin)
-- PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middlewares, event listeners)
+- PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middleware, event listeners)
 - HTTPS and HTTP/2 support (including HTTP/2 Push, H2C)
 - A Fully customizable http(s)/2 server 
 - FastCGI support (HTTP plugin)
