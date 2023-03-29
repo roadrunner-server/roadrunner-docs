@@ -81,9 +81,3 @@ while ($data = $worker->waitPayload()) {
     $worker->respond(new \Spiral\RoadRunner\Payload('DONE'));
 }
 ```
-
-## Tips:
-
-1. If your application uses mostly IO (disk, network, etc), you can allocate as much worker as you have memory for the application. Workers are cheap. Hello-world worker consumes no more than ~26Mb of RSS memory.
-2. For the CPU bound operation, see a CPU avg. load and choose the number of workers to consume 90-95% CPU. Leave few percents for the GO's GC (not necessary btw).
-3. If you have ~const workers latency, you may calculate the number of workers needed to handle target [load](https://github.com/spiral/roadrunner/discussions/799#discussioncomment-1332646).

@@ -1,6 +1,6 @@
 # Running a RR server as daemon on Linux
 
-In the RR repository you can find rr.server systemd unit file. The structure of the file is the following:
+In the RR repository, you will find the `rr.server` systemd unit file. The structure of this file is as follows:
 
 ```ini
 [Unit]

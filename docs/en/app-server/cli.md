@@ -76,6 +76,18 @@ Workers of [http]:
 +---------+-----------+---------+---------+-----------------+
 ```
 
+To `pause`/`reset`/`stop` `JOBS` pipelines, you may use the following commands:
+
+```bash
+$ rr jobs pause/stop/resume -c .rr.yaml pipeline1,pipeline2
+```
+
+Or to `list`:
+
+```bash
+$ rr jobs list -c .rr.yaml
+```
+
 RoadRunner supports `.env` files. To read environment variables from the `.env` file, use the `--dotenv` CLI command:
 ```bash
 rr serve --dotenv .env -c .rr.yaml
@@ -92,7 +104,7 @@ List of all commands with available options:
   1. `-c`: path to the config file.
   2. `-w`: set the working directory.
   3. `--dotenv`: populate the process with env variables from the `.dotenv` file.
-  4. `-d`: start a pprof server. Note, this is not `debug`, to use debug logs level, please, use logs: https://roadrunner.dev/docs/plugins-logger/2.x/en
+  4. `-d`: start a pprof server. Note, this is not `debug`, to use debug logs level, please, use logs: https://roadrunner.dev/docs/plugins-logger/2023.x/en
   5. `-s`: silent mode.
   6. `-o`: to override configuration keys with your values, e.g. `-o=http.address=:8080` will override the `http.address` from the `.rr.yaml`. 
   7. `-p`: create a `.pid` file to use `./rr stop` later. 
@@ -104,6 +116,13 @@ List of all commands with available options:
   1. `-c`: path to the config file.
   2. `-w`: set the working directory. 
   3. `-i`: interactive mode (update statistic every second).
+
+- `jobs`:
+  1. `pause pipeline1,pipeline2`: pause specified pipelines.
+  2. `resume pipeline1,pipeline2`: resume specified pipelines.
+  3. `stop pipeline1,pipeline2`: stop specified pipelines.
+  4. `list`: list all running pipelines.
+
 - `stop`:
   1. `-f`: force stop.
   2. `-s`: silent mode.
