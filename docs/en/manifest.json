@@ -104,7 +104,7 @@
       "logging-and-observability/logger": "Logger",
       "logging-and-observability/health": "Healthchecks",
       "logging-and-observability/metrics": "Metrics",
-      "logging-and-observability/dashboards": "Grafana",
+      "logging-and-observability/dashboards/dashboards": "Grafana",
       "logging-and-observability/otel": "OpenTelemetry"
     }
   },
