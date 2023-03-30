@@ -100,55 +100,52 @@ jobs:
 Above is a complete list of all possible common Jobs settings. Let's now figure
 out what they are responsible for.
 
-- `num_pollers` - The number of threads that concurrently read from the priority
-  queue and send payloads to the workers. There is no optimal number, it's
-  heavily dependent on the PHP worker's performance. For example, "echo workers"
-  may process over 300k jobs per second within 64 pollers (on 32 core CPU).
+- `num_pollers`: The number of threads that are simultaneously reading from the priority
+  queue and send payloads to the workers. There is no optimal number, it depends
+  heavily on the performance of the PHP worker. For example, echo workers
+  can process over 300k jobs per second within 64 pollers (on a 32 core CPU).
 
-- `timeout` - The internal timeouts via golang context (in seconds). For
-  example, if the connection was interrupted or your push in the middle of the
-  redial state with 10 minutes timeout (but our timeout is 1 min for example),
-  or queue is full. If the timeout exceeds, your call will be rejected with an
+- `timeout`: The internal Golang context timeouts (in seconds). For
+  example, if the connection was disconnected or your push was in the middle of a
+  redial state with a timeout of 10 minutes (but our timeout is e.g. 1 minute),
+  or the queue is full. If the timeout is exceeded, your call will be rejected with an
   error. Default: 60 (seconds).
 
-- `pipeline_size` - The "binary heaps" priority queue (PQ) settings. Priority
-  queue stores jobs inside according to its' priorities. Priority might be set
-  for the job or inherited by the pipeline. If worker performance is poor, PQ
-  will accumulate jobs until `pipeline_size` will be reached. After that, PQ
-  will be blocked until workers process all the jobs inside.
+- `pipeline_size`: The binary heaps priority queue (PQ) settings. The priority
+  queue stores jobs in order of priority. The priority can be set
+  for the job or inherited by the pipeline. When worker performance is poor, PQ
+  will accumulate jobs until `pipeline_size` is reached. After that, PQ
+  is then blocked until the workers have processed all the jobs in it.
 
-  Blocked PQ means, that you can push the job into the driver, but RoadRunner
-  will not read that job until PQ will be empty. If RoadRunner will be killed
-  with jobs inside the PQ, they won't be lost, because jobs are deleted from the
-  drivers' queue only after Ack.
+  Blocked PQ means that you can push the job into the driver, but RoadRunner
+  will not read that job until PQ is empty. If RoadRunner is running
+  with jobs in the PQ, they won't be lost because jobs are not removed from the driver's
+  driver queue until after Ack.
 
-- `pool` - All settings in this section are similar to the worker pool settings
+- `pool`: All settings in this section are similar to the worker pool settings
   described on the [configuration page](https://roadrunner.dev/docs/intro-config).
 
-- `consume` - Contains an array of the names of all queues specified in the
+- `consume`: Contains an array of the names of all queues specified in the
   `"pipelines"` section, which should be processed by the concierge specified in
-  the global `"server"` section (see the [PHP worker's settings](/php/worker.md)).
+  the global `"server"` section (see the [PHP worker's settings](../php/worker.md)).
 
-- `pipelines` - This section contains a list of all queues declared in the
-  RoadRunner. The key is a unique *queue identifier*, and the value is an object
-  from the settings specific to each driver (we will talk about it later).
+- `pipelines`: This section contains a list of all queues created in the
+  RoadRunner. The key is a unique *queue identifier*, and the value is an object of the
+  from the driver-specific settings (we will talk about this later).
 
 ## PHP Client (Producer)
 
-Now that we have configured the server, we can start writing our first code for
-sending the task to the queue. But before doing this, we need to connect to our
-server. And to do this, it is enough to create a `Jobs` instance.
+Now that we have the server configured, we can start writing our first code to send the task to the queue. 
+But before we do that, we need to connect to our server. And to do that, it is enough to create a `Jobs` instance.
 
 ```php
 // Server Connection
 $jobs = new Spiral\RoadRunner\Jobs\Jobs();
 ```
 
-Please note that in this case we have not specified any connection settings. And
-this is really not required if this code is executed in a RoadRunner environment.
-However, in the case that a connection is required to be established
-from a third-party application (for example, a CLI command), then the settings
-must be specified explicitly.
+Note that in this case we did not specify any connection settings.
+And this is really not necessary if this code is executed in a RoadRunner environment.
+However, in case you need to connect from a third party application (e.g. a CLI command), you need to specify the settings explicitly.
 
 ```php
 $jobs = new Spiral\RoadRunner\Jobs\Jobs(

@@ -1,4 +1,4 @@
-### Beanstalk Driver
+# Beanstalk Driver
 
 Beanstalk is a simple and fast general purpose work queue. To install Beanstalk,
 you can use the [local queue server](https://github.com/beanstalkd/beanstalkd)

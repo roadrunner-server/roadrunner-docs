@@ -1,4 +1,5 @@
 # Installation
+
 The easiest way to get the latest RoadRunner version is to use one of the pre-built release binaries, which are available for
 OSX, Linux, FreeBSD, and Windows. Instructions for using these binaries are on the GitHub [releases page](https://github.com/roadrunner-server/roadrunner/releases).
 
@@ -38,8 +39,8 @@ Server binary will be available at the root of your project.
 ## Installation option for the Debian-derivatives (Ubuntu, Mint, MX, etc)
 
 ```bash
-wget https://github.com/roadrunner-server/roadrunner/releases/download/v2.X.X/roadrunner-2.X.X-linux-amd64.deb
-sudo dpkg -i roadrunner-2.X.X-linux-amd64.deb
+wget https://github.com/roadrunner-server/roadrunner/releases/download/v2023.X.X/roadrunner-2023.X.X-linux-amd64.deb
+sudo dpkg -i roadrunner-2023.X.X-linux-amd64.deb
 ```
 
 ## Dowload the latest release via curl:

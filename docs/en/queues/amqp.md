@@ -1,4 +1,4 @@
-### AMQP Driver
+# AMQP Driver
 
 Strictly speaking, AMQP (and 0.9.1 version used) is a protocol, not a full-fledged driver, so you can use
 any servers that support this protocol (on your own, only rabbitmq was tested) , such as:
