@@ -27,7 +27,7 @@ Since a single worker typically processes more than a single request, you should
 - RoadRunner has +40% performance when using keep-alive connections.
 - Set the memory limit at least 10-20% below `max_memory_usage`.
 - Since RoadRunner workers run from cli, you need to enable OPcache in the CLI with `opcache.enable_cli=1`.
-- Make sure to use [health check endpoint](../loggin-and-observability/health.md) when running rr in a cloud environment.
+- Make sure to use [health check endpoint](../logging-and-observability/health.md) when running rr in a cloud environment.
 - Use the `user` option in the config to start worker processes from the specified user on Linux-based systems. Note that in this case RoadRunner should be started from the `root` to allow fork-exec processes from different users.
 - If your application uses mostly IO (disk, network, etc), you can allocate as many workers as you have memory for the application. Workers are cheap. A hello-world worker uses no more than ~26Mb of RSS memory.
 - For CPU bound operation, see an average CPU load and choose the number of workers to consume 90-95% CPU. Leave a few percent for the GC of the GO (not necessary btw).
