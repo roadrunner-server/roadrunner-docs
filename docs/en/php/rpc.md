@@ -63,3 +63,4 @@ You may be able to find the RPC Go definitions here:
 - [Resetter](https://github.com/roadrunner-server/resetter/blob/master/rpc.go)
 - [Status](https://github.com/roadrunner-server/status/blob/master/rpc.go)
 - [Metrics](https://github.com/roadrunner-server/metrics/blob/master/rpc.go)
+- [Lock](https://github.com/roadrunner-server/lock/blob/master/rpc.go)

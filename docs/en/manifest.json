@@ -54,6 +54,7 @@
       "plugins/grpc": "gRPC",
       "plugins/server": "Server",
       "plugins/service": "Service",
+      "plugins/locks": "Locks",
       "plugins/tcp": "TCP"
     }
   },
