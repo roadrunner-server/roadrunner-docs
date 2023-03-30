@@ -140,7 +140,7 @@ grpc:
 ```
 
 ### Metrics
-- [link](../logging-and-observability/metrics.md)
+- [link](../lab/metrics.md)
 
 Example of grafana dashboard is available [here](https://github.com/roadrunner-server/roadrunner/blob/master/dashboards/grpc_dashboard.json).
 

@@ -1,6 +1,6 @@
 # RoadRunner Dashboards
 
-Grafana dashboards for the RR (including temporal) installations. More info about the available metrics is here: [link](https://roadrunner.dev/docs/plugins-metrics/2.x/en)
+Grafana dashboards for the RR (including temporal) installations. More info about the available metrics is here: [link](../metrics.md)
 
 ## gRPC dashboard
 
