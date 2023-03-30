@@ -52,3 +52,14 @@ You can immediately use this RPC to call embedded RPC services such as HTTP:
 ```php
 var_dump($rpc->call('informer.Workers', 'http'));
 ```
+
+## Go RPC
+
+You may be able to find the RPC Go definitions here:
+
+- [Jobs](https://github.com/roadrunner-server/jobs/blob/master/rpc.go)
+- [KV](https://github.com/roadrunner-server/kv/blob/master/rpc.go)
+- [Informer](https://github.com/roadrunner-server/informer/blob/master/rpc.go)
+- [Resetter](https://github.com/roadrunner-server/resetter/blob/master/rpc.go)
+- [Status](https://github.com/roadrunner-server/status/blob/master/rpc.go)
+- [Metrics](https://github.com/roadrunner-server/metrics/blob/master/rpc.go)
