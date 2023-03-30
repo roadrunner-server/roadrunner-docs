@@ -4,17 +4,17 @@ Grafana dashboards for the RR (including temporal) installations. More info abou
 
 ## gRPC dashboard
 
-This dashboard contains gRPC plugin metrics: [link](grpc_dashboard.json)
+This dashboard contains gRPC plugin metrics: [link](grpc.md)
 
 ## HTTP dashboard
 
-This dashboard contains http plugin metrics: [link](http_dashboard.json)
+This dashboard contains http plugin metrics: [link](http.md)
 
 ## JOBS dashboard
 
-This dashboard contains jobs plugin metrics: [link](jobs_dashboard.json)
+This dashboard contains jobs plugin metrics: [link](jobs.md)
 
 ## Temporal dashboard
 
-[This](temporal_dashboard.json) dashboard contains temporal (RR part) plugin metrics.
+[This](temporal.md) dashboard contains temporal (RR part) plugin metrics.
 Official repo with the temporal metrics available here: https://github.com/temporalio/dashboards
