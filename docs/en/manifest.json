@@ -30,7 +30,7 @@
       "customization/events-bus": "Events bus",
       "customization/plugin": "Writing a custom plugin",
       "customization/middleware": "Writing a custom middleware",
-      "customization/embedding": "Embedding a Server"
+      "customization/embedding": "Integrating with Go apps"
     }
   },
   {
