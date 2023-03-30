@@ -1,7 +1,7 @@
 # Developer Mode
 
-RoadRunner uses PHP scripts in daemon mode. This means that you have to reload the server every time you change your
-codebase, or configure Roadrunner to do that automatically.
+RoadRunner uses PHP scripts in daemon mode. This means that you have to reload the server every time you change the
+codebase, or configure Roadrunner to do it automatically.
 
 ## In Docker
 
@@ -25,10 +25,16 @@ http:
   pool.debug: true
 ```
 
-# Restarting Workers
+In this mode, RR will not create a worker when RR starts, no matter what you specify in the configuration, until you send a request.
+If you send 2-3-n parallel requests, RR will create 2-3-n workers. After the response, RR stops and removes the worker. 
+This can also be done using the `Jobs` plugin and the `Jobs` consumers. Each consumed message will create a worker.
 
-RoadRunner provides multiple ways to safely restart worker(s) on demand. Both approaches can be used on a live server
-and should not cause downtime.
+This is done to always load your last code into the PHP worker.
+
+## Restarting Workers
+
+RoadRunner provides several ways to safely restart workers on demand. Both approaches can be used on a live server
+and should not cause any downtime.
 
 ## Stop Command
 
