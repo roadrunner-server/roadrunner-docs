@@ -1,43 +1,60 @@
-# Health Endpoint
-RoadRunner server includes a health check endpoint that returns the health of the workers.
+# Health and Readiness checks
 
-## Enable health
+The RoadRunner server features a health check endpoint, which provides information on the condition of the workers.
 
-To enable the health check endpoint, add a `status` section to your configuration:
+## Enable health/readiness checks
+
+To activate the health/readiness checks endpoint, include a status section in your configuration:
 
 ```yaml
 version: "3"
 
 status:
-  address: localhost:2114
+  address: 127.0.0.1:2114
+  unavailable_status_code: 500
 ```
 
-To access the health-check use the following URL:
+To access the health check, utilize the following URL:
 
-`http://localhost:2114/health?plugin=http`
+`http://127.0.0.1:2114/health?plugin=http`, where
 
-> You can check one or multiple plugins using health-check. Currently, only HTTP supported.
+- `/health`: is the endpoint for the healthcheck. You may also use `/ready` or `/jobs` (the jobs endpoint does not support a list of plugins).
+- `?plugin=<plugin_name>`: list of the plugins with workers to check.
 
-Once enabled, the health check endpoint will respond with the following: 
+> **Note**
+> You can use the health check to assess one or multiple plugins. Health/readiness checks can be applied to any plugin that has workers.
 
- - `HTTP 200` if there is at least **one worker** ready to serve requests.
- - `HTTP 500` if there are **no workers** ready to serve requests.
+After activation, the health check endpoint will return the following status codes:
+
+- `HTTP 200` if there is at least **one worker** ready to serve requests.
+- `HTTP 500` if there are **no workers** ready to service requests.
+
+## Jobs plugin pipelines check
+
+Additionally, you can examine the pipelines in the `Jobs` plugin using the following URL:
+
+- `http://127.0.0.1:2114/jobs`
+
+> **Note**
+> Output: `plugin: jobs: pipeline: test-1 | priority: 13 | ready: true | queue: test-1 | active: 0 | delayed: 0 | reserved: 0 | driver: memory | error:  `
+
+## Custom not-ready status code
+
+By default, RoadRunner employs a `500` status code for health/readiness checks if issues (no workers or error workers) arise with the workers. However, you can replace this status code with a custom one. To achieve this, utilize the `unavailable_status_code` option:
+
+```yaml
+version: "3"
+
+status:
+  address: 127.0.0.1:2114
+  unavailable_status_code: 500 # <-- YOUR CUSTOM CODE
+```
 
 
-To access the readiness-check use the following URL:
-
-`http://localhost:2114/ready?plugin=http`
-
-
-The difference between `ready` and `health` endpoints in the underlying checks.
-
-For the `ready`, at least 1 worker should be in the `Ready` state (ready to accept a request). For the `health` check at least 1 worker should be in the `Active` state (serving the request).
-
-From the user perspective, the `Ready` state means that the request might be sent and processed immediately, but the `Active` state means that the worker is working on the request and is healthy.
 ## Use cases
 
-The health check endpoint can be used for the following:
+The health check endpoint serves the following purposes::
 
- - [Kubernetes readiness and liveness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
- - [AWS target group health checks](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
- - [GCE Load Balancing health checks](https://cloud.google.com/load-balancing/docs/health-checks)
+- [Kubernetes readiness and liveness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+- [AWS target group health checks](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html)
+- [GCE Load Balancing health checks](https://cloud.google.com/load-balancing/docs/health-checks)

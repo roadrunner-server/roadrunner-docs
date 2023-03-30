@@ -1,4 +1,4 @@
-### Access logs
+# HTTP Access logs
 
 RR starting from the `v2.5.0` brings access logs support (turned off by default). They will include the following information:  
 
@@ -14,7 +14,7 @@ RR starting from the `v2.5.0` brings access logs support (turned off by default)
 - `http_user_agent` - http user [agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent)
 - `http_referer` - http [referer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer)
 
-#### Configuration:
+## Configuration:
 
 ```yaml
 version: "3"

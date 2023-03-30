@@ -1,5 +1,6 @@
 # Logging
 
+Logger plugin is used to redirect workers `STDERR` into the RoadRunner `STDERR`/`STDOUT`.
 RoadRunner provides the ability to control the log for each plugin individually.
 
 ## Global configuration
