@@ -503,3 +503,15 @@ http:
 
 `http.internal_error_code` code is used for the `SoftJob`, allocation, all kinds of TTL, Network, errors. But for
 example, for the load balancer might be better to use a different code. So, you may override the default one.
+
+## Middleware order
+
+Since all middleware are independent, they can remove/update headers set by the [previous one](https://github.com/roadrunner-server/roadrunner/issues/1501).
+Note that the request (imagine) comes from the right:
+
+```yaml
+http:
+    middleware: # RESPONSE FROM HERE --> [ "static", "gzip", "sendfile" ] # <-- REQUEST COMES FROM HERE
+```
+
+So in this case the request gets into the `sendfile` middleware, then `gzip` and `static`. And vice versa from the response.
