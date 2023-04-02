@@ -47,11 +47,10 @@ rpc:
 $rpc = Goridge\RPC\RPC::create(RoadRunner\Environment::fromGlobals()->getRPCAddress());
 ```
 
-You can immediately use this RPC to call embedded RPC services such as HTTP:
+## Available RPC methods:
 
-```php
-var_dump($rpc->call('informer.Workers', 'http'));
-```
+1. `rpc.Version`: - to get the RoadRunner version.
+2. `rpc.Config`: - to get the RoadRunner configuration.
 
 ## Go RPC
 
@@ -64,3 +63,4 @@ You may be able to find the RPC Go definitions here:
 - [Status](https://github.com/roadrunner-server/status/blob/master/rpc.go)
 - [Metrics](https://github.com/roadrunner-server/metrics/blob/master/rpc.go)
 - [Lock](https://github.com/roadrunner-server/lock/blob/master/rpc.go)
+- [RPC](https://github.com/roadrunner-server/rpc/blob/master/rpc.go)
