@@ -15,17 +15,17 @@ RoadRunner uses Endure to manage dependencies, this allows you to tweak and exte
 
 ## How to write a plugin
 
-- ### Writing a plugin  
 [![plugin](https://img.youtube.com/vi/h5PPvc_YOtg/0.jpg)](https://www.youtube.com/watch?v=h5PPvc_YOtg)  
 
-- ### Velox configuration  
+## Velox configuration
+
 [![configuration](https://img.youtube.com/vi/sddi_lh7ePo/0.jpg)](https://www.youtube.com/watch?v=sddi_lh7ePo)  
 
-#### Install Golang
+## Install Golang
 
 To build an application server you need [Golang 1.20+](https://golang.org/dl/) or Docker to be installed.
 
-### Installation:
+## Installation:
 
 - Docker:
 
@@ -48,7 +48,7 @@ ENV CGO_ENABLED=0
 # RUN build
 RUN vx build -c velox.toml -o /usr/bin/
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} php:8.1-cli
+FROM --platform=${TARGETPLATFORM:-linux/amd64} php:8.2-cli
 
 # copy required files from builder image
 COPY --from=velox /usr/bin/rr /usr/bin/rr
@@ -63,9 +63,12 @@ CMD ["/usr/bin/rr"]
 go install github.com/roadrunner-server/velox/cmd/vx@latest
 ```
 
-- Or download velox binary from the [releases page](https://github.com/roadrunner-server/velox/releases) and unpack to your `PATH`.
+- Or download `velox` binary from the [releases page](https://github.com/roadrunner-server/velox/releases) and unpack to your `PATH`.
 
-### Configuration:
+## Configuration:
+
+Keep in mind to set the latest stable version in the `${VERSION}` env variable.
+You may also use `${TIME}` env variable to write the build time in the output binary.
 
 ```toml
 # filename - `plugins.toml`
@@ -74,7 +77,7 @@ go install github.com/roadrunner-server/velox/cmd/vx@latest
 build_args = ['-trimpath', '-ldflags', '-s -X github.com/roadrunner-server/roadrunner/v2023/internal/meta.version=${VERSION} -X github.com/roadrunner-server/roadrunner/v2023/internal/meta.buildTime=${TIME}']
 
 [roadrunner]
-ref = "v2.12.1"
+ref = "v2023.1.0"
 
 [github]
     [github.token]
@@ -82,61 +85,60 @@ ref = "v2.12.1"
 
     [github.plugins]
     # LOGS
-    appLogger = { ref = "v3.2.0", owner = "roadrunner-server", repository = "app-logger" }
-    logger = { ref = "v3.2.0", owner = "roadrunner-server", repository = "logger" }
+    appLogger = { ref = "v4.0.4", owner = "roadrunner-server", repository = "app-logger" }
+    logger = { ref = "v4.1.3", owner = "roadrunner-server", repository = "logger" }
 
     # CENTRIFUGE BROADCASTING PLATFORM
-    centrifuge = { ref = "v3.2.0", owner = "roadrunner-server", repository = "centrifuge" }
+    centrifuge = { ref = "v4.1.2", owner = "roadrunner-server", repository = "centrifuge" }
 
     # WORKFLOWS ENGINE
-    temporal = { ref = "v3.0.0", owner = "temporalio", repository = "roadrunner-temporal" }
+    temporal = { ref = "v4.2.1", owner = "temporalio", repository = "roadrunner-temporal" }
 
     # METRICS
-    metrics = { ref = "v3.3.0", owner = "roadrunner-server", repository = "metrics" }
+    metrics = { ref = "v4.0.4", owner = "roadrunner-server", repository = "metrics" }
 
     # HTTP + MIDDLEWARE
-    http = { ref = "v3.2.0", owner = "roadrunner-server", repository = "http" }
-    gzip = { ref = "v3.2.0", owner = "roadrunner-server", repository = "gzip" }
-    prometheus = { ref = "v3.2.0", owner = "roadrunner-server", repository = "prometheus" }
-    headers = { ref = "v3.2.0", owner = "roadrunner-server", repository = "headers" }
-    static = { ref = "v3.2.0", owner = "roadrunner-server", repository = "static" }
-    otel = { ref = "v3.2.0", owner = "roadrunner-server", repository = "otel" }
-
-    # RELOAD (for the DEV)
-    reload = { ref = "v3.2.0", owner = "roadrunner-server", repository = "reload" }
+    http = { ref = "v4.1.4", owner = "roadrunner-server", repository = "http" }
+    gzip = { ref = "v4.0.4", owner = "roadrunner-server", repository = "gzip" }
+    prometheus = { ref = "v4.0.5", owner = "roadrunner-server", repository = "prometheus" }
+    headers = { ref = "v4.0.4", owner = "roadrunner-server", repository = "headers" }
+    static = { ref = "v4.0.5", owner = "roadrunner-server", repository = "static" }
+    
+    # OpenTelemetry
+    otel = { ref = "v4.1.5", owner = "roadrunner-server", repository = "otel" }
 
     # SERVER
-    server = { ref = "v3.2.0", owner = "roadrunner-server", repository = "server" }
+    server = { ref = "v4.1.1", owner = "roadrunner-server", repository = "server" }
 
     # SERVICE aka lightweit systemd
-    service = { ref = "v3.2.0", owner = "roadrunner-server", repository = "service" }
+    service = { ref = "v4.1.0", owner = "roadrunner-server", repository = "service" }
 
     # JOBS
-    jobs = { ref = "v3.2.0", owner = "roadrunner-server", repository = "jobs" }
-    amqp = { ref = "v3.3.0", owner = "roadrunner-server", repository = "amqp" }
-    sqs = { ref = "v3.3.0", owner = "roadrunner-server", repository = "sqs" }
-    beanstalk = { ref = "v3.2.0", owner = "roadrunner-server", repository = "beanstalk" }
-    nats = { ref = "v3.2.0", owner = "roadrunner-server", repository = "nats" }
-    kafka = { ref = "v3.0.4", owner = "roadrunner-server", repository = "kafka" }
+    jobs = { ref = "v4.3.2", owner = "roadrunner-server", repository = "jobs" }
+    amqp = { ref = "v4.4.3", owner = "roadrunner-server", repository = "amqp" }
+    sqs = { ref = "v4.2.3", owner = "roadrunner-server", repository = "sqs" }
+    beanstalk = { ref = "v4.2.2", owner = "roadrunner-server", repository = "beanstalk" }
+    nats = { ref = "v4.2.2", owner = "roadrunner-server", repository = "nats" }
+    kafka = { ref = "v4.1.4", owner = "roadrunner-server", repository = "kafka" }
 
     # KV
-    kv = { ref = "v3.2.0", owner = "roadrunner-server", repository = "kv" }
-    boltdb = { ref = "v3.2.0", owner = "roadrunner-server", repository = "boltdb" }
-    memory = { ref = "v3.3.0", owner = "roadrunner-server", repository = "memory" }
-    redis = { ref = "v3.2.0", owner = "roadrunner-server", repository = "redis" }
-    memcached = { ref = "v3.2.0", owner = "roadrunner-server", repository = "memcached" }
+    kv = { ref = "v4.1.5", owner = "roadrunner-server", repository = "kv" }
+    boltdb = { ref = "v4.3.2", owner = "roadrunner-server", repository = "boltdb" }
+    memory = { ref = "v4.2.2", owner = "roadrunner-server", repository = "memory" }
+    redis = { ref = "v4.1.5", owner = "roadrunner-server", repository = "redis" }
+    memcached = { ref = "v4.1.5", owner = "roadrunner-server", repository = "memcached" }
 
     # FILESERVER (static files)
-    fileserver = { ref = "v3.2.0", owner = "roadrunner-server", repository = "fileserver" }
+    fileserver = { ref = "v4.0.5", owner = "roadrunner-server", repository = "fileserver" }
 
     # gRPC plugin
-    grpc = { ref = "v3.2.0", owner = "roadrunner-server", repository = "grpc" }
+    grpc = { ref = "v4.1.5", owner = "roadrunner-server", repository = "grpc" }
 
     # HEALTHCHECKS + READINESS CHECKS
-    status = { ref = "v3.2.0", owner = "roadrunner-server", repository = "status" }
+    status = { ref = "v4.1.5", owner = "roadrunner-server", repository = "status" }
 
     # TCP for the RAW TCP PAYLOADS
-    tcp = { ref = "v3.2.0", owner = "roadrunner-server", repository = "tcp" }
+    tcp = { ref = "v4.0.4", owner = "roadrunner-server", repository = "tcp" }
 
 [gitlab]
     [gitlab.token]
@@ -178,5 +180,5 @@ Where:
 - `folder`: if the plugin is in some folder in your repository, you may specify it via this configuration option. For example: ` cache = { ref = "v1.6.18", owner = "darkweak", repository = "souin", folder="plugins/roadrunner" }`.
 - `replace`: go.mod [replace directive](https://go.dev/ref/mod#go-mod-file-replace).
 
-### Known limitation
+## Known limitation
 - At the moment only GitHub and GitLab repositories are supported.
