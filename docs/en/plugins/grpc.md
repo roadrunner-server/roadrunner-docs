@@ -1,8 +1,8 @@
-### PHP Client
+## PHP Client
 
 - [Roadrunner GRPC](https://github.com/spiral/roadrunner-grpc)
 
-### Compiling proto sample:
+## Compiling proto sample:
 
 ```
 protoc --plugin=protoc-gen-php-grpc --php_out=<OUTPUT DIRECTORY> --php-grpc_out=<OUTPUT DIRECTORY> simple.proto
@@ -139,7 +139,7 @@ grpc:
     destroy_timeout: 60s
 ```
 
-### Metrics
+## Metrics
 - [link](../lab/metrics.md)
 
 Example of grafana dashboard is available [here](https://github.com/roadrunner-server/roadrunner/blob/master/dashboards/grpc_dashboard.json).
@@ -150,7 +150,7 @@ Example of grafana dashboard is available [here](https://github.com/roadrunner-s
 2. `Logger` plugin to show log messages.
 3. `Config` plugin to read and populate plugin's configuration.
 
-### mTLS
+## mTLS
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following configuration:
 
 ```yaml
