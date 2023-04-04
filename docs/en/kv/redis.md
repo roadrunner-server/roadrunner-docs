@@ -1,4 +1,4 @@
-### Redis Driver Configuration
+# Redis Driver
 
 Before configuring the Redis driver, please make sure that the Redis Server is
 installed and running. You can read more about this [in the documentation](https://redis.io/).
