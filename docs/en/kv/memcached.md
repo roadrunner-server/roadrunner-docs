@@ -1,4 +1,4 @@
-## Memcached Driver Configuration
+# Memcached Driver
 
 Before configuring the Memcached driver, please make sure that the Memcached
 Server is installed and running. You can read more about this [in the documentation](https://memcached.org/).
