@@ -1,21 +1,25 @@
-## OpenTelemetry plugin
+# OpenTelemetry plugin
 
 OpenTelemetry plugin is a unified standard for tracing, logging and metrics information. Currently, only tracing information is stable and safe to use in production.
+More info: [link](https://opentelemetry.io/)
 
-### PHP Library
+## PHP Client
 
-PHP library in the alpha stage at the moment: [link](https://github.com/open-telemetry/opentelemetry-php).  
+PHP library in the [beta](https://opentelemetry.io/docs/instrumentation/php/#status-and-releases) stage at the moment: [link](https://github.com/open-telemetry/opentelemetry-php).  
 Thanks to [Brett McBride](https://github.com/brettmc), he created a rr-otel [PHP demo](https://github.com/brettmc/rr-otel-demo).
 
-### Original issue
+## Original issue
 
 - https://github.com/roadrunner-server/roadrunner/issues/1027
 
-### Configuration
+## Configuration
 
-OT is a middleware plugin which currently working with gRPC and HTTP plugins.
+OpenTelemetry is a middleware that currently works with gRPC, HTTP and Jobs plugins.
 
-Example configuration for HTTP:
+## OpenTelemetry HTTP
+
+- For HTTP, you need to enable an `otel' middleware with the main `otel` configuration:
+
 ```yaml
 version: "3"
 
@@ -52,7 +56,10 @@ logs:
   mode: production
 ```
 
-Example configuration for gRPC:
+## OpenTelemetry gRPC 
+
+- For gRPC, configure only the main `otel` section:
+
 ```yaml
 version: "3"
 
@@ -82,6 +89,36 @@ logs:
   level: debug
 ```
 
+## OpenTelemetry Jobs
+
+- To configure the `Jobs` plugin with OpenTelemetry, you only need to configure the main `otel` section:
+
+```yaml
+version: "3"
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php otel_worker.php"
+  relay: pipes
+
+jobs:
+  # ....
+
+otel:
+  insecure: true
+  compress: false
+  exporter: otlp
+  service_name: rr_test
+  service_version: 1.0.0
+  endpoint: 127.0.0.1:4317
+  
+logs:
+  encoding: console
+  level: debug
+```
+
 `otel` contains the following keys:
 1. `insecure`: boolean, default `false`. Use insecure endpoints (http/https) or insecure gRPC.
 2. `compress`: boolean, default `false`. Use gzip to compress the spans.
@@ -93,7 +130,7 @@ logs:
 8. `service_version`: string, default `1.0.0`. User's service version.
 9. `headers`: key-values map, default empty. User defined headers. new_relic `api-key` should be [here](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/opentelemetry-setup/#review-settings). 
 
-### OpenTelemetry environment variables
+## OpenTelemetry environment variables
 
 Env variables are used for the PHP process and can be passed via the `server` env variables.
 
