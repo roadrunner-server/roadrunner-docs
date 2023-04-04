@@ -1,4 +1,4 @@
-## Boltdb Driver Configuration
+# Boltdb Driver
 
 This type of driver is already supported by the RoadRunner and does not require
 any additional installations.
