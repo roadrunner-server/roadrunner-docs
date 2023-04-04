@@ -4,8 +4,8 @@ RoadRunner main configuration is written in YAML. However, if you prefer JSON fo
 RR accepts both formats.
 Here is a link to the most recent configuration reference:
 
-- ## [**link**](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml)
+- [**link**](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml)
 
 # Configuration plugin
 
-- ##[**link**](../plugins/config.md)
+- [**link**](../plugins/config.md)
