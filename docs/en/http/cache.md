@@ -3,6 +3,9 @@
 Cache middleware implements http-caching RFC 7234. It's based on the [Souin](https://github.com/darkweak/souin) HTTP cache library.  
 Have a look at the [Souin documentation](https://github.com/darkweak/souin) if you need more information.
 
+> **WARNING**
+> This is a third party plugin and isn't included by default. See the `Building RoadRunner with Cache` section for more information.
+
 ## Features
 
  * [RFC 7234](https://httpwg.org/specs/rfc7234.html) compliant HTTP Cache.
@@ -14,7 +17,7 @@ Have a look at the [Souin documentation](https://github.com/darkweak/souin) if y
  * Configure multiple HTTP verbs to cache (especially for GraphQL).
  * Builtin timeout.
 
-**Build the roadrunner binary**
+## Building RoadRunner with Cache
 
 As it's based on the [Souin](https://github.com/darkweak/souin) HTTP cache library we can use directly the roadrunner middleware implemenation. We have to set the `folder` property because this middleware is located in a sub-directory.
 ```toml
