@@ -2,6 +2,8 @@
 
 RoadRunner application can be started by calling a simple command from the root of your PHP application.
 
+## Serving and Stopping
+
 ```bash
 $ rr serve 
 ```
@@ -32,6 +34,13 @@ Or to force stop:
 $ rr stop -f
 ```
 
+RoadRunner supports `.env` files. To read environment variables from the `.env` file, use the `--dotenv` CLI command:
+```bash
+rr serve --dotenv .env -c .rr.yaml
+```
+
+## Reloading workers
+
 To reload all RoadRunner plugins:
 
 ```bash
@@ -58,6 +67,8 @@ To run golang pprof server (debug mode):
 $ rr serve -d -c .rr.yaml
 ```
 
+## Workers status (OS metrics)
+
 To view the status of all active workers in an interactive mode.
 
 ```bash
@@ -76,6 +87,8 @@ Workers of [http]:
 +---------+-----------+---------+---------+-----------------+
 ```
 
+## Jobs commands
+
 To `pause`/`reset`/`stop` `JOBS` pipelines, you may use the following commands:
 
 ```bash
@@ -88,16 +101,15 @@ Or to `list`:
 $ rr jobs list -c .rr.yaml
 ```
 
-RoadRunner supports `.env` files. To read environment variables from the `.env` file, use the `--dotenv` CLI command:
-```bash
-rr serve --dotenv .env -c .rr.yaml
-```
+
 
 To show the rr version, use `-v` or `--version`:
 ```bash
 rr -v
 ```
 Output: `rr version local (build time: development, go1.18.3), OS: linux, arch: amd64`
+
+## Available CLI commands
 
 List of all commands with available options:
 - `serve`:
