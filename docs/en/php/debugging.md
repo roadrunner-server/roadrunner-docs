@@ -1,4 +1,5 @@
 # Debugging
+
 You can use RoadRunner scripts with xDebug extension. In order to enable configure your IDE to accept remote connections. 
 
 Note, if you run multiple PHP processes you have to extend the maximum number of allowed connections to the number of 

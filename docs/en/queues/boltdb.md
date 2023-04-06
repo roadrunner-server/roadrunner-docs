@@ -7,7 +7,7 @@ huge load. The maximum RPS it can have is not more than 30-50.
 Data in this driver is stored in the boltdb database file. You can't use the same file at the same time for the 2 pipelines or for the
 for KV plugin and Jobs plugin. This is boltdb limitation on simultaneous access of 2 processes to the same file.
 
-The complete `boltdb` driver configuration:
+## Configuration:
 
 ```yaml
 version: "3"

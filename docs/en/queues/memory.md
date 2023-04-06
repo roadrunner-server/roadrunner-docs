@@ -8,7 +8,7 @@ destroyed when the RoadRunner Server is restarted. If you need persistent
 queue, then it is recommended to use alternative drivers: `amqp`, `beanstalk`
 or `sqs`.
 
-The complete `memory` driver configuration looks like this:
+## Configuration:
 
 ```yaml
 version: "3"

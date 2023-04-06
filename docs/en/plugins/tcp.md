@@ -1,9 +1,9 @@
 # TCP Plugin
 
-The TCP plugin can read raw TCP data, delimited with the specified delimiters, and send it to the worker. So basically anything that can be sent over TCP can be sent to the RR endpoint.
+The TCP plugin can read raw TCP data, delimited by the specified delimiters, and send it to the worker. So basically anything that can be sent over TCP can be sent to the RR endpoint.
+## PHP client 
 
-### PHP library
-- https://github.com/spiral/roadrunner-tcp
+- [link](https://github.com/spiral/roadrunner-tcp)
 
 ### Configuration
 
@@ -32,7 +32,7 @@ Where:
 
 ### RR Protocol
 
-Protocol used to have bi-directional communication channel between the PHP worker and the RR server. The protocol can be used by any third-party library and has its own client API with the RR. Our reference implementation is: https://github.com/spiral/roadrunner-tcp.
+Protocol used to provide a bi-directional communication channel between the PHP worker and the RR server. The protocol can be used by any third party library and has its own client API to the RR. Our reference implementation can be found at https://github.com/spiral/roadrunner-tcp.
 
 - `OnConnect`: when the connection is established, RR sends payload with the `CONNECTED` header to the worker with connection uuid, server name, and connection remote address. The PHP worker might then respond with the following headers:
     1. `WRITE` - to write the data in the connection and then start the read loop. After data arrived in the connection, RR will read it and send to it the PHP worker with the header `DATA`.

@@ -13,8 +13,7 @@ beanstalk:
   addr: tcp://127.0.0.1:11300
 ```
 
-After setting up the connection, you can start using it. Let's take a look at
-the complete config with all the options for this driver:
+## Configuration:
 
 ```yaml
 version: "3"

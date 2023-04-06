@@ -1,6 +1,11 @@
+# gRPC plugin
+
+RoadRunner's `gRPC` plugin provides the ability for the PHP worker to work with the `gRPC` interface. It consists of 2 main parts: server and proto-plugin.
+The server is used to pass the `gRPC` requests to the PHP worker and the proto-plugin acts as a `protoc` plugin to generate the PHP interface to handle the requests.
+
 ## PHP Client
 
-- [Roadrunner GRPC](https://github.com/spiral/roadrunner-grpc)
+- [link](https://github.com/spiral/roadrunner-grpc)
 
 ## Compiling proto sample:
 

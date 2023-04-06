@@ -18,7 +18,9 @@ amqp:
   addr: amqp://guest:guest@localhost:5672
 ```
 
-Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses the queue settings, including those specific to AMQP):
+Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses the queue settings, including those specific to AMQP).
+
+## Configuration:
 
 ```yaml
 version: "3"

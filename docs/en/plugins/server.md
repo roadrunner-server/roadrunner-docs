@@ -5,7 +5,7 @@ All created workers will automatically inherit all RRs functionality like: super
 
 ## PHP Client
 
-- [Roadrunner Worker](https://github.com/spiral/roadrunner-worker)
+- [link](https://github.com/spiral/roadrunner-worker)
 
 ## Configuration
 

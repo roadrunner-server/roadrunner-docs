@@ -1,6 +1,4 @@
-## RoadRunner Events bus
-
-- `[AVAILABLE SINCE RR v2.6.0]`
+# RoadRunner Events bus
 
 The RR events bus might be useful when one plugin raises some event on which another plugin should react. For example,
 plugins like `Temporal` might read events from the `worker_watcher`.
@@ -134,6 +132,6 @@ func foo() {
 }
 ```
 
-> **INFO**
+> **NOTE**
 > Important note: you don't need to import your custom event types into the subscriber. You only need to know the name of that event and pass a string to the subscriber.
 

@@ -128,7 +128,7 @@ file_put_contents('php://stderr', 'my message');
 
 Since RoadRunner 2.0 all warnings send to STDOUT will be forwarded to STDERR as well.
 
-## Embedded Monitoring
+## Process supervision
 
 RoadRunner is capable of monitoring your application and run soft reset (between requests) if necessary. The previous name - `limit`, current - `supervisor`
 Edit your `.rr` file to specify limits for your application:

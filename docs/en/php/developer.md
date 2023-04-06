@@ -31,6 +31,8 @@ This can also be done using the `Jobs` plugin and the `Jobs` consumers. Each con
 
 This is done to always load your last code into the PHP worker.
 
+More info: [debug](debugging.md)
+
 ## Restarting Workers
 
 RoadRunner provides several ways to safely restart workers on demand. Both approaches can be used on a live server

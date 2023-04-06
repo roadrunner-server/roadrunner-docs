@@ -6,6 +6,6 @@ Here is a link to the most recent configuration reference:
 
 - [**link**](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml)
 
-# Configuration plugin
+## Configuration plugin
 
 - [**link**](../plugins/config.md)

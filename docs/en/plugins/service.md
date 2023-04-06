@@ -3,26 +3,25 @@
 The service plugin acts much like the simplified `systemd` daemons. The main purpose of this plugin is to start and
 monitor processes.
 There is no limit to the number of processes. For example, if you need to run 10 identical PHP processes, you can use 1
-service
-with `process_num` set to 10.
+service with `process_num` set to 10.
 RoadRunner can restart the process after exit with `remain_after_exit` set to true, show the service name in the logs,
-limit the execution time of the process, pass the
-the execution time of the process, pass your `ENV` variables and pause the restarts.
+limit the execution time of the process, pass the execution time of the process, pass your `ENV` variables and pause the restarts.
 
 Any PHP script, binary, shell script can be started as a service. Basically, anything that can be executed can be
 executed by the service plugin.
 
-- `Since RR v2.5.0`
-- Client API [link](https://github.com/spiral/roadrunner-services)
+## PHP client  
 
-### Main capabilities
+- [link](https://github.com/spiral/roadrunner-services)
+
+## Main capabilities
 
 1. Execute PHP code, binaries, bash/powershell scripts.
 2. Restart after specified amount of time.
 3. Control execute time for the particular command.
 4. Provide statistic to the `Informer` plugin about `%CPU`, `PID` and used `RSS memory`.
 
-### Config
+## Config
 
 ```yaml
 version: "3"

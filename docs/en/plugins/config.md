@@ -1,4 +1,6 @@
-The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML config.
+# Configuration and environment variables parser
+
+The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML/JSON config.
 
 ## Compatibility matrix
 

@@ -8,7 +8,7 @@ full-fledged event streaming platform.
 Now used by 80% of the Fortune 500, Kafka brings numerous benefits to virtually every industry and opens up countless
 new use cases, large and small.
 
-Configuration:
+## Configuration:
 
 ```yaml
 # Kafka jobs driver

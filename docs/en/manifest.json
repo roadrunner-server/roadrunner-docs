@@ -92,7 +92,6 @@
       "http/gzip": "GZIP",
       "http/headers": "Headers and CORS",
       "http/sendfile": "X-Sendfile",
-      "http/fileserver": "Fileserver",
       "http/static": "Static files"
     }
   },

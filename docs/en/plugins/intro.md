@@ -1,14 +1,14 @@
-## What is it?
+# What is it?
 
 RR plugin is a separate piece of software that can extend the functionality of RR. The plugin may depend on the other
 plugins, or it may be completely independent.
 
-### Creating own plugin/middleware:
+## Creating own plugin/middleware:
 
 - [Plugin](../customization/plugin.md)
 - [Middleware](../customization/middleware.md)
 
-### Interface
+## Interface
 
 In general, every plugin implements the following set of methods. They are all optional, but add functionality to your plugin.
 ```go

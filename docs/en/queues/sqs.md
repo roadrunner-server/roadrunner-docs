@@ -14,7 +14,9 @@ of the Amazon SQS server.
 After you have created the SQS server, you need to specify the following
 connection settings in the `sqs` configuration settings. Unlike AMQP and Beanstalk,
 SQS requires more values to set up a connection and will be different from what we are used to.
-we're used to:
+we're used to.
+
+## Configuration:
 
 ```yaml
 sqs:

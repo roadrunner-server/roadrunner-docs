@@ -19,7 +19,7 @@ func (s *Plugin) Init() error {
 }
 ```
 
-### Disabling plugin
+## Disabling plugin
 
 You may disable the plugin in the runtime according to a different conditions. For example, if there are no config for
 it or you get an initialization error, but still don't want to stop the execution.
@@ -59,7 +59,7 @@ func (s *Plugin) Init(cfg Configurer) error {
 
 You can register your plugin by creating a custom version of `main.go` file and [building it](build.md).
 
-### Dependencies
+## Dependencies
 
 You can access other RoadRunner plugins by requesting dependencies in your `Init` method. All dependencies should be
 represented as interfaces,
@@ -90,7 +90,7 @@ func (s *Service) Init(r Configurer, log Logger) error {
 }
 ```
 
-### Configuration
+## Configuration
 
 In most cases, your services would require a set of configuration values.
 RoadRunner can automatically populate and validate your configuration structure using the `config` plugin via an
@@ -174,7 +174,7 @@ func (cfg *Config) InitDefaults() {
 
 ```
 
-### Serving
+## Serving
 
 Create `Serve` and `Stop` methods in your structure to let RoadRunner start and stop your service. You may also use a
 context from the `Stop` method to let RR force your plugin to stop after a specified timeout in the configuration.
@@ -225,7 +225,7 @@ The `Serve` method is thread-safe. It runs in a separate goroutine managed by th
 One note is that you should unblock it when calling `Stop` on the container.
 Otherwise, the service will be killed after the timeout (which can be set in Endure).
 
-### Collecting dependencies in runtime
+## Collecting dependencies in runtime
 
 RoadRunner provides a way to collect dependencies at runtime via the `Collects` interface.
 This is very useful for middlewares or extending plugins with additional functionality without changing them.
@@ -272,7 +272,7 @@ Important notes:
 3. `(*Middleware)(nil)`: is the second argument of the `dep.Fits` method which should be an interface you want to find
    in the registered plugins.
 
-### RPC Methods
+## RPC Methods
 
 Extending your plugin with RPC methods does not change the plugin at all. The only thing you have to do is to create a
 file with
@@ -330,5 +330,5 @@ method you might use the following sample:
 var_dump($rpc->call('custom.Hello', 'world'));
 ```
 
-### Tips:
+## Tips:
 1. More about plugins can be found here: [link](https://github.com/roadrunner-server/endure/tree/master/examples)

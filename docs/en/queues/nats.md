@@ -2,7 +2,7 @@
 
 NATS driver supported in RR since `v2.5.0` and includes only NATS JetStream support.
 
-The complete `NATS` driver configuration:
+## Configuration:
 
 ```yaml
 version: "3"
