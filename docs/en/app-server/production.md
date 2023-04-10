@@ -22,13 +22,12 @@ Since a single worker typically processes more than a single request, you should
 - Connect to a worker using pipes for better performance (Unix sockets are just a bit slower).
 - Adjust your pool timings to the values you like.
 - Number of workers = number of CPU threads in your system, unless your application is IO bound, then choose the number heuristically.
-  number heuristically.
-- Consider using `max_jobs` for your workers if you experience application stability issues over time.
+- Consider using `max_jobs` for your workers if you experience application stability memory issues over time.
 - RoadRunner has +40% performance when using keep-alive connections.
 - Set the memory limit at least 10-20% below `max_memory_usage`.
-- Since RoadRunner workers run from cli, you need to enable OPcache in the CLI with `opcache.enable_cli=1`.
+- Since RoadRunner runs workers from cli, you need to enable OPcache in the CLI with `opcache.enable_cli=1`.
 - Make sure to use [health check endpoint](../lab/health.md) when running rr in a cloud environment.
-- Use the `user` option in the config to start worker processes from the specified user on Linux-based systems. Note that in this case RoadRunner should be started from the `root` to allow fork-exec processes from different users.
+- Use the `user` option in the `server` plugin configuration to start worker processes from the specified user on Linux-based systems. Note that in this case RoadRunner should be started from the `root` to allow fork-exec processes from different users.
 - If your application uses mostly IO (disk, network, etc), you can allocate as many workers as you have memory for the application. Workers are cheap. A hello-world worker uses no more than ~26Mb of RSS memory.
 - For CPU bound operation, see an average CPU load and choose the number of workers to consume 90-95% CPU. Leave a few percent for the GC of the GO (not necessary btw).
 - If you have ~const workers latency, you can calculate the number of workers needed to handle the target [load] (https://github.com/spiral/roadrunner/discussions/799#discussioncomment-1332646).
