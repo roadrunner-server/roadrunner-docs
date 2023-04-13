@@ -23,6 +23,14 @@ separate project.
 
 [![configuration](https://img.youtube.com/vi/sddi_lh7ePo/0.jpg)](https://www.youtube.com/watch?v=sddi_lh7ePo)
 
+## Configuring Velox for the private repositories:
+- Make sure the `ssh-agent` is running and the ssh key has been added: [link](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- Exclude your organization package prefix from the Go environment variables:
+```
+go env -w GOPRIVATE="gitlab/github.com/<company_name>/*"
+go env -w GONOSUMDB="gitlab/github.com/<company_name>/*"
+```
+
 ## Install Golang
 
 To build an application server you need [Golang 1.20+](https://golang.org/dl/) or Docker to be installed.
