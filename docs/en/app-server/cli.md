@@ -116,7 +116,7 @@ List of all commands with available options:
   1. `-c`: path to the config file.
   2. `-w`: set the working directory.
   3. `--dotenv`: populate the process with env variables from the `.dotenv` file.
-  4. `-d`: start a pprof server. Note, this is not `debug`, to use debug logs level, please, use logs: https://roadrunner.dev/docs/plugins-logger/2023.x/en
+  4. `-d`: start a pprof server. Note, this is not `debug`, to use debug logs level, please, use logs: [link](../lab/logger.md)
   5. `-s`: silent mode.
   6. `-o`: to override configuration keys with your values, e.g. `-o=http.address=:8080` will override the `http.address` from the `.rr.yaml`. 
   7. `-p`: create a `.pid` file to use `./rr stop` later. 
