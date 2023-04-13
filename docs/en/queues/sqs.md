@@ -1,6 +1,6 @@
 # SQS Driver
 
-[Amazon SQS (Simple Queue Service](https://aws.amazon.com/sqs/) is an alternative
+[Amazon SQS Simple Queue Service](https://aws.amazon.com/sqs/) is an alternative
 queue server also developed by Amazon and is also part of the AWS
 service infrastructure. If you prefer to use the "cloud" option, you can use the
 [prebuilt documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-configuring.html)
