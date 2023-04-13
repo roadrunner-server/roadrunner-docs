@@ -5,5 +5,5 @@ RoadRunner allocates workers like usual processes (via `fork` + `exec` syscalls)
 How to fix that?  
 
 1. Check the `pool.allocate_timeout` option. It should be in the form of `pool.allocate_timeout: 1s` or `pool.allocate_timeout: 1h`, so you should specify the units of measurement. Also, keep in mind, that `1s` for the allocate timeout might be a very small value, try to increase it.
-2. xdebug might freeze the worker spawn while improperly configured. See this tutorial: https://roadrunner.dev/docs/php-debugging/2.x/en
+2. xdebug might freeze the worker spawn while improperly configured. See this tutorial: [link](../php/debugging.md)
 3. If you use a server's relay other than `pipes`, check this options: https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml#L75. It's responsible for the initial handshake timeout between RR and PHP process established via `sockets` or `TCP`.

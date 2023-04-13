@@ -102,7 +102,7 @@ func Plugins() []any {
 
 Or you might use Velox to [build the RR binary](build.md).
 
-You should also make sure you configure the middleware to be used via the [config or the command line](https://roadrunner.dev/docs/intro-config). Otherwise, the plugin will be loaded, but the middleware will not be used with incoming requests.
+You should also make sure you configure the middleware to be used via the [config or the command line](../intro/config.md). Otherwise, the plugin will be loaded, but the middleware will not be used with incoming requests.
 
 ```yaml
 http:
