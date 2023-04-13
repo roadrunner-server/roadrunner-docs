@@ -9,3 +9,7 @@ Here is a link to the most recent configuration reference:
 ## Configuration plugin
 
 - [**link**](../plugins/config.md)
+
+## Limitations
+
+Note that since we use dots as level separators, e.g.: `http.pool`, you can't use dots in section names, queue names, etc. [link](https://github.com/roadrunner-server/roadrunner/issues/1529)
