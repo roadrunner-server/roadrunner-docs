@@ -1,6 +1,12 @@
 # Configuration and environment variables parser
 
-The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML/JSON config.
+The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML/JSON config. Each configuration should contain a version. The currently supported version is version 3. The version should be at the top of the configuration and should be a string:
+
+```yaml
+version: '3'
+
+# ... other config values
+```
 
 ## Compatibility matrix
 
