@@ -44,7 +44,7 @@ while ($req = $psr7->waitRequest()) {
 
 ```
 
-Name this file `handler.php` and put it into the root of your project. Make sure to run `composer require spiral/roadrunner`.
+Name this file `handler.php` and put it into the root of your project. Make sure to run `composer require spiral/roadrunner-http nyholm/psr7`.
 
 ### Application
 We can create a simple application to demonstrate how it works:

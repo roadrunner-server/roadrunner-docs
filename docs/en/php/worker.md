@@ -6,7 +6,7 @@ In order to run your PHP application, you must create a worker endpoint and conf
 install the required package using [Composer](https://getcomposer.org/).
 
 ```bash
-composer require spiral/roadrunner nyholm/psr7
+composer require spiral/roadrunner-http nyholm/psr7
 ```
 
 Simplest entrypoint with PSR-7 server API might look like:
