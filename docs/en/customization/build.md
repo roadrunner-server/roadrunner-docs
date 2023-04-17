@@ -19,6 +19,9 @@ separate project.
 
 [![plugin](https://img.youtube.com/vi/h5PPvc_YOtg/0.jpg)](https://www.youtube.com/watch?v=h5PPvc_YOtg)
 
+### `v2023.x.x` update
+[![plugin](https://img.youtube.com/vi/w_uxFhdinvU/0.jpg)](https://www.youtube.com/watch?v=w_uxFhdinvU)
+
 ## Velox configuration
 
 [![configuration](https://img.youtube.com/vi/sddi_lh7ePo/0.jpg)](https://www.youtube.com/watch?v=sddi_lh7ePo)
