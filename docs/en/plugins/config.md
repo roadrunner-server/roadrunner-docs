@@ -27,7 +27,9 @@ version: '3'
 
 **OpenTelemetry Middleware Update:**
 
-As of version `v2023.1.0`, the OpenTelemetry (OTEL) middleware has been separated from the HTTP plugin. It is now
+1. ⚠️ The `reload` plugin has been removed from the default plugins list. Please use `*.pool.debug=true` instead.
+
+2. As of version `v2023.1.0`, the OpenTelemetry (OTEL) middleware has been separated from the HTTP plugin. It is now
 configured using a top-level YAML key.
 
 - **`v2.x`**
@@ -74,6 +76,7 @@ To update your configuration from version 2.7 to version 3, follow these steps:
 2. **Relocate the `otel` middleware configuration:** If your configuration uses the `otel` middleware configuration
    within the `http` plugin, move it to the configuration root by cutting it from the `http` plugin and pasting it at
    the root level.
+3. **Remove** the `reload` plugin configuration and if needed, use the `*.pool.debug=true` option instead.
 
 ## Tips:
 
