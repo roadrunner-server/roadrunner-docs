@@ -1,50 +1,81 @@
-# Developer Mode
+# PHP Workers — Developer Mode
 
-RoadRunner uses PHP scripts in daemon mode. This means that you have to reload the server every time you change the
-codebase, or configure Roadrunner to do it automatically.
+When RoadRunner starts workers, they operate in daemon mode. In this mode, you need to reload the server every time you
+make changes to your codebase.
 
-## In Docker
+## Manual restarting
 
-You can reset rr process in docker by connecting to it using local rr client.
+One of the way reloading server is using console command:
 
-```yaml
+```terminal
+./rr reset
+```
+
+This command is also helpful when you need to restart a remote RoadRunner server using a local RoadRunner
+client.
+
+### Restarting in Docker container
+
+For example, you can use this command to restart workers inside a Docker container. To do this, you need to
+configure the RoadRunner server to handle external RPC requests by adding the following lines to your configuration
+file:
+
+```yaml .rr.yaml
 rpc:
   listen: tcp://:6001
 ```
 
-> Make sure to forward/expose port 6001.
+> **Note**
+> You must also forward/expose port `6001` in your Docker container to be able to use this feature.
 
-Then run `rr reset` locally on file change.
+Now when you run the command, RoadRunner client sends RPC request to the running server.
+
+> **Warning**
+> Pay attention to the RPC host and port which uses RoadRunner client specified in the `.rr.yaml` should be the same as
+> the RPC host and port which uses RoadRunner server. By default, client uses `127.0.0.1:6001`.
 
 ## Debug Mode
 
-To run workers in debug mode (similar to how PHP-FPM operates):
+It can be a time-consuming and tedious process to restart workers manually, especially during the development phase
+of a project. To address this issue, RoadRunner provides a debug mode that automatically restarts workers after each
+handled request, allowing developers to make changes to their codebase without having to manually reload the server each
+time.
+
+To enable debug mode, you can set the `pool.debug` option to `true` in desired plugin section that has workers pool:
+
+```yaml
+http:
+  pool:
+    debug: true
+    num_workers: 4
+```
+
+Or if you have only `debug` option in the `pool` section you can use short syntax:
 
 ```yaml
 http:
   pool.debug: true
 ```
 
-In this mode, RR will not create a worker when RR starts, no matter what you specify in the configuration, until you send a request.
-If you send 2-3-n parallel requests, RR will create 2-3-n workers. After the response, RR stops and removes the worker. 
-This can also be done using the `Jobs` plugin and the `Jobs` consumers. Each consumed message will create a worker.
+> **Note**
+> Every plugin in RoadRunner that creates workers has a `pool` section in which you can activate debug mode.
 
-This is done to always load your last code into the PHP worker.
+In this mode, RoadRunner does not create a worker when it starts up, regardless of the configuration settings. Instead,
+it waits for requests to arrive and creates workers accordingly. After the response, RoadRunner stops and removes the
+worker, allowing you to make changes to your codebase and reload it automatically.
+
+If you send 2-3-n parallel requests, RoadRunner will create 2-3-n workers to handle those requests simultaneously.
+Similarly, when using the `Jobs` plugin and the `Jobs` consumers, each consumed message will create a worker.
 
 More info: [debug](debugging.md)
 
-## Restarting Workers
-
-RoadRunner provides several ways to safely restart workers on demand. Both approaches can be used on a live server
-and should not cause any downtime.
-
 ## Stop Command
 
-You are able to send a `stop` command from the worker to the parent server to force process destruction. In this
-scenario,
-the job/request will be automatically forwarded to the next worker.
+In RoadRunner, you can send a `stop` command from the worker to the parent server to force process destruction. When
+this happens, the job/request will be automatically forwarded to the next worker in the queue.
 
-We can demonstrate it by implementing `max_jobs` control on PHP end:
+You can use this feature to implement `max_jobs` control on the PHP side. This can be useful for controlling memory
+usage inside the PHP script or for managing long-running tasks that need to be periodically restarted.
 
 ```php
 <?php
@@ -78,5 +109,5 @@ while ($req = $worker->waitRequest()) {
 }
 ```
 
-> **INFO**
-> This approach can be used to control memory usage inside the PHP script.
+As you can see in the example above, we send a `stop` command after handling 10 requests, to force process destruction.
+This ensures that the script does not consume too much memory and avoids any potential memory leaks.
