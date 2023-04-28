@@ -1,4 +1,4 @@
-# What is it?
+# RoadRunner — What is it?
 
 RoadRunner is a high-performance PHP application server and process manager, designed with extensibility in mind through
 its utilization of plugins. Developed in Go, RoadRunner operates by running your application in the form of workers,
