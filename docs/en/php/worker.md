@@ -1,115 +1,122 @@
 # PHP Workers
 
+RoadRunner is a high-performance PHP application server designed to handle a large number of requests simultaneously. It
+does so by running your PHP application in the form of workers, which follow the shared-nothing architecture. Each
+worker represents an individual process, ensuring isolation and independence in their operation.
+
+In this section, you will learn how to create a PHP worker that handles HTTP requests and returns a response to the
+RoadRunner server.
+
 ## Creating a worker
 
-In order to run your PHP application, you must create a worker endpoint and configure RoadRunner to use it. First,
-install the required package using [Composer](https://getcomposer.org/).
+### Worker types
 
-```bash
+RoadRunner provides several plugins that use workers to receive requests,
+including [HTTP](https://github.com/roadrunner-php/http), [Jobs](https://github.com/roadrunner-php/jobs),
+[Centrifuge](https://github.com/roadrunner-php/centrifugo), [gRPC](https://github.com/roadrunner-php/grpc),
+[TCP](https://github.com/roadrunner-php/tcp), and [Temporal](https://legacy-documentation-sdks.temporal.io/php/workers).
+You should choose the appropriate plugin based on the requirements of your application. In our example, we will create 
+a worker for the HTTP plugin.
+
+To create HTTP worker, you need to install the required composer packages:
+
+```terminal
 composer require spiral/roadrunner-http nyholm/psr7
 ```
 
-Simplest entrypoint with PSR-7 server API might look like:
+### Entry point
 
-```php
+After installing the required packages, you can create a worker. Here is an example of the simplest entry point with the
+PSR-7 server API:
+
+```php psr-worker.php
 <?php
 
-use Spiral\RoadRunner;
-use Nyholm\Psr7;
+require __DIR__ . '/vendor/autoload.php';
 
-include "vendor/autoload.php";
+use Nyholm\Psr7\Response;
+use Nyholm\Psr7\Factory\Psr17Factory;
 
-$worker = RoadRunner\Worker::create();
-$psrFactory = new Psr7\Factory\Psr17Factory();
+use Spiral\RoadRunner\Worker;
+use Spiral\RoadRunner\Http\PSR7Worker;
 
-$psr7 = new RoadRunner\Http\PSR7Worker($worker, $psrFactory, $psrFactory, $psrFactory);
+
+// Create new RoadRunner worker from global environment
+$worker = Worker::create();
+
+// Create common PSR-17 HTTP factory
+$factory = new Psr17Factory();
+
+$psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
 
 while (true) {
     try {
         $request = $psr7->waitRequest();
-
-        if (!($request instanceof \Psr\Http\Message\ServerRequestInterface)) { // Termination request received
-            break;
-        }
-    } catch (\Throwable) {
-        $psr7->respond(new Psr7\Response(400)); // Bad Request
+    } catch (\Throwable $e) {
+        // Although the PSR-17 specification clearly states that there can be
+        // no exceptions when creating a request, however, some implementations
+        // may violate this rule. Therefore, it is recommended to process the 
+        // incoming request for errors.
+        //
+        // Send "Bad Request" response.
+        $psr7->respond(new Response(400));
         continue;
     }
 
     try {
-        // Application code logic
-        $psr7->respond(new Psr7\Response(200, [], 'Hello RoadRunner!'));
-    } catch (\Throwable) {
-        $psr7->respond(new Psr7\Response(500, [], 'Something Went Wrong!'));
+        // Here is where the call to your application code will be located. 
+        // For example:
+        //  $response = $app->send($request);
+        //
+        // Reply by the 200 OK response
+        $psr7->respond(new Response(200, [], 'Hello RoadRunner!'));
+    } catch (\Throwable $e) {
+        // In case of any exceptions in the application code, you should handle
+        // them and inform the client about the presence of a server error.
+        //
+        // Reply by the 500 Internal Server Error response
+        $psr7->respond(new Response(500, [], 'Something Went Wrong!'));
+        
+        // Additionally, we can inform the RoadRunner that the processing 
+        // of the request failed.
+        $psr7->getWorker()->error((string)$e);
     }
 }
 ```
 
-Such a worker will expect communication with the parent RoadRunner server over standard pipes. Create a `.rr.yaml` config to enable it:
+This worker expects communication with the RoadRunner server over standard pipes.
 
-```yaml
+Create a `.rr.yaml` configuration file to enable it:
+
+```yaml .rr.yaml
 server:
   command: "php psr-worker.php"
 
 http:
   address: 0.0.0.0:8080
-  pool:
-    num_workers: 4
 ```
 
-If you don't like `yaml` try `.rr.json`:
+> **Note**
+> Read more about the configuration HTTP in the [HTTP Plugin](../http/http.md) section.
 
-```json
-{
-  "server": {
-    "command": "php psr-worker.php"
-  },
-  "http": {
-    "address": "0.0.0.0:8080",
-    "pool": {
-      "num_workers": 4
-    }
-  }
-}
+Now you can start the RoadRunner server by running the following command:
+
+```terminal
+./rr serve
 ```
 
-You can start the application now by downloading the RR binary file and running `rr serve`.
+> **Note**
+> Read more about how to download and install RoadRunner in the [RoadRunner — Installation](../intro/install.md)
+> section.
 
-## Alternative Communication Methods
+### Error Handling
 
-PHP Workers would utilize standard pipes STDOUT and STDERR to exchange data frames with the RR server. In some cases, you might
-want to use alternative communication methods such as TCP sockets:
+There are multiple ways to handle errors produced by PHP workers in RoadRunner. The simplest and most common way is to
+respond to the parent service with the error message using `$psr7->getWorker()->error()` method.
 
-```yaml
-server:
-  command: "php psr-worker.php"
-  relay: "tcp://localhost:7000"
-  
-http:
-  address: 0.0.0.0:8080
-  pool:
-    num_workers: 4
-```
+**Here's an example:**
 
-Unix sockets:
-
-```yaml
-server:
-  command: "php psr-worker.php"
-  relay:  "unix://rr.sock"
-
-http:
-  address: 0.0.0.0:8080
-  pool:
-    num_workers: 4
-```
-
-## Error Handling
-
-There are multiple ways of how you can handle errors produces by PHP workers.
-The simplest and most common way would be responding to parent service with the error message using `getWorker()->error()`:
-
-```php
+```php psr-worker.php
 try {
     $resp = new Psr7\Response();
     $resp->getBody()->write("hello world");
@@ -120,20 +127,61 @@ try {
 }
 ```
 
-You can also flush your warning and errors into `STDERR` to output them directly into the console (similar to docker-compose).
+Another way to handle errors is to flush warnings and errors to `STDERR` to output them directly into the console.
+
+**Here's an example:**
 
 ```php
-file_put_contents('php://stderr', 'my message');
+file_put_contents('php://stderr', 'Error message');
 ```
 
-Since RoadRunner 2.0 all warnings send to STDOUT will be forwarded to STDERR as well.
+> **Note**
+> Since RoadRunner 2.0 all warnings send to `STDOUT` will be forwarded to `STDERR` as well.
+
+## Communication Methods
+
+By default, workers use standard pipes `STDOUT` and `STDERR` to exchange data frames with the RoadRunner server.
+However, in some cases, you may want to use alternative communication methods such as `TCP` or `unix` sockets.
+
+:::: tabs
+
+::: tab TCP Sockets
+
+```yaml .rr.yaml
+server:
+  command: "php psr-worker.php"
+  relay: "tcp://127.0.0.1:7000"
+
+http:
+  address: 0.0.0.0:8080
+```
+
+:::
+
+::: tab Unix Sockets
+
+```yaml .rr.yaml
+server:
+  command: "php psr-worker.php"
+  relay: "unix://rr.sock"
+
+http:
+  address: 0.0.0.0:8080
+```
+
+:::
+
+::::
 
 ## Process supervision
 
-RoadRunner is capable of monitoring your application and run soft reset (between requests) if necessary. The previous name - `limit`, current - `supervisor`
-Edit your `.rr` file to specify limits for your application:
+RoadRunner provides process supervision capabilities to monitor your application and perform a soft reset between
+requests if necessary. You can configure process supervision for your application by editing your `.rr.yaml`
+configuration file and specifying the necessary limits.
 
-```yaml
+**Here's an example configuration**
+
+```yaml .rr.yaml
 # monitors rr server(s)
 http:
   address: "0.0.0.0:8080"
@@ -152,25 +200,26 @@ http:
       max_worker_memory: 100
 ```
 
+> **Warning**
+> Please pay attention, that the previous section name was **limit**, current - **supervisor**
+
 ## Troubleshooting
 
-In some cases, RR would not be able to handle errors produced by PHP worker (PHP is missing, the script is dead, etc.).
+In some cases, RoadRunner may not be able to handle errors produced by the PHP worker, such as if PHP is missing or the
+script has died.
 
-```
-$ rr serve
-```
-
-You can troubleshoot it by invoking `command` set in `.rr` file manually:
-
-```
-$ php psr-worker.php
+```terminal
+./rr serve
 ```
 
-The worker should not cause any error until any input provided and must fail with invalid input signature after the
-first input character.
+If this happens, you can troubleshoot the issue by invoking the `command` specified in your `.rr.yaml` file manually.
 
-## Other Type of Workers
+```terminal
+php psr-worker.php
+```
 
-Different Roadrunner plugins might define their own worker APIs, examples: 
-- [GRPC](https://github.com/spiral/roadrunner-grpc)
-- [Workflow/Activity Worker](https://legacy-documentation-sdks.temporal.io/php/workers)
+If there are any errors or issues with the script, they should be visible in the output of this command.
+
+The worker should not cause any errors until any input is provided, and it should fail with an invalid input signature
+after the first input character. If this is not the case, there may be an issue with the PHP script or the way it is
+interacting with RoadRunner.
