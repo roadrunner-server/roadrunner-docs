@@ -1,25 +1,9 @@
 # What is it?
 
 RoadRunner is a high-performance PHP application server and process manager, designed with extensibility in mind through
-its utilization of plugins. Developed in the Go, RoadRunner operates by running your application in the form of workers,
+its utilization of plugins. Developed in Go, RoadRunner operates by running your application in the form of workers,
 which follow the shared-nothing architecture. Each worker represents an individual process, ensuring isolation and
 independence in their operation.
-
-RoadRunner also provides an RPC interface for communication between the application and the server, which plays a
-significant role in enhancing the interaction between the two components. This interface is particularly useful when
-working with the various plugins that support RPC communication, such as:
-
-- [**KV**](../kv/overview.md) - A cache service that allows for efficient storage and retrieval of cached data.
-- [**Locks**](../plugins/locks.md) - Offers a convenient means to manage distributed locks, ensuring resource access
-  coordination across multiple processes or systems.
-- [**Service**](../plugins/service.md) - A dynamic server processes supervisor that enables seamless management of
-  server processes directly from the application.
-- [**Jobs**](../queues/overview.md) - Provides the ability to dynamically manage queue pipelines from within the
-  application, streamlining the execution of tasks and jobs.
-- [**Logger**](../lab/logger.md) - Facilitates the forwarding of logs from the application to the RoadRunner logger,
-  ensuring centralized and efficient log management.
-- [**Metrics**](../lab/metrics.md) - Allows for the submission of application metrics to Prometheus, promoting
-  comprehensive monitoring and analysis of application performance.
 
 ## Server
 
@@ -45,6 +29,24 @@ The following plugins are designed to run workers and handle specific types of r
 
 By utilizing these plugins, RoadRunner ensures that your PHP application can effectively handle a wide range of requests
 and communication protocols, delivering optimal performance and flexibility.
+
+## RPC
+
+RoadRunner also provides an RPC interface for communication between the application and the server, which plays a
+significant role in enhancing the interaction between the two components. This interface is particularly useful when
+working with the various plugins that support RPC communication, such as:
+
+- [**KV**](../kv/overview.md) - A cache service that allows for efficient storage and retrieval of cached data.
+- [**Locks**](../plugins/locks.md) - Offers a convenient means to manage distributed locks, ensuring resource access
+  coordination across multiple processes or systems.
+- [**Service**](../plugins/service.md) - A dynamic server processes supervisor that enables seamless management of
+  server processes directly from the application.
+- [**Jobs**](../queues/overview.md) - Provides the ability to dynamically manage queue pipelines from within the
+  application, streamlining the execution of tasks and jobs.
+- [**Logger**](../lab/logger.md) - Facilitates the forwarding of logs from the application to the RoadRunner logger,
+  ensuring centralized and efficient log management.
+- [**Metrics**](../lab/metrics.md) - Allows for the submission of application metrics to Prometheus, promoting
+  comprehensive monitoring and analysis of application performance.
 
 ## PHP
 
