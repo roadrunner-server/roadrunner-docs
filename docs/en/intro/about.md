@@ -73,8 +73,8 @@ It is worth mentioning that workers follow the shared-nothing architecture, whic
 - **Simplified Development:** By maintaining the isolation of workers, the shared-nothing architecture reduces the
   complexity of managing shared resources and simplifies the development process.
 
-
 ## What's Next?
 
-1. [PHP Worker](../php/worker.md)
-2. [Writing a custom plugin](../customization/plugin.md)
+1. [PHP Workers](../php/worker.md) - Learn how to configure and run PHP workers.
+2. [PHP Workers — RPC to RoadRunner](../php/rpc.md) - Learn how to use RPC to communicate with PHP applications.
+3. [Writing a custom plugin](../customization/plugin.md) - Learn how to create a custom plugin.
