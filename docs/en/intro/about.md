@@ -5,6 +5,14 @@ its utilization of plugins. Developed in Go, RoadRunner operates by running your
 which follow the shared-nothing architecture. Each worker represents an individual process, ensuring isolation and
 independence in their operation.
 
+It is designed to be like a central processor for PHP applications, helping developers create faster, more
+responsive and robust applications with ease.
+
+![image](https://user-images.githubusercontent.com/773481/235296092-2f82643b-7822-4649-952a-0529efa3af88.png)
+
+Whether you’re building a complex web app or a simple PHP script, it has everything you need to deliver top-notch
+performance and functionality.
+
 ## Server
 
 RoadRunner efficiently manages a collection of PHP processes, referred to as workers, and routes incoming requests from
