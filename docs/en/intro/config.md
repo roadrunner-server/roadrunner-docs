@@ -1,4 +1,4 @@
-# RoadRunner — Configuration reference
+# RoadRunner — Configuration
 
 RoadRunner supports both **YAML** and **JSON** configuration formats. The examples in our documentation use YAML, but
 you can use JSON as well.
