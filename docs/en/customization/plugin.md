@@ -1,4 +1,4 @@
-# Writing Plugins
+# Customization — Writing Plugins
 
 RoadRunner uses Endure container to manage dependencies. This approach is similar to the PHP Container implementation
 with automatic method injection. You can create your own plugins, event listeners, middlewares, etc.
