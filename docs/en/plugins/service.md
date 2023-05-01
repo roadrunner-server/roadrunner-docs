@@ -1,34 +1,33 @@
-# Service plugin
+# Plugins — Service
 
-The service plugin acts much like the simplified `systemd` daemons. The main purpose of this plugin is to start and
-monitor processes.
-There is no limit to the number of processes. For example, if you need to run 10 identical PHP processes, you can use 1
-service with `process_num` set to 10.
-RoadRunner can restart the process after exit with `remain_after_exit` set to true, show the service name in the logs,
-limit the execution time of the process, pass the execution time of the process, pass your `ENV` variables and pause the restarts.
+RoadRunner Service Plugin provides a simple API to monitor and control processes. It is often used to manage background
+processes, daemons, or services that need to run continuously. The Service Plugin allows you to start, stop, and manage
+any number of processes, including PHP scripts, binaries, and bash/powershell scripts.
 
-Any PHP script, binary, shell script can be started as a service. Basically, anything that can be executed can be
-executed by the service plugin.
+## Manage services using RoadRunner config
 
-## PHP client  
+The Service Plugin is configured using a `.rr.yaml`.
 
-- [link](https://github.com/spiral/roadrunner-services)
+Here is an example configuration:
 
-## Main capabilities
-
-1. Execute PHP code, binaries, bash/powershell scripts.
-2. Restart after specified amount of time.
-3. Control execute time for the particular command.
-4. Provide statistic to the `Informer` plugin about `%CPU`, `PID` and used `RSS memory`.
-
-## Config
-
-```yaml
+```yaml .rr.yaml
 version: "3"
 
+...
+
 service:
+  meilisearch:
+    service_name_in_log: true
+    remain_after_exit: true
+    restart_sec: 1
+    command: "./bin/meilisearch"
+  centrifuge:
+    service_name_in_log: true
+    remain_after_exit: true
+    restart_sec: 1
+    command: "./bin/centrifugo --config=centrifugo.json"
   some_service_1:
-    command: "php tests/plugins/service/test_files/loop.php"
+    command: "php loop.php"
     process_num: 10
     exec_timeout: 0s
     remain_after_exit: true
@@ -36,42 +35,199 @@ service:
     env:
       - foo: "BAR"
     restart_sec: 1
-
-  some_service_2:
-    command: "tests/plugins/service/test_files/test_binary"
-    process_num: 1
-    remain_after_exit: true
-    service_name_in_log: false
-    restart_sec: 1s
-    env:
-      - foo: "BAR"
-    exec_timeout: 10s
 ```
 
-Description:
+The `service` section is where you define your services, with each service having its own configuration settings.
 
-1. Service plugin supports any number of nested commands.
-2. `command`: command to execute. There are no restrictions on commands. It could be a binary, a PHP file, a script,
-   etc.
-3. `process_num`: default: 1, number of processes for the command to fire.
-4. `exec_timeout`: default: 0s (unlimited), maximum allowed time to run for the process. Can be in the form
-   of: `1h`, `1m` or `1s` (`h`,`m`,`s`).
-5. `remain_after_exit`: default: false. Remain process after exit. For example, if you need to restart process every 10
-   seconds `exec_timeout`: should be 10s, and `remain_after_exit` should be set to true. NOTE: if you kill the process
-   from outside and if `remain_after_exit` will be true, the process will be restarted.
-6. `restart_sec`: default: 30 seconds. Delay between process stop and restart.
-7. `service_name_in_log`: default: false, show the service name in the log in the form `%plugin%.%service_name%`.
-8. `env` - environment variables to pass to the underlying process from the config.
+### Configuration Settings
 
-### RPC Interface
+The following are the available configuration settings for each service:
 
-Since RR `v2.9` you have an ability to manage services via RPC interface.
+| Setting               | Description                                                                                                                                                                                                                                                                                                                    |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **command**           | The command to execute. There are no restrictions on commands. It could be a binary, a PHP file, a script, etc.                                                                                                                                                                                                                |
+| **process_num**       | The number of processes for the command to fire. The default value is `1`.                                                                                                                                                                                                                                                     |
+| **exec_timeout**      | The maximum allowed time to run for the process. The default value is 0s, which means unlimited time. The timeout can be set in the form of `1h`, `1m`, or `1s` (h,m,s).                                                                                                                                                       |
+| **remain_after_exit** | If set to `true`, the process will remain after exit. For example, if you need to restart the process every 10 seconds, exec_timeout should be set to `10s`, and `remain_after_exit` should be set to `true`. Note that if you kill the process from outside and `remain_after_exit` is `true`, the process will be restarted. |
+| restart_sec           | The delay between process stop and restart. The default value is 30 seconds.                                                                                                                                                                                                                                                   |
+| service_name_in_log   | If set to `true`, the service name will be shown in the log in the form `%plugin%.%service_name%`. The default value is `false`.                                                                                                                                                                                               |
+| env                   | Environment variables to pass to the underlying process from the config.                                                                                                                                                                                                                                                       |
 
-All communication between PHP and GO made by the RPC calls with protobuf payloads. You can find versioned proto-payloads
-here: [Proto](https://github.com/roadrunner-server/api/blob/master/proto/service/v1/service.proto).
+Services will be started when RoadRunner starts and will be stopped when RoadRunner stops.
 
-- `Create(in *serviceV1.Create, out *serviceV1.Response)  error` - Create a new service.
-- `Restart(in *serviceV1.Service, out *serviceV1.Response) error` - Restart an exist service.
-- `Terminate(in *serviceV1.Service, out *serviceV1.Response) error` - Terminate (Kill) an exist service.
-- `Status(in *serviceV1.Service, out *serviceV1.Status) error` - Get status for an exist service.
-- `List(_ *serviceV1.Service, out *serviceV1.List) error` - Get list of available services.
+## PHP client
+
+The RoadRunner Service Plugin PHP Client Library allows you to manage processes in PHP application using the Service
+Plugin. You can use the library to create, start, stop, restart, and manage any number of services.
+
+### Installation
+
+You can install the package via composer:
+
+```terminal
+composer require spiral/roadrunner-services
+```
+
+### Usage
+
+To use the library, you need to create an instance of `Spiral\RoadRunner\Services\Manager`:
+
+```php
+use Spiral\RoadRunner\Services\Manager;
+use Spiral\Goridge\RPC\RPC;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$manager = new Manager(RPC::create('tcp://127.0.0.1:6001'));
+```
+
+#### Create a service
+
+To create a new service, use the `create` method:
+
+```php
+use Spiral\RoadRunner\Services\Exception\ServiceException;
+
+try {
+    $result = $manager->create(
+        name: 'listen-jobs', 
+        command: 'php app.php queue:listen',
+        processNum: 3,
+        execTimeout: 0,
+        remainAfterExit: false,
+        env: ['APP_ENV' => 'production'],
+        restartSec: 30
+    );
+    
+    if (!$result) {
+        throw new ServiceException('Service creation failed.');
+    }
+} catch (ServiceException $e) {
+    // handle exception
+}
+```
+
+#### Checking Service Status
+
+To check the status of a service, use the `statuses` method:
+
+```php
+use Spiral\RoadRunner\Services\Exception\ServiceException;
+
+try {
+    $status = $manager->statuses(name: 'listen-jobs');
+    
+    // Will return an array with statuses of every run process
+} catch (ServiceException $e) {
+    // handle exception
+}
+```
+
+#### Restarting a Service
+
+To restart a service, use the `restart` method:
+
+```php
+use Spiral\RoadRunner\Services\Exception\ServiceException;
+
+try {
+    $result = $manager->restart(name: 'listen-jobs');
+    
+    if (!$result) {
+        throw new ServiceException('Service restart failed.');
+    }
+} catch (ServiceException $e) {
+    // handle exception
+}
+```
+
+#### Terminating a Service
+
+To terminate a service, use the `terminate` method:
+
+```php
+use Spiral\RoadRunner\Services\Exception\ServiceException;
+
+try {
+    $result = $manager->terminate(name: 'listen-jobs');
+    
+    if (!$result) {
+        throw new ServiceException('Service termination failed.');
+    }
+} catch (ServiceException $e) {
+    // handle exception
+}
+```
+
+#### Listing All Services
+
+To get a list of all services, use the `list` method:
+
+```php
+use Spiral\RoadRunner\Services\Exception\ServiceException;
+
+try {
+    $services = $manager->list();
+    
+    // Will return an array with services names
+    // ['listen-jobs', 'websocket-connection'] 
+} catch (ServiceException $e) {
+    // handle exception
+}
+```
+
+## API
+
+### Protobuf API
+
+To make it easy to use the Service proto API in PHP, we provide
+a [GitHub repository](https://github.com/roadrunner-php/roadrunner-api-dto), that contains all the generated
+PHP DTO classes proto files, making it easy to work with these files in your PHP application.
+
+- [API](https://github.com/roadrunner-server/api/blob/master/proto/service/v1/service.proto)
+
+
+### RPC API
+
+The RoadRunner Lock Plugin allows you to manage locks in your application using RPC API . The API communicates with the
+Lock Plugin using RPC calls with protobuf payloads.
+
+#### Create
+
+The `Create` method is used to create a new lock.
+
+```go
+Create(in *serviceV1.Create, out *serviceV1.Response) error
+```
+
+#### Acquire
+
+The `Acquire` method is used to acquire a lock.
+
+```go
+Acquire(in *serviceV1.Acquire, out *serviceV1.Response) error
+```
+
+#### Release
+
+The `Release` method is used to release a lock.
+
+```go
+Release(in *serviceV1.Release, out *serviceV1.Response) error
+```
+
+#### Delete
+
+The `Delete` method is used to delete a lock.
+
+```go
+Delete(in *serviceV1.Delete, out *serviceV1.Response) error
+```
+
+#### List
+
+The `List` method is used to list all locks.
+
+```go
+List(in *serviceV1.List, out *serviceV1.ListResponse) error
+```
