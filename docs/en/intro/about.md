@@ -2,23 +2,19 @@
 
 RoadRunner is a high-performance PHP application server and process manager, designed with extensibility in mind through
 its utilization of plugins. Developed in Go, RoadRunner operates by running your application in the form of workers,
-which follow the shared-nothing architecture. Each worker represents an individual process, ensuring isolation and
-independence in their operation.
+where each worker represents an individual process, ensuring isolation and independence in their operation.
 
 It is designed to be like a central processor for PHP applications, helping developers create faster, more
 responsive and robust applications with ease.
 
 ![image](https://user-images.githubusercontent.com/773481/235296092-2f82643b-7822-4649-952a-0529efa3af88.png)
 
-Whether you’re building a complex web app or a simple PHP script, it has everything you need to deliver top-notch
-performance and functionality.
-
 ## Server
 
 RoadRunner efficiently manages a collection of PHP processes, referred to as workers, and routes incoming requests from
-various plugins to these workers. This communication is facilitated through
+various plugins to these workers. This communication is done through
 the [goridge](https://github.com/roadrunner-server/goridge) protocol, enabling your PHP application to handle requests
-and send responses back to clients seamlessly.
+and send responses back to clients.
 
 ![Base Diagram](https://user-images.githubusercontent.com/796136/65347341-79dd8600-dbe7-11e9-9621-1c5f2ef929e6.png)
 
@@ -65,12 +61,12 @@ RoadRunner keeps PHP workers alive between incoming requests. This means that yo
 
 Since a worker resides in memory, all open resources persist across requests, remaining accessible for subsequent
 interactions. Utilizing the built-in [goridge](https://github.com/roadrunner-server/goridge), you can
-offload complex computations to the application server rapidly. For instance, you can schedule a background PHP job or
-even develop your own [custom RoadRunner plugin](../customization/plugin.md) to process intricate tasks using Go, which
+offload complex computations to the application server. For instance, you can schedule a background PHP job or
+even develop your own [custom RoadRunner plugin](../customization/plugin.md) to process complex tasks using Go, which
 offers improved efficiency and performance. By leveraging the strengths of both PHP and Go, you can create a more robust
 and high-performance solution for your applications.
 
-It is worth mentioning that workers follow the shared-nothing architecture, which offers several benefits:
+It is worth mentioning the following properties of the PHP workers:
 
 - **Isolation:** Each worker process operates independently, preventing interference with other worker processes and
   improving stability.

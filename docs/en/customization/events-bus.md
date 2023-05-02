@@ -208,6 +208,6 @@ func foo() {
 ```
 
 > **Note**
-> Important note: you don't need to import your custom event types into the subscriber. You only need to know the name
+> You don't need to import your custom event types into the subscriber. You only need to know the name
 > of that event and pass a string to the subscriber.
 

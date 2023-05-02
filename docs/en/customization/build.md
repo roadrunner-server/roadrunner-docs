@@ -162,7 +162,7 @@ go env -w GONOSUMDB="gitlab/github.com/<company_name>/*"
 
 :::: tabs
 
-::: tab Using Docker
+::: tab Docker
 
 To streamline the build process, you can use the Docker image to build the application server and don't worry about
 installing Golang or any other dependencies on your local machine.
@@ -198,7 +198,7 @@ CMD ["/usr/bin/rr"]
 ```
 :::
 
-::: tab Using Go
+::: tab Go
 You can use the `go install` command to download Velox.
 
 > **Warning**

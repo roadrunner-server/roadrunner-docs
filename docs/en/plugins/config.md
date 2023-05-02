@@ -49,7 +49,7 @@ versions.
 #### OpenTelemetry Middleware Update
 
 Starting from version **v2023.1.0**, the OpenTelemetry (OTEL) middleware configuration has been moved out of the HTTP
-plugin to support its usage across multiple plugins, including HTTP, gRPC, and jobs. The OTEL middleware is now
+plugin to support its usage across multiple plugins, including HTTP, gRPC, jobs and temporal. The OTEL middleware is now
 configured using a top-level YAML key.
 
 **RoadRunner 2.x**
@@ -88,7 +88,7 @@ otel:
   endpoint: "127.0.0.1:4318"
 ```
 
-## Updating from `version: 2.7` to `version: 3`:
+## Updating from `version: 2.7` to `version: 3`
 
 To update your configuration from version 2.7 to version 3, follow these steps:
 
@@ -98,7 +98,7 @@ To update your configuration from version 2.7 to version 3, follow these steps:
    the root level.
 3. **Remove** the `reload` plugin configuration and if needed, use the `*.pool.debug=true` option instead.
 
-## Tips:
+## Tips
 
 1. By default, `.rr.yaml` used as the configuration, located in the same directory with RR binary.
 

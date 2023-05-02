@@ -5,14 +5,10 @@ server using [Goridge library](https://github.com/roadrunner-php/goridge).
 
 ## Goridge
 
-Goridge is a high-performance PHP-to-Golang codec library developed specifically for communication between PHP
+Goridge is a high-performance PHP-to-Golang library developed specifically for communication between PHP
 applications and RoadRunner. It is designed to provide a reliable and efficient way to communicate between the two
 components, allowing PHP developers to take advantage of the performance benefits of Golang-based systems while still
 writing their applications in PHP.
-
-Goridge works over native PHP sockets and Golang net/rpc package, which RoadRunner
-uses for its RPC interface. This allows PHP applications to communicate with RoadRunner using minimal overhead,
-structured data transfer, and `[]byte` support.
 
 ## Installation
 
@@ -106,10 +102,11 @@ the RPC Go definitions for these plugins in the following repositories:
   globally or separately for each plugin.
 - [Status](https://github.com/roadrunner-server/status/blob/master/rpc.go)
 - [Metrics](https://github.com/roadrunner-server/metrics/blob/master/rpc.go)
-- [Lock](https://github.com/roadrunner-server/lock/blob/master/rpc.go) - Provides a way to obtain and release locks on
-  resources.
+- [Lock](../plugins/locks.md) - Provides a way to obtain and release locks on
+  resources. [Github](https://github.com/roadrunner-server/lock/blob/master/rpc.go)
+- [Service](../plugins/service.md) - Provides a simple API to monitor and control
+  processes [Github](https://github.com/roadrunner-server/service/blob/master/rpc.go)
 - [RPC](https://github.com/roadrunner-server/rpc/blob/master/rpc.go)
-
 
 ## What's Next?
 
