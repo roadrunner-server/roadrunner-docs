@@ -2,7 +2,7 @@
 
 RoadRunner gRPC plugin enables PHP applications to communicate with gRPC clients.
 
-The RoadRunner gRPC plugin consists of two main parts:
+It consists of two main parts:
 
 1. **Proto-plugin `protoc-gen-php-grpc`:** This is a plugin for the protoc compiler that generates PHP code from a gRPC
    service definition file (`.proto`). It generates PHP classes that correspond to the service definition and message
@@ -12,7 +12,7 @@ The RoadRunner gRPC plugin consists of two main parts:
    from gRPC clients, proxies them to the PHP workers, and sends the responses back to the client. The server is
    responsible for managing the lifecycle of the PHP workers and ensuring that they are available to handle requests.
 
-## Usage
+## Proto-plugin
 
 The first step is to define a `.proto` file that describes the gRPC service and messages that your PHP application will
 handle.

@@ -36,7 +36,14 @@ The TCP plugin is configured via the `tcp` section of the RoadRunner configurati
 
 **Here is an example configuration:**
 
+:::: tabs
+
+::: tab Server command
+
 ```yaml .rr.yaml
+server:
+  command: "php tcp-worker.php"
+
 tcp:
   servers:
     smtp:
@@ -52,6 +59,39 @@ tcp:
     allocate_timeout: 60s
     destroy_timeout: 60s
 ```
+
+> **Note**
+> You can define command to start server in the `server.command` section:. It will be used to start PHP workers for all
+> registered plugins, such as `grpc`, `http`, `jobs`, etc.
+
+:::
+
+::: tab Worker commands
+You can also define command to start server in the `grpc.pool.command` section to separate server and grpc workers.
+
+```yaml .rr.yaml
+server:
+  command: "php worker.php"
+
+tcp:
+  servers:
+    smtp:
+      addr: tcp://127.0.0.1:1025
+      delimiter: "\r\n" # by default
+
+    server2:
+      addr: tcp://127.0.0.1:8889
+
+  pool:
+    command: "php tcp-worker.php"
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
+
+:::
+::::
 
 #### Configuration Parameters
 
@@ -86,9 +126,7 @@ composer require spiral/roadrunner-tcp
 
 The following example demonstrates how to create a simple PHP worker:
 
-```php
-<?php
-
+```php tcp-worker.php
 require __DIR__ . '/vendor/autoload.php';
 
 use Spiral\RoadRunner\Worker;
