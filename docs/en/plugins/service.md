@@ -197,7 +197,7 @@ Lock Plugin using RPC calls with protobuf payloads.
 The `Create` method is used to create a new lock.
 
 ```go
-Create(in *serviceV1.Create, out *serviceV1.Response) error
+func (r *rpc) Create(in *serviceV1.Create, out *serviceV1.Response) error
 ```
 
 #### Acquire
@@ -205,7 +205,7 @@ Create(in *serviceV1.Create, out *serviceV1.Response) error
 The `Acquire` method is used to acquire a lock.
 
 ```go
-Acquire(in *serviceV1.Acquire, out *serviceV1.Response) error
+func (r *rpc) Acquire(in *serviceV1.Acquire, out *serviceV1.Response) error
 ```
 
 #### Release
@@ -213,7 +213,7 @@ Acquire(in *serviceV1.Acquire, out *serviceV1.Response) error
 The `Release` method is used to release a lock.
 
 ```go
-Release(in *serviceV1.Release, out *serviceV1.Response) error
+func (r *rpc) Release(in *serviceV1.Release, out *serviceV1.Response) error
 ```
 
 #### Delete
@@ -221,7 +221,7 @@ Release(in *serviceV1.Release, out *serviceV1.Response) error
 The `Delete` method is used to delete a lock.
 
 ```go
-Delete(in *serviceV1.Delete, out *serviceV1.Response) error
+func (r *rpc) Delete(in *serviceV1.Delete, out *serviceV1.Response) error
 ```
 
 #### List
@@ -229,5 +229,5 @@ Delete(in *serviceV1.Delete, out *serviceV1.Response) error
 The `List` method is used to list all locks.
 
 ```go
-List(in *serviceV1.List, out *serviceV1.ListResponse) error
+func (r *rpc) List(in *serviceV1.List, out *serviceV1.ListResponse) error
 ```

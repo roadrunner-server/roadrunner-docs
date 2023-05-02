@@ -126,7 +126,7 @@ PHP DTO classes proto files, making it easy to work with these files in your PHP
 
 ### RPC API
 
-RoadRunner provides an RPC API, which allows youy to manage distributed locks in your applications using remote
+RoadRunner provides an RPC API, which allows you to manage distributed locks in your applications using remote
 procedure calls. The RPC API provides a set of methods that map to the available methods of the RoadRunner\Lock\Lock
 class in PHP.
 

@@ -220,7 +220,7 @@ while ($request = $centrifugoWorker->waitRequest()) {
 }
 ```
 
-## API
+## Protobuf API
 
 To make it easy to use the Centrifugo proto API in PHP, we provide
 a [GitHub repository](https://github.com/roadrunner-php/roadrunner-api-dto), that contains all the generated
