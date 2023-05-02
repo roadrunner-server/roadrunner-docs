@@ -6,6 +6,11 @@ acquire, release, and manage locks in a distributed environment. With this plugi
 sections of your application and prevent race conditions, data corruption, and other synchronization issues that can
 occur in multi-process environments.
 
+> **Warning**
+> RoadRunner lock plugin uses an in-memory storage to store information about locks at this moment. When multiple
+> instances of RoadRunner are used, each instance will have its own in-memory storage for locks. As a result, if a process
+> acquires a lock on one instance of RoadRunner, it will not be aware of the lock state on the other instances. 
+
 ## PHP client
 
 The RoadRunner lock plugin comes with a convenient PHP package that simplifies the process of integrating the
@@ -168,7 +173,6 @@ func (r *rpc) ForceRelease(req *lockApi.Request, resp *lockApi.Response) error {
 #### Exists
 
 Checks if a resource is currently locked and returns information about the lock.
-
 
 ```go
 func (r *rpc) Exists(req *lockApi.Request, resp *lockApi.Response) error {}

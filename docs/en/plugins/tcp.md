@@ -6,7 +6,7 @@ processing.
 
 ## Principle of work
 
-The RoadRunner TCP plugin operates by receiving client requests and proxying them to free PHP workers that are and not
+The RoadRunner TCP plugin operates by receiving client requests and proxying them to free PHP workers that are not
 currently processing any request.
 
 > **Warning**
@@ -155,3 +155,7 @@ while ($request = $tcpWorker->waitRequest()) {
     }
 }
 ```
+
+## What's Next?
+
+1. [Plugins — KV](../kv/overview.md) - Learn how to use the Key Value plugin to store data between requests.
