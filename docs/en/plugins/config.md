@@ -1,6 +1,18 @@
-# Configuration and environment variables parser
+# Plugins — Config
 
-The `config` plugin parses the configurations of other plugins and uses flags to locate the YAML/JSON config. Each configuration should contain a version. The currently supported version is version 3. The version should be at the top of the configuration and should be a string:
+The config plugin is an essential component in RoadRunner, responsible for parsing configuration files and environment
+variables. It serves as a central hub for managing configurations for the plugins and RoadRunner server itself.
+
+## Configuration File Structure
+
+The RoadRunner configuration file should be formatted using **YAML** or **JSON**. Each configuration file must include
+a `version` at the top, indicating the format's version. The currently supported configuration version is **version 3**.
+
+> **Warning**
+> The configuration version is not synonymous with the RoadRunner (RR) version. The configuration version and RR version
+> have separate versioning systems.
+
+**Example of a YAML configuration file:**
 
 ```yaml
 version: '3'
@@ -8,9 +20,13 @@ version: '3'
 # ... other config values
 ```
 
-## Compatibility matrix
+> **Warning**
+> Version numbers are strings, not numbers. For example, `version: "3"` is correct, but `version: 3` is not.
 
-⚠️ Keep in mind that the `yaml` configuration version is not the same as the RR version. They have independent versions.
+### Compatibility matrix
+
+The compatibility matrix provides information about the supported configuration versions for different RoadRunner
+versions.
 
 | RR version     | Configuration version                                                          |
 |----------------|--------------------------------------------------------------------------------|
@@ -19,20 +35,24 @@ version: '3'
 | **2.7.x**      | **2.7** `OR` Unversioned (treated as `v2.6.0`, will be auto-updated to `v2.7`) |
 | **<=2.6.x**    | Doesn't support versions                                                       |
 
-*non-versioned: configuration used in the 2.0.x-2.6.x releases.
+> **Note**
+> *non-versioned: configuration used in the 2.0.x-2.6.x releases.
 
-## v3.0 Configuration
+## Changelog
 
-#### CHANGES:
+### v3.0 Configuration
 
-**OpenTelemetry Middleware Update:**
+#### Reload plugin Update
 
-1. ⚠️ The `reload` plugin has been removed from the default plugins list. Please use `*.pool.debug=true` instead.
+⚠️ The `reload` plugin has been removed from the default plugins list. Please use `*.pool.debug=true` instead.
 
-2. As of version `v2023.1.0`, the OpenTelemetry (OTEL) middleware has been separated from the HTTP plugin. It is now
+#### OpenTelemetry Middleware Update
+
+Starting from version **v2023.1.0**, the OpenTelemetry (OTEL) middleware configuration has been moved out of the HTTP
+plugin to support its usage across multiple plugins, including HTTP, gRPC, and jobs. The OTEL middleware is now
 configured using a top-level YAML key.
 
-- **`v2.x`**
+**RoadRunner 2.x**
 
 ```yaml
 # HTTP plugin settings.
@@ -50,7 +70,7 @@ http:
     endpoint: "127.0.0.1:4318"
 ```
 
-- **`v2023.x.x`**
+**RoadRunner v2023.x.x**
 
 ```yaml
 http:
