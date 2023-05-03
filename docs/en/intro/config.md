@@ -83,6 +83,17 @@ services:
 ...
 ```
 
+### Dotenv
+
+RoadRunner supports reading environment variables from `.env` files, which are typically used to store sensitive or
+environment-specific variables outside of your codebase.
+
+To read environment variables from an `.env` file, you can use the `--dotenv` CLI option when starting RoadRunner.
+
+```terminal
+./rr serve --dotenv /var/www/config/.env
+```
+
 ### CLI Commands
 
 You can also use environment variables in CLI commands to customize the behavior of your RR server. This is especially
@@ -103,12 +114,11 @@ exec /var/www/rr \
   serve
 ```
 
-The `set -a` enables automatic exporting of variables. Any variables that are defined in `/var/www/config/.env` will be 
-automatically exported to the environment, making them available to any child processes that are executed from the 
-current shell. The final `set +a` command disables automatic exporting of variables, ensuring that only the variables 
+The `set -a` enables automatic exporting of variables. Any variables that are defined in `/var/www/config/.env` will be
+automatically exported to the environment, making them available to any child processes that are executed from the
+current shell. The final `set +a` command disables automatic exporting of variables, ensuring that only the variables
 that were defined in `/var/www/config/.env` are exported, and preventing any unintended variables from leaking into the
 environment.
-
 
 In this example, the following options are used:
 

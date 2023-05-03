@@ -1,9 +1,7 @@
 # App server — Running server as daemon on Linux
 
-The RoadRunner repository includes a [`rr.server`]() systemd unit file that can be used to run RoadRunner as a daemon on
-a server.
-
-**Here is an example of the unit file:**
+Here you can find an example of systemd unit file that can be used to run RoadRunner as a daemon on
+a server:
 
 ```ini
 [Unit]
