@@ -15,7 +15,7 @@ RoadRunner provides several plugins that use workers to receive requests,
 including [HTTP](https://github.com/roadrunner-php/http), [Jobs](https://github.com/roadrunner-php/jobs),
 [Centrifuge](https://github.com/roadrunner-php/centrifugo), [gRPC](https://github.com/roadrunner-php/grpc),
 [TCP](https://github.com/roadrunner-php/tcp), and [Temporal](https://legacy-documentation-sdks.temporal.io/php/workers).
-You should choose the appropriate plugin based on the requirements of your application. In our example, we will create 
+You should choose the appropriate plugin based on the requirements of your application. In our example, we will create
 a worker for the HTTP plugin.
 
 To create HTTP worker, you need to install the required composer packages:
@@ -189,17 +189,17 @@ http:
 
       # watch_tick defines how often to check the state of the workers (seconds)
       watch_tick: 1s
-      
+
       # ttl defines maximum time worker is allowed to live (seconds)
       ttl: 0
-      
+
       # idle_ttl defines maximum duration worker can spend in idle mode after 
       # first use. Disabled when 0 (seconds)
       idle_ttl: 10s
-      
+
       # exec_ttl defines maximum lifetime per job (seconds)
       exec_ttl: 10s
-      
+
       # max_worker_memory limits memory usage per worker (MB)
       max_worker_memory: 100
 
@@ -229,3 +229,7 @@ If there are any errors or issues with the script, they should be visible in the
 The worker should not cause any errors until any input is provided, and it should fail with an invalid input signature
 after the first input character. If this is not the case, there may be an issue with the PHP script or the way it is
 interacting with RoadRunner.
+
+## What's Next?
+
+1. [Plugins — Server](../plugins/server.md) - Read more about RoadRunner server plugin.
