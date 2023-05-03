@@ -150,7 +150,7 @@ RoadRunner provides a command to view the status of active workers. You can use 
 performance of your workers and diagnose any issues.
 
 ```terminal
-./rr workers -i
+./rr workers
 ```
 
 This command displays a table with the status of all workers, including their PID, status, number of executions, memory
@@ -173,6 +173,18 @@ Workers of [http]:
 +---------+-----------+---------+---------+---------+--------------------+
 |    3454 | ready     |     396 | 79 MB   |    0.04 | 1 day ago          |
 +---------+-----------+---------+---------+---------+--------------------+
+```
+
+You can also specify plugin names to view the status of workers for a particular plugin:
+
+```terminal
+./rr workers http
+```
+
+Use the `-i` option to enable interactive mode. In this mode, the command will update the statistics every second:
+
+```terminal
+./rr workers -i
 ```
 
 This command is useful for debugging performance issues and identifying workers that are not performing as expected.
@@ -258,7 +270,7 @@ This means that you can use a local RoadRunner binary as a client to connect to 
 host and port information is specified in the local configuration. This can be useful in situations where you want to
 manage a remote RoadRunner instance from your local machine.
 
-To specify the server `host` and `port` information, you can use the `rpc` section of the `.rr.yaml` file. 
+To specify the server `host` and `port` information, you can use the `rpc` section of the `.rr.yaml` file.
 
 For example:
 
