@@ -1,8 +1,7 @@
 # Plugins — TCP
 
-The RoadRunner TCP plugin allows you to handle TCP requests seamlessly alongside HTTP requests. By leveraging this
-plugin, you can create custom servers such as an SMTP server, and proxy TCP requests directly to PHP workers for
-processing.
+The RoadRunner TCP plugin helps you handle TCP requests. You can use this plugin to make your own servers like an SMTP
+server, and send TCP requests directly to PHP workers for handling.
 
 ## Principle of work
 

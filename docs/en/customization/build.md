@@ -9,20 +9,18 @@ for their particular project.
 - forking existing ones to make changes,
 - or building a lightweight server with only the necessary plugins.
 
-To facilitate this process, we have developed the **Velox** tool, which enables developers to build a RoadRunner server
-binary based on a configuration file specifying the required plugins and repositories for a specific project.
+We created a tool called **Velox** that lets developers build a RoadRunner server binary. They do this by using a
+configuration file that tells the tool which plugins and repositories are needed for the project.
 
 ## Configuration
 
-The configuration file, written in TOML format, specifies the list of repositories to include in the build, along with
-the respective owners and versions. It also allows the inclusion of private repositories hosted on both Github and
-Gitlab, with authentication via access tokens.
+The configuration file is written in TOML format and contains a list of repositories to add to the build. For each
+repository, you can specify the owner and version. You can also add private repositories from Github or Gitlab, and
+authenticate with access tokens.
 
 **Here is an example of a configuration file:**
 
-```toml
-# filename - `plugins.toml`
-
+```toml plugins.toml
 [velox]
 build_args = [
     '-trimpath',
@@ -119,7 +117,7 @@ mode = "development"
 > supported RoadRunner version is `v2023.x.x`.
 >
 > Failure to follow these guidelines may result in compatibility issues and
-> other problems. Please pay close attention to your configuration file to ensure proper use of official plugins.
+> other problems. Please pay close attention to your configuration file to ensure proper use of plugins.
 
 You can use environment variables in the configuration file. This is useful when you want to keep the configuration file
 in the repository, but you don't want to expose your tokens or just want to pass them as arguments to the `vx` command.
@@ -164,8 +162,8 @@ go env -w GONOSUMDB="gitlab/github.com/<company_name>/*"
 
 ::: tab Docker
 
-To streamline the build process, you can use the Docker image to build the application server and don't worry about
-installing Golang or any other dependencies on your local machine.
+You can simplify the build process by using the Docker image. It builds the application server and starts it
+automatically after building, without needing you to install Golang or other dependencies on your computer.
 
 **Here is an example of Dockerfile**
 
@@ -186,7 +184,7 @@ COPY velox.toml .
 ENV CGO_ENABLED=0
 
 # RUN build
-RUN vx build -c velox.toml -o /usr/bin/
+RUN vx build -c plugins.toml -o /usr/bin/
 
 FROM --platform=${TARGETPLATFORM:-linux/amd64} php:8.2-cli
 
@@ -196,6 +194,7 @@ COPY --from=velox /usr/bin/rr /usr/bin/rr
 # use roadrunner binary as image entrypoint
 CMD ["/usr/bin/rr"]
 ```
+
 :::
 
 ::: tab Go

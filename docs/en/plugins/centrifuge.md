@@ -241,3 +241,10 @@ the `Subscribe` method was called, RR will add `type`:`subscribe` metadata to th
 You may also use RPC methods to communicate with centrifugo server. RR follows the
 official [centrifugo proto API](https://github.com/centrifugal/centrifugo/blob/master/internal/apiproto/api.proto).
 Official documentation available [here](https://centrifugal.dev/docs/server/server_api#grpc-api)
+
+## Metrics
+
+RoadRunner has a [metrics plugin](../lab/metrics.md) that provides metrics for the Centrifuge plugin, which can be used
+with Prometheus.
+
+![centrifuge-metrics](https://user-images.githubusercontent.com/773481/235842147-5f39a812-c67e-4b96-8dc6-dc2d61ceee3b.png)

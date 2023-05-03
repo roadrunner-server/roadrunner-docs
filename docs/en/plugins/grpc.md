@@ -4,15 +4,15 @@ RoadRunner gRPC plugin enables PHP applications to communicate with gRPC clients
 
 It consists of two main parts:
 
-1. **Proto-plugin `protoc-gen-php-grpc`:** This is a plugin for the protoc compiler that generates PHP code from a gRPC
+1. **protoc-plugin `protoc-gen-php-grpc`:** This is a plugin for the protoc compiler that generates PHP code from a gRPC
    service definition file (`.proto`). It generates PHP classes that correspond to the service definition and message
    types. These classes provide an interface for handling incoming gRPC requests and sending responses back to the
    client.
-2. **The server:** This is a server that starts PHP workers and listens for incoming gRPC requests. It receives requests
-   from gRPC clients, proxies them to the PHP workers, and sends the responses back to the client. The server is
-   responsible for managing the lifecycle of the PHP workers and ensuring that they are available to handle requests.
+2. **gRPC  server:** This is a server that starts PHP workers and listens for incoming gRPC requests. It receives 
+   requests from gRPC clients, proxies them to the PHP workers, and sends the responses back to the client. The server 
+   is responsible for managing the lifecycle of the PHP workers and ensuring that they are available to handle requests.
 
-## Proto-plugin
+## Protoc-plugin
 
 The first step is to define a `.proto` file that describes the gRPC service and messages that your PHP application will
 handle.
@@ -131,7 +131,7 @@ with your PHP application.
 
 You can install the package via Composer using the following command:
 
-```termnal
+```terminal
 composer require spiral/roadrunner-grpc
 ```
 
@@ -196,9 +196,6 @@ Here's an example configuration:
 
 ::: tab Server command
 
-You can define command to start server in the `server.command` section:. It will be used to start PHP workers for all
-registered plugins, such as `grpc`, `http`, `jobs`, etc.
-
 ```yaml .rr.yaml
 version: "3"
 
@@ -211,6 +208,10 @@ grpc:
   proto:
     - "proto/pinger.proto"
 ```
+
+> **Note**
+> You can define command to start server in the `server.command` section:. It will be used to start PHP workers for all
+> registered plugins, such as `grpc`, `http`, `jobs`, etc.
 
 :::
 
@@ -251,16 +252,10 @@ client library in any language that supports gRPC to call the `ping` method.
 
 ## Metrics
 
-- [link](../lab/metrics.md)
+RoadRunner has a [metrics plugin](../lab/metrics.md) that provides metrics for the gRPC server, which can be used with 
+Prometheus and a preconfigured [Grafana dashboard](../lab/dashboards/grpc.md)
 
-Example of grafana dashboard is
-available [here](https://github.com/roadrunner-server/roadrunner/blob/master/dashboards/grpc_dashboard.json).
-
-### Minimal dependencies:
-
-1. `Server` plugin for the workers pool.
-2. `Logger` plugin to show log messages.
-3. `Config` plugin to read and populate plugin's configuration.
+![grpc-metrics](https://user-images.githubusercontent.com/773481/235685443-05cf8af0-9e43-4aed-8801-da6595ca7d19.png)
 
 ## mTLS
 
@@ -291,7 +286,6 @@ Options for the `client_auth_type` are:
 - `verify_client_cert_if_given`
 - `require_and_verify_client_cert`
 - `no_client_certs`
-
 
 ## Full example of Configuration
 
@@ -422,6 +416,12 @@ grpc:
     # Default: 60s
     destroy_timeout: 60s
 ```
+
+## Minimal dependencies
+
+1. `Server` plugin for the workers pool.
+2. `Logger` plugin to show log messages.
+3. `Config` plugin to read and populate plugin's configuration.
 
 ## Common issues
 

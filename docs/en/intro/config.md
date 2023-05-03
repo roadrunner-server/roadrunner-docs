@@ -20,12 +20,26 @@ GitHub repository:
 
 ## Configuration file
 
-RoadRunner looks for a configuration file named `.rr.yaml` in the current working directory. However, if you want to use
-a configuration file with a different name or location, you can specify it using the `-c` option when starting the
-server.
+The RoadRunner looks for a configuration file named `.rr.yaml` in the same directory as the server binary.
+
+If your configuration file and other application files are located in a different directory than the binary, you can use
+the `-w` option to specify the working directory.
 
 ```terminal
-./rr serve -c /path/to/file/.rr-dev.yaml
+./rr serve -w /path/to/project
+```
+
+You can also use the `-c` option to specify the path to the configuration file if you don't want to specify the working
+directory.
+
+```terminal
+./rr serve -c /path/to/project/.rr-dev.yaml
+```
+
+Or you can combine the `-c` and `-w` options to specify both the configuration file and the working directory:
+
+```terminal
+./rr serve -c .rr-dev.yaml -w /path/to/project
 ```
 
 > **Note**
@@ -36,22 +50,25 @@ server.
 Environment variables allow you to separate configuration data from your application code, making it more maintainable
 and portable.
 
-RR supports the expansion of environment variables using the `${VARIABLE}` or `$VARIABLE` syntax. This feature can be
-used in the `.rr.yaml` configuration file and CLI commands to dynamically set values based on the current environment.
+RoadRunner supports the expansion of environment variables using the `${VARIABLE}` or `$VARIABLE` syntax in a
+configuration file and CLI commands. You can use this feature to dynamically set values based on the current
+environment, such as database connection strings, API keys, and other sensitive information.
 
-### Configuration File
-
-You can use environment variables in your `.rr.yaml` configuration file to configure various settings, such as the HTTP
-address and port. This allows you to easily customize the configuration based on your specific environment without
-changing the configuration file itself.
+You can specify a default value for an environment variable using the `${VARIABLE:-DEFAULT_VALUE}` syntax. For example,
+if you want to use a default value of `8080` for the `HTTP_PORT` environment variable if it is not defined or is empty,
+you can use the following configuration:
 
 ```yaml .rr.yaml
 http:
   address: 127.0.0.1:${HTTP_PORT:-8080}
 ```
 
-In this example, the `http.address` configuration will use port `8080` by default. However, you can redefine the port
-using the `HTTP_PORT` environment variable.
+> **Note**
+> You can find more information on Bash Environment Variable Defaults in
+> the [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion).
+
+This allows you to easily customize the configuration based on your specific environment without changing the
+configuration file itself.
 
 Here's an example of a `docker-compose.yaml` file that redefines the `HTTP_PORT` for an RR service:
 
@@ -85,6 +102,13 @@ exec /var/www/rr \
   -o http.pool.supervisor.max_worker_memory=${RR_MAX_WORKER_MEMORY:-512}
   serve
 ```
+
+The `set -a` enables automatic exporting of variables. Any variables that are defined in `/var/www/config/.env` will be 
+automatically exported to the environment, making them available to any child processes that are executed from the 
+current shell. The final `set +a` command disables automatic exporting of variables, ensuring that only the variables 
+that were defined in `/var/www/config/.env` are exported, and preventing any unintended variables from leaking into the
+environment.
+
 
 In this example, the following options are used:
 
