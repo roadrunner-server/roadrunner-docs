@@ -1,22 +1,49 @@
-# Running a RR server as daemon on Linux
+# App server — Running server as daemon on Linux
 
-In the RR repository, you will find the `rr.server` systemd unit file. The structure of this file is as follows:
+The RoadRunner repository includes a [`rr.server`]() systemd unit file that can be used to run RoadRunner as a daemon on
+a server.
+
+**Here is an example of the unit file:**
 
 ```ini
 [Unit]
-Description=High-performance PHP application server
+Description = High-performance PHP application server
 
 [Service]
-Type=simple
-ExecStart=/usr/local/bin/roadrunner serve -c <path/to/.rr.yaml>
-Restart=always
-RestartSec=30
+Type = simple
+ExecStart = /usr/local/bin/rr serve -c /var/www/.rr.yaml
+Restart = always
+RestartSec = 30
 
 [Install]
-WantedBy=default.target 
+WantedBy = default.target 
 ``` 
 
-The only thing that user should do is to update `ExecStart` option with your own. To do that, set a proper path of `roadrunner` binary, required flags and path to the .rr.yaml file.
-Usually, such user unit files are located in `.config/systemd/user/`. For RR, it might be `.config/systemd/user/rr.service`. To enable it use the following commands: `systemctl enable --user rr.service` and `systemctl start rr.service`. And that's it. Now roadrunner should run as daemon on your server.
+Where is
 
-Also, you can find more info about systemd unit files here: [Link](https://wiki.archlinux.org/index.php/systemd#Writing_unit_files).
+- `/usr/local/bin/rr` - path to the RoadRunner binary file
+- `/var/www/.rr.yaml` - path to the RoadRunner configuration file
+
+> **Warning**
+> These paths are just examples, and the actual paths may differ depending on the specific
+server configuration and file locations. You should update these paths to match the actual paths used in your server
+setup.
+
+You should also update the `ExecStart` option with your own configuration and save the file with a suitable name,
+such as `rr.service`. This file should be placed in the `.config/systemd/user/` directory. To enable the service, you
+should run the following commands:
+
+```bash
+systemctl enable --user rr.service
+```
+
+and
+
+```bash
+systemctl start rr.service
+``` 
+
+This will start RoadRunner as a daemon on the server.
+
+For more information about systemd unit files, the user can refer to the
+following [link](https://wiki.archlinux.org/index.php/systemd#Writing_unit_files).
