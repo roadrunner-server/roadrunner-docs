@@ -8,8 +8,9 @@ occur in multi-process environments.
 
 > **Warning**
 > RoadRunner lock plugin uses an in-memory storage to store information about locks at this moment. When multiple
-> instances of RoadRunner are used, each instance will have its own in-memory storage for locks. As a result, if a process
-> acquires a lock on one instance of RoadRunner, it will not be aware of the lock state on the other instances. 
+> instances of RoadRunner are used, each instance will have its own in-memory storage for locks. As a result, if a
+> process
+> acquires a lock on one instance of RoadRunner, it will not be aware of the lock state on the other instances.
 
 ## PHP client
 
@@ -27,7 +28,9 @@ composer require roadrunner-php/lock
 ### Usage
 
 After the installation, you can create an instance of the `RoadRunner\Lock\Lock` class, which will allow you to use the
-available class methods. Here is an example:
+available class methods.
+
+**Here is an example:**
 
 ```php
 use RoadRunner\Lock\Lock;
@@ -37,6 +40,11 @@ require __DIR__ . '/vendor/autoload.php';
 
 $lock = new Lock(RPC::create('tcp://127.0.0.1:6001'));
 ```
+
+> **Warning**
+> To interact with the RoadRunner lock plugin, you will need to have the RPC defined in the rpc configuration
+> section. You can refer to the documentation page [here](../php/rpc.md) to learn more about the configuration and
+> installation.
 
 The `RoadRunner\Lock\Lock` class provides four methods that allow you to manage locks:
 
@@ -132,7 +140,7 @@ PHP DTO classes proto files, making it easy to work with these files in your PHP
 ### RPC API
 
 RoadRunner provides an RPC API, which allows you to manage distributed locks in your applications using remote
-procedure calls. The RPC API provides a set of methods that map to the available methods of the RoadRunner\Lock\Lock
+procedure calls. The RPC API provides a set of methods that map to the available methods of the `RoadRunner\Lock\Lock`
 class in PHP.
 
 #### Lock
