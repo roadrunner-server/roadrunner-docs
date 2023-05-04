@@ -1,37 +1,37 @@
-# KV (Key-Value) Plugin
+# KV (Key-Value) Plugin — Overview
 
-The Key-Value plugin provides the ability to store arbitrary data inside the
-RoadRunner between different requests (in case of HTTP application) or different
-types of applications. Thus, using [Temporal](https://docs.temporal.io/docs/php/introduction),
-for example, you can transfer data inside the [HTTP application](../php/worker.md)
-and vice versa.
+The RoadRunner KV (Key-Value) plugin is a powerful cache implementation written in Go language. It offers lightning-fast
+communication with cache drivers such as:
 
-As a permanent source of data, the RoadRunner allows you to use popular solutions,
-such as [Redis Server](https://redis.io/) or [Memcached](https://memcached.org/),
-but in addition it provides others that do not require a separate server, such
-as [BoltDB](https://github.com/etcd-io/bbolt), and also allows you to replace
-permanent storage with temporary that stores data in RAM.
+- [Redis Server](https://redis.io/),
+- [Memcached](https://memcached.org/),
+- [BoltDB](https://github.com/etcd-io/bbolt) - not require a separate server,
+- In-memory storage - temporary stores data in RAM.
+
+It is able to handle cache operations more efficiently than the same operations in PHP, leading to faster response times
+and improved application performance.
+
+It provides the ability to store arbitrary data inside the RoadRunner between different requests (in case of HTTP
+application) or different types of applications. Thus, using [Temporal](https://docs.temporal.io/docs/php/introduction),
+for example, you can transfer data inside the [HTTP application](../php/worker.md)and vice versa.
+
+One of the key benefits of using the RoadRunner KV plugin is its RPC interface, which allows for seamless integration
+with your existing infrastructure.
 
 ![kv-general-info](https://user-images.githubusercontent.com/2461257/128436785-3dadbf0d-13c3-4e0c-859c-4fd9668558c8.png)
 
-## Installation
-
-> **Requirements**
-> - PHP >= 8.1
-> - RoadRunner >= 2.3
-> - *ext-protobuf (optional)*
-
-To get access from the PHP code, you should put the corresponding dependency
-using [the Composer](https://getcomposer.org/).
-
-```sh
-$ composer require spiral/roadrunner-kv
-```
-
 ## Configuration
 
-After installing all the required dependencies, you need to configure this
-plugin. To enable it, add the `kv` section to your configuration:
+To use the RoadRunner KV plugin, you need to define multiple key-value storages with desired storage drivers in the
+configuration file. Each storage must have a `driver` that indicates the type of connection used by those storages. At
+the moment, four different types of drivers are available: `boltdb`, `redis`, `memcached`, and `memory`.
+
+> **Note**
+> The `memory` and `boltdb` drivers do not require additional binaries and are available immediately, while the rest
+> require additional setup. Please see the appropriate documentation for installing [Redis Server](https://redis.io/)
+> and/or [Memcached Server](https://memcached.org/).
+
+Here is a simple configuration example:
 
 ```yaml
 version: "3"
@@ -42,29 +42,33 @@ rpc:
 kv:
   example:
     driver: memory
-    config: {}
+    config: { }
 ```
 
-Please note that to interact with the KV, you will also need the RPC defined
-in the `rpc` configuration section. You can read more about the configuration and
-methods of creating the RPC connection on the [documentation page here](../php/rpc.md).
+> **Note**
+> to interact with the RoadRunner KV plugin, you will need to have the RPC defined in the rpc configuration section. You
+> can refer to the documentation page [here](../php/rpc.md) to learn more about the configuration.
 
-This configuration initializes this plugin with one storage named "`example`".
-In addition, each storage must have a `driver` that indicates the type of
-connection used by those storages. In total, at the moment, 4 different types of
-drivers are available with their own characteristics and additional settings:
-`boltdb`, `redis`, `memcached`, and `memory`.
+## PHP client
 
-The `memory` and `boltdb` drivers do not require additional binaries and are
-available immediately, while the rest require additional setup. Please see
-the appropriate documentation for installing [Redis Server](https://redis.io/)
-and/or [Memcached Server](https://memcached.org/).
+The RoadRunner KV plugin comes with a convenient PHP package that simplifies the process of integrating the plugin with
+your PHP application and store and request data from storages using RoadRunner PRC.
+
+### Installation
+
+> **Requirements**
+> - PHP >= 8.1
+> - *ext-protobuf (optional)*
+
+You can install the package via Composer using the following command:
+
+```terminal
+composer require spiral/roadrunner-kv
+```
 
 ## Usage
 
-First, you need to create the RPC connection to the RoadRunner server. You can
-specify an address with a connection by hands or use automatic detection if
-you run the php code as a [RoadRunner Worker](/php/worker.md).
+First, you need to create the RPC connection to the RoadRunner server.
 
 ```php
 use Spiral\RoadRunner\Environment;
@@ -72,67 +76,60 @@ use Spiral\Goridge\RPC\RPC;
 
 // Manual configuration
 $rpc = RPC::create('tcp://127.0.0.1:6001');
-
-// Autodetection
-$env = Environment::fromGlobals();
-$rpc = RPC::create($env->getRPCAddress());
 ```
 
-After creating the RPC connection, you should create the
-`Spiral\RoadRunner\KeyValue\Factory` object for working with storages of KV
-RoadRunner plugin.
+> **Note**
+> You can refer to the documentation page [here](../php/rpc.md) to learn more about creating the RPC connection.
 
-The factory object provides two methods for working with the plugin.
+### Usage
 
-- Method `Factory::isAvailable(): bool` returns boolean `true` value if the
-  plugin is available and `false` otherwise. Note, that this method will always return an `Exception` because it was removed from the RR RPC since `v2.6.2`, [issue](https://github.com/roadrunner-server/roadrunner/issues/901).  In the releases after `v2.6.2` you can safely remove calls to that method.
+To work with storages, you should create the `Spiral\RoadRunner\KeyValue\Factory` object after creating the RPC
+connection. It provides a method for selecting the storage.
 
-- Method `Factory::select(string): CacheInterface` receives the name of the
-  storage as the first argument and returns the implementation of the
-  [PSR-16](https://www.php-fig.org/psr/psr-16/) `Psr\SimpleCache\CacheInterface`
-  for interact with the key-value RoadRunner storage.
+- `Factory::select(string)`- method receives the name of the storage as the first argument and returns the
+  implementation of the [PSR-16](https://www.php-fig.org/psr/psr-16/) `Psr\SimpleCache\CacheInterface` for interacting
+  with the key-value RoadRunner storage.
+
+Here is a simple example of using:
 
 ```php
 use Spiral\Goridge\RPC\RPC;
 use Spiral\RoadRunner\KeyValue\Factory;
 
-$factory = new Factory(RPC::create('tcp://127.0.0.1:6001'));
-
-if (!$factory->isAvailable()) {
-    throw new \LogicException('The "kv" RoadRunner plugin not available');
-}
+$factory = new Factory($rpc);
 
 $storage = $factory->select('storage-name');
+
 // Expected:
 //  An instance of Psr\SimpleCache\CacheInterface interface
 
 $storage->set('key', 'value');
 
-echo $storage->get('key');
+var_dump($storage->get('key'));
 // Expected:
 //  string(5) "string"
 ```
 
-> The `clear()` method available since [RoadRunner v2.3.1](https://github.com/roadrunner-server/roadrunner/releases/tag/v2.3.1).
-
-Apart from this, RoadRunner Key-Value API provides several additional methods:
-You can use `getTtl(string): ?\DateTimeInterface` and
-`getMultipleTtl(string): iterable<\DateTimeInterface|null>` methods to get
-information about the expiration of an item stored in a key-value storage.
+The RoadRunner KV API provides several additional methods, such as `getTtl(string)` and `getMultipleTtl(string)`, which
+allow you to get information about the expiration of an item stored in a key-value storage.
 
 > Please note that the `memcached` driver
 > [**does not support**](https://github.com/memcached/memcached/issues/239)
 > these methods.
 
 ```php
-$ttl = $factory->select('memory')
+$ttl = $factory
+    ->select('memory')
     ->getTtl('key');
+    
 // Expected:
 //  - An instance of \DateTimeInterface if "key" expiration time is available
 //  - Or null otherwise
 
-$ttl = $factory->select('memcached')
+$ttl = $factory
+    ->select('memcached')
     ->getTtl('key');
+    
 // Expected:
 //  Spiral\RoadRunner\KeyValue\Exception\KeyValueException: Storage "memcached"
 //  does not support kv.TTL RPC method execution. Please use another driver for
@@ -141,9 +138,8 @@ $ttl = $factory->select('memcached')
 
 ### Value Serialization
 
-To save and receive data from the key-value store, the data serialization
-mechanism is used. This way you can store and receive arbitrary serializable
-objects.
+To save and receive data from the key-value store, the data serialization mechanism is used. This way you can store and
+receive arbitrary serializable objects.
 
 ```php
 $storage->set('test', (object)['key' => 'value']);
@@ -155,24 +151,22 @@ $item = $storage->set('test');
 //  }
 ```
 
-To specify your custom serializer, you will need to specify it in the key-value
-factory constructor as a second argument, or use the
-`Factory::withSerializer(SerializerInterface): self` method.
+If you need to specify your custom serializer, you can do so by specifying it in the key-value factory constructor as a
+second argument, or by using the `Factory::withSerializer(SerializerInterface): self` method. This will allow you to use
+your own serialization mechanism and store more complex objects in the key-value store.
 
 ```php
 use Spiral\Goridge\RPC\RPC;
 use Spiral\RoadRunner\KeyValue\Factory;
 
-$connection = RPC::create('tcp://127.0.0.1:6001');
-
-$storage = (new Factory($connection))
+$storage = (new Factory($rpc))
     ->withSerializer(new CustomSerializer())
     ->select('storage');
 ```
 
-In the case that you need a specific serializer for a specific value from the
-storage, then you can use a similar method `withSerializer()` for a specific
-storage.
+If you require a specific serializer for a particular value stored in the key-value storage, you can use
+the `withSerializer()` method. This allows you to use a custom serializer for that particular value while still using
+the default serializer for other values.
 
 ```php
 // Using default serializer
@@ -184,54 +178,62 @@ $storage
     ->set('key', 'value');
 ```
 
-
 #### Igbinary Value Serialization
 
-As you know, the serialization mechanism in PHP is not always productive. To
-increase the speed of work, it is recommended to use the
-[ignbinary extension](https://github.com/igbinary/igbinary).
+The serialization mechanism in PHP is not always efficient, which can impact the performance of your application. To
+increase the speed of serialization and deserialization, it is recommended to use
+the [ignbinary extension](https://github.com/igbinary/igbinary).
 
-- For the Windows OS, you can download it from the
-  [PECL website](https://windows.php.net/downloads/pecl/releases/igbinary/).
+:::: tabs
 
-- In a Linux and MacOS environment, it may be installed with a simple command:
-```sh
-$ pecl install igbinary
+::: tab Linux and MacOS
+In a Linux and MacOS environment, it may be installed with a simple command:
+
+```bash
+pecl install igbinary
 ```
 
-More detailed installation instructions are [available here](https://github.com/igbinary/igbinary#installing).
+:::
 
-After installing the extension, you just need to install the desired igbinary
-serializer in the factory instance.
+::: tab Windows
+For the Windows OS, you can download it from the
+[PECL website](https://windows.php.net/downloads/pecl/releases/igbinary/).
+:::
+
+::::
+
+> **Note**
+> More detailed installation instructions are [available here](https://github.com/igbinary/igbinary#installing).
+
+Here is an example of using the `igbinary` serializer:
 
 ```php
 use Spiral\Goridge\RPC\RPC;
 use Spiral\RoadRunner\KeyValue\Factory;
 use Spiral\RoadRunner\KeyValue\Serializer\IgbinarySerializer;
 
-$storage = (new Factory(RPC::create('tcp://127.0.0.1:6001')))
+$storage = (new Factory($rpc)
     ->withSerializer(new IgbinarySerializer())
     ->select('storage');
-//
-// Now this $storage is using igbinary serializer.
-//
 ```
 
 #### End-to-End Value Encryption
 
-Some data may contain sensitive information, such as personal data of the user.
-In these cases, it is recommended to use data encryption.
+Some data may contain sensitive information, such as personal data of the user. In these cases, it is recommended to use
+data encryption.
 
-To use encryption, you need to install the
-[Sodium extension](https://www.php.net/manual/en/book.sodium.php).
+> **Note**
+> To use encryption, you need to install the [Sodium extension](https://www.php.net/manual/en/book.sodium.php).
 
 Next, you should have an encryption key generated using
-[sodium_crypto_box_keypair()](https://www.php.net/manual/en/function.sodium-crypto-box-keypair.php)
-function. You can do this using the following command:
-```sh
-$ php -r "echo sodium_crypto_box_keypair();" > keypair.key
+[sodium_crypto_box_keypair()](https://www.php.net/manual/en/function.sodium-crypto-box-keypair.php) function. You can do
+this using the following command:
+
+```bash
+php -r "echo sodium_crypto_box_keypair();" > keypair.key
 ```
 
+> **Warning**
 > Do not store security keys in a control versioning systems (like GIT)!
 
 After generating the keypair, you can use it to encrypt and decrypt the data.
@@ -242,7 +244,7 @@ use Spiral\RoadRunner\KeyValue\Factory;
 use Spiral\RoadRunner\KeyValue\Serializer\SodiumSerializer;
 use Spiral\RoadRunner\KeyValue\Serializer\DefaultSerializer;
 
-$storage = new Factory(RPC::create('tcp://127.0.0.1:6001'));
+$storage = new Factory($rpc);
     ->select('storage');
 
 // Encrypted serializer
@@ -257,52 +259,87 @@ $storage->withSerializer($encrypted)
     ->set('user.email', 'test@example.com');
 ```
 
-## RPC Interface
+## API
 
-All communication between PHP and GO made by the RPC calls with protobuf payloads.
-You can find versioned proto-payloads here: [Proto](https://github.com/roadrunner-server/api/blob/master/kv/v1/kv.proto).
+### Protobuf API
 
-- `Has(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first argument
-  is a `Request` , which declares a `storage` and an array of `Items` ; the second
-  argument is a `Response`, it will contain `Items` with keys which are present in
-  the provided via `Request` storage. Item value and timeout are not present in
-  the response.  The error returned if the request fails.
+To make it easy to use the KV proto API in PHP, we provide
+a [GitHub repository](https://github.com/roadrunner-php/roadrunner-api-dto), that contains all the generated PHP DTO
+classes proto files, making it easy to work with these files in your PHP application.
 
-- `Set(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first argument
-  is a `Request` with the `Items` to set; return value isn't used and present here
-  only because GO's RPC calling convention. The error returned if request fails.
+- [API](https://github.com/roadrunner-server/api/blob/master/kv/v1/kv.proto)
 
-- `MGet(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first
-  argument is a `Request` with `Items` which should contain only keys (server
-  doesn't check other fields); the second argument is `Response` with the `Items`.
-  Every item will have `key` and `value` set, but without timeout (See: `TTL`).
-  The error returned if request fails.
+### RPC API
 
-- `MExpire(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-  argument is a `Request` with `Items` which should contain keys and timeouts set;
-  return value isn't used and present here only because GO's RPC calling convention.
-  The error returned if request fails.
+RoadRunner provides an RPC API, which allows you to manage key-value in your applications using remote procedure calls.
+The RPC API provides a set of methods that map to the available methods of the `Spiral\RoadRunner\KeyValue\Cache` class
+in PHP.
 
-- `TTL(in *kvv1.Request, out *kvv1.Response)` - The arguments: the first argument
-  is a `Request` with `Items` which should contain keys; return value will contain
-  keys with their timeouts. The error returned if request fails.
+#### Has
 
-- `Delete(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-  argument is a `Request` with `Items` which should contain keys to delete; return
-  value isn't used and present here only because GO's RPC calling convention.
-  The error returned if request fails.
+Checks for the presence of one or more keys in the specified storage.
 
-- `Clear(in *kvv1.Request, _ *kvv1.Response)` - The arguments: the first
-  argument is a `Request` with `storage` which should contain the storage to be
-  cleaned up; return value isn't used and present here only because GO's RPC
-  calling convention. The error returned if request fails.
+```go
+func (r *rpc) Has(in *kvv1.Request, out *kvv1.Response) error {}
+```
 
-From the PHP point of view, such requests (`MGet` for example) are as follows:
+#### Set
+
+Sets one or more key-value pairs in the specified storage.
+
+```go
+func (r *rpc) Set(in *kvv1.Request, _ *kvv1.Response) error {}
+```
+
+#### MGet
+
+Gets the values of one or more keys from the specified storage.
+
+```go
+func (r *rpc) MGet(in *kvv1.Request, out *kvv1.Response) error {}
+```
+
+#### MExpire
+
+Sets the expiration time for one or more keys in the specified storage.
+
+```go
+func (r *rpc) MExpire(in *kvv1.Request, _ *kvv1.Response) error {}
+```
+
+#### TTL
+
+Gets the expiration time of a single key in the specified storage.
+
+```go
+func (r *rpc) TTL(in *kvv1.Request, out *kvv1.Response) error {}
+```
+
+#### Delete
+
+Deletes one or more keys from the specified storage.
+
+```go
+func (r *rpc) Delete(in *kvv1.Request, _ *kvv1.Response) error {}
+```
+
+#### Clear
+
+Clears all keys from the specified storage.
+
+```go
+func (r *rpc) `Clear(in *kvv1.Request, _ *kvv1.Response) error {}
+```
+
+### Example
+
+To use the RPC API in PHP, you can create an RPC connection to the RoadRunner server and use the `call()` method to
+perform the desired operation. For example, to call the `MGet` method, you can use the following code:
 
 ```php
 use Spiral\Goridge\RPC\RPC;
 use Spiral\Goridge\RPC\Codec\ProtobufCodec;
-use Spiral\RoadRunner\KeyValue\DTO\V1\{Request, Response};
+use RoadRunner\KV\DTO\V1\{Request, Response};
 
 $response = RPC::create('tcp://127.0.0.1:6001')
     ->withServicePrefix('kv')

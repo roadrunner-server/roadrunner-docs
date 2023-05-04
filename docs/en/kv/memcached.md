@@ -1,7 +1,9 @@
-# Memcached Driver
+# KV Plugin — Memcached Driver
 
-Before configuring the Memcached driver, please make sure that the Memcached
-Server is installed and running. You can read more about this [in the documentation](https://memcached.org/).
+Before configuring the Memcached driver, please make sure that the Memcached Server is installed and running. You can
+read more about this [in the documentation](https://memcached.org/).
+
+## Configuration
 
 The complete memcached driver configuration:
 
@@ -20,8 +22,23 @@ kv:
       addr: "localhost:11211"
 ```
 
+## Options
+
 Below is a more detailed description of each of the memcached-specific options:
 
-- `addr`: String of memcached connection in format "`[HOST]:[PORT]`". In the case
-  that there are several memcached servers, then the list of connections can be
-  listed in an array format, for example: `addr: [ "localhost:11211", "localhost:11222" ]`.
+### Addr
+
+`addr`: String of memcached connection in format "`[HOST]:[PORT]`".
+
+In the case that there are several memcached servers, then the list of connections can be listed in an array format, for
+example:
+
+```yaml
+version: "3"
+
+kv:
+  memcached:
+    driver: memcached
+    config:
+      addr: [ "localhost:11211", "localhost:11222" ]
+```
