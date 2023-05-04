@@ -3,11 +3,60 @@
 RoadRunner uses Endure container to manage dependencies. This approach is similar to the PHP Container implementation
 with automatic method injection. You can create your own plugins, event listeners, middlewares, etc.
 
-To define your plugin, create a struct with a public `Init` method that returns an error value (you can
-use `roadrunner-server/errors` as
-the `error` package):
+## Interface
 
-```golang
+In general, every plugin implements the following set of methods. They are all optional, but add functionality to your
+plugin.
+
+```go
+package sample
+
+import (
+    "context"
+
+    "github.com/roadrunner-server/endure/v2/dep"
+)
+
+type (
+    // Service interface can be implemented by the plugin to use Start-Stop functionality
+    Service interface {
+        // Serve starts the plugin
+        Serve() chan error
+        // Stop stops the plugin
+        Stop(context.Context) error
+    }
+
+    // Named -> Name of the service
+    Named interface {
+        // Name return user friendly name of the plugin
+        Name() string
+    }
+
+    // Provider declares the ability to provide service edges of declared types.
+    Provider interface {
+        // Provides function return set of functions which provided dependencies to other plugins
+        Provides() []*dep.Out
+    }
+
+    // Weighted is optional to implement, but when implemented the return value added during the topological sort
+    Weighted interface {
+        Weight() uint
+    }
+
+    // Collector declares the ability to accept the plugins which match the provided method signature.
+    Collector interface {
+        // Collects search for the plugins which implements given interfaces in the args
+        Collects() []*dep.In
+    }
+)
+```
+
+## Plugin definition
+
+To define your plugin, create a struct with a public `Init` method that returns an error value (you can
+use `roadrunner-server/errors` as the `error` package):
+
+```go
 package custom
 
 const PluginName = "custom"
@@ -15,7 +64,7 @@ const PluginName = "custom"
 type Plugin struct{}
 
 func (s *Plugin) Init() error {
-	return nil
+    return nil
 }
 ```
 
@@ -26,35 +75,34 @@ it or you get an initialization error, but still don't want to stop the executio
 To do that, return the special type of error called `Disabled`, which can be found in
 the `github.com/roadrunner-server/errors` package. This type of error can be used only in the `Init` function.
 
-```golang
+```go
 package custom
 
 import (
-	"github.com/roadrunner-server/errors"
+    "github.com/roadrunner-server/errors"
 )
 
 const PluginName = "custom"
 
 type Configurer interface {
-	// UnmarshalKey takes a single key and unmarshal it into a Struct.
-	UnmarshalKey(name string, out any) error
-	// Has checks if config section exists.
-	Has(name string) bool
+    // UnmarshalKey takes a single key and unmarshal it into a Struct.
+    UnmarshalKey(name string, out any) error
+    // Has checks if config section exists.
+    Has(name string) bool
 }
 
 type Plugin struct{}
 
 func (s *Plugin) Init(cfg Configurer) error {
-	const op = errors.Op("custom_plugin_init")
-	// In this sample code, we're checking with the help of the configurer plugin if the `custom` configuration section exists
-	// and if not, disabling the plugin.
-	if !cfg.Has(PluginName) {
-		return errors.E(op, errors.Disabled)
-	}
+    const op = errors.Op("custom_plugin_init")
+    // In this sample code, we're checking with the help of the configurer plugin if the `custom` configuration section exists
+    // and if not, disabling the plugin.
+    if !cfg.Has(PluginName) {
+        return errors.E(op, errors.Disabled)
+    }
 
-	return nil
+    return nil
 }
-
 ```
 
 You can register your plugin by creating a custom version of `main.go` file and [building it](build.md).
@@ -65,28 +113,28 @@ You can access other RoadRunner plugins by requesting dependencies in your `Init
 represented as interfaces,
 and a plugin implementing this interface should be registered in the RR's container - Endure.
 
-```golang
+```go
 package custom
 
 import (
-	"go.uber.org/zap"
+    "go.uber.org/zap"
 )
 
 type Configurer interface { // <-- config plugin implements
-	// UnmarshalKey takes a single key and unmarshal it into a Struct.
-	UnmarshalKey(name string, out any) error
-	// Has checks if config section exists.
-	Has(name string) bool
+    // UnmarshalKey takes a single key and unmarshal it into a Struct.
+    UnmarshalKey(name string, out any) error
+    // Has checks if config section exists.
+    Has(name string) bool
 }
 
 type Logger interface { // <-- logger plugin implements
-	NamedLogger(name string) *zap.Logger
+    NamedLogger(name string) *zap.Logger
 }
 
 type Service struct{}
 
 func (s *Service) Init(r Configurer, log Logger) error {
-	return nil
+    return nil
 }
 ```
 
@@ -105,73 +153,72 @@ custom:
 
 Plugin:
 
-```golang
+```go
 package custom
 
 // file: plugin.go
 
 import (
-	"go.uber.org/zap"
-	"github.com/roadrunner-server/errors"
+    "go.uber.org/zap"
+    "github.com/roadrunner-server/errors"
 )
 
 const PluginName = "custom"
 
 type Configurer interface { // <-- config plugin implements
-	// UnmarshalKey takes a single key and unmarshal it into a Struct.
-	UnmarshalKey(name string, out any) error
-	// Has checks if config section exists.
-	Has(name string) bool
+    // UnmarshalKey takes a single key and unmarshal it into a Struct.
+    UnmarshalKey(name string, out any) error
+    // Has checks if config section exists.
+    Has(name string) bool
 }
 
 type Logger interface { // <-- logger plugin implements
-	NamedLogger(name string) *zap.Logger
+    NamedLogger(name string) *zap.Logger
 }
 
 type Plugin struct {
-	cfg *Config
+    cfg *Config
 }
 
 // Init plugin
 // file: plugin.go
 func (s *Plugin) Init(cfg Configurer, log Logger) error {
-	const op = errors.Op("custom_plugin_init") // error operation name
-	if !cfg.Has(PluginName) {
-		return errors.E(op, errors.Disabled)
-	}
+    const op = errors.Op("custom_plugin_init") // error operation name
+    if !cfg.Has(PluginName) {
+        return errors.E(op, errors.Disabled)
+    }
 
-	// unmarshall initial configuration
-	err := cfg.UnmarshalKey(PluginName, &s.cfg)
-	if err != nil {
-		// Error will stop execution
-		return errors.E(op, err)
-	}
+    // unmarshall initial configuration
+    err := cfg.UnmarshalKey(PluginName, &s.cfg)
+    if err != nil {
+        // Error will stop execution
+        return errors.E(op, err)
+    }
 
-	// Check the unmarshalled configuration and fill-up the defaults if not provided by the configuration
-	s.cfg.InitDefaults()
+    // Check the unmarshalled configuration and fill-up the defaults if not provided by the configuration
+    s.cfg.InitDefaults()
 
-	return nil
+    return nil
 }
 ```
 
 Configuration:
 
-```golang
+```go
 package custom
 
 // file: config.go
 
 type Config struct {
-	Address string `mapstructure:"address"`
+    Address string `mapstructure:"address"`
 }
 
 // InitDefaults .. You can also initialize some defaults values for config keys
 func (cfg *Config) InitDefaults() {
-	if cfg.Address == "" {
-		cfg.Address = "tcp://127.0.0.1:8088"
-	}
+    if cfg.Address == "" {
+        cfg.Address = "tcp://127.0.0.1:8088"
+    }
 }
-
 ```
 
 ## Serving
@@ -190,34 +237,34 @@ endure:
 
 Plugin:
 
-```golang
+```go
 package custom
 
 import (
-	"context"
+    "context"
 )
 
 type Plugin struct{}
 
 func (s *Plugin) Serve() chan error {
-	const op = errors.Op("custom_plugin_serve")
-	errCh := make(chan error, 1)
+    const op = errors.Op("custom_plugin_serve")
+    errCh := make(chan error, 1)
 
-	err := s.DoSomeWork()
-	if err != nil {
-		errCh <- errors.E(op, err)
-		return errCh
-	}
+    err := s.DoSomeWork()
+    if err != nil {
+        errCh <- errors.E(op, err)
+        return errCh
+    }
 
-	return nil
+    return nil
 }
 
 func (s *Plugin) Stop(ctx context.Context) error {
-	return s.stopServing()
+    return s.stopServing()
 }
 
 func (s *Plugin) DoSomeWork() error {
-	return nil
+    return nil
 }
 ```
 
@@ -238,30 +285,29 @@ Let's create an HTTP middleware:
 package custom
 
 import (
-	"net/http"
+    "net/http"
 )
 
 // Middleware interface
 type Middleware interface {
-	Middleware(f http.Handler) http.HandlerFunc
+    Middleware(f http.Handler) http.HandlerFunc
 }
 ```
 
 2. Implement `Collects` endure interface in the plugin where you want to have these dependencies in the runtime.
 
-```golang
+```go
 package custom
 
 // Collects collecting http middlewares
 func (p *Plugin) Collects() []*dep.In {
-	return []*dep.In{
-		dep.Fits(func(pp any) {
-			mdw := pp.(Middleware)
-			// add the middleware to the list of the middleware
-		}, (*Middleware)(nil)),
-	}
+    return []*dep.In{
+        dep.Fits(func(pp any) {
+            mdw := pp.(Middleware)
+            // add the middleware to the list of the middleware
+        }, (*Middleware)(nil)),
+    }
 }
-
 ```
 
 Important notes:
@@ -283,18 +329,17 @@ Suppose we have created a file `rpc.go`. The next step is to create a structure:
 
 1. Create a structure: (logger is optional)
 
-```golang
+```go
 package custom
 
 import (
-	"go.uber.org/zap"
+    "go.uber.org/zap"
 )
 
 type rpc struct {
-	plugin *Plugin
-	log    *zap.Logger
+    plugin *Plugin
+    log    *zap.Logger
 }
-
 ```
 
 2. Create a method, which you want to expose:
@@ -303,10 +348,10 @@ type rpc struct {
 package custom
 
 func (s *rpc) Hello(input string, output *string) error {
-	*output = input
-	// s.plugin.Foo() <-- you may also use methods from the Plugin itself
-	s.log.Debug("foo")
-	return nil
+    *output = input
+    // s.plugin.Foo() <-- you may also use methods from the Plugin itself
+    s.log.Debug("foo")
+    return nil
 }
 ```
 
@@ -316,9 +361,8 @@ func (s *rpc) Hello(input string, output *string) error {
 package custom
 
 func (p *Plugin) RPC() any {
-	return &rpc{srv: p, log: p.log}
+    return &rpc{srv: p, log: p.log}
 }
-
 ```
 
 RPC plugin will automatically find and register

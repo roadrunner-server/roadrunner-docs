@@ -184,7 +184,7 @@ To make it easy to use the Service proto API in PHP, we provide
 a [GitHub repository](https://github.com/roadrunner-php/roadrunner-api-dto), that contains all the generated
 PHP DTO classes proto files, making it easy to work with these files in your PHP application.
 
-- [API](https://github.com/roadrunner-server/api/blob/master/proto/service/v1/service.proto)
+- [API](https://github.com/roadrunner-server/api/blob/master/service/v1/service.proto)
 
 
 ### RPC API
