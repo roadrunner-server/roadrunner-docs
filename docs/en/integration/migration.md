@@ -1,9 +1,13 @@
-# Migration from v1.0 to v2.0
+# Integration — Migration from v1.0 to v2.0
+
 To migration integration from RoadRunner v1.* to v2.* follow the next steps.
 
 ## Update Configuration
-Second version of RoadRunner use single worker factory for all of its plugins. This means that you must include a new section
-into your config `server` which is responsible for the worker creation. Limit service no longer presented as separate entity 
+
+Second version of RoadRunner use single worker factory for all of its plugins. This means that you must include a new
+section
+into your config `server` which is responsible for the worker creation. Limit service no longer presented as separate
+entity
 but rather part of specific service configuration.
 
 ```yaml
@@ -22,11 +26,15 @@ http:
 > Read more in [config reference](/intro/config.md).
 
 ## No longer worry about echoing
-RoadRunner 2.0 intercepts all output to the STDOUT, this means you can start using default var_dump and other echo function
+
+RoadRunner 2.0 intercepts all output to the STDOUT, this means you can start using default var_dump and other echo
+function
 without breaking the communication. Yay!
 
 ## Explicitly declare PSR-15 dependency
-We no longer ship the default PSR implementation with RoadRunner, make sure to include one you like the most by yourself.
+
+We no longer ship the default PSR implementation with RoadRunner, make sure to include one you like the most by
+yourself.
 For example:
 
 ```bash
@@ -34,6 +42,7 @@ $ composer require nyholm/psr7
 ```
 
 ## Update Worker Code
+
 RoadRunner simplifies worker creation, use static `create()` method to automatically configure your worker:
 
 ```php
@@ -78,6 +87,7 @@ while ($req = $worker->waitRequest()) {
 ```
 
 ## Update RPCs
+
 To create RPC client use new Goridge API:
 
 ```php
