@@ -1,4 +1,4 @@
-# NGINX with RoadRunner
+# App server — NGINX with RoadRunner
 
 RoadRunner can operate alongside a web server, acting as a backend for processing PHP requests. To get started with using RoadRunner and NGINX within a Docker container, follow these steps:
 
