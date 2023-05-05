@@ -1,171 +1,103 @@
-# OpenTelemetry plugin
+# Observability — OpenTelemetry
 
-OpenTelemetry plugin is a unified standard for tracing, logging and metrics information. Currently, only tracing information is stable and safe to use in production.
-More info: [link](https://opentelemetry.io/)
+RoadRunner offers otel (OpenTelemetry) plugin, which provides a unified standard for tracing, logging, and metrics
+information. This plugin allows you to send tracing data from RoadRunner to tracing collectors
+like [New Relic](https://newrelic.com/), [Zipkin](https://zipkin.io), [Jaeger](https://www.jaegertracing.io/),
+[Datadog](https://www.datadoghq.com/), and more.
 
-## PHP Client
 
-PHP library in the [beta](https://opentelemetry.io/docs/instrumentation/php/#status-and-releases) stage at the moment: [link](https://github.com/open-telemetry/opentelemetry-php).  
-Thanks to [Brett McBride](https://github.com/brettmc), he created a rr-otel [PHP demo](https://github.com/brettmc/rr-otel-demo).
+![OpenTelemetry](https://user-images.githubusercontent.com/773481/213914208-cd944ca8-f218-4baf-8a54-5a4e42a1ed40.jpg)
 
-## Original issue
+> **Note**
+> Read more about OpenTelemetry on the [official site](https://opentelemetry.io/).
 
-- https://github.com/roadrunner-server/roadrunner/issues/1027
+The OpenTelemetry plugin is designed to integrate with various tracing collectors to provide end-to-end tracing of
+requests across multiple services. The plugin is built to support the OpenTelemetry standard, which provides a unified
+way of collecting telemetry data across various languages and frameworks.
+
+The plugin supports tracing, logging, and metrics data, but currently only tracing information is stable and safe to use
+in production.
 
 ## Configuration
 
-OpenTelemetry is a middleware that currently works with gRPC, HTTP and Jobs plugins.
+Here is an example configuration file:
 
-## OpenTelemetry HTTP
-
-- For HTTP, you need to enable an `otel' middleware with the main `otel` configuration:
-
-```yaml
+```yaml .rr.yaml
 version: "3"
 
-rpc:
-  listen: tcp://127.0.0.1:6001
+otel:
+  insecure: true
+  compress: false
+  exporter: otlp
+  service_name: rr_test
+  service_version: 1.0.0
+  endpoint: 127.0.0.1:4317
+```
 
-server:
-  command: "php otel_worker.php"
-  env:
-    - OTEL_SERVICE_NAME: php
-    - OTEL_TRACES_EXPORTER: otlp
-    - OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
-    - OTEL_EXPORTER_OTLP_ENDPOINT: http://127.0.0.1:4318
-    - OTEL_PHP_TRACES_PROCESSOR: simple
-  relay: pipes
+Once the plugin is activated, the `grpc` and `jobs` plugins will use the configuration to send tracing data to the
+collector. The `http` plugin requires the `otel` middleware to be added to the middleware list.
 
+**Here is an example:**
+
+```yaml .rr.yaml
 http:
   address: 127.0.0.1:15389
-  middleware: [gzip, otel]
-  pool:
-    num_workers: 10
+  middleware: [ gzip, otel ]
 
-otel:
-  insecure: true
-  compress: false
-  exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
-  endpoint: 127.0.0.1:4318
-
-logs:
-  encoding: console
-  level: debug
-  mode: production
+...
 ```
 
-## OpenTelemetry gRPC 
+**The `otel` section of the configuration file contains the following options:**
 
-- For gRPC, configure only the main `otel` section:
+| Option              | Description                                                                                                                                                                                                                                     |
+|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **insecure**        | a boolean that determines whether to use insecure endpoints (HTTP/HTTPS) or insecure gRPC. The default value is `false`.                                                                                                                        |                                                                                                                                                                                                        |
+| **compress**        | a boolean that determines whether to use gzip to compress the spans. The default value is `false`.                                                                                                                                              |
+| **exporter**        | a string that provides functionality to emit telemetry to consumers. Possible values are `otlp` (used for New Relic, Datadog), `zipkin`, `stdout`, `jaeger`, or `jaeger_agent` to use a Jaeger agent UDP endpoint. The default value is `otlp`. |
+| **custom_url**      | a string that is used for the http client to override the default URL. The default value is `empty`.                                                                                                                                            |
+| **client**          | a string that determines the client to send the spans. Possible values are http and grpc. The default value is `http`.                                                                                                                          |
+| **endpoint**        | a string that specifies the consumer's endpoint. The default value is `localhost:4318`.                                                                                                                                                         |
+| **service_name**    | a string that specifies the user's service name. The default value is `RoadRunner`.                                                                                                                                                             |
+| **service_version** | a string that specifies the user's service version. The default value is `1.0.0`.                                                                                                                                                               |
+| **headers**         | a key-value map that contains user-defined headers. The `api-key` for New Relic should be here.                                                                                                                                                 |
 
-```yaml
-version: "3"
+## Collector
 
-rpc:
-  listen: tcp://127.0.0.1:6001
+The OpenTelemetry Collector offers a vendor-agnostic implementation of how to receive, process and export telemetry
+data. It removes the need to run, operate, and maintain multiple agents/collectors. This works with improved scalability
+and supports open-source observability data formats (e.g. Jaeger, Prometheus, Fluent Bit, etc.) sending to one or more
+open-source or commercial back-ends. The local Collector agent is the default location to which instrumentation
+libraries export their telemetry data.
 
-server:
-  command: "php otel_worker.php"
-  relay: pipes
+To start the collector, you can use the official Docker container `otel/opentelemetry-collector-contrib`.
 
-grpc:
-  listen: "tcp://127.0.0.1:9001"
-  proto: "service.proto"
-  pool:
-    num_workers: 10
+**Here is an example `docker-compose.yaml`:**
 
-otel:
-  insecure: true
-  compress: false
-  exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
-  endpoint: 127.0.0.1:4317
-  
-logs:
-  encoding: console
-  level: debug
-```
-
-## OpenTelemetry Jobs
-
-- To configure the `Jobs` plugin with OpenTelemetry, you only need to configure the main `otel` section:
-
-```yaml
-version: "3"
-
-rpc:
-  listen: tcp://127.0.0.1:6001
-
-server:
-  command: "php otel_worker.php"
-  relay: pipes
-
-jobs:
-  # ....
-
-otel:
-  insecure: true
-  compress: false
-  exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
-  endpoint: 127.0.0.1:4317
-  
-logs:
-  encoding: console
-  level: debug
-```
-
-`otel` contains the following keys:
-1. `insecure`: boolean, default `false`. Use insecure endpoints (http/https) or insecure gRPC.
-2. `compress`: boolean, default `false`. Use gzip to compress the spans.
-3. `exporter`: string, default `otlp`. Provides functionality to emit telemetry to consumers. Possible values: `otlp` (used for `new_relic`, `datadog`), `zipkin`, `stdout`, `jaeger` or `jaeger_agent` to use a Jaeger agent UDP endpoint.
-4. `custom_url`: string, default empty. Used for the `http` client to override the default URL.
-5. `client`: string, default `http`. Client to send the spans. Possible values: `http`, `grpc`.
-6. `endpoint`: string, default `localhost:4318`. Consumer's endpoint.
-7. `service_name`: string, default: `RoadRunner`. User's service name.
-8. `service_version`: string, default `1.0.0`. User's service version.
-9. `headers`: key-values map, default empty. User defined headers. new_relic `api-key` should be [here](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/opentelemetry-setup/#review-settings). 
-
-## OpenTelemetry environment variables
-
-Env variables are used for the PHP process and can be passed via the `server` env variables.
-
-```yaml
-server:
-  command: "php otel_worker.php"
-  env:
-    - OTEL_SERVICE_NAME: php
-    - OTEL_TRACES_EXPORTER: otlp
-    - OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
-    - OTEL_EXPORTER_OTLP_ENDPOINT: http://127.0.0.1:4318
-    - OTEL_PHP_TRACES_PROCESSOR: simple
-  relay: pipes
-```
-
-### Using with DataDog
-
-```yaml
-#docker-composer.yml
+```yaml docker-compose.yaml
 version: "3.6"
 
 services:
   collector:
     image: otel/opentelemetry-collector-contrib
-    command: ["--config=/etc/otel-collector-config.yml"]
+    command: [ "--config=/etc/otel-collector-config.yml" ]
     volumes:
       - ./otel-collector-config.yml:/etc/otel-collector-config.yml
     ports:
       - "4318:4318"
+      - "4317:4317"
 ```
 
-Below, you will find an example of a collector configuration that sends data to Zipkin, Datadog, or New Relic:
+> **Note**
+> Read more about the OpenTelemetry Collector on the [official site](https://opentelemetry.io/docs/collector/).
 
-```yaml
-#otel-collector-config.yml
+### Collector Configuration
+
+The collector is started with the `otel-collector-config.yml` configuration file, which specifies how the collector
+should receive, process, and export the tracing data.
+
+Here is an example configuration file that sends data to Zipkin and Datadog:
+
+```yaml otel-collector-config.yml
 receivers:
   otlp:
     protocols:
@@ -201,7 +133,25 @@ service:
       exporters: [ zipkin, datadog, otlp, logging ]
 ```
 
-Then configure your php application:
+| Option         | Description                                                                                                                                                                                                                                  |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **receivers**  | a key-value map that specifies the protocols the collector should use to receive the tracing data.                                                                                                                                           |
+| **processors** | a key-value map that specifies the processors to apply to the tracing data before exporting it. In this example, it uses the batch processor, which batches tracing data before exporting it.                                                |
+| **exporters**  | a key-value map that specifies the destination collectors to which the tracing data should be exported.  In this example, it exports the tracing data to `zipkin`, `datadog`, `otlp`, and `logging`.                                         |
+| **service**    | a key-value map that specifies the service name and the pipelines through which the tracing data flows.  In this example, the traces pipeline includes the otlp receiver, batch processor, and zipkin, datadog, otlp, and logging exporters. |
+
+> **Note**
+> Read more about the OpenTelemetry Collector configuration on
+> the [official site](https://opentelemetry.io/docs/collector/configuration/).
+
+## PHP Client
+
+The official [PHP SDK](https://github.com/open-telemetry/opentelemetry-php) for OpenTelemetry provides support for the
+OpenTelemetry standard on the PHP side.
+
+To configure your PHP application to use the RoadRunner OpenTelemetry plugin, you need to use environment variables.
+
+**Here is an example of the required environment variables:**
 
 ```dotenv
 # OpenTelemetry
@@ -211,3 +161,27 @@ OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318 # Collector address
 OTEL_PHP_TRACES_PROCESSOR=simple
 ```
+
+You can pass these environment variables to your PHP application from the RoadRunner configuration using
+the `server.env` option:
+
+```yaml .rr.yaml
+server:
+  command: "php otel_worker.php"
+  env:
+    - OTEL_SERVICE_NAME: php
+    - OTEL_TRACES_EXPORTER: otlp
+    - OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+    - OTEL_EXPORTER_OTLP_ENDPOINT: http://127.0.0.1:4318
+    - OTEL_PHP_TRACES_PROCESSOR: simple
+  relay: pipes
+```
+
+
+> **Note**
+> Thanks to [Brett McBride](https://github.com/brettmc), he created a
+> rr-otel [PHP demo](https://github.com/brettmc/rr-otel-demo).
+
+## Original issue
+
+- https://github.com/roadrunner-server/roadrunner/issues/1027
