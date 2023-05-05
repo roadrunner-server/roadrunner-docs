@@ -1,12 +1,26 @@
 # Customization — Writing Plugins
 
-RoadRunner uses Endure container to manage dependencies. This approach is similar to the PHP Container implementation
-with automatic method injection. You can create your own plugins, event listeners, middlewares, etc.
+RoadRunner provides the ability to create custom plugins, event listeners, middlewares, etc, that extend its
+functionality. It uses Endure container to manage dependencies, this approach is similar to the PHP Container
+implementation with automatic method injection.
+
+**To create a custom plugin, you can follow these steps:**
+
+- Define a struct with a public `Init` method that returns an error value.
+- Implement the `Service` interface in your struct to provide the `Serve` and `Stop` methods.
+- Request dependencies using their respective interfaces and inject them using Endure container.
+- Register your plugin with RoadRunner by creating a custom version of the `main.go` file and [building it](build.md).
+
+Below you can find more information about the plugin interface, how to define a plugin, and how to access other plugins.
 
 ## Interface
 
-In general, every plugin implements the following set of methods. They are all optional, but add functionality to your
-plugin.
+RoadRunner plugins are implemented using the Service interface, which provides the `Serve` and `Stop` methods for
+starting and stopping the plugin. Additionally, plugins can implement other optional interfaces
+like `Named`, `Provider`, `Weighted`, and `Collector`. These interfaces enable plugins to provide dependencies to other
+plugins, define their weight in the plugin's topology, and collect plugins that implement specific interfaces.
+
+**Here is an example:**
 
 ```go
 package sample
@@ -53,8 +67,9 @@ type (
 
 ## Plugin definition
 
-To define your plugin, create a struct with a public `Init` method that returns an error value (you can
-use `roadrunner-server/errors` as the `error` package):
+To define a custom plugin, create a struct with a public `Init` method that returns an error value (you can
+use `roadrunner-server/errors` as the `error` package). In this method, you can access other plugins by requesting
+dependencies.
 
 ```go
 package custom
@@ -70,10 +85,11 @@ func (s *Plugin) Init() error {
 
 ## Disabling plugin
 
-You may disable the plugin in the runtime according to a different conditions. For example, if there are no config for
-it or you get an initialization error, but still don't want to stop the execution.
-To do that, return the special type of error called `Disabled`, which can be found in
-the `github.com/roadrunner-server/errors` package. This type of error can be used only in the `Init` function.
+Sometimes, you may want to disable a plugin at runtime based on certain conditions. For example, if there are no
+configurations for the plugin, or if there is an initialization error but you still don't want to stop the execution of
+the server. In such cases, you can return the special type of error called `Disabled`, which can be found in
+the `github.com/roadrunner-server/errors` package. This type of error can only be used in the `Init` function of the
+plugin.
 
 ```go
 package custom
@@ -105,13 +121,10 @@ func (s *Plugin) Init(cfg Configurer) error {
 }
 ```
 
-You can register your plugin by creating a custom version of `main.go` file and [building it](build.md).
-
 ## Dependencies
 
-You can access other RoadRunner plugins by requesting dependencies in your `Init` method. All dependencies should be
-represented as interfaces,
-and a plugin implementing this interface should be registered in the RR's container - Endure.
+You can access other plugins by requesting dependencies in your `Init` method. All dependencies should be represented as
+interfaces, and a plugin implementing this interface should be registered in the RR's container - Endure.
 
 ```go
 package custom
@@ -140,18 +153,17 @@ func (s *Service) Init(r Configurer, log Logger) error {
 
 ## Configuration
 
-In most cases, your services would require a set of configuration values.
-RoadRunner can automatically populate and validate your configuration structure using the `config` plugin via an
-interface:
+In most cases, your services would require a set of configuration values. RoadRunner can automatically populate and 
+validate your configuration structure using the `config` plugin via an interface.
 
-YAML configuration sample:
+### YAML configuration sample
 
 ```yaml
 custom:
   address: tcp://127.0.0.1:8888
 ```
 
-Plugin:
+### Plugin
 
 ```go
 package custom
@@ -202,7 +214,7 @@ func (s *Plugin) Init(cfg Configurer, log Logger) error {
 }
 ```
 
-Configuration:
+### Configuration
 
 ```go
 package custom
@@ -235,7 +247,7 @@ endure:
   grace_period: 30s
 ```
 
-Plugin:
+### Plugin
 
 ```go
 package custom
@@ -321,9 +333,10 @@ Important notes:
 ## RPC Methods
 
 Extending your plugin with RPC methods does not change the plugin at all. The only thing you have to do is to create a
-file with
-RPC methods (let's call it `rpc.go`) and add all RPC methods for the plugin without modifying the plugin itself:
-Example based on the `informer` plugin:
+file with RPC methods (let's call it `rpc.go`) and add all RPC methods for the plugin without modifying the plugin 
+itself.
+
+**Example based on the `informer` plugin:**
 
 Suppose we have created a file `rpc.go`. The next step is to create a structure:
 
@@ -367,12 +380,12 @@ func (p *Plugin) RPC() any {
 
 RPC plugin will automatically find and register
 your [RPC](https://github.com/roadrunner-server/rpc/blob/master/plugin.go#L184) methods under your plugin name. So, for
-example, to call the `Hello`
-method you might use the following sample:
+example, to call the `Hello` method you might use the following sample:
 
 ```php
 var_dump($rpc->call('custom.Hello', 'world'));
 ```
 
 ## Tips:
+
 1. More about plugins can be found here: [link](https://github.com/roadrunner-server/endure/tree/master/examples)
