@@ -9,7 +9,7 @@ for their particular project.
 - forking existing ones to make changes,
 - or building a lightweight server with only the necessary plugins.
 
-We created a tool called **Velox** that lets developers build a RoadRunner server binary. It uses a configuration file 
+We created a tool called **Velox** that lets developers build a RoadRunner server binary. It uses a configuration file
 to determine which plugins and repositories are required for building a RoadRunner server binary.
 
 ## Configuration
@@ -21,7 +21,8 @@ authenticate with access tokens.
 > **Note**
 > To download all the required plugins for RoadRunner, you need a GitHub token. If you try to download plugins without a
 > token, anonymous access is limited to 50 requests per hour. You can read more about these limits on
-> the [Rate limits for GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/rate-limits-for-github-apps)
+>
+the [Rate limits for GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/rate-limits-for-github-apps)
 > page.
 
 
@@ -169,8 +170,9 @@ go env -w GONOSUMDB="gitlab/github.com/<company_name>/*"
 
 ::: tab Docker
 
-You can simplify the build process by using the Docker image. It builds the application server and starts it
-automatically after building, without needing you to install Golang or other dependencies on your computer.
+Using the Docker image simplifies the build process by automatically building the RoadRunner binary and storing it in
+the `/usr/bin/` folder. This eliminates the need to install Golang or other dependencies on your computer. Once the 
+build is complete, Docker will automatically start the RoadRunner server.
 
 **Here is an example of Dockerfile**
 
