@@ -118,6 +118,10 @@ level = "debug"
 mode = "development"
 ```
 
+> **Note**
+> You can find the latest version of the example configuration file in
+> the [official repository](https://github.com/roadrunner-server/velox/blob/master/velox_rr_v2023.toml).
+
 > **Warning**
 > When using official plugins for RoadRunner, it is recommended avoid using the `master` branch as it may contain
 > unstable code. Instead, use tags with the same major version (e.g., `logger:v4.x.x` + `amqp:v4.x.x`, but
@@ -171,7 +175,7 @@ go env -w GONOSUMDB="gitlab/github.com/<company_name>/*"
 ::: tab Docker
 
 Using the Docker image simplifies the build process by automatically building the RoadRunner binary and storing it in
-the `/usr/bin/` folder. This eliminates the need to install Golang or other dependencies on your computer. Once the 
+the `/usr/bin/` folder. This eliminates the need to install Golang or other dependencies on your computer. Once the
 build is complete, Docker will automatically start the RoadRunner server.
 
 **Here is an example of Dockerfile**
@@ -187,7 +191,7 @@ ARG APP_VERSION="undefined"
 ARG BUILD_TIME="undefined"
 
 # copy your configuration into the docker
-COPY velox.toml .
+COPY plugins.toml .
 
 # we don't need CGO
 ENV CGO_ENABLED=0
