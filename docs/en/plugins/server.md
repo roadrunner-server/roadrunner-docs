@@ -1,14 +1,14 @@
 # Plugins — Server
 
 RoadRunner server plugin, is responsible for starting worker pools for plugins that use workers, such as `http`, `tcp`,
-`jobs`, `centrifuge`, and `grpc`. The worker pools inherit all of RoadRunner's features, such as supervising, state
-machine, and command handling.
+`jobs`, `centrifuge`, `temporal`, and `grpc`. The worker pools inherit all of RoadRunner's features, such as
+supervising, state machine, and command handling.
 
 ## Configuration
 
 The `server` section contains various options for configuring the plugin.
 
-Here is an example of a configuration file:
+**Here is an example of a configuration:**
 
 ```yaml .rr.yaml
 server:
@@ -72,15 +72,28 @@ The `on_init` section is used for application initialization or warming up befor
 a command script that will be executed before starting the workers. You can also set environment variables to pass to
 this script.
 
+> **Note**
+> If the `on_init` command fails (i.e., returns a non-zero exit code), RoadRunner will log the error but continue
+> execution. This ensures that a failure during initialization does not interrupt the application's operation.
+
 ### Worker starting command
 
 The `server.command` option is required and is used to start the worker pool for each configured section in the config.
 
-> **Note:**
+> **Note**
 > This option can be overridden by plugins with a pool section, such as the http.pool.command.
 
-The `user` and `group` options allow you to set the user and group that will start and own the worker process. An empty
-value means to use the RoadRunner process user.
+The `user` and `group` options allow you to set the user and group that will start and own the worker process. This
+feature provides an additional layer of security and control over the application's execution environment.
+
+> **Note**
+> An empty value means to use the RoadRunner process user.
+
+> **Warning**
+> RoadRunner must be started from the root user. Root access is needed only to fork the process under a
+> different user. Once the worker process is started, it will run with the specified user and group permissions,
+> providing a secure and controlled execution environment for the application. All temporary files (`http` for example)
+> would be created with the provided user/group
 
 The `env` option allows you to set environment variables to pass to the worker script.
 
