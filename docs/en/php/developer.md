@@ -56,18 +56,20 @@ Or if you have only `debug` option in the `pool` section you can use short synta
 http:
   pool.debug: true
 ```
+
 > **Note**
 > Every plugin in RoadRunner that creates workers has a `pool` section in which you can activate debug mode.
 
 
 > **Warning**
-> When using the `pool.debug` option in RoadRunner, it is important to note that the `pool.num_workers` section will not
-> work as expected. This is because, in debug mode, RoadRunner does not create a worker at startup. Instead, it waits
-> for requests to come in and creates workers accordingly. After the response, RoadRunner stops and removes the worker.
+> When using the `pool.debug` option in RoadRunner, it is important to note that settings in `poll` section would work
+> differently. All options will be ignored (`supervisor`, `max_jobs`, `num_workers`, etc). This is because, in debug 
+> mode, RoadRunner does not create a worker at startup. Instead, it waits for requests to come in and creates workers 
+> accordingly. After the response, RoadRunner stops and removes the worker.
 > When you send 2-3-n parallel requests to RoadRunner, it creates 2-3-n workers to handle those requests simultaneously.
 > The number of workers depends on the number of requests you send. Similarly, when you use the Jobs plugin and the Jobs
-> consumers, every message consumed creates a worker to handle that message. The number of workers is based on the number
-> of messages consumed.
+> consumers, every message consumed creates a worker to handle that message. The number of workers is based on the
+> number of messages consumed.
 >
 > This enables you to make changes to your codebase and reload it automatically.
 
