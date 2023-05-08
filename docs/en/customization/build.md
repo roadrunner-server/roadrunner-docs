@@ -20,9 +20,8 @@ authenticate with access tokens.
 
 > **Note**
 > To download all the required plugins for RoadRunner, you need a GitHub token. If you try to download plugins without a
-> token, anonymous access is limited to 50 requests per hour. You can read more about these limits on
->
-the [Rate limits for GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/rate-limits-for-github-apps)
+> token, anonymous access is limited to 50 requests per hour. You can read more about these limits on 
+> the [Rate limits for GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/rate-limits-for-github-apps)
 > page.
 
 
