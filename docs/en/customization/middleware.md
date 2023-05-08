@@ -1,9 +1,10 @@
 # Customization — HTTP Middleware
 
-RoadRunner provides a flexible and extensible architecture that allows developers to build custom middleware for both
-`HTTP` and `gRPC` plugins. Moving highly loaded parts of an application, such as authentication, to middleware written
-in Go can provide a significant performance boost. By leveraging the speed and efficiency of Go, developers can improve
-the overall performance of their application and handle spikes in traffic more effectively.
+RoadRunner provides a flexible and extensible architecture that allows developers to build custom middleware for
+`http` and custom interceptors for `grpc` and `temporal` plugins. Moving highly loaded parts of an application, such as
+authentication, to middleware written in Go can provide a significant performance boost. By leveraging the speed and
+efficiency of Go, developers can improve the overall performance of their application and handle spikes in traffic more
+effectively.
 
 Middleware architecture allows developers to create custom middleware for their specific needs. The HTTP
 middleware can be used to intercept and modify HTTP requests and responses, while the gRPC interceptor can be used to
@@ -64,7 +65,7 @@ func (p *Plugin) Name() string {
 
 ## gRPC
 
-The middleware (Interceptor) intercepts incoming gRPC requests and can be used to perform additional processing, such as
+The interceptor intercepts incoming gRPC requests and can be used to perform additional processing, such as
 authentication, rate limiting, and logging.
 
 **To create custom interceptor for gRPC requests in RoadRunner, follow these steps:**
@@ -108,7 +109,7 @@ func (p *Plugin) Name() string {
 ```
 
 > **Note**
-> Middleware must correspond to the
+> Interceptor must correspond to the
 > following [interface](https://github.com/roadrunner-server/grpc/blob/master/common/interfaces.go#L14) and
 > be [named](https://github.com/roadrunner-server/endure/blob/master/container.go#L47).
 
@@ -188,6 +189,3 @@ http:
 ### Writing a middleware for HTTP
 
 [![Writing a middleware](https://img.youtube.com/vi/f5fUSYaDKxo/0.jpg)](https://www.youtube.com/watch?v=f5fUSYaDKxo)
-
-The RoadRunner HTTP server employs the standard Golang middleware architecture, enabling seamless integration of custom
-or community-developed middleware. A basic example of a service that incorporates middleware registration is as follows:
