@@ -9,8 +9,8 @@ for their particular project.
 - forking existing ones to make changes,
 - or building a lightweight server with only the necessary plugins.
 
-We created a tool called **Velox** that lets developers build a RoadRunner server binary. They do this by using a
-configuration file that tells the tool which plugins and repositories are needed for the project.
+We created a tool called **Velox** that lets developers build a RoadRunner server binary. It uses a configuration file 
+to determine which plugins and repositories are required for building a RoadRunner server binary.
 
 ## Configuration
 
