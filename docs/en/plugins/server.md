@@ -52,9 +52,6 @@ server:
     - SOME_KEY: "SOME_VALUE"
     - SOME_KEY2: "SOME_VALUE2"
 
-  # Worker relay can be: "pipes", TCP (eg.: tcp://127.0.0.1:6002), or socket (eg.: unix:///var/run/rr.sock).
-  #
-  # Default: "pipes"
   relay: pipes
 
   # Timeout for relay connection establishing (only for socket and TCP port relay).
@@ -62,6 +59,12 @@ server:
   # Default: 60s
   relay_timeout: 60s
 ```
+
+> **Note**
+> Worker relay can be: `pipes`, TCP (eg.: `tcp://127.0.0.1:6002`), or socket (eg.: `unix:///var/run/rr.sock`). But in
+> most cases, you should use the default `pipes` relay, it is the fastest communication transport.
+> It uses an inter-process communication mechanism that allows for fast and efficient communication between
+> processes. It does not require any network connections or external libraries, making it a lightweight and fast option.
 
 ### Server initialization
 
