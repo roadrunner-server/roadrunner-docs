@@ -14,7 +14,7 @@ This command will display the version of RoadRunner, as well as information abou
 architecture.
 
 ```output
-rr version local (build time: development, go1.18.3), OS: linux, arch: amd64
+rr version 2023.1.2 (build time: 2023-05-04T13:19:13+0000, go1.20.4), OS: linux, arch: amd64
 ```
 
 ## Starting the Server
@@ -65,17 +65,17 @@ debug mode, which starts the pprof server and listens for incoming requests on t
 
 ### Available options
 
-- `-c` - specifies the path to the configuration file. By default, RoadRunner looks for a .rr.yaml file in the current
+- `-c` - specifies the path to the configuration file. By default, RoadRunner looks for a `.rr.yaml` file in the current
   working directory. However, you can specify a different file using this option.
 - `-w` - sets the working directory for the server. By default, RoadRunner uses the current working directory.
-- `--dotenv` - populates the process with environment variables from the .dotenv file. This can be useful when you want
-  to set environment variables for your application.
-- `-d` - starts a Golang pprof server in debug mode. This allows you to analyze the performance of your application and
-  identify potential bottlenecks.
+- `--dotenv` - populates the process with environment variables from the `.dotenv` file. This can be useful when you
+  want to set environment variables for your application.
+- `-d` - starts a Golang profiling server. This allows you to analyze the performance of your application and
+  identify potential bottlenecks. (Read more [here](https://pkg.go.dev/net/http/pprof).)
 - `-s` - enables silent mode. In this mode, RoadRunner does not display any output in the console.
-- `-o` - allows you to override configuration keys with your values. For example, -o=http.address=:8080 will override
-  the http.address configuration key from the .rr.yaml file.
-- `-p` - creates a .pid file to use with the rr stop command later. This can be useful when you want to run RoadRunner
+- `-o` - allows you to override configuration keys with your values. For example, `-o=http.address=8080` will override
+  the `http.address` configuration key from the `.rr.yaml` file.
+- `-p` - creates a `.pid` file to use with the rr stop command later. This can be useful when you want to run RoadRunner
   in the background mode.
 
 ## Stopping the Server
@@ -86,6 +86,10 @@ To stop RoadRunner, you have a few options:
   is done automatically when you're stopping the pod.
 - If you want to stop RoadRunner manually, you can hit `ctrl+c` for a graceful stop or hit `ctrl+c` one more time to
   force stop.
+
+> **Note**
+> By default, graceful period is 30 seconds. You can change it in the configuration file using `endure.grace_period`
+> setting. You can find an example [here](https://github.com/roadrunner-server/roadrunner/blob/master/.rr.yaml#L2115).
 
 You can also use the following command to stop the server:
 
@@ -98,6 +102,10 @@ If you want to force stop the server, you can use the `-f` option:
 ```terminal
 ./rr stop -f
 ```
+
+> **Note**
+> The `rr stop` command can only be used to stop a RoadRunner server that was started with the` -p` option and has
+> a `.pid` file.
 
 ### Available options
 
