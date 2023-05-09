@@ -5,7 +5,7 @@ server using [Goridge library](https://github.com/roadrunner-php/goridge).
 
 ## Goridge
 
-Goridge is a high-performance PHP-to-Golang library developed specifically for communication between PHP
+Goridge is a high-performance PHP-to-Golang/Golang-to-PHP library developed specifically for communication between PHP
 applications and RoadRunner. It is designed to provide a reliable and efficient way to communicate between the two
 components, allowing PHP developers to take advantage of the performance benefits of Golang-based systems while still
 writing their applications in PHP.
