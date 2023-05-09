@@ -28,8 +28,9 @@ There are three available modes:
 ### Encoding
 
 Logger supports two types of encoding, `console` and `json`. By default, `console` encoding is used, which outputs logs
-in a friendly format. JSON encoding, on the other hand, returns messages as a JSON string without formatting. JSON
-encoding is better suited for production usage.
+in a friendly format. JSON encoding, on the other hand, returns messages in a JSON Structured logging format. This
+format presents log messages as JSON objects with key-value pairs representing each log message field, making them more
+machine-readable and easier to process programmatically. JSON encoding is also better suited for production usage.
 
 ```yaml
 logs:
