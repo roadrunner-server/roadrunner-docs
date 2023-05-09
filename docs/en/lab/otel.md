@@ -1,6 +1,6 @@
 # Observability — OpenTelemetry
 
-RoadRunner offers otel (OpenTelemetry) plugin, which provides a unified standard for tracing, logging, and metrics
+RoadRunner offers OTEL (OpenTelemetry) plugin, which provides a unified standard for tracing, logging, and metrics
 information. This plugin allows you to send tracing data from RoadRunner to tracing collectors
 like [New Relic](https://newrelic.com/), [Zipkin](https://zipkin.io), [Jaeger](https://www.jaegertracing.io/),
 [Datadog](https://www.datadoghq.com/), and more.
