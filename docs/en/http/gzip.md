@@ -1,4 +1,4 @@
-# Gzip middleware
+# HTTP — Gzip middleware
 
 The gzip middleware is used to support the `accept-encodin: gzip` header and to compress and decompress the contents of the
 outgoing/incoming requests.

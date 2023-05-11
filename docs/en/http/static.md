@@ -1,4 +1,4 @@
-# Serving static content
+# HTTP — Serving static content
 
 `Static` HTTP middleware serving static content using RoadRunner on the main HTTP plugin endpoint. Using this middleware
 can slow down the overall performance by up to `~10%`, because RoadRunner has to check the path for each file request.
