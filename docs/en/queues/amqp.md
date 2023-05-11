@@ -152,7 +152,7 @@ from `pipe1` have been processed.
 
 ### Prefetch
 
-`prefetch` - rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
+`prefetch` - rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html). Note that if you use a large number of workers and a small `prefetch` number, some of the workers may not be loaded with messages (jobs) due to the blocking nature of the prefetch. This would result in poor RoadRunner performance and waste of resources. 
 
 ### Queue
 

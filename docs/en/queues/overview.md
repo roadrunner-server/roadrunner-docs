@@ -80,7 +80,7 @@ Above is a complete list of all possible common Jobs settings. Let's now figure 
 - `num_pollers`: The number of threads that are simultaneously reading from the priority
   queue and send payloads to the workers. There is no optimal number, it depends
   heavily on the performance of the PHP worker. For example, echo workers
-  can process over 300k jobs per second within 64 pollers (on a 32 core CPU).
+  can process over 300k jobs per second within 64 pollers (on a 32 core CPU). `num_pollers` should not be less than the number of workers to properly load all of them with the jobs.
 
 - `timeout`: The internal Golang context timeouts (in seconds). For
   example, if the connection was disconnected or your push was in the middle of a
