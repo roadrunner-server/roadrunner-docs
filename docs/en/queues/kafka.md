@@ -1,4 +1,4 @@
-# Kafka driver
+# Jobs — Kafka driver
 
 Kafka driver supported since RoadRunner version `2.11.0`. The Kafka driver has been reworked in `v2023.1.0`.
 Apache Kafka is a distributed streaming system used for event stream processing, real-time data pipelines, and
@@ -8,7 +8,7 @@ full-fledged event streaming platform.
 Now used by 80% of the Fortune 500, Kafka brings numerous benefits to virtually every industry and opens up countless
 new use cases, large and small.
 
-## Configuration:
+## Configuration
 
 ```yaml
 # Kafka jobs driver

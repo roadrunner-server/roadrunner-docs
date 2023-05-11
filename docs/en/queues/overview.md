@@ -343,7 +343,7 @@ There are several ways to check the operating mode from the code:
 
 The second choice may be more preferable in cases where you need to change the RoadRunner's mode, for example, in tests.
 
-```php
+```php consumer.php
 use Spiral\RoadRunner\Environment;
 use Spiral\RoadRunner\Environment\Mode;
 
@@ -360,7 +360,7 @@ After we are convinced of the specialization of the worker, we can write the cor
 To get information about the available task in the worker, use the `$consumer->waitTask(): ReceivedTaskInterface`
 method.
 
-```php
+```php consumer.php
 use Spiral\RoadRunner\Jobs\Consumer;
 use Spiral\RoadRunner\Jobs\Task\ReceivedTaskInterface;
 
@@ -379,7 +379,7 @@ tasks among the workers.
 After you have processed the incoming task, you can execute the `complete(): void` method. After that, you tell the
 RoadRunner that you are ready to handle the next task.
 
-```php
+```php consumer.php
 $consumer = new Spiral\RoadRunner\Jobs\Consumer();
 
 while ($task = $consumer->waitTask()) {
@@ -401,7 +401,7 @@ the RoadRunner about it. The method takes two arguments. The first argument is r
 string-like (instance of `Stringable`, for example any exception) value with an error message. The second is optional
 and tells the server to restart this task.
 
-```php
+```php consumer.php
 $consumer = new Spiral\RoadRunner\Jobs\Consumer();
 $shouldBeRestarted = false;
 
