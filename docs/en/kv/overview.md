@@ -33,7 +33,7 @@ the moment, four different types of drivers are available: `boltdb`, `redis`, `m
 
 Here is a simple configuration example:
 
-```yaml
+```yaml .rr.yaml
 version: "3"
 
 rpc:
@@ -80,8 +80,6 @@ $rpc = RPC::create('tcp://127.0.0.1:6001');
 
 > **Note**
 > You can refer to the documentation page [here](../php/rpc.md) to learn more about creating the RPC connection.
-
-### Usage
 
 To work with storages, you should create the `Spiral\RoadRunner\KeyValue\Factory` object after creating the RPC
 connection. It provides a method for selecting the storage.

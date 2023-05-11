@@ -1,10 +1,9 @@
 # Plugins — Lock
 
-The RoadRunner lock plugin is a powerful tool that enables you to manage distributed locks in their applications using
-the RPC protocol. By leveraging the benefits of using GO with PHP, it provides a lightweight, fast, and reliable way to
-acquire, release, and manage locks in a distributed environment. With this plugin, you can easily manage critical
-sections of your application and prevent race conditions, data corruption, and other synchronization issues that can
-occur in multi-process environments.
+The RoadRunner lock plugin is a powerful tool that enables you to manage resource locks in their applications using the 
+RPC protocol. By leveraging the benefits of using GO with PHP, it provides a lightweight, fast, and reliable way to
+acquire, release, and manage locks. With this plugin, you can easily manage critical sections of your application and 
+prevent race conditions, data corruption, and other synchronization issues that can occur in multi-process environments.
 
 > **Warning**
 > RoadRunner lock plugin uses an in-memory storage to store information about locks at this moment. When multiple
@@ -139,9 +138,8 @@ PHP DTO classes proto files, making it easy to work with these files in your PHP
 
 ### RPC API
 
-RoadRunner provides an RPC API, which allows you to manage distributed locks in your applications using remote
-procedure calls. The RPC API provides a set of methods that map to the available methods of the `RoadRunner\Lock\Lock`
-class in PHP.
+RoadRunner provides an RPC API, which allows you to manage locks in your applications using remote procedure calls. The 
+RPC API provides a set of methods that map to the available methods of the `RoadRunner\Lock\Lock` class in PHP.
 
 #### Lock
 

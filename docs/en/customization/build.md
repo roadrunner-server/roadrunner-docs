@@ -179,7 +179,7 @@ build is complete, Docker will automatically start the RoadRunner server.
 
 **Here is an example of Dockerfile**
 
-```dockerfile
+```docker Dockerfile
 # https://docs.docker.com/buildx/working-with-buildx/
 # TARGETPLATFORM if not empty OR linux/amd64 by default
 FROM --platform=${TARGETPLATFORM:-linux/amd64} ghcr.io/roadrunner-server/velox:latest as velox
