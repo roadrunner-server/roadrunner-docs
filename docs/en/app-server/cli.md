@@ -258,12 +258,6 @@ To list all running pipelines, you can use the following command:
 ./rr jobs list
 ```
 
-To show the rr version, use `-v` or `--version`:
-
-```bash
-rr -v
-```
-
 ### Available options
 
 - `-c` - specifies the path to the configuration file. By default, RoadRunner looks for a `.rr.yaml` file in the current
