@@ -1,4 +1,4 @@
-# Headers and CORS
+# HTTP — Headers and CORS
 
 Headers middleware is used to set up request/response headers and control CORS for your application.
 

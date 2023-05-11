@@ -1,10 +1,133 @@
-# NGINX with RoadRunner
+# App server — Nginx with RoadRunner
 
-RoadRunner can operate alongside a web server, acting as a backend for processing PHP requests. To get started with using RoadRunner and NGINX within a Docker container, follow these steps:
+RoadRunner seamlessly integrates with various web servers like Nginx, providing a powerful backend solution for
+processing PHP requests.
 
-1. **Create a `Dockerfile`**: Prepare a Dockerfile that includes RoadRunner. Be sure to install the necessary dependencies for each component:
+## Nginx configuration
 
-```dockerfile
+### FastCGI
+
+RoadRunner can be configured to listen for FastCGI requests on a specific port. (Disabled by default.)
+
+```yaml .rr.yaml
+version: "3"
+
+http:
+  fcgi:
+    address: tcp://0.0.0.0:9000
+```
+
+The FastCGI method allows Nginx to communicate directly with the RoadRunner server using the FastCGI protocol. This
+method is suitable when both Nginx and RoadRunner are running on the same machine.
+
+> **Warning**
+> Remember to adjust the configuration examples according to your specific environment and requirements. If RoadRunner
+> and Nginx are running in separate Docker containers, utilize the container DNS names (e.g., `roadrunner:9000`) instead
+> of IP addresses in the Nginx configuration.
+
+```nginx docker/nginx/rr.conf
+server {
+   listen 80;
+   listen [::]:80;
+   server_name _;
+   
+   location / {
+      fastcgi_pass 127.0.0.1:9000;
+      include fastcgi_params;
+
+      access_log off;
+      error_log off;
+   }
+}
+```
+
+> **Note**
+> Consider using `fastcgi_pass` instead of `proxy_pass`: Using the `fastcgi_pass` directive might offer better
+> performance in certain configurations.
+
+### Proxy
+
+RoadRunner can be configured to listen for HTTP requests on a specific port.
+
+```yaml .rr.yaml
+http:
+  address: 0.0.0.0:8080
+```
+
+> **Note**
+> Read more about configuring HTTP server in the [HTTP Plugin](../http/http.md) section.
+
+The Proxy method involves configuring Nginx to act as a reverse proxy for RoadRunner. Nginx receives client requests and
+forwards them to RoadRunner for processing. This method is useful when both are running on separate machines or when
+additional load balancing or caching features are required.
+
+> **Warning**
+> Remember to adjust the configuration examples according to your specific environment and requirements. If RoadRunner
+> and Nginx are running in separate Docker containers, utilize the container DNS names (e.g., `roadrunner:8080`) instead
+> of IP addresses in the Nginx configuration.
+
+```nginx docker/nginx/rr.conf
+server {
+   listen 80;
+   listen [::]:80;
+   server_name _;
+   
+   location / {
+      proxy_pass http://127.0.0.1:8080;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Port $server_port;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_read_timeout 1200s;
+}
+```
+
+### WebSocket proxy
+
+To enable WebSocket connections using Nginx proxy, you need to configure the proxy accordingly.
+
+This can be done by including the following configuration in the Nginx configuration file:
+
+```nginx docker/nginx/rr.conf
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+}
+
+server {
+   listen 80;
+   listen [::]:80;
+    server_name _;
+
+    location /connection/websocket {
+        proxy_pass http://127.0.0.1:8000/connection/websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+    }
+    
+    location / {
+        proxy_pass http://127.0.0.1:9000;
+        # ...
+    }
+}
+```
+
+> **Warning**
+> `http://127.0.0.1:8000` is the default address for the Centrifugo WebSocket server and `/connection/websocket` is the
+> default path for Bidirectional WebSocket connections. 
+
+The location `/connection` block defines the path where WebSocket connections will be handled.
+
+## Docker
+
+In this example, we will demonstrate how to use RoadRunner with Nginx in a Docker environment.
+
+### Dockerfile
+
+```docker docker/app/Dockerfile
 FROM --platform=${TARGETPLATFORM:-linux/amd64} ghcr.io/roadrunner-server/roadrunner:latest as roadrunner
 FROM --platform=${TARGETPLATFORM:-linux/amd64} php:8.1-alpine
 
@@ -27,39 +150,11 @@ RUN composer install
 ENTRYPOINT ["rr"]
 ```
 
-2. **Configure NGINX**: Create an nginx configuration file to configure NGINX as a reverse proxy for RoadRunner. Adjust the settings to match your application requirements:
+### RoadRunner configuration
 
-```nginx configuration
-server {
-  listen 80;
-  listen [::]:80;
-  server_name RoadRunner;
+Create a `.rr.yaml` configuration file to specify how RoadRunner should interact with your PHP application
 
-  # http://roadrunner here is the DNS inside the docker
-  location / {
-    fastcgi_pass roadrunner:9000;
-        # include the fastcgi_param setting
-    include fastcgi_params; # <- much faster
-#     proxy_pass http://roadrunner; # <- use this to use http proxy
-    access_log off;
-    error_log off;
-#     proxy_set_header Host $host;
-#     proxy_set_header X-Forwarded-For $remote_addr;
-#     proxy_set_header X-Forwarded-Port $server_port;
-#     proxy_set_header X-Forwarded-Host $host;
-#     proxy_set_header X-Forwarded-Proto $scheme;
-#     proxy_read_timeout 1200s;
-  }
-
-  error_page 500 502 503 504 /50x.html;
-  location = /50x.html {
-    root /usr/share/nginx/html;
-  }
-```
-
-3. **Configure RoadRunner**: Create a `.rr.yaml` configuration file to specify how RoadRunner should interact with your PHP application:
-
-```yaml
+```yaml .rr.yaml
 version: '3'
 
 rpc:
@@ -70,11 +165,11 @@ server:
   relay: pipes
 
 http:
-  address: 0.0.0.0:80
-  pool:
-    num_workers: 10
+  address: 0.0.0.0:8080
   fcgi:
     address: tcp://0.0.0.0:9000
+  pool:
+    num_workers: 10
 
 logs:
   encoding: json
@@ -82,13 +177,14 @@ logs:
   mode: production
 ```
 
-4. **Create a PHP worker** to handle the HTTP requests:
+### PHP Worker
 
-```php
+Create a PHP worker to handle the HTTP requests.
+
+**Here is a simple example:**
+
+```php worker.php
 <?php
-/**
- * @var Goridge\RelayInterface $relay
- */
 use Spiral\Goridge;
 use Spiral\RoadRunner;
 
@@ -115,32 +211,35 @@ while ($req = $psr7->waitRequest()) {
 }
 ```
 
-And do not forget about the `composer.json`:
+And do not forget about the `composer.json` file:
 
-```json
+```json composer.json
 {
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "spiral/roadrunner": "^2.0",
-    "spiral/roadrunner-http": "^2.1",
-    "spiral/roadrunner-worker": "^2.2",
-    "spiral/goridge": "^3.2"
+    "spiral/roadrunner-http": "^3.0",
+    "spiral/goridge": "^4.0"
   }
 }
 ```
 
-5. **Create a docker-compose.yaml file**: To assemble and manage all components, create a `docker-compose.yaml` file that defines the RoadRunner and NGINX services, as well as their configurations:
+> **Note**
+> Read more about the RoadRunner PHP Worker in the [PHP Workers](../php/worker.md) section.
 
-```yaml
+### Docker Compose
+
+To assemble and manage all components, create a `docker-compose.yaml` file that defines the RoadRunner and Nginx
+services, as well as their configurations
+
+```yaml docker-compose.yaml
 version: "3.8"
 
 services:
   roadrunner:
     build:
       context: .
-      dockerfile: Dockerfile
-      # if needed to control the RR from the outside
+      dockerfile: docker/app/Dockerfile
     ports:
       - "127.0.0.1:6001:6001"
     command:
@@ -155,7 +254,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./:/etc/nginx/conf.d
+      - ./docker/nginx:/etc/nginx/conf.d
     environment:
       - NGINX_PORT=80
     networks:
@@ -166,6 +265,6 @@ networks:
     name: nginx-docs
 ```
 
-# Tips and Best Practices
-
-1. Consider using `fastcgi_pass` instead of `proxy_pass`: Using the `fastcgi_pass` directive might offer better performance in certain configurations.
+> **Note**
+> Store one of the configuration files provided in the [Nginx configuration](#nginx-configuration) section in
+> the `docker/nginx` directory.

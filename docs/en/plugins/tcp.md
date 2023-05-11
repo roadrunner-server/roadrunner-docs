@@ -1,70 +1,137 @@
-# TCP Plugin
+# Plugins — TCP
 
-The TCP plugin can read raw TCP data, delimited by the specified delimiters, and send it to the worker. So basically anything that can be sent over TCP can be sent to the RR endpoint.
-## PHP client 
+The RoadRunner TCP plugin helps you handle TCP requests. You can use this plugin to make your own servers like an SMTP
+server, and send TCP requests directly to PHP workers for handling.
 
-- [link](https://github.com/spiral/roadrunner-tcp)
+## Principle of work
 
-### Configuration
+The RoadRunner TCP plugin operates by receiving client requests and proxying them to free PHP workers that are not
+currently processing any request.
 
-```yaml
-version: "3"
+> **Warning**
+> It's essential to note that PHP workers are stateless, meaning you cannot save the context of a request between
+> multiple requests from a single client. Instead, you must use external storage, for
+> example [Key Value](../kv/overview.md), to maintain context and rely on the connection UUID to identify requests from
+> individual clients.
+
+The request sent to the PHP worker contains the following context:
+
+- `event` - The event type. The following events are supported:
+    - `CONNECTED`: Sent when a client connects to the server.
+    - `DATA`: Sent when a client sends data to the server.
+    - `CLOSED`: Sent when a client disconnects from the server.
+- `remote_addr`: The client's IP address.
+- `server`: The server name, as specified in the RoadRunner configuration (e.g., `smtp`, `server2`).
+- `body`: The request body.
+- `uuid`: The connection UUID.
+
+The protocol used by the RoadRunner TCP plugin provides a bi-directional communication channel between the PHP worker
+and the RoadRunner server. This design allows PHP workers to send responses back to the client, enabling seamless
+handling of client requests and communication between all parties.
+
+## Configuration
+
+The TCP plugin is configured via the `tcp` section of the RoadRunner configuration file.
+
+**Here is an example configuration:**
+
+:::: tabs
+
+::: tab Server command
+
+```yaml .rr.yaml
+server:
+  command: "php tcp-worker.php"
 
 tcp:
   servers:
-    tcp_access_point_1:
-      addr: tcp://127.0.0.1:7777
-      delimiter: "\r\n"
+    smtp:
+      addr: tcp://127.0.0.1:1025
+      delimiter: "\r\n" # by default
+
     server2:
       addr: tcp://127.0.0.1:8889
-      read_buf_size: 10
-    server3:
-      addr: tcp://127.0.0.1:8810
-      delimiter: "\r\n"
-      read_buf_size: 1
+
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
 ```
 
-Where:
-- `servers`: is the list of TCP servers to start. Every server should contain:
-    1. `addr`: server address with port.
-    2. `delimiter`: data packets delimiter. Every send should end either with EOF or with the delimiter.
-    3. `read_buf_size`: chunks that RR uses to read the data. In MB. If you expect big payloads on a TCP server, to reduce `read` syscalls, would be a good practice to use a fairly big enough buffer.
+> **Note**
+> You can define command to start server in the `server.command` section:. It will be used to start PHP workers for all
+> registered plugins, such as `grpc`, `http`, `jobs`, etc.
 
-### RR Protocol
+:::
 
-Protocol used to provide a bi-directional communication channel between the PHP worker and the RR server. The protocol can be used by any third party library and has its own client API to the RR. Our reference implementation can be found at https://github.com/spiral/roadrunner-tcp.
+::: tab Worker commands
+You can also define command to start server in the `grpc.pool.command` section to separate server and grpc workers.
 
-- `OnConnect`: when the connection is established, RR sends payload with the `CONNECTED` header to the worker with connection uuid, server name, and connection remote address. The PHP worker might then respond with the following headers:
-    1. `WRITE` - to write the data in the connection and then start the read loop. After data arrived in the connection, RR will read it and send to it the PHP worker with the header `DATA`.
-    2. `CONTINUE` - to start the read loop without writing the data into the connection. RR will send read data to the PHP worker with the `DATA` header.
-    3. `WRITECLOSE` - to write the data, close the connection and free up the allocated resources. RR will send the `CLOSED` header to the worker after the actual data will be written and the connection is closed.
-    4. `CLOSE` - to just close the connection and free up the allocated resources. RR will send the `CLOSED` header to the PHP worker.
+```yaml .rr.yaml
+server:
+  command: "php worker.php"
 
-- `OnConnectionClosed`: when the connection is closed for any reason, RR sends the `CLOSED` header to the worker with the connection UUID, server name and connection remote address.
-- `OnDataArrived`: when the data arrived, RR read the data expecting delimiter at the end of the read and sends the data to the PHP worker with the `DATA` header.
+tcp:
+  servers:
+    smtp:
+      addr: tcp://127.0.0.1:1025
+      delimiter: "\r\n" # by default
 
-To summarize:   
-PHP worker sends the following headers:
-- `WRITE`
-- `CONTINUE`
-- `WRITECLOSE`
-- `CLOSE`
+    server2:
+      addr: tcp://127.0.0.1:8889
 
-RR sends:
-- `CONNECTED`
-- `DATA`
-- `CLOSED`
+  pool:
+    command: "php tcp-worker.php"
+    num_workers: 2
+    max_jobs: 0
+    allocate_timeout: 60s
+    destroy_timeout: 60s
+```
 
+:::
+::::
 
-### Worker sample
+#### Configuration Parameters
 
-```php
-<?php
+- `servers`: A list of TCP servers to start. Each server should contain the following keys:
+    - `addr`: The server address and port, specified in the format `tcp://<IP_ADDRESS>:<PORT>`.
+    - `delimiter`: (Optional) The data packet delimiter. By default, it is set to `\r\n`. Each data packet should end
+      either with an `EOF` or the specified delimiter.
+    - `read_buf_size`: (Optional) The size of the read buffer in MB. To reduce the number of read syscalls, consider
+      using a larger buffer size if you expect to receive large payloads on the TCP server.
 
+- `pool`: Configuration for the PHP worker pool.
+    - `num_workers`: The number of PHP workers to allocate.
+    - `max_jobs`: The maximum number of jobs each worker can handle. Set to 0 for no limit.
+    - `allocate_timeout`: The timeout for worker allocation, specified in the format `<VALUE>s` (e.g., `60s` for 60
+      seconds).
+    - `destroy_timeout`: The timeout for worker destruction, specified in the same format as allocate_timeout.
+
+## PHP client
+
+The RoadRunner TCP plugin comes with a convenient PHP package that simplifies the process of integrating the plugin with
+your PHP application.
+
+### Installation
+
+To get started, you can install the package via Composer using the following command:
+
+```terminal
+composer require spiral/roadrunner-tcp
+```
+
+### Usage
+
+The following example demonstrates how to create a simple PHP worker:
+
+```php tcp-worker.php
 require __DIR__ . '/vendor/autoload.php';
 
 use Spiral\RoadRunner\Worker;
 use Spiral\RoadRunner\Tcp\TcpWorker;
+use Spiral\RoadRunner\Tcp\TcpResponse;
+use Spiral\RoadRunner\Tcp\TcpEvent;
 
 // Create new RoadRunner worker from global environment
 $worker = Worker::create();
@@ -74,39 +141,36 @@ $tcpWorker = new TcpWorker($worker);
 while ($request = $tcpWorker->waitRequest()) {
 
     try {
-        if ($request->event === TcpWorker::EVENT_CONNECTED) 
-            // You can close connection according your restrictions
+        if ($request->event === TcpEvent::Connected) {
+            // You can close connection according to your restrictions
             if ($request->remoteAddr !== '127.0.0.1') {
                 $tcpWorker->close();
                 continue;
             }
-            
-            // -----------------
-            
-            // Or continue read data from server
-            // By default, server closes connection if a worker doesn't send CONTINUE response 
+
+            // Or continue reading data from the server
+            // By default, the server closes the connection if a worker
+            // doesn't send a CONTINUE response
             $tcpWorker->read();
-            
-            // -----------------
-            
-            // Or send response to the TCP connection, for example, to the SMTP client
+
+            // Or send a response to the TCP connection, for example, to an SMTP client
             $tcpWorker->respond("220 mailamie \r\n");
-            
-        } elseif ($request->event === TcpWorker::EVENT_DATA) {
-                   
+
+        } elseif ($request->event === TcpEvent::Data) {
+
             $body = $request->body;
-            
-            // ... handle request from TCP server [tcp_access_point_1]
+
+            // Handle request from TCP server [tcp_access_point_1]
             if ($request->server === 'tcp_access_point_1') {
 
                 // Send response and close connection
-                $tcpWorker->respond('Access denied', true);
-               
-            // ... handle request from TCP server [server2] 
+                $tcpWorker->respond('Access denied', TcpResponse::RespondClose);
+
+            // Handle request from TCP server [server2]
             } elseif ($request->server === 'server2') {
-                
+
                 // Send response to the TCP connection and wait for the next request
-                $tcpWorker->respond(json_encode([
+                $tcpWorker->respond(\json_encode([
                     'remote_addr' => $request->remoteAddr,
                     'server' => $request->server,
                     'uuid' => $request->connectionUuid,
@@ -114,18 +178,21 @@ while ($request = $tcpWorker->waitRequest()) {
                     'event' => $request->event
                 ]));
             }
-           
-        // Handle closed connection event 
-        } elseif ($request->event === TcpWorker::EVENT_CLOSED) {
-            // Do something ...
-            
-            // You don't need to send response on closed connection
+
+        // Handle closed connection event
+        } elseif ($request->event === TcpEvent::Close) {
+            // Do something
+
+            // You don't need to send a response on a closed connection
         }
-        
+
     } catch (\Throwable $e) {
-        $tcpWorker->respond("Something went wrong\r\n", true);
+        $tcpWorker->respond("Something went wrong\r\n", TcpResponse::RespondClose);
         $worker->error((string)$e);
     }
 }
 ```
 
+## What's Next?
+
+1. [Plugins — KV](../kv/overview.md) - Learn how to use the Key Value plugin to store data between requests.

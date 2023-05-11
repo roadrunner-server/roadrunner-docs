@@ -1,8 +1,11 @@
-## Embedding a Server
+# Customization — Embedding a Server
 
-In some cases, it can be useful to embed a RoadRunner server inside another GO program. This is often the case in microservice architectures where you may have a mandated GO framework for all the apps. In such cases it might not be possible to run a stock roadrunner instance and the only choice is to run roadrunner inside the main app framework / program.
+In some cases, it can be useful to embed a RoadRunner server inside another GO program. This is often the case in
+microservice architectures where you may have a mandated GO framework for all the apps. In such cases it might not be
+possible to run a stock roadrunner instance and the only choice is to run roadrunner inside the main app framework /
+program.
 
-This is now possible in version 2.11 and newer. Let's pretend we have a GO app with an HTTP handler and we want to pass the request to PHP via RoadRunner running in the same go app.
+Here's an example of how to embed RoadRunner into a Go program with an HTTP handler:
 
 ```go
 func handleRequest(w http.ResponseWriter, request *http.Request) {
@@ -18,9 +21,10 @@ plugins := roadrunner.DefaultPluginsList() // List of RR plugins to enable
 rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 ```
 
-Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a stock roadrunner binary.
+Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a
+stock roadrunner binary.
 
-You can however chose only the plugins you want and add your own private plugins as well:
+You can however choose only the plugins you want and add your own private plugins as well:
 
 ```go
 overrides := []string{
@@ -40,9 +44,11 @@ rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 
 ## Passing requests to RoadRunner
 
-Roadrunner can respond to HTTP requests, but also gRPC ones or many more. Because this is all done via plugins that each listen to different types of requests, ports, etc...
+Roadrunner can respond to HTTP requests, but also gRPC ones or many more. Because this is all done via plugins that each
+listen to different types of requests, ports, etc...
 
-So when we talk about passing a request to roadrunner, we're actually talking about passing the request to roadrunner's HTTP plugin. To do this, we need to keep a handle on the http plugin.
+So when we talk about passing a request to roadrunner, we're actually talking about passing the request to roadrunner's
+HTTP plugin. To do this, we need to keep a handle on the http plugin.
 
 ```go
 overrides := []string{} // List of configuration overrides
@@ -58,8 +64,8 @@ plugins := []interface{}{
 rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 ```
 
-The HTTP plugin is itself an `http.Handler` so it's now very easy to use it to let roadrunner and PHP handle the request:
-
+The HTTP plugin is itself an `http.Handler` so it's now very easy to use it to let roadrunner and PHP handle the
+request:
 
 ```go
 overrides := []string{
@@ -103,25 +109,27 @@ To gracefully stop the server, we simply call `rr.Stop()`
 ## Roadrunner State
 
 When you run roadrunner, it goes through multiple phases of initialization, running, stopping etc...
-Sometimes it is useful to know about those, be it for debugging, to know if you're ready to accept requests, or if you can gracefully shutdown the main program.
+Sometimes it is useful to know about those, be it for debugging, to know if you're ready to accept requests, or if you
+can gracefully shutdown the main program.
 
 You can call `rr.CurrentState()` on your roadrunner instance to retrieve one of the following states:
 
-```
+```go
 package fsm
 // github.com/roadrunner-server/endure/pkg/fsm
 
 type State uint32
 
 const (
-	Uninitialized State = iota
-	Initializing
-	Initialized
-	Starting
-	Started
-	Stopping
-	Stopped
-	Error
+    Uninitialized State = iota
+    Initializing
+    Initialized
+    Starting
+    Started
+    Stopping
+    Stopped
+    Error
 )
 ```
+
 Additionally, the actual status name can be obtained via `rr.CurrentState().String()`.

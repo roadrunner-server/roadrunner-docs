@@ -1,6 +1,5 @@
-# [Chubbyphp Framework](https://github.com/chubbyphp/chubbyphp-framework)
-List of available integrations.
+# Integration — Chubbyphp Framework
 
-Repository | Status
---- | ---
-[chubbyphp/chubbyphp-framework](https://github.com/chubbyphp/chubbyphp-framework/blob/master/doc/Server/Roadrunner.md)|MIT License
+| Repository                                                                                                             | Status      |
+|------------------------------------------------------------------------------------------------------------------------|-------------|
+| [chubbyphp/chubbyphp-framework](https://github.com/chubbyphp/chubbyphp-framework/blob/master/doc/Server/Roadrunner.md) | MIT License |

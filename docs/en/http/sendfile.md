@@ -1,4 +1,4 @@
-# X-Sendfile middleware
+# HTTP — X-Sendfile middleware
 
 The `Send` HTTP middleware and the `X-Sendfile` HTTP response headers are used to stream large files using the RoadRunner.
 While the file is being streamed with the help of the RoadRunner, the PHP worker may be accepting the next request.

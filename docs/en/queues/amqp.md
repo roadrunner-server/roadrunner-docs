@@ -1,28 +1,32 @@
-# AMQP Driver
+# Jobs — AMQP Driver
 
-Strictly speaking, AMQP (and 0.9.1 version used) is a protocol, not a full-fledged driver, so you can use
-any servers that support this protocol (on your own, only rabbitmq was tested) , such as:
-[RabbitMQ](https://www.rabbitmq.com/), [Apache Qpid](http://qpid.apache.org/) or
-[Apache ActiveMQ](http://activemq.apache.org/). However, it is recommended to
-use RabbitMQ as the main implementation, and reliable performance with other
+Strictly speaking, AMQP (and 0.9.1 version used) is a protocol, not a full-fledged driver, so you can use any servers
+that support this protocol (on your own, only rabbitmq was tested), such as:
+
+- [RabbitMQ](https://www.rabbitmq.com/),
+- [Apache Qpid](http://qpid.apache.org/)
+- [Apache ActiveMQ](http://activemq.apache.org/).
+
+However, it is recommended to use RabbitMQ as the main implementation, and reliable performance with other
 implementations is not guaranteed.
 
-To install and configure the RabbitMQ, use the corresponding
-[documentation page](https://www.rabbitmq.com/download.html). After that, you
-should configure the connection to the server in the "`amqp`" section. This
-configuration section contains exactly one `addr` key with a
-[connection DSN](https://www.rabbitmq.com/uri-spec.html).
+To install and configure the RabbitMQ, use the
+corresponding [documentation page](https://www.rabbitmq.com/download.html).
 
-```yaml
+After that, you should configure the connection to the server in the "`amqp`" section. This configuration section
+contains exactly one `addr` key with a [connection DSN](https://www.rabbitmq.com/uri-spec.html).
+
+```yaml .rr.yaml
 amqp:
   addr: amqp://guest:guest@localhost:5672
 ```
 
-Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses the queue settings, including those specific to AMQP).
+Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses
+the queue settings, including those specific to AMQP).
 
-## Configuration:
+## Configuration
 
-```yaml
+```yaml .rr.yaml
 version: "3"
 
 amqp:
@@ -56,7 +60,7 @@ jobs:
         #
         # Default: false
         consume_all: false
-        
+
         # Redial timeout (in seconds). How long to try to reconnect to the AMQP server.
         #
         # Default: 60
@@ -128,7 +132,7 @@ jobs:
         #
         # Default: false
         requeue_on_fail: false
-        
+
         # Queue headers (new in 2.12.2)
         #
         # Default: null
@@ -136,35 +140,102 @@ jobs:
           x-queue-mode: lazy
 ```
 
-Below is a more detailed description of each of the amqp-specific options:
-- `priority`: job priority. A lower value corresponds to a higher priority. For instance, consider two pipelines: "pipe1" with a priority of 1 and "pipe10" with a priority of 10. Workers will only take jobs from "pipe10" if all the jobs from "pipe1" have been processed.
-- `prefetch`: rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
-- `queue`: required, AMQP internal (inside the driver) queue name.
-- `consume_all`: by default, RoadRunner only supports `Jobs` structures from the queue. Enable this option by setting it to true if you wish to consume raw payloads as well.
-- `exchange`: required, rabbitMQ exchange name. See also ["AMQP model"](https://www.rabbitmq.com/tutorials/amqp-concepts.html#amqp-model) documentation section.
-- `exchange_type`: rabbitMQ exchange type. May be one of `direct`, `topics`,`headers` or `fanout`.
-- `routing_key`: queue's routing key. Required to push the `Job`.
-- `exclusive`: applied to the queue, exclusive queues cannot be redeclared. If set to true, and you attempt to declare the same pipeline twice, it will result in an error.
-- `multiple_ack`:  this delivery, along with all prior unacknowledged deliveries on the same channel, will be acknowledged. This feature is beneficial for batch processing of deliveries and is applicable only for Ack, not for Nack.
-- `requeue_on_fail`: requeue on Nack (by RabbitMQ). Docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
-- `queue_headers`: used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+## Configuration options
 
-**NEW in 2.7:**
+**Here is a detailed description of each of the amqp-specific options:**
 
-- `durable`: create a durable queue. Default: false
-- `delete_queue_on_stop`: delete the queue when the pipeline is stopped. Default: false
+### Priority
 
-**NEW in 2.12:**
+`priority`- job priority. A lower value corresponds to a higher priority. For instance, consider two pipelines: `pipe1`
+with a priority of `1` and `pipe10` with a priority of `10`. Workers will only take jobs from `pipe10` if all the jobs
+from `pipe1` have been processed.
 
-- `redial_timeout`: Redial timeout (in seconds). How long to try to reconnect to the AMQP server.
-- `exchange_durable`: Durable exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)). Default: false
-- `exchange_auto_deleted`: Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). Default: false
-- `queue_auto_deleted`: Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). Default: false
+### Prefetch
 
-**NEW in 2.12.2:**
+`prefetch` - rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html)
 
-`queue_headers`: used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+### Queue
 
-**NEW in 2023.1.0:**
+`queue` - required, AMQP internal (inside the driver) queue name.
 
-`consumer_id`: string that is unique and scoped for all consumers on this channel.
+### Consume all
+
+`consume_all` - by default, RoadRunner only supports `Jobs` structures from the queue. Enable this option by setting it
+to true if you wish to consume raw payloads as well.
+
+### Exchange
+
+`exchange` - required, rabbitMQ exchange name.
+
+> **Note**
+> See also [AMQP model](https://www.rabbitmq.com/tutorials/amqp-concepts.html#amqp-model) documentation section.
+
+### Exchange type
+
+`exchange_type` - rabbitMQ exchange type. May be one of `direct`, `topics`,`headers` or `fanout`.
+
+### Routing key
+
+`routing_key` - queue's routing key. Required to push the `Job`.
+
+### Exclusive
+
+`exclusive` - applied to the queue, exclusive queues cannot be redeclared. If set to true, and you attempt to declare
+the same pipeline twice, it will result in an error.
+
+### Multiple ack
+
+`multiple_ack` - this delivery, along with all prior unacknowledged deliveries on the same channel, will be
+acknowledged. This feature is beneficial for batch processing of deliveries and is applicable only for `Ack`, not for
+`Nack`.
+
+### Requeue on fail
+
+`requeue_on_fail` - requeue on Nack (by RabbitMQ).
+
+> **Note**
+> Read more about Nack in RabbitMQ official docs: https://www.rabbitmq.com/confirms.html#consumer-nacks-requeue
+
+### Queue headers
+
+`queue_headers` - used to pass arguments to the `Queue` create method, such as `x-queue-mode: lazy`
+
+### Durable
+
+`durable` - create a durable queue. 
+
+Default: `false`
+
+### Delete queue on stop
+
+`delete_queue_on_stop` - delete the queue when the pipeline is stopped. 
+
+Default: `false`
+
+### Redial timeout
+
+`redial_timeout` - Redial timeout (in seconds). How long to try to reconnect to the AMQP server.
+
+### Exchange durable
+
+`exchange_durable` - Durable
+exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges)). 
+
+Default: `false`
+
+### Exchange auto deleted
+
+`exchange_auto_deleted` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
+
+Default: `false`
+
+### Queue auto deleted
+
+`queue_auto_deleted` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
+unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). 
+
+Default: `false`
+
+### Consumer id
+
+`consumer_id` - string that is unique and scoped for all consumers on this channel.

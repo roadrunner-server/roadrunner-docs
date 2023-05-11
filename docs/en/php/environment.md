@@ -1,63 +1,47 @@
-# Environment configuration
+# PHP Workers — Environment configuration
 
-All RoadRunner workers inherit the system configuration available for the parent server process.
-Additionally, you can customize the set of environment variables passed to your workers by using the `env` section in the `.rr` configuration file.
+RoadRunner offers the capability to set and manage environment variables for workers. This capability allows you to set
+specific environment variables when workers are initialized, providing a flexible and organized method for managing
+application configurations.
 
-```yaml
+## Setting Env Variables
+
+You can set environment variables for PHP workers by defining them in the `server.env` section of the RoadRunner
+configuration file. These variables will be applied to all workers when they are started by the server.
+
+**Here's an example:**
+
+```yaml .rr.yaml
 server:
   command: "php worker.php"
   env:
-     key: value
+    DEBUG: true
 ```
 
-> **WARNING**
-> All keys will be automatically uppercased!
+In this example, when RoadRunner starts a PHP worker, it will set the `DEBUG` environment variable to `true`.
 
-### Using environment variables in the configuration
+> **Warning**
+> All environment variable keys will be automatically converted to uppercase.
 
-- Option 1:
+## Default Env Values in PHP Workers
 
-```bash
-set -a
-source /var/www/config/.env
-set +a
+RoadRunner comes with a set of default environment (ENV) values that facilitate proper communication between the PHP
+process and the server. These values are automatically available to workers and can be used to configure and manage
+various aspects of the worker's operation.
 
-exec /var/www/rr \
-  -c /var/www/.rr.yaml \
-  -w /var/www \  
-  -o http.pool.num_workers=${RR_NUM_WORKERS:-8} \
-  -o http.pool.max_jobs=${RR_MAX_JOBS:-16} \
-  -o http.pool.supervisor.max_worker_memory=${RR_MAX_WORKER_MEMORY:-512}
-  serve
-  ```
-  Where: 
-  - `-w`: is working directory.
-  - `-o`: is option to overwrite. All options might be overwritten.
-  - `/var/www/config/.env`: contains needed env variables.
-  - `${RR_NUM_WORKERS:-8}`: Use `RR_NUM_WORKERS` or 8 by default (if no there are no `RR_NUM_WORKERS` in the `.env`)
+**Here's a list of the default ENV values provided by RoadRunner:**
 
----
+| Key            | Description                                                                                            |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| **RR_MODE**    | Identifies what mode worker should work with (`http`, `temporal`, `grpc`, `jobs`, `tcp`, `centrifuge`) |
+| **RR_RPC**     | Contains RPC connection address when enabled.                                                          |
+| **RR_RELAY**   | `pipes` or `tcp://...`, depends on server relay configuration.                                         |
+| **RR_VERSION** | RoadRunner version started the PHP worker (minimum `2023.1.0`)                                         |
 
-  - Option 2:
+These default environment values can be used within your PHP worker to configure various settings and adapt the worker's
+behavior according to the specific requirements of your application.
 
-```yaml
-http:
-  address: 127.0.0.1:15389
-  middleware: [ gzip ] 
-  pool:
-    num_workers: ${RR_NUM_WORKERS}
-    max_jobs: ${RR_MAX_JOBS}
-```
+## What's Next?
 
-RR is able to expand the environment variable from the sentence like `${xxx}` OR `$xxx`
-
-### Default ENV values inside the worker
-
-RoadRunner provides a set of environment (ENV) values to assist the PHP process in establishing proper communication with the server.
-
-Key      | Description
----      | ---
-RR_MODE  | Identifies what mode worker should work with (`http`, `temporal`, `grpc`, `jobs`, `tcp`)
-RR_RPC   | Contains RPC connection address when enabled.
-RR_RELAY | "pipes" or "tcp://...", depends on server relay configuration.
-RR_VERSION | RoadRunner version started the PHP worker (minimum 2023.1.0)
+1. [Environment variables](../intro/config.md) - Learn how to use environment variables in your RoadRunner
+   configuration.

@@ -1,10 +1,10 @@
-# NATS Driver
+# Jobs — NATS Driver
 
 NATS driver supported in RR since `v2.5.0` and includes only NATS JetStream support.
 
-## Configuration:
+## Configuration
 
-```yaml
+```yaml .rr.yaml
 version: "3"
 
 nats:
@@ -60,12 +60,35 @@ jobs:
         delete_after_ack: false
 ```
 
-Below is a more detailed description of each of the in-memory-specific options:
+## Configuration options
 
-- `subject` - nats [subject](https://docs.nats.io/nats-concepts/subjects).
-- `stream` - stream name.
-- `deliver_new` - the consumer will only start receiving messages that were created after the consumer was created.
-- `rate_limit` - NATS rate [limiter](https://docs.nats.io/jetstream/concepts/consumers#ratelimit).
-- `delete_stream_on_stop` - delete the whole stream when pipeline stopped.
-- `delete_after_ack` - delete message after it successfully acknowledged.
-- `consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to also consume the raw payloads.
+**Here is a detailed description of each of the nats-specific options:**
+
+### Subject
+
+`subject` - nats [subject](https://docs.nats.io/nats-concepts/subjects).
+
+### Stream
+
+`stream` - stream name.
+
+### Deliver new
+
+`deliver_new` - the consumer will only start receiving messages that were created after the consumer was created.
+
+### Rate limit
+
+`rate_limit` - NATS rate [limiter](https://docs.nats.io/jetstream/concepts/consumers#ratelimit).
+
+### Delete stream on stop
+
+`delete_stream_on_stop` - delete the whole stream when pipeline stopped.
+
+### Delete after ack
+
+`delete_after_ack` - delete message after it successfully acknowledged.
+
+### Consume all
+
+`consume_all` - By default, RR supports only `Jobs` structures from the queue. Set this option to true if you want to
+also consume the raw payloads.

@@ -1,9 +1,10 @@
-# Debugging
+# PHP Workers — Debugging
 
 You can use RoadRunner scripts with xDebug extension. In order to enable configure your IDE to accept remote connections. 
 
-Note, if you run multiple PHP processes you have to extend the maximum number of allowed connections to the number of 
-active workers, otherwise some calls would not be caught on your breakpoints.
+> **Note:** 
+> If you run multiple PHP processes you have to extend the maximum number of allowed connections to the number of 
+> active workers, otherwise some calls would not be caught on your breakpoints.
 
 ![xdebug](https://user-images.githubusercontent.com/796136/46493729-c767b400-c819-11e8-9110-505a256994b0.png)
 
@@ -11,7 +12,7 @@ To activate xDebug make sure to set the `xdebug.mode=debug` in your `php.ini`.
 
 To enable xDebug in your application make sure to set ENV variable `XDEBUG_SESSION`:
 
-```
+```yaml .rr.yaml
 rpc:
    listen: tcp://127.0.0.1:6001
 
@@ -31,7 +32,7 @@ Please, keep in mind this guide: [xdebug3](https://xdebug.org/docs/upgrade_guide
 
 You should be able to use breakpoints and view state at this point.
 
-### PHP Storm notes
+## PHP Storm notes
 
 ```bash
 export PHP_IDE_CONFIG="serverName=octane-app.test"
@@ -54,8 +55,8 @@ false-positive debug session.
 
 Once RoadRunner starts all workers, enable XDebug listener and reset jobs workers with:
 
-```bash
-rr reset jobs
+```terminal
+./rr reset jobs
 ```
 
 Now you should see debug session started:

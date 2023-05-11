@@ -1,8 +1,8 @@
-# Ubiquity Framework
-List of available integrations.
+# Integration — Ubiquity Framework
 
-> Attention, these set of integrations is currently available for v1.* of RoadRunner.
+> **Warning**
+> These set of integrations are currently available only for RoadRunner `v1.*`.
 
-Repository | Status
---- | ---
-https://github.com/Lapinskas/roadrunner-ubiquity | Not available
+| Repository                                       | Status        |
+|--------------------------------------------------|---------------|
+| https://github.com/Lapinskas/roadrunner-ubiquity | Not available |

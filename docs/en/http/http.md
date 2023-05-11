@@ -2,8 +2,9 @@
 
 HTTP plugin is used to pass `HTTP`/`HTTPS`/`fCGI`/`HTTP2(h2c)` requests to the PHP worker.
 
-## Complete configuration reference:
-```yaml
+## Configuration reference
+
+```yaml .rr.yaml
 version: "3"
 
 # HTTP plugin settings.
@@ -41,16 +42,15 @@ http:
   # Allow incoming requests only from the following subnets (https://en.wikipedia.org/wiki/Reserved_IP_addresses).
   #
   # Default: ["10.0.0.0/8", "127.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",  "::1/128", "fc00::/7", "fe80::/10"]
-  trusted_subnets:
-    [
-      "10.0.0.0/8",
-      "127.0.0.0/8",
-      "172.16.0.0/12",
-      "192.168.0.0/16",
-      "::1/128",
-      "fc00::/7",
-      "fe80::/10",
-    ]
+  trusted_subnets: [
+    "10.0.0.0/8",
+    "127.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "::1/128",
+    "fc00::/7",
+    "fe80::/10",
+  ]
 
   # File uploading settings.
   uploads:
@@ -315,15 +315,14 @@ http:
     max_concurrent_streams: 128
 ```
 
-## HTTPS and HTTP/2
+## HTTPS
 
-You can enable HTTPS and HTTP2 support by adding `ssl`/`h2` section into `http` config.
+You can enable HTTPS support by adding `ssl` section into `http` config.
 
 ```yaml
 version: "3"
 
 http:
-  # host and port separated by semicolon
   address: 127.0.0.1:8080
 
   ssl:
@@ -333,23 +332,16 @@ http:
     cert: fixtures/server.crt
     key: fixtures/server.key
     root_ca: root.crt
-
-  # optional support for http2  
-  http2:
-    h2c: false
-    max_concurrent_streams: 128
 ```
 
-## Let's Encrypt
+### Let's Encrypt
 
-RR starting from the `v2.5.0` can automatically obtain TLS certificates for your domain. The folder with your certs
-might be moved between servers, RR will check the `certs_dir` and obtain a new certificate if the old one is above to
-expire.
+RR can automatically obtain TLS certificates for your domain. The folder with your certs might be moved between servers,
+RR will check the `certs_dir` and obtain a new certificate if the old one is above to expire. 
+
 RR will track your certificate's expiration date and refresh it automatically.
 
-## Configuration
-
-```yaml
+```yaml .rr.yaml
 version: "3"
 
 http:
@@ -396,12 +388,12 @@ http:
   # ........
 ```
 
-## mTLS
+### mTLS
 
 To enable [mTLS](https://www.cloudflare.com/en-gb/learning/access-management/what-is-mutual-tls/) use the following
 configuration:
 
-```yaml
+```yaml .rr.yaml
 http:
   pool:
     num_workers: 1
@@ -416,7 +408,7 @@ http:
     client_auth_type: require_and_verify_client_cert 
 ```
 
-Options for the `client_auth_type` are:
+**Options for the `client_auth_type` are:**
 
 - `request_client_cert`
 - `require_any_client_cert`
@@ -424,22 +416,50 @@ Options for the `client_auth_type` are:
 - `require_and_verify_client_cert`
 - `no_client_certs`
 
-## Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
+### Redirecting HTTP to HTTPS
+
+To enable an automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
+
+### Root certificate authority support
+
+Root CA supported by the option in `.rr.yaml`
+
+```yaml
+version: "3"
+
+http:
+  ssl:
+    root_ca: root.crt
+```
+
+## HTTP/2
+
+You can enable HTTP2 support by adding `http2` section into `http` config.
+
+```yaml
+version: "3"
+
+http:
+  address: 127.0.0.1:8080
+
+  http2:
+    h2c: false
+    max_concurrent_streams: 128
+```
+
+### Upgrade connection from `http1.1` to `h2c` [`v2.10.2`]
 
 Connection might be upgraded from the `http/1.1`
 to `h2c`: [rfc7540](https://datatracker.ietf.org/doc/html/rfc7540#section-3.4)
-Headers, which should be sent to upgrade connection:
+
+**Headers, which should be sent to upgrade connection:**
 
 1. `Upgrade`: `h2c`
 2. `Connection`: `HTTP2-Settings`
 3. `Connection`: `Upgrade`
 4. `HTTP2-Settings`: `AAMAAABkAARAAAAAAAIAAAAA` [RFC](https://datatracker.ietf.org/doc/html/rfc7540#section-3.2.1)
 
-## Redirecting HTTP to HTTPS
-
-To enable an automatic redirect from `http://` to `https://` set `redirect` option to `true` (disabled by default).
-
-## HTTP/2 Push Resources
+### HTTP/2 Push Resources
 
 RoadRunner support [HTTP/2 push](https://en.wikipedia.org/wiki/HTTP/2_Server_Push) via virtual headers provided by PHP
 response.
@@ -451,9 +471,10 @@ return $response->withAddedHeader('http2-push', '/test.js');
 Note that the path of the resource must be related to the public application directory and must include `/` at the
 beginning.
 
-> Please note, HTTP2 push only works under HTTPS with `static` service enabled.
+> **Note**
+> HTTP2 push only works under HTTPS with `static` service enabled.
 
-## H2C
+### H2C
 
 You can enable HTTP/2 support over non-encrypted TCP connection using H2C:
 
@@ -472,24 +493,10 @@ There is FastCGI frontend support inside the HTTP module, you can enable it (dis
 version: "3"
 
 http:
-  # HTTP service provides FastCGI as frontend
   fcgi:
     # FastCGI connection DSN. Supported TCP and Unix sockets.
     address: tcp://0.0.0.0:6920
 ```
-
-## Root certificate authority support
-
-Root CA supported by the option in .rr.yaml
-
-```yaml
-version: "3"
-
-http:
-  ssl:
-    root_ca: root.crt
-```
-
 
 ## Overriding HTTP default error code
 
@@ -506,12 +513,15 @@ example, for the load balancer might be better to use a different code. So, you 
 
 ## Middleware order
 
-Since all middleware are independent, they can remove/update headers set by the [previous one](https://github.com/roadrunner-server/roadrunner/issues/1501).
-Note that the request (imagine) comes from the right:
+Since all middleware are independent, they can remove/update headers set by
+the [previous one](https://github.com/roadrunner-server/roadrunner/issues/1501).
+
+**Note that the request (imagine) comes from the right:**
 
 ```yaml
 http:
-    middleware: # RESPONSE FROM HERE --> [ "static", "gzip", "sendfile" ] # <-- REQUEST COMES FROM HERE
+  middleware: # RESPONSE FROM HERE --> [ "static", "gzip", "sendfile" ] # <-- REQUEST COMES FROM HERE
 ```
 
-So in this case the request gets into the `sendfile` middleware, then `gzip` and `static`. And vice versa from the response.
+So in this case the request gets into the `sendfile` middleware, then `gzip` and `static`. And vice versa from the
+response.
