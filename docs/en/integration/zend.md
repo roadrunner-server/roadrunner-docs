@@ -1,9 +1,8 @@
 # Integration — Zend Expressive
 
-List of available integrations.
+> **Warning**
+> These set of integrations are currently available only for RoadRunner `v1.*`.
 
-> Attention, these set of integrations is currently available for v1.* of RoadRunner.
-
- Repository                                                              | Status        
--------------------------------------------------------------------------|---------------
- https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration | Not available 
+| Repository                                                              | Status        |
+|-------------------------------------------------------------------------|---------------|
+| https://github.com/sergey-telpuk/roadrunner-zend-expressive-integration | Not available |
