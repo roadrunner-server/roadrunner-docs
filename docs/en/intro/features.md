@@ -13,7 +13,7 @@ of your web applications.
 - PCI DSS compliant (HTTP plugin)
 - PSR-7 HTTP server (file uploads, error handling, static files, hot reload, middleware, event listeners)
 - HTTPS and HTTP/2 support (including HTTP/2 Push, H2C)
-- A Fully customizable http(s)/2 server
+- A fully customizable http(s)/2 server
 - FastCGI support (HTTP plugin)
 - Flexible environment configuration
 - No external PHP dependencies (64bit version required)
@@ -38,7 +38,7 @@ of your web applications.
     - [Laravel](https://github.com/laravel/octane),
     - Slim,
     - CakePHP
-- Compatible with both Windows and WSL2, with support for Unix sockets (`AF_UNIX`) on Windows 10.
+- Compatible with both Windows and WSL2, with support for Unix sockets (`AF_UNIX`) on Windows 10/11.
 
 The list of features mentioned above is just the tip of the iceberg. RoadRunner is actively developed by maintainers
 and contributors, which means new features are constantly being added.

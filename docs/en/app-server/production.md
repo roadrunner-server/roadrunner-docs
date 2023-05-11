@@ -29,7 +29,7 @@ descriptors and avoiding state pollution to prevent memory leaks and ensure appl
 - Connect to a worker using `pipes` for better performance (Unix sockets are just a bit slower).
 - Adjust your pool timings to the values you like.
 - **Number of workers = number of CPU threads** in your system, unless your application is IO bound, then choose the
-  number heuristically.
+  number heuristically based on the available memory on the server.
 - Consider using `max_jobs` for your workers if you experience application stability memory issues over time.
 - RoadRunner has +40% performance when using keep-alive connections.
 - Set the memory limit at least 10-20% below `max_memory_usage`.

@@ -18,8 +18,8 @@ kv:
     driver: memcached
     config:
       # Optional section.
-      # Default: "localhost:11211"
-      addr: "localhost:11211"
+      # Default: "127.0.0.1:11211"
+      addr: "127.0.0.1:11211"
 ```
 
 ## Options
@@ -40,5 +40,5 @@ kv:
   memcached:
     driver: memcached
     config:
-      addr: [ "localhost:11211", "localhost:11222" ]
+      addr: [ "127.0.0.1:11211", "127.0.0.1:11222" ]
 ```

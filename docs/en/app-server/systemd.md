@@ -24,12 +24,12 @@ Where is
 
 > **Warning**
 > These paths are just examples, and the actual paths may differ depending on the specific
-server configuration and file locations. You should update these paths to match the actual paths used in your server
-setup.
+> server configuration and file locations. You should update these paths to match the actual paths used in your server
+> setup.
 
 You should also update the `ExecStart` option with your own configuration and save the file with a suitable name,
-such as `rr.service`. This file should be placed in the `.config/systemd/user/` directory. To enable the service, you
-should run the following commands:
+such as `rr.service`. Usually, such user unit files are located in the `.config/systemd/user/` directory. To enable the
+service, you should run the following commands:
 
 ```bash
 systemctl enable --user rr.service
