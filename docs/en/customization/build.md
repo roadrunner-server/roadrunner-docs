@@ -27,7 +27,7 @@ authenticate with access tokens.
 
 **Here is an example of a configuration file:**
 
-```toml plugins.toml
+```toml velox_rr_2023.toml
 [velox]
 build_args = [
     '-trimpath',
@@ -36,7 +36,7 @@ build_args = [
 ]
 
 [roadrunner]
-ref = "v2023.1.0"
+ref = "v2023.1.3"
 
 [github]
 [github.token]
@@ -190,13 +190,13 @@ ARG APP_VERSION="undefined"
 ARG BUILD_TIME="undefined"
 
 # copy your configuration into the docker
-COPY plugins.toml .
+COPY velox_rr_2023.toml .
 
 # we don't need CGO
 ENV CGO_ENABLED=0
 
 # RUN build
-RUN vx build -c plugins.toml -o /usr/bin/
+RUN vx build -c velox_rr_2023.toml -o /usr/bin/
 
 FROM --platform=${TARGETPLATFORM:-linux/amd64} php:8.2-cli
 
@@ -222,7 +222,7 @@ go install github.com/roadrunner-server/velox/cmd/vx@latest
 After the binary has been downloaded, you can build the application server:
 
 ```bash
-vx build -c plugins.toml -o ~/Downloads
+vx build -c velox_rr_2023.toml -o ~/Downloads
 ```
 
 | Option | Description                     |
@@ -242,7 +242,7 @@ the [Github releases page](https://github.com/roadrunner-server/velox/releases) 
 After the binary has been downloaded, you can build the application server:
 
 ```bash
-vx build -c plugins.toml -o ~/Downloads
+vx build -c velox_rr_2023.toml -o ~/Downloads
 ```
 
 | Option | Description                     |

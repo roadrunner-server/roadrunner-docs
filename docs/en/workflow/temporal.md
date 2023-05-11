@@ -16,7 +16,7 @@ server:
   command: "php worker.php"
 
 temporal:
-  address: "localhost:7233"
+  address: "127.0.0.1:7233"
   activities:
     num_workers: 10
 

@@ -796,7 +796,7 @@
                     {
                         "matcher": {
                             "id": "byName",
-                            "options": "{instance=\"localhost:2112\", job=\"prometheus\"}"
+                            "options": "{instance=\"127.0.0.1:2112\", job=\"prometheus\"}"
                         },
                         "properties": [
                             {

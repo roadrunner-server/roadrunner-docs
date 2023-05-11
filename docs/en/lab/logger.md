@@ -62,7 +62,7 @@ logs:
 
 ### Line Endings
 
-It allows configuring custom line endings for the logger. By default, the plugin uses `\n` as the line ending.
+It allows configuring custom line endings for the logger. By default, the plugin uses `\n` as the line ending. Note that the `\n` is a forced default. This means that if the value is empty, RoadRunner will still use `\n`. So no empty line endings are allowed.
 
 ```yaml
 logs:

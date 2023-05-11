@@ -24,10 +24,9 @@ kv:
 
     config:
       # Optional section.
-      # By default, one connection will be specified with the
-      # "localhost:6379" value.
+      # By default, one connection will be specified with the "127.0.0.1:6379" value.
       addrs:
-        - "localhost:6379"
+        - "127.0.0.1:6379"
 
       # Optional section.
       # Default: ""

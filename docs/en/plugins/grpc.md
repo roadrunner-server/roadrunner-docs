@@ -266,7 +266,7 @@ configuration:
 version: "3"
 
 grpc:
-  listen: "tcp://localhost:9001"
+  listen: "tcp://127.0.0.1:9001"
 
   proto:
     - "first.proto"

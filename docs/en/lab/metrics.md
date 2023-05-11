@@ -79,7 +79,7 @@ Prometheus. To do this, you need to register collectors in your configuration fi
 version: "3"
 
 metrics:
-  address: localhost:2112
+  address: 127.0.0.1:2112
   collect:
     registered_users:
       type: counter
@@ -97,7 +97,7 @@ You can also use tagged (labels) metrics to group values:
 version: "3"
 
 metrics:
-  address: localhost:2112
+  address: 127.0.0.1:2112
   collect:
     registered_users:
       type: histogram

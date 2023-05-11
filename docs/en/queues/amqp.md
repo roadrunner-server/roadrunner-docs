@@ -18,7 +18,7 @@ contains exactly one `addr` key with a [connection DSN](https://www.rabbitmq.com
 
 ```yaml .rr.yaml
 amqp:
-  addr: amqp://guest:guest@localhost:5672
+  addr: amqp://guest:guest@127.0.0.1:5672
 ```
 
 Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses
@@ -30,7 +30,7 @@ the queue settings, including those specific to AMQP).
 version: "3"
 
 amqp:
-  addr: amqp://guest:guest@localhost:5672
+  addr: amqp://guest:guest@127.0.0.1:5672
 
 jobs:
   pipelines:
