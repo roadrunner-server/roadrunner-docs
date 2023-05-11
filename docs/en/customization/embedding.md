@@ -24,7 +24,7 @@ rr, err := roadrunner.NewRR(".rr.yaml", overrides, plugins)
 Here we use the default list of plugins. The same list of plugin you would get if you were to run `rr serve` with a
 stock roadrunner binary.
 
-You can however chose only the plugins you want and add your own private plugins as well:
+You can however choose only the plugins you want and add your own private plugins as well:
 
 ```go
 overrides := []string{
@@ -114,7 +114,7 @@ can gracefully shutdown the main program.
 
 You can call `rr.CurrentState()` on your roadrunner instance to retrieve one of the following states:
 
-```
+```go
 package fsm
 // github.com/roadrunner-server/endure/pkg/fsm
 
