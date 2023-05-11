@@ -6,9 +6,9 @@ you to keep it running and make it even better. There are lots of ways you can g
 ## Support Questions
 
 If you have any questions or need advice or suggestions, feel free to join
-our [Discord channel](https://discord.gg/TFeEmCs) for support from the RoadRunner maintainers and community members.
+our [Discord channel](https://discord.gg/spiralphp) for support from the RoadRunner maintainers and community members.
 
-<a href="https://discord.gg/TFeEmCs"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
+<a href="https://discord.gg/spiralphp"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
 
 ## Issues
 
