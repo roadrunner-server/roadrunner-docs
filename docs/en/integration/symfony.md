@@ -9,7 +9,7 @@
 [baldinof_badge_packagist_version]:https://img.shields.io/packagist/v/baldinof/roadrunner-bundle.svg?maxAge=180
 [baldinof_badge_php_version]:https://img.shields.io/packagist/php-v/baldinof/roadrunner-bundle.svg?longCache=true
 
-[baldinof_badge_build_status]:https://img.shields.io/github/workflow/status/baldinof/roadrunner-bundle/CI
+[baldinof_badge_build_status]:https://img.shields.io/github/actions/workflow/status/baldinof/roadrunner-bundle/ci.yaml?branch=3.x
 
 [baldinof_badge_license]:https://img.shields.io/packagist/l/baldinof/roadrunner-bundle.svg?longCache=true
 
