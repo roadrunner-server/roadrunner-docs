@@ -180,7 +180,7 @@ $storage
 
 The serialization mechanism in PHP is not always efficient, which can impact the performance of your application. To
 increase the speed of serialization and deserialization, it is recommended to use
-the [ignbinary extension](https://github.com/igbinary/igbinary).
+the [igbinary extension](https://github.com/igbinary/igbinary).
 
 :::: tabs
 

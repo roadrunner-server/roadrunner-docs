@@ -68,7 +68,7 @@ func (p *Plugin) Name() string {
 The interceptor intercepts incoming gRPC requests and can be used to perform additional processing, such as
 authentication, rate limiting, and logging.
 
-**To create custom interceptor for gRPC requests in RoadRunner, follow these steps:**
+**To create a custom interceptor for gRPC requests in RoadRunner, follow these steps:**
 
 1. Define a struct that implements the `Init()`, `Interceptor()`, and `Name()` methods. The `Init() `method is called
    when the plugin is initialized, the `Interceptor()` method is called for each incoming gRPC request, and the `Name()`

@@ -86,7 +86,7 @@ services:
 ### Dotenv
 
 RoadRunner supports reading environment variables from `.env` files, which are typically used to store sensitive or
-environment-specific variables outside of your codebase.
+environment-specific variables outside your codebase.
 
 To read environment variables from an `.env` file, you can use the `--dotenv` CLI option when starting RoadRunner.
 

@@ -138,7 +138,7 @@ $metrics->add('registered_users', 1);
 
 #### Labels
 
-Using labeled) metrics allows you to attach additional metadata to your metrics, which can be useful for filtering,
+Using labeled metrics allows you to attach additional metadata to your metrics, which can be useful for filtering,
 grouping, and aggregating the data.
 
 **Some benefits of using labeled metrics include:**

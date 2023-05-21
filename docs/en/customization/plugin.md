@@ -1,6 +1,6 @@
 # Customization — Writing Plugins
 
-RoadRunner provides the ability to create custom plugins, event listeners, middlewares, etc, that extend its
+RoadRunner provides the ability to create custom plugins, event listeners, middlewares, etc., that extend its
 functionality. It uses Endure container to manage dependencies, this approach is similar to the PHP Container
 implementation with automatic method injection.
 
@@ -86,7 +86,7 @@ func (s *Plugin) Init() error {
 ## Disabling plugin
 
 Sometimes, you may want to disable a plugin at runtime based on certain conditions. For example, if there are no
-configurations for the plugin, or if there is an initialization error but you still don't want to stop the execution of
+configurations for the plugin, or if there is an initialization error, but you still don't want to stop the execution of
 the server. In such cases, you can return the special type of error called `Disabled`, which can be found in
 the `github.com/roadrunner-server/errors` package. This type of error can only be used in the `Init` function of the
 plugin.

@@ -120,7 +120,7 @@ jobs:
         # on the same channel will be acknowledged.  This is useful for batch processing
         # of deliveries
         #
-        # Default:false
+        # Default: false
         multiple_ack: false
 
         # The consumer_id is identified by a string that is unique and scoped for all consumers on this channel.
@@ -152,7 +152,7 @@ from `pipe1` have been processed.
 
 ### Prefetch
 
-`prefetch` - rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html). Note that if you use a large number of workers and a small `prefetch` number, some of the workers may not be loaded with messages (jobs) due to the blocking nature of the prefetch. This would result in poor RoadRunner performance and waste of resources. 
+`prefetch` - rabbitMQ QoS prefetch. See also ["prefetch-size"](https://www.rabbitmq.com/amqp-0-9-1-reference.html#basic.qos.prefetch-size). Note that if you use a large number of workers and a small `prefetch` number, some of the workers may not be loaded with messages (jobs) due to the blocking nature of the prefetch. This would result in poor RoadRunner performance and waste of resources. 
 
 ### Queue
 
