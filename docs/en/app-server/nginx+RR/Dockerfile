@@ -7,7 +7,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions sockets
 
-CMD ["rr", "serve", "-c", ".rr.yaml"]
+ENTRYPOINT ["rr"]
 
 WORKDIR /src
 
