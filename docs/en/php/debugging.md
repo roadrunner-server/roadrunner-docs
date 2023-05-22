@@ -63,7 +63,7 @@ Now you should see debug session started:
 
 1. Step over to some place where job task is being resolved with `$consumer->waitTask()`.
 2. As soon as you reach it, debugger stops but session will still be active.
-3. Trigger task consumptions either with HTTP request or console command (depends on how your application works)
+3. Trigger task consumption with either an HTTP request or a console command (depending on how your application works).
 and continue to debug job worker as usual within active session started before.
 4. You can continue to debug jobs as long as debug session active.
 
