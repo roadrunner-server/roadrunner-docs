@@ -49,7 +49,7 @@ After you have configured the connection - you should configure the queue that w
 
 > **Note**
 > You may also skip the whole `sqs` configuration section (global, not the pipeline) to use the AWS IAM credentials if
-> the RR is inside the EC2 machine. RR will try to detect env automatically by making an http request to
+> the RR is inside the EC2 machine. RR will try to detect env automatically by making a http request to
 > the `http://169.254.169.254/latest/dynamic/instance-identity/` as
 > pointer [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify_ec2_instances.html)
 

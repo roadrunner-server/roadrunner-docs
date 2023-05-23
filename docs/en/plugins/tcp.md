@@ -25,7 +25,7 @@ The request sent to the PHP worker contains the following context:
 - `body`: The request body.
 - `uuid`: The connection UUID.
 
-The protocol used by the RoadRunner TCP plugin provides a bi-directional communication channel between the PHP worker
+The protocol used by the RoadRunner TCP plugin provides a bidirectional communication channel between the PHP worker
 and the RoadRunner server. This design allows PHP workers to send responses back to the client, enabling seamless
 handling of client requests and communication between all parties.
 
