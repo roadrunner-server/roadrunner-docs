@@ -7,10 +7,12 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 
 RUN install-php-extensions sockets
 
-ENTRYPOINT ["rr"]
-
 WORKDIR /src
 
-COPY composer.json composer.lock .rr.yaml worker.php ./
+COPY worker.php /src
+COPY .rr.yaml /src
+COPY composer.json /src
 
 RUN composer install
+
+ENTRYPOINT ["rr"]
