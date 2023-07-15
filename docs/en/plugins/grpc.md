@@ -298,10 +298,11 @@ grpc:
   # This option is required
   listen: "tcp://127.0.0.1:9001"
 
-  # Proto file to use, multiply files supported [SINCE 2.6]
+  # Proto file to use, multiply files supported [SINCE 2.6]. As of [2023.1.4], wilcards are allowed in the proto field.
   #
   # This option is required
   proto:
+    - "*.proto"
     - "first.proto"
     - "second.proto"
 

@@ -13,22 +13,23 @@ Here is an example configuration:
 ```yaml .rr.yaml
 version: "3"
 
-...
-
 service:
   meilisearch:
     service_name_in_log: true
+    timeout_stop_sec: 10
     remain_after_exit: true
     restart_sec: 1
     command: "./bin/meilisearch"
   centrifuge:
     service_name_in_log: true
+    timeout_stop_sec: 10
     remain_after_exit: true
     restart_sec: 1
     command: "./bin/centrifugo --config=centrifugo.json"
   some_service_1:
     command: "php loop.php"
     process_num: 10
+    timeout_stop_sec: 10
     exec_timeout: 0s
     remain_after_exit: true
     service_name_in_log: false
@@ -48,6 +49,7 @@ The following are the available configuration settings for each service:
 | **command**           | The command to execute. There are no restrictions on commands. It could be a binary, a PHP file, a script, etc.                                                                                                                                                                                                                |
 | **process_num**       | The number of processes for the command to fire. The default value is `1`.                                                                                                                                                                                                                                                     |
 | **exec_timeout**      | The maximum allowed time to run for the process. The default value is 0s, which means unlimited time. The timeout can be set in the form of `1h`, `1m`, or `1s` (h,m,s).                                                                                                                                                       |
+| **timeout_stop_sec**  | The maximum allowed time to wait for the process to stop.                                                           |
 | **remain_after_exit** | If set to `true`, the process will remain after exit. For example, if you need to restart the process every 10 seconds, exec_timeout should be set to `10s`, and `remain_after_exit` should be set to `true`. Note that if you kill the process from outside and `remain_after_exit` is `true`, the process will be restarted. |
 | restart_sec           | The delay between process stop and restart. The default value is 30 seconds.                                                                                                                                                                                                                                                   |
 | service_name_in_log   | If set to `true`, the service name will be shown in the log in the form `%plugin%.%service_name%`. The default value is `false`.                                                                                                                                                                                               |
@@ -159,6 +161,9 @@ try {
 }
 ```
 
+> **Note**
+> When you terminating the service, RR sends the `SIGINT` signal to the underlying process(ses).
+
 #### Listing All Services
 
 To get a list of all services, use the `list` method:
@@ -185,49 +190,3 @@ a [GitHub repository](https://github.com/roadrunner-php/roadrunner-api-dto), tha
 PHP DTO classes proto files, making it easy to work with these files in your PHP application.
 
 - [API](https://github.com/roadrunner-server/api/blob/master/service/v1/service.proto)
-
-
-### RPC API
-
-The RoadRunner Lock Plugin allows you to manage locks in your application using RPC API . The API communicates with the
-Lock Plugin using RPC calls with protobuf payloads.
-
-#### Create
-
-The `Create` method is used to create a new lock.
-
-```go
-func (r *rpc) Create(in *serviceV1.Create, out *serviceV1.Response) error
-```
-
-#### Acquire
-
-The `Acquire` method is used to acquire a lock.
-
-```go
-func (r *rpc) Acquire(in *serviceV1.Acquire, out *serviceV1.Response) error
-```
-
-#### Release
-
-The `Release` method is used to release a lock.
-
-```go
-func (r *rpc) Release(in *serviceV1.Release, out *serviceV1.Response) error
-```
-
-#### Delete
-
-The `Delete` method is used to delete a lock.
-
-```go
-func (r *rpc) Delete(in *serviceV1.Delete, out *serviceV1.Response) error
-```
-
-#### List
-
-The `List` method is used to list all locks.
-
-```go
-func (r *rpc) List(in *serviceV1.List, out *serviceV1.ListResponse) error
-```

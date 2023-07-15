@@ -62,7 +62,7 @@ http:
 
 
 > **Warning**
-> When using the `pool.debug` option in RoadRunner, it is important to note that settings in `poll` section would work
+> When using the `pool.debug` option in RoadRunner, it is important to note that settings in `pool` section would work
 > differently. All options will be ignored (`supervisor`, `max_jobs`, `num_workers`, etc). This is because, in debug 
 > mode, RoadRunner does not create a worker at startup. Instead, it waits for requests to come in and creates workers 
 > accordingly. After the response, RoadRunner stops and removes the worker.
