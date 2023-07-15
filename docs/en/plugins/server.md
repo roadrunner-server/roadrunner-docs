@@ -30,6 +30,24 @@ server:
       - SOME_KEY: "SOME_VALUE"
       - SOME_KEY2: "SOME_VALUE2"
 
+  #[SINCE 2023.2]
+  after_init:
+    # Command to execute after the main server's command
+    #
+    # This option is required if using on_init
+    command: "any php or script here"
+
+    # Script execute timeout
+    #
+    # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
+    exec_timeout: 20s
+
+    # Environment variables for the worker processes.
+    #
+    # Default: <empty map>
+    env:
+      - SOME_KEY: "SOME_VALUE"
+      - SOME_KEY2: "SOME_VALUE2"
   # Worker starting command, with any required arguments.
   #
   # This option is required.
@@ -75,6 +93,8 @@ this script.
 > **Note**
 > If the `on_init` command fails (i.e., returns a non-zero exit code), RoadRunner will log the error but continue
 > execution. This ensures that a failure during initialization does not interrupt the application's operation.
+
+The `after_init` section is used to execute some script/binary when the pool of workers will be initialized. The command in the `after_init` section will be executed after each pool of workers is initialized. For example, if you have 2 plugins: `http` and `grpc`, the `after_init` command would be fired twice.
 
 ### Worker starting command
 

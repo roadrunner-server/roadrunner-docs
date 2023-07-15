@@ -97,10 +97,8 @@ For example:
     "*"
   ],
   "token_hmac_secret_key": "test",
-  "publish": true,
   "proxy_publish": true,
   "proxy_subscribe": true,
-  "proxy_connect": true,
   "allow_subscribe_for_client": true,
   "proxy_connect_endpoint": "grpc://127.0.0.1:10001",
   "proxy_connect_timeout": "10s",
