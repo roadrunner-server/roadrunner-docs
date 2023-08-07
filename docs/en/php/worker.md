@@ -51,6 +51,9 @@ $psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
 do {
     try {
         $request = $psr7->waitRequest();
+        if ($request === null) {
+            continue;
+        }
     } catch (\Throwable $e) {
         // Although the PSR-17 specification clearly states that there can be
         // no exceptions when creating a request, however, some implementations
