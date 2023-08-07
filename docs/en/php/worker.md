@@ -40,7 +40,6 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Spiral\RoadRunner\Worker;
 use Spiral\RoadRunner\Http\PSR7Worker;
 
-
 // Create new RoadRunner worker from global environment
 $worker = Worker::create();
 
@@ -49,7 +48,7 @@ $factory = new Psr17Factory();
 
 $psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
 
-while (true) {
+do {
     try {
         $request = $psr7->waitRequest();
     } catch (\Throwable $e) {
@@ -81,7 +80,7 @@ while (true) {
         // of the request failed.
         $psr7->getWorker()->error((string)$e);
     }
-}
+} while (isset($request));
 ```
 
 This worker expects communication with the RoadRunner server over standard pipes.
