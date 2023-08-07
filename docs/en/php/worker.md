@@ -40,7 +40,6 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Spiral\RoadRunner\Worker;
 use Spiral\RoadRunner\Http\PSR7Worker;
 
-
 // Create new RoadRunner worker from global environment
 $worker = Worker::create();
 
@@ -49,9 +48,12 @@ $factory = new Psr17Factory();
 
 $psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
 
-while (true) {
+do {
     try {
         $request = $psr7->waitRequest();
+        if ($request === null) {
+            break;
+        }
     } catch (\Throwable $e) {
         // Although the PSR-17 specification clearly states that there can be
         // no exceptions when creating a request, however, some implementations
@@ -81,7 +83,7 @@ while (true) {
         // of the request failed.
         $psr7->getWorker()->error((string)$e);
     }
-}
+} while (isset($request));
 ```
 
 This worker expects communication with the RoadRunner server over standard pipes.
