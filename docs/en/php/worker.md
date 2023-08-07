@@ -52,7 +52,7 @@ do {
     try {
         $request = $psr7->waitRequest();
         if ($request === null) {
-            continue;
+            break;
         }
     } catch (\Throwable $e) {
         // Although the PSR-17 specification clearly states that there can be
