@@ -30,9 +30,10 @@ kafka:
 
   # Ping to test connection to Kafka
   #
-  # Optional, default: empty
+  # Examples: "2s", "5m"
+  # Optional, default: "10s"
   ping:
-    timeout: "5s"
+    timeout: "10s"
 
   # SASL authentication options to use for all connections. Depending on the auth type, plain or aws_msk_plain sections might be removed.
   #
