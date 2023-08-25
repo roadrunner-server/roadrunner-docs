@@ -92,7 +92,7 @@ Above is a complete list of all possible common Jobs settings. Let's now figure 
   queue stores jobs in order of priority. The priority can be set
   for the job or inherited by the pipeline. When worker performance is poor, PQ
   will accumulate jobs until `pipeline_size` is reached. After that, PQ
-  is then blocked until the workers have processed all the jobs in it.
+  is then blocked until the workers have processed all the jobs in it. **Lower number means higher priority.**
 
 > **Note**
 > Blocked PQ means that you can push the job into the driver, but RoadRunner
