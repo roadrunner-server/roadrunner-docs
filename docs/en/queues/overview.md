@@ -9,7 +9,7 @@ The RoadRunner PHP library provides both API implementations: The client one,
 which allows you to dispatch tasks, and the server one, which provides the
 consumer who processes the tasks.
 
-![queue](https://user-images.githubusercontent.com/2461257/128100380-2d4df71a-c86e-4d5d-a58e-a3d503349200.png)
+![RR queue](https://github.com/roadrunner-server/roadrunner-docs/assets/773481/31f7aed2-efae-4088-8f46-b67b8c04a3dd)
 
 ## Configuration
 
