@@ -525,3 +525,9 @@ http:
 
 So in this case the request gets into the `sendfile` middleware, then `gzip` and `static`. And vice versa from the
 response.
+
+## Request queues
+
+RR has an internal queue for requests. The `allocate_timeout` is used to assign a worker to the request. 
+If your worker works for 1 minute for example, but `allocate_timeout` is equal to 30 seconds, after this timeout, RR will start rejecting the first request in queue. 
+Then +30s for the second, and so on and so forth.

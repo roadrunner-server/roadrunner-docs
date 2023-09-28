@@ -31,6 +31,10 @@ The health check endpoint will return `HTTP 200` if there is at least one worker
 no workers ready to service requests, the endpoint will return `HTTP 500`. If there are any other errors, the endpoint
 will also return `HTTP 500`.
 
+The readiness check endpoint will return `HTTP 200` if there is at least one worker ready to take the request (i.e., not
+currently busy with another request). If there is no worker ready or all workers are busy, the endpoint will return 
+`HTTP 500` status code (you can override this too).
+
 ## Customizing the Not-Ready Status Code
 
 By default, Status Plugin uses a `500` status code. However, you can replace this status code with a custom one.
