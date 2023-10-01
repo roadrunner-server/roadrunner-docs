@@ -10,7 +10,7 @@ Prior to the function deployment, you must compile or download PHP binary files 
 Place PHP binaries in a `bin/` folder of your project.
 
 ### PHP Worker
-PHP worker does not require any specific configuration to run inside Lambda function. We can use default snippet with internal counter to demonstrate how workers are being reused:
+PHP worker does not require any specific configuration to run inside Lambda function. We can use the default snippet with internal counter to demonstrate how workers are being reused:
 
 ```php
 <?php
@@ -237,10 +237,10 @@ server:
 ```
 Here you can use full advantage of the RR2, you can include any plugin here and configure it with the embedded config (within reasonable limits).
 
-To build and package your lambda function run:
+To build and package your lambda function, run:
 
 ```
-$ GOOS=linux GOARCH=amd64 go build -o main main.go 
+$ GOOS=linux GOARCH=amd64 go build -o main main.go plugin.go
 $ zip main.zip * -r
 ```
 
@@ -250,6 +250,6 @@ You can now upload and invoke your handler using simple string event.
 There are multiple notes you have to acknowledge:
 
 - start with 1 worker per lambda function in order to control your memory usage.
-- make sure to include env variables listed in the code to properly resolve the location of PHP binary and it's dependencies.
-- avoid database connections without concurrency limit
+- make sure to include env variables listed in the code to properly resolve the location of PHP binary and its dependencies.
+- avoid database connections without a concurrency limit
 - avoid database connections
