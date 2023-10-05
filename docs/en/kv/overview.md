@@ -232,7 +232,7 @@ php -r "echo sodium_crypto_box_keypair();" > keypair.key
 ```
 
 > **Warning**
-> Do not store security keys in a control versioning systems (like GIT)!
+> Do not store security keys in a control versioning system (like GIT)!
 
 After generating the keypair, you can use it to encrypt and decrypt the data.
 

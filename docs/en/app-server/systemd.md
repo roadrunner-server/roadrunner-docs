@@ -45,3 +45,16 @@ This will start RoadRunner as a daemon on the server.
 
 For more information about systemd unit files, the user can refer to the
 following [link](https://wiki.archlinux.org/index.php/systemd#Writing_unit_files).
+
+## SDNotify support
+
+RR supports SDNotify protocol. You can use it to notify systemd about the readiness of your application. You don't need
+to configure anything, RR will automatically detect systemd and send the notification. The only one option which might be
+configured is watchdog timeout. By default, it's turned off. You can enable it by setting the following option in your 
+`.rr.yaml` config:
+
+```yaml
+endure:
+  log_level: error
+  watchdog_sec: 60 # watchdog timeout in seconds
+```

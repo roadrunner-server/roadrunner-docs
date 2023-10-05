@@ -36,7 +36,7 @@ kv:
 
 ## Options
 
-Below is a more detailed description of each of the boltdb-specific options:
+Below is a more detailed description of the various boltdb options.:
 
 ### File
 
