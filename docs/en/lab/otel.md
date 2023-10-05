@@ -27,11 +27,15 @@ Here is an example configuration file:
 version: "3"
 
 otel:
+  # https://github.com/open-telemetry/opentelemetry-specification/blob/v1.25.0/specification/resource/semantic_conventions/README.md
+  resources:
+    service_name: "rr_test"
+    service_version: "1.0.0"
+    service_namespace: "RR-Shop"
+    service_instance_id: "UUID"
   insecure: true
   compress: false
   exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
   endpoint: 127.0.0.1:4317
 ```
 
@@ -61,6 +65,7 @@ http:
 | **service_name**    | a string that specifies the user's service name. The default value is `RoadRunner`.                                                                                                                 |
 | **service_version** | a string that specifies the user's service version. The default value is `1.0.0`.                                                                                                                   |
 | **headers**         | a key-value map that contains user-defined headers. The `api-key` for New Relic should be here.                                                                                                     |
+| **resources**       | a key-value map that contains OTEL resources (https://github.com/open-telemetry/opentelemetry-specification/blob/v1.25.0/specification/resource/semantic_conventions/README.md)                     |
 
 ## Collector
 
