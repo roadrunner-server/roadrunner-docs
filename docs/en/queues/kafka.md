@@ -28,6 +28,13 @@ kafka:
   # Required to use Kafka driver
   brokers: [ "127.0.0.1:9092", "127.0.0.1:9002" ]
 
+  # Ping to test connection to Kafka
+  #
+  # Examples: "2s", "5m"
+  # Optional, default: "10s"
+  ping:
+    timeout: "10s"
+
   # SASL authentication options to use for all connections. Depending on the auth type, plain or aws_msk_plain sections might be removed.
   #
   # Optional, default: empty
