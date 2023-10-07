@@ -7,7 +7,7 @@ RoadRunner server includes an embedded metrics server based on [Prometheus](http
 To enable metrics add `metrics` section to your configuration:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 metrics:
   address: localhost:2112
@@ -52,7 +52,7 @@ metrics:
       help: "Application counter."
 ```
 
-To send metric from the application:
+To send metrics from the application:
 
 ```php
 $metrics = new Spiral\RoadRunner\Metrics\Metrics(
@@ -80,7 +80,7 @@ metrics:
       labels: ["label_1", "label_2"]
 ```
 
-You should specify values for your labels while pushing the metric:
+You should specify the values for your labels while pushing the metric:
 
 ```php
 $metrics = new Spiral\RoadRunner\Metrics\Metrics(
@@ -96,7 +96,7 @@ $metrics->add('app_type_duration', 0.5, $labels);
 
 ## Declare metrics
 
-You can declare metric from PHP application itself:
+You can declare metric from the PHP application itself:
 
 ```php
 $metrics->declare(
