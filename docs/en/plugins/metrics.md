@@ -42,7 +42,7 @@ You can also publish application-specific metrics using an RPC connection to the
 configuration file:
 
 ```yaml
-version: "2.7"
+version: "3"
   
 metrics:
   address: localhost:2112
@@ -69,7 +69,7 @@ $metrics->add('app_metric_counter', 1);
 You can use tagged (labels) metrics to group values:
 
 ```yaml
-version: "2.7"
+version: "3"
 
 metrics:
   address: localhost:2112
