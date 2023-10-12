@@ -22,7 +22,7 @@ with your existing infrastructure.
 
 ## Opentelemetry tracing
 
-All KV driver support opentelemetry tracing. 
+All KV drivers support opentelemetry tracing. 
 To enable tracing, you need to add [`otel`](../lab/otel.md) section to your configuration file:
 
 ```yaml .rr.yaml
