@@ -63,6 +63,18 @@ debug mode, which starts the pprof server and listens for incoming requests on t
 ./rr serve -d -c .rr.yaml
 ```
 
+### Experimental features
+RoadRunner also supports experimental features.
+To enable experimental features, use the `--enable-experimental` or `-e` option:
+
+```terminal
+./rr serve --enable-experimental -c .rr.yaml
+```
+
+```terminal
+./rr serve -e -c .rr.yaml
+```
+
 ### Available options
 
 - `-c` - specifies the path to the configuration file. By default, RoadRunner looks for a `.rr.yaml` file in the current
@@ -77,6 +89,8 @@ debug mode, which starts the pprof server and listens for incoming requests on t
   the `http.address` configuration key from the `.rr.yaml` file.
 - `-p` - creates a `.pid` file to use with the rr stop command later. This can be useful when you want to run RoadRunner
   in the background mode.
+- `-e` or `--enable-experimental` - enables experimental features. This option is useful when you want to test new
+  features that are not yet available in the stable release.
 
 ## Stopping the Server
 
