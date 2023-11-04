@@ -16,6 +16,8 @@ http:
   headers:
     cors:
       allowed_origin: "*"
+      # If `allowed_origin_regex` option is set, the content of `allowed_origin` is ignored
+      allowed_origin_regex: "^http://foo"
       allowed_headers: "*"
       allowed_methods: "GET,POST,PUT,DELETE"
       allow_credentials: true
