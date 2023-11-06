@@ -278,13 +278,13 @@ exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.htm
 
 Default: `false`
 
-### Exchange auto deleted
+### Exchange auto delete
 
 `exchange_auto_delete` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
 
 Default: `false`
 
-### Queue auto deleted
+### Queue auto delete
 
 `queue_auto_delete` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
 unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). 
