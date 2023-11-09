@@ -1,10 +1,10 @@
 # Experimental Features
 
 ## Introduction
-Starting from the RR `v2023.3.5` release, we have introduced a new feature called **Experimental Features**. This feature allows you to try out new features that are not yet ready for production use.
+Starting from the RR `v2023.3.4` release, we have introduced a new feature called **Experimental Features**. This feature allows you to try out new features that are not yet ready for production use.
 
 ## How to enable experimental features
-To enable experimental features, you need to run RR with the `-e` (`--experimental`) flag. For example:
+To enable experimental features, you need to run RR with the `-e` (`--enable-experimental`) flag. For example:
 
 ```bash
 ./rr serve -e
@@ -13,7 +13,7 @@ To enable experimental features, you need to run RR with the `-e` (`--experiment
 Or:
 
 ```bash
-./rr serve --experimental
+./rr serve --enable-experimental
 ```
 
 ## List of experimental features
@@ -55,10 +55,21 @@ http:
 It will override the `server` and `http` sections of the main configuration file. 
 You may use env variables in the included configuration files, but you can't use overrides for the nested configuration. For example:
 
+> **Note**
+> The next 'include' will override values set by the previous 'include'. Values in the root `.rr.yaml` will be overwritten by the includes as well.
+> Feel free to send us feedback on this feature.
+
+
 ```yaml .rr.include1-sub1.yaml
 version: "3"
 
 server:
   command: "${PHP_COMMAND:-php_test_files/psr-worker-bench.php}"
   relay: pipes
+```
+
+You may use any number of the included configuration files via CLI command, in quotas and separated by whitespace. For example:
+
+```bash
+./rr serve -e -c .rr.yaml -o include=".rr.yaml .rr2.yaml"
 ```
