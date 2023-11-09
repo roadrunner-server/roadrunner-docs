@@ -28,5 +28,8 @@ $pool->addWorker('http');
 $pool->removeWorker('http');
 ```
 
+### List of the supported plugins:
+- `http`, `grpc`, `temporal`, `centrifuge`, `tcp`, `jobs`.
+
 This provides developers more control and flexibility over their RoadRunner setup, 
 allowing for better resource allocation based on the needs of their application.
