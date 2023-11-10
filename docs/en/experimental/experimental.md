@@ -18,7 +18,7 @@ Or:
 
 ## List of experimental features
 
-### Support for the nested configurations. 
+### Support for the nested configurations: `[>=2023.3.4]`. 
 
 Using the following syntax, you may include other configuration files into the main one:
 
@@ -72,4 +72,15 @@ You may use any number of the included configuration files via CLI command, in q
 
 ```bash
 ./rr serve -e -c .rr.yaml -o include=".rr.yaml .rr2.yaml"
+```
+
+### Support for loading the [`envfile`](https://github.com/roadrunner-server/roadrunner/issues/1077) in the `.rr.yaml`: `[>= v2023.3.5]`
+In the `v2023.3.5` added experimental support for loading `envfile` in the `.rr.yaml` configuration file.
+should be in the same directory as the `.rr.yaml` file.
+
+Sample `.rr.yaml` file:
+
+```yaml .rr.yaml
+version: "3"
+envfile: .env
 ```
