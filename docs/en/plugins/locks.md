@@ -126,6 +126,35 @@ $lock->updateTTL('pdf:create', $id, 10);
 $lock->updateTTL('pdf:create', $id, new \DateInterval('PT10S'));
 ```
 
+## Symfony integration
+
+#### Installation
+
+You can install the package via composer:
+
+```bash
+composer require roadrunner-php/symfony-lock-driver
+
+```
+
+#### Usage
+
+```php
+use RoadRunner\Lock\Lock;
+use Spiral\Goridge\RPC\RPC;
+use Spiral\RoadRunner\Symfony\Lock\RoadRunnerStore;
+use Symfony\Component\Lock\LockFactory;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$lock = new Lock(RPC::create('tcp://127.0.0.1:6001'));
+$factory = new LockFactory(
+    new RoadRunnerStore($lock)
+);
+```
+
+Read more about using a Symfony Lock component [here](https://symfony.com/doc/current/components/lock.html).
+
 ## API
 
 ### Protobuf API
