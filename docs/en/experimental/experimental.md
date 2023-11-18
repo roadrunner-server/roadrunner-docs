@@ -76,7 +76,7 @@ You may use any number of the included configuration files via CLI command, in q
 
 ### Support for loading [`envfiles`](https://github.com/roadrunner-server/roadrunner/issues/1077) in the `.rr.yaml`: `[>= v2023.3.5]`
 In the `v2023.3.5` added experimental support for loading `envfiles` in the `.rr.yaml` configuration file.
-should be in the same directory as the `.rr.yaml` file.
+`.env` file should be in the same directory as the `.rr.yaml` file.
 
 Sample `.rr.yaml` file:
 
