@@ -1,6 +1,6 @@
 # HTTP Plugin
 
-HTTP plugin is used to pass `HTTP`/`HTTPS`/`fCGI`/`HTTP2(h2c)` requests to the PHP worker.
+HTTP plugin is used to pass `HTTP`/`HTTPS`/`fCGI`/`HTTP2(h2c)`/`HTTP3` requests to the PHP worker.
 
 ## Configuration reference
 
@@ -497,6 +497,9 @@ http:
     # FastCGI connection DSN. Supported TCP and Unix sockets.
     address: tcp://0.0.0.0:6920
 ```
+
+## HTTP/3
+HTTP3 support is experimental and might be changed in the future. Docs are available in the [experimental](../experimental/experimental.md) section.
 
 ## Overriding HTTP default error code
 
