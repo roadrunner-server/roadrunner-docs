@@ -166,3 +166,19 @@ Client certificates might be used in your favorite `http3` client. For example, 
 ```bash
 curl3 --http3 -k --cert localhost+2.pem --key localhost+2-key.pem https://127.0.0.1:34555/
 ```
+
+### OTLP support in the `gRPC` plugin: `[>=2023.3.8]`.
+In the `v2023.3.8` we added experimental support for the `OTLP` protocol in the `gRPC` plugin. To enable it, you need to activate `otel` plugin by adding the following lines to the `.rr.yaml` file:
+
+```yaml .rr.yaml
+otel: # <- activate otel plugin
+  resource:
+    service_name: "rr_test_grpc"
+    service_version: "1.0.0"
+    service_namespace: "RR-gRPC"
+    service_instance_id: "UUID-super-long-unique-id"
+  insecure: false
+  exporter: stderr
+```
+
+More about `OTLP` plugin you may read [here](../lab/otel.md).
