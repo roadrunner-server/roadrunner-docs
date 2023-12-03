@@ -181,4 +181,13 @@ otel: # <- activate otel plugin
   exporter: stderr
 ```
 
+Trace keys passed to the PHP workers are:
+1. `Traceparent`
+2. `Uber-Trace-Id`
+
+Example:
+```log
+"Traceparent":["00-2678b910f57fe3320587f4126a390868-6b87f1600005b643-01"],"Uber-Trace-Id":["2678b910f57fe3320587f4126a390868:6b87f1600005b643:0:1"]
+```
+
 More about `OTLP` plugin you may read [here](../lab/otel.md).
