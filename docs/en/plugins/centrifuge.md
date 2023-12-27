@@ -6,6 +6,9 @@ Our previous JS client had feeble support and was not updated for a long time.
 
 RR exposes all available APIs, including a `gRPC` proxy and the client's API.
 
+## Centrifuge tutorials:
+- https://centrifugal.dev/docs/tutorial/intro
+
 ## API
 
 - [PHP library](https://github.com/roadrunner-php/centrifugo)
