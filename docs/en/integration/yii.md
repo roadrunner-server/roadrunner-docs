@@ -8,6 +8,5 @@ that covers almost everything needed for the integration.
 ### Yii 3
 
 There was
-an [experiment of running Yii3 with RoadRunner](https://forum.yiiframework.com/t/using-roadrunner-as-a-server/127060).
-When released, framework will support RoadRunner out of the box.
-
+an [experiment of running Yii3 with RoadRunner](https://forum.yiiframework.com/t/using-roadrunner-as-a-server/127060).  
+There is also an [official application runner](https://github.com/yiisoft/yii-runner-roadrunner).
