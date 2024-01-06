@@ -15,16 +15,17 @@ RoadRunner provides several plugins that use workers to receive requests,
 including [HTTP](https://github.com/roadrunner-php/http), [Jobs](https://github.com/roadrunner-php/jobs),
 [Centrifuge](https://github.com/roadrunner-php/centrifugo), [gRPC](https://github.com/roadrunner-php/grpc),
 [TCP](https://github.com/roadrunner-php/tcp), and [Temporal](https://legacy-documentation-sdks.temporal.io/php/workers).
-You should choose the appropriate plugin based on the requirements of your application. In our example, we will create
-a worker for the HTTP plugin.
+You should choose the appropriate plugin based on the requirements of your application. In the examples below, 
+we will explore the creation of an HTTP worker and a simple implementation of an entry point that can handle several
+types of requests. 
+
+### Simple HTTP Worker
 
 To create HTTP worker, you need to install the required composer packages:
 
 ```terminal
 composer require spiral/roadrunner-http nyholm/psr7
 ```
-
-### Entry point
 
 After installing the required packages, you can create a worker. Here is an example of the simplest entry point with the
 PSR-7 server API:
@@ -101,6 +102,214 @@ http:
 
 > **Note**
 > Read more about the configuration HTTP in the [HTTP Plugin](../http/http.md) section.
+
+### Single entry point
+
+In the example below, we will create a single entry point capable of processing incoming HTTP requests and requests
+from the queue system. RoadRunner provides the `RR_MODE` environment variable, which allows us to determine the type
+of request received. We can then instantiate the appropriate worker, process the incoming request, return the response, 
+and handle any potential exceptions. In this example, we strive to minimize dependencies and reduce the amount of code
+to the maximum extent possible. The sole objective of this example is to demonstrate how to handle various types of 
+requests.
+
+First of all, we need to install the required composer packages:
+
+```terminal
+composer require spiral/roadrunner-http spiral/roadrunner-jobs nyholm/psr7
+```
+
+Let's start by creating an enum to enumerate the possible operating modes of RoadRunner. In this example, we will only 
+require the values **http** and **jobs**, but we will list all available modes:
+
+```php RoadRunnerMode.php
+namespace App;
+
+enum RoadRunnerMode: string
+{
+    case Http = 'http';
+    case Jobs = 'jobs';
+    case Temporal = 'temporal';
+    case Grpc = 'grpc';
+    case Tcp = 'tcp';
+    case Centrifuge = 'centrifuge';
+    case Unknown = 'unknown';
+}
+```
+
+To split the logic for handling different types of requests, let's introduce the concept of a **dispatcher**. 
+It will determine whether it can handle an incoming request and process it. We'll define an interface for dispatchers,
+which will include two methods: **canServe** - responsible for determining if the dispatcher can handle the request or not,
+and **serve** - intended to process the request if the **canServe** method returns **true**:
+
+```php DispatcherInterface.php
+namespace App\Dispatcher;
+
+use Spiral\RoadRunner\EnvironmentInterface;
+
+interface DispatcherInterface
+{
+    public function canServe(EnvironmentInterface $env): bool;
+
+    public function serve(): void;
+}
+```
+
+Let's implement the two dispatchers we need. One for handling HTTP requests and the other for processing requests
+from the queuing system:
+
+```php HttpDispatcher.php
+namespace App\Dispatcher;
+
+use App\RoadRunnerMode;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7\Response;
+use Spiral\RoadRunner\EnvironmentInterface;
+use Spiral\RoadRunner\Http\PSR7Worker;
+use Spiral\RoadRunner\Worker;
+
+final class HttpDispatcher implements DispatcherInterface
+{
+    public function canServe(EnvironmentInterface $env): bool
+    {
+        return $env->getMode() === RoadRunnerMode::Http->value;
+    }
+
+    public function serve(): void
+    {
+        $factory = new Psr17Factory();
+        $worker = new PSR7Worker(Worker::create(), $factory, $factory, $factory);
+
+        while (true) {
+            try {
+                $request = $worker->waitRequest();
+                if ($request === null) {
+                    break;
+                }
+            } catch (\Throwable $e) {
+                $worker->respond(new Response(400));
+                continue;
+            }
+
+            try {
+                // Handle request and return response.
+                $worker->respond(new Response(200, [], 'Hello RoadRunner!'));
+            } catch (\Throwable $e) {
+                $worker->respond(new Response(500, [], 'Something Went Wrong!'));
+                $worker->getWorker()->error((string)$e);
+            }
+        }
+    }
+}
+```
+
+```php QueueDispatcher.php
+namespace App\Dispatcher;
+
+use App\RoadRunnerMode;
+use Spiral\RoadRunner\EnvironmentInterface;
+use Spiral\RoadRunner\Jobs\Consumer;
+
+final class QueueDispatcher implements DispatcherInterface
+{
+    public function canServe(EnvironmentInterface $env): bool
+    {
+        return $env->getMode() === RoadRunnerMode::Jobs->value;
+    }
+
+    public function serve(): void
+    {
+        $consumer = new Consumer();
+
+        while ($task = $consumer->waitTask()) {
+            try {
+                // Handle and process task. Here we just print payload.
+                var_dump($task);
+
+                // Complete task.
+                $task->complete();
+            } catch (\Throwable $e) {
+                $task->fail($e);
+            }
+        }
+    }
+}
+```
+
+In the `canServe` method of both dispatchers, we use the `Spiral\RoadRunner\EnvironmentInterface` interface provided by
+the [spiral/roadrunner-worker](https://github.com/roadrunner-php/worker) package. This interface provides the `getMode`
+method, which returns the current mode of RoadRunner as a string. The implementation of this interface, provided by the package,
+determines the mode based on the `RR_MODE` environment variable.
+
+The `serve` method creates the worker and processes the incoming request. In the **HttpDispatcher**, we've used code
+from the above HTTP worker example, while in the **QueueDispatcher**, we instantiate the `Spiral\RoadRunner\Jobs\Consumer`
+class provided by the [spiral/roadrunner-jobs](https://github.com/roadrunner-php/jobs) package. In a loop, we retrieve
+and handle incoming tasks. Both methods are significantly simplified, lacking real processing logic for requests.
+They send a string response to the browser and output the task object to the console.
+
+Now, let's create an entry point that will be specified in the RoadRunner configuration file and will use our dispatchers:
+
+```php app.php
+require __DIR__ . '/vendor/autoload.php';
+
+use App\Dispatcher\DispatcherInterface;
+use App\Dispatcher\HttpDispatcher;
+use App\Dispatcher\QueueDispatcher;
+use Spiral\RoadRunner\Environment;
+
+/**
+ * Collect all dispatchers.
+ *
+ * @var DispatcherInterface[] $dispatchers
+ */
+$dispatchers = [
+    new HttpDispatcher(),
+    new QueueDispatcher(),
+];
+
+// Create environment
+$env = Environment::fromGlobals();
+
+// Execute dispatcher that can serve the request
+foreach ($dispatchers as $dispatcher) {
+    if ($dispatcher->canServe($env)) {
+        $dispatcher->serve();
+    }
+}
+```
+
+> **Note**
+> The [Roadrunner Bridge](https://github.com/spiral/roadrunner-bridge) package, which provides the integration of **RoadRunner**
+> into the **Spiral Framework** embodies this concept, and you may explore it if you wish to delve deeper into this topic.
+
+Create a `.rr.yaml` configuration file:
+
+```yaml .rr.yaml
+version: '3'
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php app.php"
+
+http:
+  address: "0.0.0.0:8080"
+
+jobs:
+  consume: [ "default" ]
+  pool:
+    num_workers: 2
+    supervisor:
+      max_worker_memory: 100
+  pipelines:
+    default:
+      driver: memory
+      config:
+        priority: 10
+```
+
+> **Note**
+> Read more about the [RoadRunner configuration](../intro/config.md).
 
 Now you can start the RoadRunner server by running the following command:
 
