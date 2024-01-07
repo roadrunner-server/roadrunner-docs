@@ -38,6 +38,16 @@ The general metrics provided by the metrics plugin include:
 
 ### HTTP Metrics
 
+> **Note**
+> To enable specific HTTP metrics, you need to add an HTTP middleware called `http_metrics` to the `http.middleware`
+> section of your configuration file.
+> 
+> **Here is an example:**
+> ```yaml
+> http:
+>   middleware: [ "http_metrics" ]
+> ```
+
 The HTTP metrics provided by the metrics plugin include:
 
 - `rr_http_requests_queue` - Total number of queued requests waiting for a worker.
