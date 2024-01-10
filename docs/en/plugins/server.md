@@ -18,6 +18,11 @@ server:
     # This option is required if using on_init
     command: "any php or script here"
 
+    # Username (not UID) for the worker processes. An empty value means to use the RR process user.
+    #
+    # Default: ""
+    user: ""
+
     # Script execute timeout
     #
     # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
