@@ -41,6 +41,8 @@ export XDEBUG_SESSION="mode=debug start_with_request=yes client_host=127.0.0.1 c
 php -dvariables_order=EGPCS artisan octane:start --max-requests=250 --server=roadrunner --port=8000 --rpc-port=6001 --watch --workers=1
 ```
 
+Feel free to check our community notes: [link](https://forum.spiral.dev/t/xdebug-integration/86/1)
+
 ## Jobs debugging
 
 ### Prerequisites

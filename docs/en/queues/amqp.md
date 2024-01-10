@@ -13,12 +13,43 @@ implementations is not guaranteed.
 To install and configure the RabbitMQ, use the
 corresponding [documentation page](https://www.rabbitmq.com/download.html).
 
-After that, you should configure the connection to the server in the "`amqp`" section. This configuration section
-contains exactly one `addr` key with a [connection DSN](https://www.rabbitmq.com/uri-spec.html).
+After that, you should configure the connection to the server in the `amqp` section. This configuration section
+contains exactly one `addr` key with a [connection DSN](https://www.rabbitmq.com/uri-spec.html). The `TLS` configuration sits in the `amqp.tls` section and consists of the following options:
+
+- `key`: path to a key file.
+- `cert`: path to a certificate file.
+- `root_ca`: CA certificate path, used with the `client_auth_type`.
+- `client_auth_type`: also known as `mTLS`. Possible values are: `request_client_cert`, `require_any_client_cert`, `verify_client_cert_if_given`, `require_and_verify_client_cert`, `no_client_certs`.
+
+You should also configure `rabbitMQ` with `TLS` support: [link](https://www.rabbitmq.com/ssl.html).
 
 ```yaml .rr.yaml
 amqp:
   addr: amqp://guest:guest@127.0.0.1:5672
+
+  # AMQPS TLS configuration
+  #
+  # This section is optional
+  tls:
+    # Path to the key file
+    #
+    # This option is required
+    key: ""
+
+    # Path to the certificate
+    #
+    # This option is required
+    cert: ""
+
+    # Path to the CA certificate, defines the set of root certificate authorities that servers use if required to verify a client certificate. Used with the `client_auth_type` option.
+    #
+    # This option is optional
+    root_ca: ""
+
+    # Client auth type (mTLS, peer verification).
+    #
+    # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
+    client_auth_type: no_client_certs
 ```
 
 Upon establishing a connection to the server, you can create a new queue that utilizes this connection and encompasses
@@ -30,7 +61,31 @@ the queue settings, including those specific to AMQP).
 version: "3"
 
 amqp:
-  addr: amqp://guest:guest@127.0.0.1:5672
+  addr: amqp://guest:guest@127.0.0.1:5672 
+
+  # AMQPS TLS configuration
+  #
+  # This section is optional
+  tls:
+    # Path to the key file
+    #
+    # This option is required
+    key: ""
+
+    # Path to the certificate
+    #
+    # This option is required
+    cert: ""
+
+    # Path to the CA certificate, defines the set of root certificate authorities that servers use if required to verify a client certificate. Used with the `client_auth_type` option.
+    #
+    # This option is optional
+    root_ca: ""
+
+    # Client auth type (mTLS, peer verification).
+    #
+    # This option is optional. Default value: no_client_certs. Possible values: request_client_cert, require_any_client_cert, verify_client_cert_if_given, require_and_verify_client_cert, no_client_certs
+    client_auth_type: no_client_certs
 
 jobs:
   pipelines:
@@ -79,12 +134,12 @@ jobs:
         # Auto-delete (exchange is deleted when last queue is unbound from it): https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges
         #
         # Default: false
-        exchange_auto_deleted: false
+        exchange_auto_delete: false
 
         # Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes) (rabbitmq option: https://www.rabbitmq.com/queues.html#properties)
         #
         # Default: false
-        queue_auto_deleted: false
+        queue_auto_delete: false
 
         # Delete queue when stopping the pipeline
         #
@@ -223,15 +278,15 @@ exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.htm
 
 Default: `false`
 
-### Exchange auto deleted
+### Exchange auto delete
 
-`exchange_auto_deleted` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
+`exchange_auto_delete` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
 
 Default: `false`
 
-### Queue auto deleted
+### Queue auto delete
 
-`queue_auto_deleted` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
+`queue_auto_delete` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
 unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). 
 
 Default: `false`

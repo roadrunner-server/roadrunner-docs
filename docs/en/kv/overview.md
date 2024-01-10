@@ -5,8 +5,8 @@ communication with cache drivers such as:
 
 - [Redis Server](https://redis.io/),
 - [Memcached](https://memcached.org/),
-- [BoltDB](https://github.com/etcd-io/bbolt) - not require a separate server,
-- In-memory storage - temporary stores data in RAM.
+- [BoltDB](https://github.com/etcd-io/bbolt) - does not require a separate server,
+- [In-memory](memory.md) storage — temporary stores data in RAM.
 
 It is able to handle cache operations more efficiently than the same operations in PHP, leading to faster response times
 and improved application performance.
@@ -19,6 +19,35 @@ One of the key benefits of using the RoadRunner KV plugin is its RPC interface, 
 with your existing infrastructure.
 
 ![kv-general-info](https://user-images.githubusercontent.com/2461257/128436785-3dadbf0d-13c3-4e0c-859c-4fd9668558c8.png)
+
+## Opentelemetry tracing
+
+All KV drivers support opentelemetry tracing. 
+To enable tracing, you need to add [otel](../lab/otel.md) section to your configuration file:
+
+```yaml .rr.yaml
+version: "3"
+
+kv:
+  example:
+    driver: memory
+    config: { }
+
+otel:
+  resources:
+    service_name: "rr_test"
+    service_version: "1.0.0"
+    service_namespace: "RR-Shop"
+    service_instance_id: "UUID"
+  insecure: true
+  compress: false
+  exporter: otlp
+  endpoint: 127.0.0.1:4317
+```
+
+After that, you can see traces in your [Jaeger](https://www.jaegertracing.io/), [Uptrace](https://uptrace.dev/), [Zipkin](https://zipkin.io/) or any 
+other opentelemetry compatible tracing system.
+
 
 ## Configuration
 
@@ -232,7 +261,7 @@ php -r "echo sodium_crypto_box_keypair();" > keypair.key
 ```
 
 > **Warning**
-> Do not store security keys in a control versioning systems (like GIT)!
+> Do not store security keys in a control versioning system (like GIT)!
 
 After generating the keypair, you can use it to encrypt and decrypt the data.
 

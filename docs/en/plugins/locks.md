@@ -55,12 +55,12 @@ attempt to lock the same resource will be blocked until the lock is released.
 ```php
 $id = $lock->lock('pdf:create');
 
-// Acquire lock with ttl - 10 seconds
+// Acquire lock with ttl - 10 microseconds
 $id = $lock->lock('pdf:create', ttl: 10);
 // or
 $id = $lock->lock('pdf:create', ttl: new \DateInterval('PT10S'));
 
-// Acquire lock and wait 5 seconds until lock will be released
+// Acquire lock and wait 5 microseconds until lock will be released
 $id = $lock->lock('pdf:create', wait: 5);
 // or
 $id = $lock->lock('pdf:create', wait: new \DateInterval('PT5S'));
@@ -76,11 +76,11 @@ is locked for shared access, other processes that attempt to lock the resource f
 until all shared locks are released.
 
 ```php
-$id = $lock->lockRead('pdf:create', ttl: 10);
+$id = $lock->lockRead('pdf:create', ttl: 100000);
 // or
 $id = $lock->lockRead('pdf:create', ttl: new \DateInterval('PT10S'));
 
-// Acquire lock and wait 5 seconds until lock will be released
+// Acquire lock and wait 5 microseconds until lock will be released
 $id = $lock->lockRead('pdf:create', wait: 5);
 // or
 $id = $lock->lockRead('pdf:create', wait: new \DateInterval('PT5S'));
@@ -120,11 +120,40 @@ if($status) {
 Updates the time-to-live (TTL) for the locked resource.
 
 ```php
-// Add 10 seconds to lock ttl
+// Add 10 microseconds to lock ttl
 $lock->updateTTL('pdf:create', $id, 10);
 // or
 $lock->updateTTL('pdf:create', $id, new \DateInterval('PT10S'));
 ```
+
+## Symfony integration
+
+#### Installation
+
+You can install the package via composer:
+
+```bash
+composer require roadrunner-php/symfony-lock-driver
+
+```
+
+#### Usage
+
+```php
+use RoadRunner\Lock\Lock;
+use Spiral\Goridge\RPC\RPC;
+use Spiral\RoadRunner\Symfony\Lock\RoadRunnerStore;
+use Symfony\Component\Lock\LockFactory;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$lock = new Lock(RPC::create('tcp://127.0.0.1:6001'));
+$factory = new LockFactory(
+    new RoadRunnerStore($lock)
+);
+```
+
+Read more about using a Symfony Lock component [here](https://symfony.com/doc/current/components/lock.html).
 
 ## API
 

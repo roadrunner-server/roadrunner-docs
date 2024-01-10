@@ -91,6 +91,10 @@ jobs:
         # Default: default
         queue: default
 
+        # Message group ID: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html#SQS-SendMessage-request-MessageGroupId
+        # Default: empty, should be set if FIFO queue is used
+        message_group_id: "test"
+
         # Optional section.
         # Default: empty
         attributes:
@@ -130,6 +134,11 @@ Default: `5`.
 `queue` - SQS internal queue name. Can contain alphanumeric characters, hyphens (`-`), and underscores (`_`).
 
 Default value is `default` string.
+
+### Message Group ID
+
+`message_group_id` - Message group ID is required for FIFO queues. Messages that belong to the same message group are processed in a FIFO manner.
+More info: [link](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html#SQS-SendMessage-request-MessageGroupId)
 
 ### Skip queue declaration
 

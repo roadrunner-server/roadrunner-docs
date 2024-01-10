@@ -8,6 +8,10 @@ full-fledged event streaming platform.
 Now used by 80% of the Fortune 500, Kafka brings numerous benefits to virtually every industry and opens up countless
 new use cases, large and small.
 
+Version `2023.2.0` update:
+
+- Added new `SCRAM-SHA-256` and `SCRAM-SHA-512` authentication mechanisms.
+
 ## Configuration
 
 ```yaml
@@ -24,16 +28,23 @@ kafka:
   # Required to use Kafka driver
   brokers: [ "127.0.0.1:9092", "127.0.0.1:9002" ]
 
+  # Ping to test connection to Kafka
+  #
+  # Examples: "2s", "5m"
+  # Optional, default: "10s"
+  ping:
+    timeout: "10s"
+
   # SASL authentication options to use for all connections. Depending on the auth type, plain or aws_msk_plain sections might be removed.
   #
   # Optional, default: empty
   sasl:
 
-    # PLAIN auth section -----
+    # ----------- 1. PLAIN and SCRAM auth section ---------------
 
     # Mechanism used for the authentication
     #
-    # Required for the section. Might be: 'aws_msk_iam' or 'plain'
+    # Required for the section. Might be: 'aws_msk_iam', 'plain', 'SCRAM-SHA-256', 'SCRAM-SHA-512'
     mechanism: plain
 
     # Username to use for authentication.
@@ -46,12 +57,22 @@ kafka:
     # Required for the plain auth mechanism.
     password: bar
 
+    # Nonce.
+    #
+    # Optional for the SHA auth types. Empty by default.
+    nonce: "foo"
+
+    # If true, suffixes the "tokenauth=true" extra attribute to the initial authentication message.
+    # Set this to true if the user and pass are from a delegation token.
+    # Optional for the SHA auth types. Empty by default.
+    is_token: false
+
     # Zid is an optional authorization ID to use in authenticating.
     #
     # Optional, default: empty.
     zid: "foo"
 
-    # AWS_MSK_IAM auth section -----
+    # -------------- 2. AWS_MSK_IAM auth section ------------------
 
     # AWS Access key ID.
     #

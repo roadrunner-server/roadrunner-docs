@@ -81,8 +81,8 @@ version: "3"
 logs:
   encoding: console # default value
   level: info
+  mode: none # disable server logging. Also `off` can be used.
   channels:
-    server.mode: none # disable server logging. Also `off` can be used.
     http:
       mode: production
       output: http.log

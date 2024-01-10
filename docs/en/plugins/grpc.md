@@ -8,7 +8,7 @@ It consists of two main parts:
    service definition file (`.proto`). It generates PHP classes that correspond to the service definition and message
    types. These classes provide an interface for handling incoming gRPC requests and sending responses back to the
    client.
-2. **gRPC  server:** This is a server that starts PHP workers and listens for incoming gRPC requests. It receives 
+2. **gRPC server:** This is a server that starts PHP workers and listens for incoming gRPC requests. It receives 
    requests from gRPC clients, proxies them to the PHP workers, and sends the responses back to the client. The server 
    is responsible for managing the lifecycle of the PHP workers and ensuring that they are available to handle requests.
 
@@ -60,7 +60,7 @@ the GitHub releases page.
 The simplest way to get the latest version of `protoc-gen-php-grpc` plugin is to download one of the pre-built release
 binaries on the GitHub [releases page](https://github.com/roadrunner-server/roadrunner/releases).
 
-Just download the appropriate archive from the releases page and extract it into your desired application directory.
+Just download the appropriate archive from the release page and extract it into your desired application directory.
 
 :::
 
@@ -75,7 +75,7 @@ latest version of `protoc-gen-php-grpc` plugin to your project's root directory.
 composer require spiral/roadrunner-cli
 ```
 
-And run the following command to download the latest version of plugin
+And run the following command to download the latest version of the plugin
 
 ```terminal
 ./vendor/bin/rr download-protoc-binary
@@ -107,7 +107,7 @@ protoc --plugin=protoc-gen-php-grpc \
 After running the command, you can find the generated DTO and `PingerInterface` files in
 the `<app>/generated/GRPC/Pinger` directory.
 
-We recommend also to register the GRPC namespace in the `composer.json` file:
+We recommend also registering the GRPC namespace in the `composer.json` file:
 
 ```json
 {
@@ -121,6 +121,11 @@ We recommend also to register the GRPC namespace in the `composer.json` file:
 ```
 
 By doing this, you can easily use the generated PHP classes in your application.
+
+### Using BUF plugin
+
+You can also use the [BUF](https://buf.build/community/roadrunner-server-php-grpc) plugin
+to generate PHP code from the `.proto` file.
 
 ## PHP Client
 
@@ -298,10 +303,11 @@ grpc:
   # This option is required
   listen: "tcp://127.0.0.1:9001"
 
-  # Proto file to use, multiply files supported [SINCE 2.6]
+  # Proto file to use, multiply files supported [SINCE 2.6]. As of [2023.1.4], wilcards are allowed in the proto field.
   #
   # This option is required
   proto:
+    - "*.proto"
     - "first.proto"
     - "second.proto"
 
@@ -419,7 +425,7 @@ grpc:
 
 ## Minimal dependencies
 
-1. `Server` plugin for the workers pool.
+1. `Server` plugin for the worker pool.
 2. `Logger` plugin to show log messages.
 3. `Config` plugin to read and populate plugin's configuration.
 

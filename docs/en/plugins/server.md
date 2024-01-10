@@ -86,7 +86,7 @@ this script.
 The `server.command` option is required and is used to start the worker pool for each configured section in the config.
 
 > **Note**
-> This option can be overridden by plugins with a pool section, such as the http.pool.command.
+> This option can be overridden by plugins with a pool section, such as the `http.pool.command`, or in general `<plugin>.pool.command`.
 
 The `user` and `group` options allow you to set the user and group that will start and own the worker process. This
 feature provides an additional layer of security and control over the application's execution environment.
