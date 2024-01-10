@@ -8,7 +8,7 @@ The simplest way to get the latest version of RoadRunner is to download one of t
 available for various operating systems, including macOS, Linux, FreeBSD, and Windows. You can find these binaries on
 the GitHub [releases page](https://github.com/roadrunner-server/roadrunner/releases).
 
-To install RoadRunner just download the appropriate archive from the releases page and extract it into your desired
+To install RoadRunner, just download the appropriate archive from the releases page and extract it into your desired
 application directory.
 
 ## Docker
@@ -24,7 +24,7 @@ image `ghcr.io/roadrunner-server/roadrunner:latest`.
 
 ```dockerfile
 FROM ghcr.io/roadrunner-server/roadrunner:2023.X.X AS roadrunner
-FROM php:8.2-cli
+FROM php:8.x-cli
 
 COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
@@ -35,7 +35,7 @@ CMD rr serve -c .rr.yaml
 ```
 
 > **Warning**
-> Don't forget to replace `2023.X.X` with desired version of RoadRunner.
+> Don't forget to replace `2023.X.X` with a desired version of RoadRunner.
 
 ## Composer
 
@@ -74,7 +74,12 @@ sudo dpkg -i roadrunner-2023.X.X-linux-amd64.deb
 ```
 
 > **Warning**
-> Don't forget to replace `2023.X.X` with desired version of RoadRunner.
+> Don't forget to replace `2023.X.X` with a desired version of RoadRunner.
+
+## MacOS package using [Homebrew](https://brew.sh/):
+```terminal
+brew install roadrunner
+```
 
 ## CURL
 

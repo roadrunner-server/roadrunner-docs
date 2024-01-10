@@ -134,12 +134,12 @@ jobs:
         # Auto-delete (exchange is deleted when last queue is unbound from it): https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges
         #
         # Default: false
-        exchange_auto_deleted: false
+        exchange_auto_delete: false
 
         # Auto-delete (queue that has had at least one consumer is deleted when last consumer unsubscribes) (rabbitmq option: https://www.rabbitmq.com/queues.html#properties)
         #
         # Default: false
-        queue_auto_deleted: false
+        queue_auto_delete: false
 
         # Delete queue when stopping the pipeline
         #
@@ -278,15 +278,15 @@ exchange ([rabbitmq option](https://www.rabbitmq.com/tutorials/amqp-concepts.htm
 
 Default: `false`
 
-### Exchange auto deleted
+### Exchange auto delete
 
-`exchange_auto_deleted` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
+`exchange_auto_delete` - Auto-delete (exchange is deleted when last queue is unbound from it): [link](https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges). 
 
 Default: `false`
 
-### Queue auto deleted
+### Queue auto delete
 
-`queue_auto_deleted` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
+`queue_auto_delete` - Auto-delete (queue that has had at least one consumer is deleted when last consumer
 unsubscribes): [link](https://www.rabbitmq.com/queues.html#properties). 
 
 Default: `false`

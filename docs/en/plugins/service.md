@@ -20,6 +20,7 @@ service:
     remain_after_exit: true
     restart_sec: 1
     command: "./bin/meilisearch"
+    user: "www-data"
   centrifuge:
     service_name_in_log: true
     timeout_stop_sec: 10
@@ -54,7 +55,7 @@ The following are the available configuration settings for each service:
 | restart_sec           | The delay between process stop and restart. The default value is 30 seconds.                                                                                                                                                                                                                                                   |
 | service_name_in_log   | If set to `true`, the service name will be shown in the log in the form `%plugin%.%service_name%`. The default value is `false`.                                                                                                                                                                                               |
 | env                   | Environment variables to pass to the underlying process from the config.                                                                                                                                                                                                                                                       |
-
+| user                  | Username (not UID) for the Service process. An empty value means to use the RR process user.                                                                                                                                                                                                                                   |
 Services will be started when RoadRunner starts and will be stopped when RoadRunner stops.
 
 ## PHP client

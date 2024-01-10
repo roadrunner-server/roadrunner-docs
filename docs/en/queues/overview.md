@@ -9,7 +9,7 @@ The RoadRunner PHP library provides both API implementations: The client one,
 which allows you to dispatch tasks, and the server one, which provides the
 consumer who processes the tasks.
 
-![queue](https://user-images.githubusercontent.com/2461257/128100380-2d4df71a-c86e-4d5d-a58e-a3d503349200.png)
+![RR queue](https://github.com/roadrunner-server/roadrunner-docs/assets/773481/31f7aed2-efae-4088-8f46-b67b8c04a3dd)
 
 ## Configuration
 
@@ -213,7 +213,7 @@ $task = $task->withOptions($options);
 Please note, a queue with Kafka driver requires a task with specified `topic`. In this case you have to use
 `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`, because it has all required methods for working with Kafka driver.
 Connect to queue using `Spiral\RoadRunner\Jobs\KafkaOptionsInterface`. To redefine this options for a particular
-message, simply pass another `Spiral\RoadRunner\Jobs\KafkaOptionsInterface` implementation as a second parameter of
+message, simply pass another `Spiral\RoadRunner\Jobs\KafkaOptionsInterface` implementation as a third parameter of
 the `create` method.
 
 ```php
@@ -238,8 +238,8 @@ second one dispatches multiple tasks, returning an array. Moreover, the second m
 tasks in the array, as opposed to sending each task separately.
 
 ```php
-$a = $queue->create(SendEmailTask::class, ['email' => 'john.doe@example.com']);
-$b = $queue->create(SendEmailTask::class, ['email' => 'john.snow@the-wall.north']);
+$a = $queue->create(SendEmailTask::class, \json_encode(['email' => 'john.doe@example.com']));
+$b = $queue->create(SendEmailTask::class, \json_encode(['email' => 'john.snow@the-wall.north']));
 
 foreach ([$a, $b] as $task) {
     $result = $queue->dispatch($task);
@@ -268,15 +268,16 @@ using the `push` method. However, this functionality has a number of limitations
 - You can create several different tasks and collect them into one collection
   and send them to the queue at once (using the so-called batching).
 
-In the case of immediate dispatch, you will have access to only the basic features: The `push()` method accepts one
-required argument with the name of the task and two optional arguments containing additional data for the task being
-performed and additional sending options (for example, a delay). Moreover, this method is designed to send only one
+In the case of immediate dispatch, you will have access to only the basic features: The `push()` method accepts 
+two required arguments. The first argument is the name of the task to be executed. The second argument is the payload data
+for the task. In addition, the method takes an additional third argument with `Spiral\RoadRunner\Jobs\OptionsInterface` where you can
+pass object with predefined options. Moreover, this method is designed to send only one
 task.
 
 ```php
 use Spiral\RoadRunner\Jobs\Options;
 
-$payload = ['email' => $email, 'message' => $message];
+$payload = \json_encode(['email' => $email, 'message' => $message]);
 
 $task = $queue->push(SendEmailTask::class, $payload, new Options(
     delay: 60 // in seconds

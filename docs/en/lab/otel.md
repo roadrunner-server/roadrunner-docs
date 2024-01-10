@@ -4,6 +4,7 @@ RoadRunner offers OTEL (OpenTelemetry) plugin, which provides a unified standard
 information. This plugin allows you to send tracing data from RoadRunner to tracing collectors
 like [New Relic](https://newrelic.com/), [Zipkin](https://zipkin.io), [Jaeger](https://www.jaegertracing.io/),
 [Datadog](https://www.datadoghq.com/), and more.
+Starting with `v2023.3`, the `Jaeger` exporter is deprecated. Please use `OTLP` instead: [docs](https://www.jaegertracing.io/docs/1.49/architecture/).
 
 
 ![OpenTelemetry](https://user-images.githubusercontent.com/773481/213914208-cd944ca8-f218-4baf-8a54-5a4e42a1ed40.jpg)
@@ -26,11 +27,15 @@ Here is an example configuration file:
 version: "3"
 
 otel:
+  # https://github.com/open-telemetry/opentelemetry-specification/blob/v1.25.0/specification/resource/semantic_conventions/README.md
+  resource:
+    service_name: "rr_test"
+    service_version: "1.0.0"
+    service_namespace: "RR-Shop"
+    service_instance_id: "UUID"
   insecure: true
   compress: false
   exporter: otlp
-  service_name: rr_test
-  service_version: 1.0.0
   endpoint: 127.0.0.1:4317
 ```
 
@@ -49,17 +54,18 @@ http:
 
 **The `otel` section of the configuration file contains the following options:**
 
-| Option              | Description                                                                                                                                                                                                                                     |
-|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **insecure**        | a boolean that determines whether to use insecure endpoints (HTTP/HTTPS) or insecure gRPC. The default value is `false`.                                                                                                                        |                                                                                                                                                                                                        |
-| **compress**        | a boolean that determines whether to use gzip to compress the spans. The default value is `false`.                                                                                                                                              |
-| **exporter**        | a string that provides functionality to emit telemetry to consumers. Possible values are `otlp` (used for New Relic, Datadog), `zipkin`, `stdout`, `jaeger`, or `jaeger_agent` to use a Jaeger agent UDP endpoint. The default value is `otlp`. |
-| **custom_url**      | a string that is used for the http client to override the default URL. The default value is `empty`.                                                                                                                                            |
-| **client**          | a string that determines the client to send the spans. Possible values are http and grpc. The default value is `http`.                                                                                                                          |
-| **endpoint**        | a string that specifies the consumer's endpoint. The default value is `127.0.0.1:4318`.                                                                                                                                                         |
-| **service_name**    | a string that specifies the user's service name. The default value is `RoadRunner`.                                                                                                                                                             |
-| **service_version** | a string that specifies the user's service version. The default value is `1.0.0`.                                                                                                                                                               |
-| **headers**         | a key-value map that contains user-defined headers. The `api-key` for New Relic should be here.                                                                                                                                                 |
+| Option              | Description                                                                                                                                                                                         |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **insecure**        | a boolean that determines whether to use insecure endpoints (HTTP/HTTPS) or insecure gRPC. The default value is `false`.                                                                            |                                                                                                                                                                                                        |
+| **compress**        | a boolean that determines whether to use gzip to compress the spans. The default value is `false`.                                                                                                  |
+| **exporter**        | a string that provides functionality to emit telemetry to consumers. Possible values are `otlp` (used for New Relic, Datadog, Jaeger), `zipkin`, `stdout` or `stderr`. The default value is `otlp`. |
+| **custom_url**      | a string that is used for the http client to override the default URL. The default value is `empty`.                                                                                                |
+| **client**          | a string that determines the client to send the spans. Possible values are http and grpc. The default value is `http`.                                                                              |
+| **endpoint**        | a string that specifies the consumer's endpoint. The default value is `127.0.0.1:4318`.                                                                                                             |
+| **service_name**    | a string that specifies the user's service name. The default value is `RoadRunner`.                                                                                                                 |
+| **service_version** | a string that specifies the user's service version. The default value is `1.0.0`.                                                                                                                   |
+| **headers**         | a key-value map that contains user-defined headers. The `api-key` for New Relic should be here.                                                                                                     |
+| **resource**        | a key-value map that contains OTEL resource (https://github.com/open-telemetry/opentelemetry-specification/blob/v1.25.0/specification/resource/semantic_conventions/README.md)                      |
 
 ## Collector
 
@@ -176,6 +182,27 @@ server:
     - OTEL_PHP_TRACES_PROCESSOR: simple
   relay: pipes
 ```
+
+## Supported plugins:
+
+Here is the list of currently supported plugin
+
+| Plugin/Driver | Description                                                                                  |
+|---------------|----------------------------------------------------------------------------------------------|
+| **Redis**     | Redis driver, e.g.: [link](https://redis.uptrace.dev/guide/go-redis-monitoring.html#uptrace) |
+| **Memcached** | Memcached driver. Native OTEL integration.                                                   |
+| **In-Memory** | In-Memory KV/Jobs driver.                                                                    |
+| **BoltDB**    | Jobs and KV drivers.                                                                         |
+| **KV**        | KV PRC layer.                                                                                |
+| **HTTP**      | HTTP plugin with all HTTP middleware (gzip, http_tracing, headers, etc).                     |
+| **JOBS**      | JOBS plugin RPC layer.                                                                       |
+| **AMQP**      | AMQP driver.                                                                                 |
+| **SQS**       | SQS driver.                                                                                  |
+| **Kafka**     | Kafka driver.                                                                                |
+| **NATS**      | NATS driver.                                                                                 |
+| **Beanstalk** | Beanstalk driver.                                                                            |
+
+
 
 
 > **Note**

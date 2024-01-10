@@ -5,7 +5,7 @@ main job store. This driver should be used locally for testing or development. I
 type of driver can't handle huge loads. huge load. The maximum RPS it can have is not more than 30-50.
 
 Data in this driver is stored in the boltdb database file. You can't use the same file at the same time for the 2
-pipelines or for the for KV plugin and Jobs plugin. This is boltdb limitation on simultaneous access of 2 processes to
+pipelines or for the for KV plugin and Jobs plugin. This is a boltdb limitation on simultaneous access of 2 processes to
 the same file.
 
 ## Configuration
@@ -25,17 +25,25 @@ jobs:
       driver: boltdb
 
       config: # NEW in 2.7
+        # Number of jobs to prefetch from the driver.
+        #
+        # Default: 100_000.
+        prefetch: 10000
+
+        # Pipeline priority
+        #
+        # If the job has priority set to 0, it will inherit the pipeline's priority. Default: 10.
+        priority: 10
+
         # BoldDB file to create or DB to use
+        #
         # Default: "rr.db"
         file: "path/to/rr.db"
 
-        # Optional section.
-        # Default: 10
-        priority: 10
-
-        # Optional section.
-        # Default: 1000
-        prefetch: 1000
+        # Permissions for the boltdb database file
+        #
+        # This option is optional. Default: 0755
+        permissions: 0755
 ```
 
 ## Configuration options
@@ -59,3 +67,7 @@ Jobs from `pipe10` will be taken by workers only if all jobs from `pipe1` are pr
 `file` - boltdb database file to use. Might be a full path with file: `/foo/bar/rr1.db`. 
 
 Default: `rr.db`.
+
+### Permissions
+
+`permissions` - Permissions for the boltdb database file. Default: `0755`.

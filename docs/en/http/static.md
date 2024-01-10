@@ -47,7 +47,7 @@ version: "3"
 http:
   # host and port separated by semicolon
   address: 127.0.0.1:44933
-  middleware: [ "static", headers", "gzip" ]
+  middleware: [ "static", "headers", "gzip" ]
   # Settings for "headers" middleware (docs: https://roadrunner.dev/docs/http-http/2023.x/en).
   headers:
     cors:

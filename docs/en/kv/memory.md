@@ -19,20 +19,7 @@ kv:
     # Required section.
     # Should be "memory" for the memory driver.
     driver: memory
-
-    config:
-      # Optional section.
-      # Default: 60
-      interval: 60
+    config: {}
 ```
 
-## Options
-
-Below is a more detailed description of each of the memory-specific options:
-
-### Interval
-
-`interval`: The interval (in seconds) between checks for the lifetime of the value in the cache. For large values of
-the interval, the cache item will be checked less often for expiration of its lifetime. It is recommended to use large
-values only in cases when the cache is used without expiration values, or in cases when this value is not critical to
-the architecture of your application. Note that the lower this value, the higher the load on the system.
+There are no additional configuration options for this driver. The `in-memory` driver will automatically create callbacks for items with TTL.
