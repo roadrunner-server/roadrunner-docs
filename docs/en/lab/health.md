@@ -25,7 +25,7 @@ return the health status of the http plugin.
 
 > **Note**
 > You can specify multiple plugins by separating them with a comma. For example, to check the health status of both the
-> http and grpc plugins, you can use the following URL: http://127.0.0.1:2114/health?plugin=http,grpc.
+> http and grpc plugins, you can use the following URL: http://127.0.0.1:2114/health?plugin=http&plugin=grpc.
 
 The health check endpoint will return `HTTP 200` if there is at least one worker ready to serve requests. If there are
 no workers ready to service requests, the endpoint will return `HTTP 500`. If there are any other errors, the endpoint
