@@ -50,7 +50,7 @@ The following are the available configuration settings for each service:
 | **command**           | The command to execute. There are no restrictions on commands. It could be a binary, a PHP file, a script, etc.                                                                                                                                                                                                                |
 | **process_num**       | The number of processes for the command to fire. The default value is `1`.                                                                                                                                                                                                                                                     |
 | **exec_timeout**      | The maximum allowed time to run for the process. The default value is 0s, which means unlimited time. The timeout can be set in the form of `1h`, `1m`, or `1s` (h,m,s).                                                                                                                                                       |
-| **timeout_stop_sec**  | The maximum allowed time to wait for the process to stop.                                                           |
+| **timeout_stop_sec**  | The maximum allowed time to wait for the process to stop.                                                                                                                                                                                                                                                                      |
 | **remain_after_exit** | If set to `true`, the process will remain after exit. For example, if you need to restart the process every 10 seconds, exec_timeout should be set to `10s`, and `remain_after_exit` should be set to `true`. Note that if you kill the process from outside and `remain_after_exit` is `true`, the process will be restarted. |
 | restart_sec           | The delay between process stop and restart. The default value is 30 seconds.                                                                                                                                                                                                                                                   |
 | service_name_in_log   | If set to `true`, the service name will be shown in the log in the form `%plugin%.%service_name%`. The default value is `false`.                                                                                                                                                                                               |
@@ -163,7 +163,7 @@ try {
 ```
 
 > **Note**
-> When you terminating the service, RR sends the `SIGINT` signal to the underlying process(ses).
+> When you're terminating the service, RR sends the `SIGINT` signal to the underlying process(ses).
 
 #### Listing All Services
 

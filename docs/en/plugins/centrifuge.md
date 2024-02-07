@@ -236,8 +236,8 @@ the `Subscribe` method was called, RR will add `type`:`subscribe` metadata to th
 
 ### RPC
 
-You may also use RPC methods to communicate with centrifugo server. RR follows the
-official [centrifugo proto API](https://github.com/centrifugal/centrifugo/blob/master/internal/apiproto/api.proto).
+You may also use RPC methods to communicate with Centrifugo server. RR follows the
+official [Centrifugo proto API](https://github.com/centrifugal/centrifugo/blob/master/internal/apiproto/api.proto).
 Official documentation available [here](https://centrifugal.dev/docs/server/server_api#grpc-api)
 
 ## Metrics

@@ -33,5 +33,5 @@ Once enabled, RoadRunner will log the following information for each incoming HT
   size for the RR is 1MB.
 - `request_time` - Request processing time in seconds with a milliseconds' resolution
 - `status` - HTTP response status
-- `http_user_agent` - HTTP user agent [agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) string of the client
+- `http_user_agent` - HTTP user [agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) string of the client
 - `http_referer` - HTTP [referer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer) string of the client

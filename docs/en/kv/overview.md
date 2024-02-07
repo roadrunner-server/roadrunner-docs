@@ -213,8 +213,8 @@ the [igbinary extension](https://github.com/igbinary/igbinary).
 
 :::: tabs
 
-::: tab Linux and MacOS
-In a Linux and MacOS environment, it may be installed with a simple command:
+::: tab Linux and macOS
+In a Linux and macOS environment, it may be installed with a simple command:
 
 ```bash
 pecl install igbinary

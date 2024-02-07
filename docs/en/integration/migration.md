@@ -23,7 +23,7 @@ http:
     num_workers: 4
 ```
 
-> Read more in [config reference](/intro/config.md).
+> Read more in [config reference](../intro/config.md).
 
 ## No longer worry about echoing
 

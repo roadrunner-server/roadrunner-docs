@@ -103,9 +103,9 @@ the RPC Go definitions for these plugins in the following repositories:
 - [Status](https://github.com/roadrunner-server/status/blob/master/rpc.go)
 - [Metrics](https://github.com/roadrunner-server/metrics/blob/master/rpc.go)
 - [Lock](../plugins/locks.md) - Provides a way to obtain and release locks on
-  resources. [Github](https://github.com/roadrunner-server/lock/blob/master/rpc.go)
+  resources. [GitHub](https://github.com/roadrunner-server/lock/blob/master/rpc.go)
 - [Service](../plugins/service.md) - Provides a simple API to monitor and control
-  processes [Github](https://github.com/roadrunner-server/service/blob/master/rpc.go)
+  processes [GitHub](https://github.com/roadrunner-server/service/blob/master/rpc.go)
 - [RPC](https://github.com/roadrunner-server/rpc/blob/master/rpc.go)
 
 ## What's Next?

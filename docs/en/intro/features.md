@@ -44,7 +44,7 @@ The list of features mentioned above is just the tip of the iceberg. RoadRunner 
 and contributors, which means new features are constantly being added.
 
 If you have a feature request in mind, you can check
-out [Github issues](https://github.com/roadrunner-server/roadrunner/issues) page. Here you'll find a list of open
+out [GitHub issues](https://github.com/roadrunner-server/roadrunner/issues) page. Here you'll find a list of open
 feature requests. The RoadRunner community is active and responsive, so feel free to join the discussion on
 our [Discord channel](https://discord.gg/spiralphp) or [contribute](./contributing.md) to the project.
 
