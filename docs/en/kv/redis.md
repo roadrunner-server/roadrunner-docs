@@ -181,7 +181,7 @@ disabling this option. In this case, aged connections will not be closed.
 
 `idle_check_freq`: Frequency of idle checks made by idle connections reaper. Must be in the format of 
 a "numeric value" + "time format suffix". A value of`0` is equivalent to a timeout of 1 minute (`1m`). A value of `-1` 
-disables idle connections reaper. Note, that idle connections are still discarded by the client if `idle_timeout` is 
+disables idle connections' reaper. Note, that idle connections are still discarded by the client if `idle_timeout` is 
 set.
 
 `read_only`: An optional boolean value that enables or disables read-only mode. If `true` value is specified, the 

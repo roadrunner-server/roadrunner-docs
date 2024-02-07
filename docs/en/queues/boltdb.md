@@ -2,7 +2,7 @@
 
 This type of driver is already supported by RoadRunner and requires no additional installation. It uses boltdb as the
 main job store. This driver should be used locally for testing or development. It can be used in production, but this
-type of driver can't handle huge loads. huge load. The maximum RPS it can have is not more than 30-50.
+type of driver can't handle huge loads. The maximum RPS it can have is not more than 30-50.
 
 Data in this driver is stored in the boltdb database file. You can't use the same file at the same time for the 2
 pipelines or for the for KV plugin and Jobs plugin. This is a boltdb limitation on simultaneous access of 2 processes to

@@ -108,7 +108,7 @@ http:
     # Other middlewares
 ```
 
-**Detailled configuration**
+**Detailed configuration**
 
 | Key                                | Description                                                           | Value example                                                            |
 |:-----------------------------------|:----------------------------------------------------------------------|:-------------------------------------------------------------------------|
@@ -118,8 +118,8 @@ http:
 | `api.{api}.security`               | (DEPRECATED) Enable the JWT Authentication token  verification        | `true`<br/><br/>`(default: false)`                                       |
 | `api.security.secret`              | (DEPRECATED) JWT secret key                                           | `Any_charCanW0rk123`                                                     |
 | `api.security.users`               | (DEPRECATED) Array of authorized users with username x password combo | `- username: admin`<br/><br/>`  password: admin`                         |
-| `api.souin.security`               | Enable JWT validation to access the resource                                  |  `true`<br/><br/>`(default: false)`                                                                        |
-| `cache_keys`                       | Define the key generation rules for each URI matching the key regexp        |                                                                          |
+| `api.souin.security`               | Enable JWT validation to access the resource                          | `true`<br/><br/>`(default: false)`                                       |
+| `cache_keys`                       | Define the key generation rules for each URI matching the key regexp  |                                                                          |
 | `cache_keys.{your regexp}`         | Regexp that the URI should match to override the key                  |                                                                          |
 | generation                         | `.+\.css`                                                             |                                                                          |
 | `default_cache.key.disable_body`   | Disable the body part in the key matching the regexp (GraphQL         |                                                                          |
@@ -163,7 +163,7 @@ configuration | [See the Badger configuration for the options](https://dgraph.io
 configuration | [See the Etcd configuration for the options](https://pkg.go.dev/go.etcd.io/etcd/clientv3#Config)                          |
 | `default_cache.headers`                           | List of headers to include to the
 cache | `- Authorization`<br/><br/>`- Content-Type`<br/><br/>`- X-Additional-Header`                                              |
-| `default_cache.key`                               | Override the key generation with the ability to disable unecessary
+| `default_cache.key`                               | Override the key generation with the ability to disable unnecessary
 parts | |
 | `default_cache.key.disable_body`                  | Disable the body part in the key (GraphQL
 context)                                                                                          | `true`<br/><br/>`(default: false)`                                                                                        |
