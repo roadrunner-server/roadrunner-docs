@@ -18,6 +18,11 @@ server:
     # This option is required if using on_init
     command: "any php or script here"
 
+    # Username (not UID) of the user from whom the on_init command is executed. An empty value means to use the RR process user.
+    #
+    # Default: ""
+    user: ""
+
     # Script execute timeout
     #
     # Default: 60s [60m, 60h], if used w/o units its means - NANOSECONDS.
@@ -65,6 +70,9 @@ server:
 > most cases, you should use the default `pipes` relay, it is the fastest communication transport.
 > It uses an inter-process communication mechanism that allows for fast and efficient communication between
 > processes. It does not require any network connections or external libraries, making it a lightweight and fast option.
+
+> **Note**
+> Use `on_init.user` option to execute the on_init command under a different user.
 
 ### Server initialization
 
